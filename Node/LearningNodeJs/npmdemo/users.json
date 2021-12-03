@@ -1,0 +1,18 @@
+{
+    "id":352994,
+    "employee":{
+       "account_id":4727571
+    },
+    "primary":true,
+    "emergency":false,
+    "dependent":true,
+    "beneficiary":false,
+    "first_name":"child1",
+    "last_name":"child1",
+    "relationship":"dependent",
+    "birthdate":"2017-04-01",
+    "_links":{
+       "self":"https://dev.saashr.com/ta/rest/v2/companies/616780/contacts/352994",
+       "edit":"https://dev.saashr.com/ta/rest/v2/companies/616780/contacts/352994"
+    }
+ }
