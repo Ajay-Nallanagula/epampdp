@@ -1,0 +1,34 @@
+{
+  "adminUser": {
+    "username": "AjayNallanagula",
+    "password": "admin123",
+    "role": "admin"
+  },
+  "defaultPort": 3000,
+  "mongoCreds": {
+    "password": "18%40Vasisht",
+    "cluster": "cluster0.u0oli",
+    "dbname": "seniorkitchen",
+    "username": "AjayNallanagula",
+    "menuCollection": "menuitems"
+  },
+  "defaultDateFormat": "DD/MM/YYYY",
+  "typeOfMealsEnum": ["Breakfast", "Lunch", "Dinner"],
+  "typeOfMeals": {
+    "breakfast": {
+      "name": "Breakfast",
+      "breakfastStartTime": 7,
+      "breakfastEndTime": 10
+    },
+    "lunch": {
+      "name": "Lunch",
+      "lunchStartTime": 12,
+      "lunchEndTime": 15
+    },
+    "dinner": {
+      "name": "Dinner",
+      "dinnerStartTime": 15,
+      "dinnerEndTime": 21
+    }
+  }
+}
