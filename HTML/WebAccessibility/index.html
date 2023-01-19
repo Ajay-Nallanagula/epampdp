@@ -6,6 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
+      .container {
+        display: flex;
+        flex-flow: row;
+        justify-content: space-between;
+        align-content: space-evenly;
+      }
+
+      .flexItem{
+        margin:2px;
+        padding:2px;
+      }
+
       .divTest {
         height: 100px;
         width: 300px;
@@ -26,7 +38,16 @@
     </style>
   </head>
   <body>
-    <div class="divTest sr-only">
+    <div class="container">
+      <div class="flexItem">
+        <input type="checkbox">Select All</input>
+      </div>
+      <div class="flexItem">
+        <input type="text" placeholder="Search.." name="search" />
+      </div>
+    </div>
+
+    <div class="divTest">
       <h3>Hello World!!</h3>
     </div>
   </body>

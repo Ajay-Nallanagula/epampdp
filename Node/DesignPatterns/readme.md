@@ -1,3 +1,13 @@
+https://springframework.guru/gang-of-four-design-patterns/
+
+Design Patterns in JQUERY:
+https://www.patterns.dev/posts/classic-design-patterns/
+
+AntiPatterns:
+https://www.patterns.dev/posts/classic-design-patterns/#antipatterns
+
+
+
 Creational Patterns: How objects are created
 Structural Patterns: How the objects are composed (instance functions, variables)
 Behavioral Patterns: How the Object communicate with external sources

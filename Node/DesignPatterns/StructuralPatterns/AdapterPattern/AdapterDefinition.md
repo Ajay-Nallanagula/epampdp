@@ -1,3 +1,5 @@
+Easier: https://dev.to/wecarrasco/adapter-pattern-with-javascript-4lgi 
+
 The Gang of Four defines the intent of an adapter as converting the interface of a class into another interface that clients expect. Adapters lets classes work together that couldn't otherwise because of incompatible interfaces.
 
 Further reading here :

@@ -6,7 +6,7 @@ See the below ctor.
 Pizza(int size) { ... }  
 Pizza(int size, boolean cheese) { ... }  
 Pizza(int size, boolean cheese, boolean pepperoni) { ... }  
-Pizza(int size, boolean cheese, boolean pepperoni, boolean bacon) { ... }
+Pizza(int size, boolean cheese, boolean pepperoni, boolean bacon, string[] toppings) { ... }
 This is called the Telescoping Constructor Pattern. The problem with this pattern is that once constructors are 4 or 5 parameters long it becomes difficult to remember the required order of the parameters as well as what particular constructor you might want in a given situation.
 
 One alternative you have to the Telescoping Constructor Pattern is the JavaBean Pattern where you call a constructor with the mandatory parameters and then call any optional setters after:

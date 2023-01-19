@@ -27,6 +27,7 @@ class PersonBuilder {
         return this
     }
 
+    //NOTE: IMPORTANT METHOD
     build() {
         return new Person(this)
     }

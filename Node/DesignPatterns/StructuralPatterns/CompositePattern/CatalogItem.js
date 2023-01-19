@@ -24,9 +24,10 @@ class CatalogGroup {
 
     print() {
         console.log(`\n${this.name.toUpperCase()}`)
-        //console.log(this.composites)
+      //  console.log(this.composites)
         this.composites.forEach(item => {
-            item.print()
+        //   console.log(JSON.stringify(item))
+            item.print() // thiswill be called recursively
         })
     }
 
@@ -64,12 +65,12 @@ function run() {
     //console.log(keyChain.total)
 
     const catalogGroup = new CatalogGroup('All items', [footwearGroup, food_Group, keyChain])
-    //catalogGroup.print()
-    //console.log(catalogGroup.total)
+    catalogGroup.print()
+    console.log(catalogGroup.total)
 
-    const anotherCGrp = new CatalogGroup('up-up-cgrp', [catalogGroup])
-    anotherCGrp.print()
-    console.log(anotherCGrp.total)
+    // const anotherCGrp = new CatalogGroup('up-up-cgrp', [catalogGroup])
+    // anotherCGrp.print()
+    // console.log(anotherCGrp.total)
 }
 
 run()
