@@ -1,0 +1,372 @@
+References:
+https://www.freecodecamp.org/news/a-complete-beginners-guide-to-react-router-include-router-hooks/ 
+https://www.techiediaries.com/react/react-router-5-4-tutorial-examples/
+https://www.sitepoint.com/react-router-complete-guide/
+https://reactrouter.com/web/guides/primary-components
+
+******The place where you mention the route, the component will be rendered there .
+In case of nested routes, it will be rendered within the component.
+
+
+What is Routing?
+In an application , if u need the ability to navigate from one part of app to other part of the app, you can make it possible using routing.
+You can navigate either by giving url or click/any action on an element
+
+In React routing is provided by third party Library 
+npm install react-router-dom
+
+consider below url , url fragments explaination
+Eg: https://analytics.twitter.com/user/ajayNallanagula/tweets?filter=top&origin=im
+https:protocol,
+analytics.twitter.com: domain
+user,ajayNallanagula,tweets: route-parameters
+filter=top,origin=im : query-string
+
+react-router vs react-router-dom:
+
+react-router contains all the common components between react-router-dom and react-router-native. When should you use one over the other? If you're on the web then react-router-dom should have everything you need as it also exports the common components you'll need. If you're using React Native, react-router-native should have everything you need for the same reason. So you'll probably never have to import anything directly from react-router. As far as when you use
+
+To enable Routing we need to follow:
+ #region Step 1: BrowserRouter from 'react-router-dom'
+To enable routing in our React app, we first need to import BrowserRouter from react-router-dom.
+Eg: 
+import { BrowserRouter as Router } from "react-router-dom";
+export default function App() { return ( <Router> <main> <nav> <ul> <li><a href="/">Home</a></li> <li><a href="/about">About</a></li> <li><a href="/contact">Contact</a></li> </ul> </nav> </main> </Router> ); } 
+if we need routing in our entire app, we must wrap our higher component with BrowserRouter
+
+What does BrowserRouter aka Router do ?
+1) The above code creates a history instance for our entire <App> component
+2) Html5 History API : https://developer.mozilla.org/en-US/docs/Web/API/History_API
+The DOM Window object provides access to the browser's session history through the history object. It exposes useful methods and properties that let you navigate back and forth through the user's history, and manipulate the contents of the history stack
+window.history.back(),window.history.forward(),window.history.go(-1) //positive forward,negative backward, 0 refresh the page
+3) Each <Router> component creates a history object that keeps track of the current location (history.location) and also the previous locations in a stack. When the current location changes, the view is re-rendered and you get a sense of navigation. How does the current location change? The history object has methods such as history.push and history.replace to take care of that. The history.push method is invoked when you click on a <Link> component, and history.replace is called when you use a <Redirect>. Other methods — such as history.goBack and history.goForward — are used to navigate through the history stack by going back or forward a page.
+
+#endregion step1:
+
+
+#region Step 2: ROUTE component from 'react-router-dom'
+Step 2:
+Just adding router doesn't do much, it just brings your application under Routing umbrella. We need to add Routes 
+The Route component has several properties. But here, we just need path and render. 
+
+path: the path of the route. Here, we use / to define the path of the home page.
+
+render: will display the content whenever the route is reached
+
+Route Component is a RenderProps pattern style component
+
+Add the route where ever you want the content to be rendered
+
+Eg: <div style={styleObj.divClass}> <ul style={styleObj.ulClass}> <li style={styleObj.liClass}><a href='/'>Home</a></li> <li style={styleObj.liClass}><a href='/'>Contact</a></li> <li style={styleObj.liLastClass}><a href='/'>About</a></li> </ul> </div> ***<Route path='/' ****render={()=><h1>Welcome Home</h1>}/>
+
+Way 1: Route using Component prop render
+
+Though the above is possible, Imagine if you have to render a component 
+In that case we need to use different variant of Route 
+ <Route path='/' component={Home}/> 
+This component prop render
+Note that when using the component prop to render a route, the match, location and history route props are implicitly passed to the component. 
+
+Way 2: Route as Child Component from reactV5.1, for HOOKS
+The above route can be written as 
+ <Route path='/' exact/>Home</Route>
+NOTE: IN THIS CASE THE IMPLICT PROPS match,location,history ARE NOT PASSED, GET THEM FROM HOOKS, useLocation,useParams,useHistory,useRouteMatch etc.
+
+ What should be done if you want to pass props to Home component via route ?
+ 1) One way is route parameters params (props.match.params)
+ 2)<Link to={{pathname:'some-url',state={{obj:{}}} search:'query-string'>
+ 
+ Consider the following setup of routes 
+  <ul style={styleObj.ulClass}> <li style={styleObj.liClass}> <a href="/">Home</a> </li> <li style={styleObj.liClass}> <a href="/contact">Contact</a> </li> <li style={styleObj.liLastClass}> <a href="/about">About</a> </li> </ul>
+      <Route path="/" component={Home} />
+      <Route path="/contact" component={Contact} />
+      <Route path="/about" component={About} />
+	  
+In the above the Route-path prop will match with the href i.e is given in <a></a> , but in this case the path='/' will be prepended with every other route why because
+When the regex matching of the route is in process the routes check for startsWith '/' is been checked hence it will render both the components
+To avoid that we need to use 'exact' that will solve the problem.
+   <Route exact path="/" component={Home} />
+      <Route path="/contact" component={Contact} />
+      <Route path="/about" component={About} />
+
+All the routes that match are rendered inclusively.	  
+The other problem with above scenario is two routes match hence two route components are rendered , to avoid that we need to make use of
+Switch which will enable to render only one route per match, i.e first match will be rendered
+ <Switch>
+      <Route  path="/" component={Home} />
+      <Route path="/contact" component={Contact} />
+      <Route path="/about" component={About} />
+  </Switch>
+
+The path prop is used to identify the portion of the URL that the router should match. It uses the Path-to-RegExp library to turn a path string into a regular expression. It will then be matched against the current location.
+
+If the router’s path and the location are successfully matched, an object is created which is called a match object.
+match have following props
+match.url: a string that returns the matched portion of the URL. This is particularly useful for building nested <Link> components.
+match.path: a string that returns the route’s path string — that is, <Route path="">. We’ll be using this to build nested <Route> components.
+match.isExact: a Boolean that returns true if the match was exact (without any trailing characters).
+match.params: an object containing key/value pairs from the URL parsed by the Path-to-RegExp package.
+
+eg:
+match:
+isExact: true
+params: {name: "AJAYNALLANAGULA"}
+path: "/contact/:name?"
+url: "/contact/AJAYNALLANAGULA"
+
+
+
+
+#endregion Step 2: ROUTE component from 'react-router-dom'
+	  
+
+#region Step3: LINK Component
+Step 3:
+Change your <a></a> tags to Link why 
+whenever we change/navigate to other parts of the application you can notice the browser reloads the page to avvoid that we use
+<Link to="url"> react component ,Link doesn't refresh the page but re-renders the component ,we get a sense of navigation.
+In this case to prop accepts the url.
+
+Step 4: How to pass route parameters
+const name='AjayNallanagula'
+a)  <li style={styleObj.liClass}>
+            <Link to={`/contact/${name}`}>Contact</Link>
+          </li>
+b)  <Route path="/contact/:name" component={Contact} />
+
+eg of locationObj:
+location{
+hash: ""
+key: "pr63l6"
+pathname: "/contact/someName"
+search: ""
+state: undefined
+}
+
+How do we pass state to the route ? that can be retrieved from location object ?
+
+
+Consider below example:
+          <li style={styleObj.liClass}>
+            <Link
+              to={{
+                pathname: `/product/${prodName}`,
+                state: {
+                  empObj: {
+                    empId: "84",
+                    empName: "Ajay Kumar N",
+                    empAddr: "Hitech-city",
+                  },
+                },
+				search:'?size=8&brand=rebook&color=blue'
+              }}
+            >
+              Products
+            </Link>
+          </li>
+
+//Inside the component , we can retrieve state and search as follows
+const {state,search} = location //can be from hook or props.
+But here search comes as raw unformmated query string 
+'?size=8&brand=rebook&color=blue', we need to parse the query-string .
+
+React Router v4 and v5  doesn’t come with built-in support for parsing query strings
+best for users to decide what the implementation to be used BrowserAPI(https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) or third-party query-string parser . for eg: the query-string library on NPM.
+
+
+When we navigate to Contacts tab the url will be 
+"http://localhost:3000/contact/AjayNallanagula
+
+What happens if you don't pass the name in url ?
+Your Contacts component will not render.
+To avoild such situation use nullable params append '?' to the Route path parameter
+<Route path="/contact/:name?" component={Contact} />
+
+How do we retrieve the name in Contacts Component?
+const Contact = (props)=>{
+const name = props.match.params.name //RETRIEVE NAME PARAM HERE
+    return(
+        <>
+        <h1>Contact Page {name}</h1>
+                </>
+    )
+
+
+How do we navigate programatically ?
+using history.push("url")
+const {history} = props
+        <div><button onClick={()=>history.push("/contact")}>Go to Contact</button></div>
+        <div><button onClick={()=>history.push("/contact/someName")}>Go to Contact Param</button></div>
+        <div><button onClick={()=>history.push("/about")}>Go to About</button></div>
+
+React has another component , <Ridirect to='url'/>
+Eg:
+const About = ({match:{params:{name}}}) => (
+  // props.match.params.name
+  <Fragment>
+    { name !== 'John Doe' ? <Redirect to="/" /> : null }
+    <h1>About {name}</h1>
+    <FakeText />
+  </Fragment>
+);
+
+Redirect vs history.push()
+Redirect component replaces the page and therefore the user can't go back to the previous page. But, with the push method they can. However, you can use props.history.replace('/) to mimic the Redirect behavior.
+
+How do we show HTTP 404 ?
+NOTE : NO PATH is given , if the route is not matched below route will catch that route
+<Route render={() => <h1>404: page not found</h1>} />
+
+
+
+
+#endregion Step3
+
+
+
+#region:  NESTED Routing
+
+This way of giving nested routes is wrong
+We get a warning saying : " You should not use <Route component> and <Route children> in the same route; <Route component> will be ignored "
+WRONG WAY OF NESTED ROUTES
+ <Switch>
+        <Route exact path="/home" component={Home}>
+          <Route path="/contact" component={Contact}></Route>
+          <Route path="/about" component={About}></Route>
+        </Route>
+      </Switch>
+
+https://stackoverflow.com/questions/41474134/nested-routes-with-react-router-v4-v5
+
+Eg of Nested route
+//Parent Component
+const NestedRoutes = () => { return ( <> <div style={styleObj.divClass}> <ul style={styleObj.ulClass}> <li style={styleObj.liClass}> <Link to="/home">Home</Link> </li> </ul> </div> <Switch> <Route path="/home" component={Home}/> </Switch> </> ); };
+
+//Child component home.jsconst Home = (props) => { const { history } = props; return ( <> <h1>Home Page</h1> <div> <FakeText /> </div> <ul style={{ listStyleType: "none" }}> <li> <Link to="/home/contact">Contact</Link> </li> <li> <Link to="/home/about">About</Link> </li> </ul>
+ <Switch> <Route path="/home/contact" component={Contact}></Route> <Route path="/home/about" component={About}></Route> </Switch> </> ); };
+
+#endregion NESTEDROUTING
+
+
+
+
+#region TODO: route-config
+https://medium.com/swlh/react-router-route-configuration-968f4aac7fab
+Do some more R& D on nested routes with route.config
+
+
+
+
+
+
+
+
+
+
+
+#endregion route-config
+#region Routing HOOKS
+
+Way 1: Route using Component prop render
+
+Though the above is possible, Imagine if you have to render a component 
+In that case we need to use different variant of Route 
+ <Route path='/' component={Home}/> 
+This component prop render
+Note that when using the component prop to render a route, the match, location and history route props are implicitly passed to the component. 
+
+Way 2: Route as Child Component from react-router V5.1, for HOOKS
+The above route can be written as 
+ <Route path='/' exact/><Home {...props}/></Route>
+NOTE: IN THIS CASE THE IMPLICT PROPS match,location,history ARE NOT PASSED, GET THEM FROM HOOKS, useLocation,useParams,useHistory,useRouteMatch etc.
+
+Router Hooks
+------------
+useHistory: 
+----------
+The useHistory hook gives us access to the history instance without pulling it from props.
+
+import { useHistory } from "react-router-dom";
+
+const Contact = () => {
+const history = useHistory();
+return (
+  <Fragment>
+    <h1>Contact</h1>
+    <button onClick={() => history.push('/') } >Go to home</button>
+  </Fragment>
+  )
+  };
+  
+useParams:
+---------
+This hook helps us get the parameter passed on the URL without using the props object.
+const {name} = useParams()
+
+useLocation: similar to window.location
+-----------
+This hook returns the location object that represents the current URL.
+
+import { useLocation } from "react-router-dom";
+
+const Contact = () => {
+const { pathname } = useLocation();
+
+return (
+  <Fragment>
+    <h1>Contact</h1>
+    <p>Current URL: {pathname}</p>
+  </Fragment>
+  )
+  };
+
+eg 2:
+import { useLocation } from 'react-router-dom';
+
+function Profile() {
+  const location = useLocation();
+  useEffect(() => {
+    const currentPath = location.pathname;
+    const searchParams = new URLSearchParams(location.search);
+  }, [location]);
+  return <p>Profile</p>;
+}
+
+other props of locationObj
+
+useLocationObj:
+hash: ""
+key: "pr63l6"
+pathname: "/contact/someName"
+search: ""
+state: undefined
+
+
+useRouteMatch:
+--------------
+Provides access to the match object
+learn about match object : https://reactrouter.com/web/api/match
+If it is provided with no arguments, it returns the closest match in the component or its parents.
+*** A primary use case would be to construct nested paths.
+import { useRouteMatch, Route } from 'react-router-dom';
+
+function Auth() {
+  const match = useRouteMatch();
+  return (
+    <>
+      <Route path={`${match.url}/login`}>
+        <Login />
+      </Route>
+      <Route path={`${match.url}/register`}>
+        <Register />
+      </Route>
+    </>
+  );
+
+history.location vs location in React
+--------------------------------------
+It is also found on history.location but you shouldn’t use that because it’s mutable. You can read more about that in the history doc.
+A location object is never mutated so you can use it in the lifecycle hooks to determine when navigation happens, this is really useful for data fetching and animation.
+
+
+#endregion routing hooks

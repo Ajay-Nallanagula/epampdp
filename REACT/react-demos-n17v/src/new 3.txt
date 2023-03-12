@@ -1,0 +1,8 @@
+1) Virtual DOM
+2) What is JSX
+3) Prop Vs State
+4) Components
+5) Conditional Rendering
+
+React.createClass({}) this is deprecated from version 16.0.
+

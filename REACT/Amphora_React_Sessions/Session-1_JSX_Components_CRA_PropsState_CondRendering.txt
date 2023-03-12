@@ -1,0 +1,252 @@
+React is a Library. Something like Handlebars.js ,Moustache.js
+
+What is Single Page Application?
+https://huspi.com/blog-open/definitive-guide-to-spa-why-do-we-need-single-page-applications
+
+*****REACT SUPPORTS ONLY ONE-WAY BINDING.
+
+#region miscllenaous
+React Class Property Proposal
+https://michalzalecki.com/react-components-and-class-properties/
+
+random unique keys shortid npm package
+
+Difference between NPX Vs NPM
+https://dev.to/bogicevic7/npm-vs-npx-which-to-use-when-2hob
+https://www.techgecs.in/2019/12/difference-between-npm-npx-and-yarn.html
+
+HOW DID WE EVOLVE TO JSX from PURE JS in React?(Session From Manohar)
+https://codesandbox.io/s/dazzling-curran-fus12?file=/index.html      1-OCT-2020
+VideoRecording-link : https://web.microsoftstream.com/video/98eed31a-63af-4bf5-a697-ec2c378af621
+
+What is <React.StrictMode>?
+We can do import React,{StrictMode} from 'react'; <StrictMode> bla bla </StrictMode>
+1) StrictMode is a tool for highlighting potential problems in an application
+2) Like Fragment, StrictMode does not render any visible UI. It activates additional checks and warnings for its descendants
+
+Url : https://reactjs.org/docs/strict-mode.html
+https://mariosfakiolas.com/blog/my-react-components-render-twice-and-drive-me-crazy/
+
+Strict mode wrns you about : deprecated methods, unecessary sideeffects,unsafe life-cycle changes ,warn about findDOMNode instead use , createRef() etc
+
+React and ReactDOM?
+ReactDom contains render method, other useful API methods related to react are present in React Object like your HOOKS
+
+you see the good old document.getElementById("app") DOM access why ?
+1) You use this to tell React where the application should be located in the page.
+
+React.DOM vs ReactDOM ?
+difference between React.DOM and ReactDOM. The first is a collection of ready-made HTML elements, and the second is a way to render the app in the browser (think ReactDOM.render()).
+
+React.createClass({}) this is deprecated from version 16.0 ,Its better use ES6 syntax 
+export class Sample extends React.Component {
+//bla bla 
+}
+
+#endregion
+
+
+
+#region VIRTUAL DOM 
+______________________________________________________________________________________________________________________
+How browser rendering works — behind the scenes ...
+ https://blog.logrocket.com/how-browser-rendering-works-behind-the-scenes-6782b0e8fb10/
+
+What is Virtual DOM and Why is it fast ?
+https://medium.com/@happymishra66/virtual-dom-in-reactjs-43a3fdb1d130
+https://programmingwithmosh.com/react/react-virtual-dom-explained/
+
+Post-mortem of Virtual-DOM?
+https://bitsofco.de/understanding-the-virtual-dom/#:~:text=Because%20React%20uses%20the%20virtual,of%20the%20elements%20that%20change.
+
+How Virtual DOM works?
+1) First we need to know how browser parses HTML & Css, so briefly, Browser first parses HTML create DOM object(simple JS object), similarly it also creates CSSOM(css object model , yet another JS Object)
+2) CSSOM is applied to DOM, this is phase is called "ATTACHMENT" .
+3) After ATTACHMENT is done , LAYOUT phase starts, which means where each of the html element should be placed on the browser screen, its calculated based on cordinates 
+4) Once Layout is done , RENDERTREE is prepared and the HTML elements are PAINTED and DISPLAYED 
+
+consider following eg :
+document.getElementById("root").innerHTML = 'New Value'
+For this all the above steps will have to be performed, for one element updation performance might not be affected.
+But if we update the real DOM 10 times each of the above step will repeat 10 times. This is why updating Real DOM is slow.
+
+React on the other hand , introduced "Virtual DOM" Virtual DOM is ,DOM object maintained in-memory. 
+(Something like in-memory caching, caching DOM object , is treated as Virtual DOM)
+But REACT maintains TWO copies of Virtual DOM 
+1) One Copy of VirtualDOM tracked for updated changes 
+2) second copy tracked with previous changes 
+3) At the time updating REAL DOM , both Virtual DOM are compared and changes that needed to be done are patched onto REAL DOM(Reconciliation)
+
+Advantages of Virtual DOM.
+--------------------------
+1) Virtual DOM doesn't use dirty checking, instead it uses observables to track/update the changes (Dirty Check is done in AngularJs)
+2) Virtual DOM carries out Bulk updates ,
+3) Virtual DOM uses efficent diffing algorithms
+4) Efficient update of subtree only Breadth First Apporach(learn a bit about BFS)
+
+ dirty check Vs Observables ? https://stackoverflow.com/questions/21109361/why-is-reacts-concept-of-virtual-dom-said-to-be-more-performant-than-dirty-mode#:~:text=Dirty%20checking%20is%20slower%20than,in%20the%20data%20structure%20recursively.&text=This%20isn't%20really%20related,with%20or%20without%20dirty%20checking.
+ SHORT ANSWER :  In React, each of your components have a state. This state is like an observable you might find in knockout or other MVVM style libraries. Essentially, React knows when to re-render the scene because it is able to observe when this data changes. Dirty checking is slower than observables because you must poll the data at a regular interval and check all of the values in the data structure recursively. By comparison, setting a value on the state will signal to a listener that some state has changed, so React can simply listen for change events on the state and queue up re-rendering.
+
+Whenever setState() method is called on any component, ReactJS makes that component dirty and re-renders it.
+Re-render all the children if parent state has changed, But this can be controlled using ShouldComponentUpdate() lifecycle method or React.Memo() hook.
+
+what do you mean by bulk updates??
+
+consider followinge example?
+
+const test = () =>{
+const [count,setCount] = useState(0)
+
+//Now calling setCount fourtimes
+setCount((prevCount)=>prevCount+1)
+setCount((prevCount)=>prevCount+1)
+setCount((prevCount)=>prevCount+1) 
+setCount((prevCount)=>prevCount+1)
+}
+
+When setCount is called 4 times , the component state is not updated at each state rather React collects all the setStates and do a bulk update .
+
+What are react batch updates?
+https://blog.logrocket.com/simplifying-state-management-in-react-apps-with-batched-updates/
+https://stackoverflow.com/questions/53048495/does-react-batch-state-update-functions-when-using-hooks
+In short react collects all the setStates and run them together , rather than updating each individual one. 
+React collects all the updates from known scopes, like eventHandlers(click,onchange) etc. But batch-Updates inside setTimeOuts, promises,[ if the state changes are triggered asynchronously (e.g. wrapped in a promise), they will not be batched]
+react doesn't take them as part of batch updates, w.r.t promises/setTimeouts the update is applied immediately.
+If you want to force the asyncalls also to be batch updated we need to use an unstable API call ReactDOM.unstable_batchedUpdates(() => { ... })
+
+NOTE: USING BATCH UPDATES YOU DIRECTLY GET THE READY-MADE VALUES, THE CHANGE TRANSITION IS NOT SEEN.
+	  BUT DURING NON BATCH UPDATES,(ASYNC CALLS) , THE CHANGE TRANSITION IS SEEN WHEN YOU CONSOLE
+	  FOLLOW THE EXAMPLE SHOWN IN THE REFERENCE LINKS
+	  
+
+
+NOTE: React.createElement , Actually, this function (called directly or through JSX) creates a new node in the Virtual DOM
+https://www.freecodecamp.org/news/a-quick-guide-to-learn-react-and-how-its-virtual-dom-works-c869d788cd44/
+______________________________________________________________________________________________________________________
+#endregion
+
+
+
+#region What is JSX ??
+
+HOW DID WE EVOLVE TO JSX from PURE JS in React?(Session From Manohar)
+https://codesandbox.io/s/dazzling-curran-fus12?file=/index.html
+VideoRecording-link : https://web.microsoftstream.com/video/98eed31a-63af-4bf5-a697-ec2c378af621
+
+JSX is special syntax of react, It is look-a-like of HTML but its actually Javascript .
+JSX is compiled into browser understandable JS by tool called Babel.
+JSX supports nesting of components, since class is a reserved word in JS , we have className in JSX to give stylised classes.
+
+You can also create the elements using pure javascript, without JSX , using React.createElement('CustomComponentName',{attributes...})
+
+
+Eg without JSX :
+class IngredientsList extends React.Component {
+render() {
+return React.createElement(
+"ul",
+{ className: "ingredients" },
+this.props.items.map((ingredient, i) =>
+React.createElement("li", { key: i }, ingredient)
+)
+);
+}
+}
+
+React Components must start with UpperCase letter, Why?
+https://reactjs.org/docs/jsx-in-depth.html
+Short Ans: In JSX, lower-case tag names are considered to be HTML tags. However, lower-case tag names with a dot (property accessor) aren't.
+<component /> compiles to React.createElement('component') (html tag)
+<Component /> compiles to React.createElement(Component)
+<obj.component /> compiles to React.createElement(obj.component)
+
+
+#endregion
+
+
+
+#region Conditional Rendering
+style 1 : isRender && ComponentA
+style 2: isRenderA ? CompA : CompB
+style 3 : if(isRenderA) return CompA else CompB
+#endregion
+
+
+#region Helpful References :
+
+This is why we need to bind event handlers in Class Components in React ? Wht there is no this for arrow functions ?
+https://www.freecodecamp.org/news/this-is-why-we-need-to-bind-event-handlers-in-class-components-in-react-f7ea1a6f93eb
+
+
+When null is returned by a component it prevents React from mounting the component.
+function App(props) {
+    if(props.noRender)
+        return null
+    
+    return (
+        <div>App Component</div>
+    )
+}
+
+
+#endregion
+
+
+#region CRA
+CRA is tool chain
+config babel,webpack
+npx react app
+conventions are followed in react app
+react-script does all webpack and babel stuff
+react-source-explorer package
+
+#endregion
+
+#region Props Vs State
+
+What are props? 
+Short for properties, props can best be defined as a way of passing data from component to component, basically from parent to child component
+Props can be set manually or props can be set using PropTypes.DefaultProps. Props must be immutable.
+
+What is state ? state is private to class.
+React components has a built-in state object. The state object is where you store property values that belongs to the component.Though state is built-in you can choose NOT to use the state in the components, in that case only using props and not state makes the component Pure Component.
+When the state object changes, the component re-renders.state objects are  mutable
+
+
+https://medium.com/@itIsMadhavan/reactjs-props-vs-state-ff3a7680930d
+
+1) Props must be immutable.
+2) If you want to mutate props, then they have to be assigned to state to mutate. 
+Since props are passed in, and they cannot change, you can think of any React component that only uses props (and not state) as “pure,”
+that is, it will always render the same output given the same input. This makes them really easy to test - win!
+Component That uses only props , i.e doesn't change any property of prop via state is called as pure component.
+
+consider scenario of props send to child component, and child component needs to update the parent props , in that case we need to use callbacks 
+eg: button click handler , define a function with params in parent component assign that to props and pass onto child , trigger the function call in child 
+
+*** WRONG PRACTICES OF UPDATING STATE:
+
+1) this.state.count = this.state.count + 1 //WRONG WAY
+React cannot listen to the state getting updated in this way, so your component will not re-render. Always use setState
+
+2) this.setState({
+  count: this.state.count + 1 //WRONG WAY
+});
+This way doesn't take into account the asynchrony way of set-state, and might cause errors with out of sync state data.
+
+Q)  setstate using callback vs object?
+---------------------------------------
+https://medium.com/@wisecobbler/using-a-function-in-setstate-instead-of-an-object-1f5cfd6e55d1
+Answer:  setSate is asynchrony in nature, i.e don't expect your state to be immediately updated after  call to setState.
+
+NOTE: use a callback in setState only when you are dealing with previous state, if you don't require a previosState, you can directly assign an object.
+NOTE: Make sure if you have to spread array/object or not.
+
+consider following
+const [state,setState] = useState({key:'value')}
+
+setState({key:state.key}) //WRONG: This case will not gurantee you that state.key has updated key value , owing to asyncrony nature of the setState
+
+setState((prevState,[props])=>({key:prevState.key})) //CORRECT: in this way prevState value will be provided by react itself considering asynchrony nature of setState , additionally call back function also has second parameter as props, square bracket indicate its optional
+
+#endregion

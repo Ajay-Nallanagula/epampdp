@@ -18,16 +18,19 @@ const onPostMultipleMenuItems = (req, res) => {
       res.send('PLEASE CHECK UPLOAD THE FILE' + err.messsage);
     }
     const weekAllMealsObj = convertExcelFileToJsonObject(files.multipleFiles.filepath)
+    console.log(weekAllMealsObj['Sheet1'])
 
-    try {
-      Object.keys(weekAllMealsObj).forEach((key) => {
-        return menuItemModel.insertMany(weekAllMealsObj[key]
-          .map(dayMeals => ({ ...dayMeals, date: convertToLocaleDateString(dayMeals.date) })))
-      })
-      res.status(200).send('Uploaded Sucessfully!!')
-    } catch (error) {
-      res.status(500).send('Upload failed, Please check the document!! ' + err.messsage)
-    }
+    res.status(200).send(weekAllMealsObj['Sheet1'])
+    //console.log(weekAllMealsObj)
+    // try {
+    //   Object.keys(weekAllMealsObj).forEach((key) => {
+    //     return menuItemModel.insertMany(weekAllMealsObj[key]
+    //       .map(dayMeals => ({ ...dayMeals, date: convertToLocaleDateString(dayMeals.date) })))
+    //   })
+    //   res.status(200).send('Uploaded Sucessfully!!')
+    // } catch (error) {
+    //   res.status(500).send('Upload failed, Please check the document!! ' + err.messsage)
+    // }
 
   });
 

@@ -1,0 +1,143 @@
+#region HOC
+
+What are HOC's?
+https://www.smashingmagazine.com/2020/06/higher-order-components-react/
+
+Problems with HOC's well explained ?
+https://www.kirillvasiltsov.com/writing/thinking-in-react-hooks/
+
+#region Higher Order functions
+https://blog.bitsrc.io/understanding-higher-order-functions-in-javascript-75461803bad
+
+
+
+What is functional programming ?
+Functional Programming is a form of programming in which you can pass functions as parameters to other functions and also return them as values
+
+In JavaScript or any other functional programming languages functions are objects.
+
+In JavaScript functions are a special type of objects. They are Function objects
+
+function greeting() {
+  console.log('Hello World');
+}
+// Invoking the function
+greeting();  // prints 'Hello World'
+
+To prove functions are objects
+// We can add properties to functions like we do with objects
+greeting.lang = 'English';
+// Prints 'English'
+console.log(greeting.lang);
+
+With functions in JavaScript, you can
+Store them as variables
+Use them in arrays
+Assign them as object properties (methods)
+Pass them as arguments
+Return them from other functions
+
+What you can do with objects like assiging/pass as params/ etc , can also be done with your functions in JS
+
+What are Higher order functions ?
+---------------------------------
+ A Higher-Order function is a function that receives a function as an argument or returns the function as output.
+Eg: map,filter,reduce are some of HOF's
+
+User-Defined-HOF:
+-----------------
+const add = (x)=>(y)=>x+y 
+const result = add(2) //add returns function with parameter
+console.log(result(3))
+
+#endregion Higher order functions
+
+
+https://reactjs.org/docs/higher-order-components.html
+
+What is a HOC?
+A higher-order component (HOC) is an advanced technique in React for reusing component logic. HOCs are not part of the React API, per se. They are a pattern that emerges from React’s compositional nature.
+
+a higher-order component is a function that takes a component and returns a new component.
+const EnhancedComponent = higherOrderComponent(WrappedComponent);
+
+HOCs are common in third-party React libraries, such as Redux’s connect 
+
+Examples: W:\INTERVIEWS_2020\PRACTICE_DEMOS_NOTES\REACT\Session-1\firstapp\src\HOOKS\HOC>
+
+
+Rule of thumb:
+1) Don’t Mutate the Original Component. Use Composition.
+
+Eg:
+function logProps(InputComponent) {
+  InputComponent.prototype.componentDidUpdate = function(prevProps) {
+    console.log('Current props: ', this.props);
+    console.log('Previous props: ', prevProps);
+  };
+  // The fact that we're returning the original input is a hint that it has
+  // been mutated.
+  return InputComponent;
+}
+
+// EnhancedComponent will log whenever props are received
+const EnhancedComponent = logProps(InputComponent);
+
+What happens if we mutate?
+a) One is that the input component cannot be reused separately from the enhanced component
+b)  if you apply another HOC to EnhancedComponent that also mutates componentDidUpdate, the first HOC’s functionality will be overridden!
+
+
+2) HOCs should pass through props that are unrelated to its specific concern, in other words that are only related to WrappedComponent.
+3) Wrap the Display Name for Easy Debugging
+function withSubscription(WrappedComponent) {
+  class WithSubscription extends React.Component {/* ... */}
+  WithSubscription.displayName = `WithSubscription(${getDisplayName(WrappedComponent)})`;
+  return WithSubscription;
+}
+
+function getDisplayName(WrappedComponent) {
+  return WrappedComponent.displayName || WrappedComponent.name || 'Component';
+}
+
+NOTE:
+1) Don't use HOC in render method.
+//DON'T DO THIS.
+render() {
+  // A new version of EnhancedComponent is created on every render
+  // EnhancedComponent1 !== EnhancedComponent2
+  const EnhancedComponent = enhance(MyComponent);
+  // That causes the entire subtree to unmount/remount each time!
+  return <EnhancedComponent />;
+}
+2) Static Methods Must Be Copied Over
+// Define a static method
+WrappedComponent.staticMethod = function() {/*...*/}
+// Now apply a HOC
+const EnhancedComponent = enhance(WrappedComponent);
+
+// The enhanced component has no static method
+typeof EnhancedComponent.staticMethod === 'undefined' // true
+
+To solve this, you could copy the methods onto the container before returning it:
+
+function enhance(WrappedComponent) {
+  class Enhance extends React.Component {/*...*/}
+  // Must know exactly which method(s) to copy :(
+  Enhance.staticMethod = WrappedComponent.staticMethod;
+  return Enhance;
+}
+
+3) Refs Aren’t Passed Through
+That’s because ref is not really a prop — like key, it’s handled specially by React. If you add a ref to an element whose component is the result of a HOC, the ref refers to an instance of the outermost container component, not the wrapped component
+
+The solution for this problem is to use the React.forwardRef 
+
+#endregion HOC
+
+#region Javascript function composition
+https://medium.com/javascript-scene/master-the-javascript-interview-what-is-function-composition-20dfb109a1a0
+
+Get more details on functional programming
+
+#endregion Js function composition

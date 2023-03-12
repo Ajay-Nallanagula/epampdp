@@ -1,0 +1,139 @@
+Sample REST-API calls : https://jsonplaceholder.typicode.com/guide/
+
+axios documentation : https://github.com/axios/axios
+
+References: https://medium.com/codingthesmartway-com-blog/getting-started-with-axios-166cb0035237
+https://www.smashingmagazine.com/2020/06/rest-api-react-fetch-axios/
+
+#region REST API Intro
+https://www.smashingmagazine.com/2018/01/understanding-using-rest-api/
+
+An API is an application programming interface. It is a set of rules that allow programs to talk to each other. The developer creates the API on the server and allows the client to talk to it.
+
+REST determines how the API looks like. It stands for “Representational State Transfer”. It is a set of rules that developers follow when they create their API. One of these rules states that you should be able to get a piece of data (called a resource) when you link to a specific URL.
+
+Each URL is called a request while the data sent back to you is called a response.
+
+
+
+#endregion 
+
+#region FETCH API (JS inbuilt)
+
+
+
+
+#endregion Fetch API
+
+
+#region features of axios:
+
+What is axios ??
+Axios is a Promise-based HTTP client for JavaScript which can be used in your front-end application and in your Node.js backend.
+By using Axios it’s easy to send asynchronous HTTP request to REST endpoints and perform CRUD operations.
+
+
+Features of Axios:
+-----------------
+Make XMLHttpRequests from the browser
+Make http requests from node.js
+Supports the Promise API
+Intercept request and response
+Transform request and response data
+Cancel requests
+Automatic transforms for JSON data
+Client side support for protecting against XSRF
+Streamlined error handling
+Support for upload progress
+Response timeout
+Support for older browsers
+
+
+
+
+JOBS THAT cannot be done on client side:
+1) communication with database
+2) parallel tasks 
+3) communication with servers.
+
+Basic ways of Axios get/post 
+
+// Make a GET request
+axios({
+  method: 'get',
+  url: 'https://api.github.com/users/hacktivist123',
+});
+
+// Make a Post Request
+axios({
+  method: 'post',
+  url: '/login',
+  data: {
+    firstName: 'shedrack',
+    lastName: 'akintayo'
+  }
+});
+
+There are other shorthand methods for each of HTTP-VERB
+axios.request(config)
+axios.get(url[, config])
+axios.delete(url[, config])
+axios.head(url[, config])
+axios.options(url[, config]) //Used for preflight requests 
+axios.post(url[, data[, config]])
+axios.put(url[, data[, config]])
+axios.patch(url[, data[, config]])
+
+
+Making multiple requests using Axios eg:
+axios.all([
+  axios.get('https://api.github.com/users/hacktivist123'),
+  axios.get('https://api.github.com/users/adenekan41')
+])
+.then(response => {
+  console.log('Date created: ', response[0].data.created_at);
+  console.log('Date created: ', response[1].data.created_at);
+});
+
+
+How to pass Headers information using axios ? 
+const headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'JWT fefege...'
+}
+
+axios.post(Helper.getUserAPI(), data, {
+    headers: headers
+  })
+  .then((response) => {
+    dispatch({
+      type: FOUND_USER,
+      data: response.data[0]
+    })
+  })
+  .catch((error) => {
+    dispatch({
+      type: ERROR_FINDING_USER
+    })
+  })
+
+#region async + useEffect Hook
+Problem : 
+https://dev.to/n1ru4l/homebrew-react-hooks-useasynceffect-or-how-to-handle-async-operations-with-useeffect-1fa8
+
+https://dev.to/stlnick/useeffect-and-async-4da8
+
+
+
+#endregion async + useEffect Hook
+
+
+
+
+
+
+
+
+
+
+#endregion features of axios

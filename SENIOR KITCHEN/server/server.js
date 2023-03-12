@@ -42,8 +42,8 @@ app.get('/api/ExcelFormat.JPG', (req, res) => {
     res.sendFile(filePath)
 })
 
-const port = process.env.port || config.get('defaultPort')
+const port = 3001//process.env.port || config.get('defaultPort')
 
 app.listen(port, () => {
-    console.log('server is actively listening on http://localhost:3000')
+    console.log('server is actively listening on http://localhost:3001')
 })

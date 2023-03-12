@@ -1,0 +1,15 @@
+
+.flex-parent-name {
+    display: flex;
+    width: 22.5%;
+  }
+  
+  .flex-parent-element {
+    display: flex;
+    width: 30%;
+  }
+  
+  .flex-child-element {
+    flex: 1;
+    margin: 10px;
+  }

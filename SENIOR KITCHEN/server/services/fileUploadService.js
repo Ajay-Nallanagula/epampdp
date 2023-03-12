@@ -30,6 +30,7 @@ const convertExcelFileToJsonObject = (path) => {
         acc[sheetKey] = xlsx.utils.sheet_to_json(excelSheets[sheetKey], { raw: false });
         return acc
     }, {})
+    console.log({parsedDataObj})
     return parsedDataObj
 }
 

@@ -18,7 +18,6 @@ class File extends Directory{
     getLastmodified(){
         return this.lastModified
     }
-
     getSize(){
         return this.size
     }

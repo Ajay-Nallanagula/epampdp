@@ -1,0 +1,132 @@
+useReducer detail explaination 
+
+syntax : 
+const [state, dispatch] = useReducer(reducer, initialArg [, init]);
+
+references:
+https://alligator.io/react/usereducer/
+
+useReducer + useContext
+https://hswolff.com/blog/how-to-usecontext-with-usereducer/
+
+Basics of redux, definitions for action/reducer/dispatch etc
+https://redux.js.org/tutorials/fundamentals/part-3-state-actions-reducers
+
+
+NOTE : useState() method, which is built on top of useReducer(). But there cases when useReducer() is preferable.
+       useState is a wrapper around useReducer 
+
+#region What is the reducer?
+-------------------
+Reducers are functions that take the current state and an action as arguments, and return a new state result. In other words, (state, action) => newState
+Draw an analogy w.r.t coffee maker , reducers are functions that take in the current state (coffee powder) and actions (water) and brew a new state (fresh coffee).
+
+Rules of Reducers : REDUCERS SHOULD BE PURE FUNCTIONS like render(), ctor
+1) They should only calculate the new state value based on the state and action arguments
+2) They are not allowed to modify the existing state. Instead, they must make immutable updates, by copying the existing state and making changes to the copied values.
+3) They must not do any asynchronous logic or other "side effects"
+
+What is an action?
+-----------------
+In general sense action you can think of an action as an     event( ex: onlicks,onChange which deal with state change, may be CRUD) that describes something that happened in the application with your state. Action are javascript objects with {type:'blabla',payload:'blabla'} properties/schema
+
+What is initialState ?
+----------------------
+Seed data for your application to launch and start working with
+
+What is dispatch?
+-----------------
+dispatch is an alias for action i.e inside reducer function.
+
+What is useReducer hook?
+------------------------
+useReducer is another state managing hook, like useState, but useReducer is used for more complex state managing scenario's.
+The useReducer hook uses the same concept as the reducers in Redux. It is basically a pure function, with no side-effects.
+Pure functions:
+1) gives same output, when you give same set of inputs
+2) no API's and mutations inside reducers , these causes side effects.
+
+const todos = [ { id: 1, desc: "Fix the bugs assigned", completionStatus: false, user: "Ajay", canDelete: true, }, { id: 2, desc: "Clean Sonar Violations", completionStatus: false, user: "Manohar", canDelete: true, },{ id: 4, desc: "Gather requirements for next Sprint", completionStatus: false, user: "Ajay", canDelete: false }]
+
+#region example UseReducerHook
+const DELETE = "DELETE"; const CREATE = "CREATE"; //const UPDATE = "UPDATE"; // const READ = "READ";
+const todoReducer = (state, action) => { console.log({ state }, { action }); const { type, payload } = action;
+ switch (type) { case DELETE: { return state.filter((todo) => todo.id !== payload.id); } case CREATE: { return [...state,payload] } default: return "NO action is defined, this results in ERROR"; } };
+
+ const UseReducerHook = () => { //todos array here is seed-data const [state, dispatch] = useReducer(todoReducer, todos); //boolean value , its a primitive const [openCreateTodo,setOpenCreateTodo] = useState(false)
+ if(openCreateTodo){ return <CreateTodo todoCount={state.length+1} dispatch = {dispatch} setOpenCreateTodo={setOpenCreateTodo}/> }
+ return ( <> <div><button onClick = {()=>setOpenCreateTodo(true)}>Create Todo</button></div> {<TodoList dispatch={dispatch} todos={state} />} </> ); };
+
+export const TodoList = ({ todos, dispatch }) => { return ( <> <h1 style={{ color: "burlywood" }}>Todo List</h1> <div> {todos.map((todo) => ( <div style={{ padding: "5px" }}> <TodoItem key={todo.id} todo={todo} dispatch={dispatch} /> </div> ))} </div> </> ); };
+
+const TodoItem = ({ dispatch, todo }) => { const { canDelete } = todo; const onDeleteHandler = ()=>{ //Pass an action object to dispatch, dispatch is an alias for action dispatch({type:'DELETE',payload:todo}) }
+ return ( <div style={styleObj}> <div> <p>{`${todo.id}. ${todo.desc}: `} <span>{todo.user}</span></p> </div> <div> <button disabled={!canDelete} onClick={onDeleteHandler}> Delete Action!! </button> </div> </div> ); };
+
+export default UseReducerHook; 
+#endregion UseReducerHook
+
+
+#region useReducer with Lazy load seed data , useReducer(reducer, initialArg ,init);
+How to lazyload or conditionally make seed-data available for useReducer(reducers,seedData,initSeedData)?
+A) initSeedData here accepts a javascript function which can me made use for conditions and lazyloading the seed-data
+initSeedData will override initial state, i.e seedData in this case 
+
+#region Example :UseReducerHookLazySeed
+//todos array/schema is given above 
+const initTodos = ()=>todos.filter(({user}) => user === 'Ajay')
+const DELETE = "DELETE"; //const CREATE = "CREATE";
+const todoReducers = (state,action) => { const {type,payload} = action switch(type){ case DELETE:{ return state.filter(({id}) => id!==payload.id) } default: return "NO action is defined, this results in ERROR"; } }
+const UseReducerHookLazySeed = ()=>{ const [state,dispatch] = useReducer(todoReducers,todos,initTodos) console.log('TODO's array is overridden by INITTODOS here') return ( <> <TodoList dispatch={dispatch} todos={state} /> </> ) }
+export default UseReducerHookLazySeed
+
+#endregion Example :UseReducerHookLazySeed
+
+# endregion useReducer with Lazy load seed data , useReducer(reducer, initialArg ,init);
+
+
+
+#endregion What is the reducer
+
+
+#region useReducer Vs useState 
+------------------------------
+Reference : https://www.robinwieruch.de/react-usereducer-vs-usestate
+https://dev.to/spukas/3-reasons-to-usereducer-over-usestate-43ad
+
+//This is best explaination for useState Vs useReducer, the best is to use useReducer + useState in your components 
+*******https://graybox.co/knowledge/blog/react-hooks-usestate-versus-usereducer
+
+As a rule of thumb, when ever you are dealing with 
+State which holds JS primitives(boolean,integer,string,number) we can make use of 'useState' hook.
+state that deals with complex arrays, objects , we can make use of useReducer.
+
+for eg: The rule of thumb suggests that, for instance, once you spot const [state, setState] = useState({ firstname: 'Robin', lastname: 'Wieruch' }) in your code, you may be better off with useReducer instead of useState.
+
+Good Practices :
+Consider the following example this is very implicity coded, which is wrong practise
+const counterReducer = (state, action) => {
+  switch (action.type) {
+    case 'INCREASE_OR_DECREASE_BY':
+      return state + action.by;
+    default:
+      throw new Error();
+  }
+};
+//USAGE
+//dispatch({ type: 'INCREASE_OR_DECREASE_BY', by: 1})
+//dispatch({ type: 'INCREASE_OR_DECREASE_BY', by: -1 })
+
+CORRECT Practise : In this case business logic is seperate , readable concise
+const counterReducer = (state, action) => {
+  switch (action.type) {
+    case 'INCREASE':
+      return state + 1;
+    case 'DECREASE':
+      return state - 1;
+    default:
+      throw new Error();
+  }
+};
+//dispatch({ type: 'INCREASE', by: 1})
+//dispatch({ type: 'DECREASE', by: 1 })
+#end region useReducer Vs useState

@@ -1,0 +1,232 @@
+Reference: https://www.youtube.com/watch?v=poQXNp9ItL4
+
+Redux is state management library for JS apps.
+Js apps can be in React,Angular,Vue anything.
+Data changes, keep UI in diff components in sync.
+Redux fix this problem by centralizing data in store.
+Where store is JS object. The single source of truth.
+
+Redux:
+1) Centralizes applications's state
+2) Makes data flow transparent and predictable
+3) We can track why/where/what/when/how of data changes.
+4) All the different components pulls the data from store and display
+
+Redux dev tools chrome extension.
+Time Travel debugging
+Log Rocket redux dev tools in production.
+
+Redux allows to cache the page.
+Redux is based on functional programming.
+
+Functional Programming:
+Essential concepts :-
+JS is multi-paradigm programming language , oops.functional programming
+Higher order functions
+Function composition //Use lodash to get rid of paranthesis issue compose/pipe
+Currying
+Pure functions
+Immutability
+
+NOTE: spread operator of JS is only shallow copy, nested objects are shared.
+
+These are used for immutability Apart from sprad operator.
+Immer.js/ Immutable.js
+
+
+#region Mosh tutorials
+Redux is build on top of funtional programming.
+We cannot mutate the object.
+
+The building blocks of redux are
+1) Action : Will tell what happened, user performs action
+2) Store
+3) Reducer : Pure functions, which  take state and action and return new state(coffee machine)
+ Pure functions:
+ 1) No mutations
+ 2) No side effects
+ 3) No usage of global state 
+ 4) Always return the same output, given the input 
+
+How does these building blocks work ?
+scenario : Lets say we are adding an item to shopping cart
+1) An "Action" is created with object schema as , for an action "type" property is mandatory
+else redux will throw an error
+{
+ type:"ITEM_ADDED", 
+  payload:{
+  itemDescription:{
+   itemId:'bla ba'
+   itemName:'blah blah'
+  }
+ }
+}
+
+2)Action will in turn trigger dispatch, which is provided by the Store, this dispatch takes an action as an argument,
+3) This action via dispatch is forwarded to reducer. The store calls the reducer. The reducer inturn computes the new state and returns/updates the store.
+4) We don't call reducer directly.
+
+In this style of architecture we are sending all the actions through on single entrance (pipe like structure), we have central location where the actions apply, this is helpful in logging redo/undo etc
+
+Lets follow with an example
+We are Trying to build bug tracking system 
+Actions that can be done 
+1) We can add a bug
+2) We can delete a bug
+3) We can resolve a bug, changing boolean property to true 
+
+To build redux we need to follow 4 steps 
+1) Design the store
+2) define  the actions
+3) create the reducers
+4) set up the store
+
+
+Redux is not included in react, we need to seperately install redux library "npm i redux"
+here the latest version is  4.0.5
+
+Design the store
+----------------
+structure of store, simple array with bug objects, the state can be anything, can also be an object,
+in case is state is objects we may create reducer for each property 
+[
+    {
+    id:'',
+    desc:'',
+    resolved:''
+    },
+    {
+    id:'',
+    desc:'',
+    resolved:''
+    }
+]
+
+Define actions
+--------------
+1) We can add a bug
+2) We can delete a bug
+3) We can resolve a bug, changing boolean property to true 
+
+actions are plain js objects, but redux expects one of the property be 
+"type" , type can be any of the serilizable type, i.e we can store on the disk
+we can use strings, numbers, but numbers are not descriptive.
+{type:'bugAdded',description:''}
+
+Redux is inspired by flux, In flux the action object is slightly different
+{
+ type:"ITEM_ADDED", 
+  payload:{  //This is from flux
+  itemDescription:{
+   itemId:'bla ba'
+   itemName:'blah blah'
+  }
+ }
+}
+
+But redux doesnt restrict to use of flux, but using this makes your consistent
+payload contains minimum info of the action.
+
+Create Reducers
+---------------
+see reducers.js
+const reducer = (state = [], action) => { switch (action.type) { case actions.BUG_ADDED: return [ ...state, { id: ++lastId, //Payload should contain minimum information, we dont need id and resolved description: action.payload.description, resolved: false, }, ]; case actions.BUG_DELETED: return state.filter((bug) => bug.id !== action.payload.id); case actions.BUG_RESOLVED: return state.map((bug) => bug.id === action.payload.id ? { ...bug, resolved: true } : bug ); default: return state; } };
+
+export default reducer;
+
+Create store
+----------
+see store.js
+//Create store is a higher order function which takes in reducer, i.e function as an argument
+import {createStore} from 'redux' import reducer from './reducer'
+//Only reference of reducer should be passed 
+const store = createStore(reducer)
+export default store
+
+
+What does the store object have 
+console.log({store})
+    see assets/store.jpg
+    store:{
+        dispatch: function,
+        getState:function,
+        subscribe:function,
+        Symbol(observable): function,
+        replaceReducer:function,
+    }
+
+    If you see there is no direct way to access state .
+
+dispatch actions
+----------------
+see index.js
+export const addBug = (description) => ({
+  type: actions.BUG_ADDED,
+  payload: { description },
+});
+store.dispatch(addBug('Bug1'))
+
+and other examples
+
+subscribe to store
+------------------
+We need to subscribe to store when we have to notify UI when there is change in the state .
+this has to be performed before  dispatch. One subscribe is sufficent which will notify whenever there is channge.
+syntax :
+const unsubscribe = store.subscribe(()=>{
+    console.log('state has changed,',store.getState())
+})
+
+subscribe takes a function argument , HOF
+
+store.subscribe return refernce to unsubscribe method. When your component unmounts we need to use unsubscribe().
+
+see index.js for example.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#endregion
+

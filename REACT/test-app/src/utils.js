@@ -1,31 +1,33 @@
-const PACKAGES = [1, 2, 3, 4]
-const MAX_PACKAGE = 4
+import {
+    MAX_PACKAGE,
+    SECOND_MAX_PACKAGE,
+    PACKAGE_TRANSLATION,
+    AVAILABLE_PACKAGES,
+} from './kitchenConstants.js'
 
-const PACKAGE_TRANSLATION = {
-    boxSize_4: 'PACKET_4',
-    boxSize_2: 'PACKET_2',
-    boxSize_3: 'PACKET_3',
-    boxSize_1: 'PACKET_1'
+const fetchQuotitentRemainder = (quantity, maxPackage) => {
+    const quotitent = Math.floor(quantity / maxPackage)
+    const remainder = quantity % maxPackage
+    return { quotitent, remainder }
+}
+
+export const claculatePackageMax10 = (quantity, menuItem) => {
+    const { quotitent, remainder } = fetchQuotitentRemainder(quantity, MAX_PACKAGE)
+    if (remainder !== 0) {
+        const calculatePackageLessThan10 = calculatePackages(remainder, menuItem)
+        return { ...calculatePackageLessThan10, boxSize_10: quotitent }
+    }
+    return { boxSize_10: quotitent, menuItem }
 }
 
 export const calculatePackages = (quantity, menuItem) => {
-    if (isQuantityLessOrEqualToPackage(quantity)) {
-        const size = PACKAGES.find(packageNum => packageNum === quantity)
-        return { [`boxSize_${size}`]: 1, menuItem }
-    }
-
-    const quotitent = Math.floor(quantity / MAX_PACKAGE)
-    const remainder = quantity % MAX_PACKAGE
-    // const boxSize = calculatePackages(remainder)
+    //Divide any number with x, the remainder will always be less than x, hence 
+    const { quotitent, remainder } = fetchQuotitentRemainder(quantity, SECOND_MAX_PACKAGE)
     if (remainder !== 0) {
         return { boxSize_4: quotitent, [`boxSize_${remainder}`]: 1, menuItem }
     }
     return { boxSize_4: quotitent, menuItem }
 
-}
-
-const isQuantityLessOrEqualToPackage = (quantity) => {
-    return quantity <= MAX_PACKAGE
 }
 
 export const calculateCumulativeTotal = (cumulative, menuCollation, menuItem) => {
@@ -51,7 +53,6 @@ export const calculateCumulativeTotal = (cumulative, menuCollation, menuItem) =>
     return { ...cumulative, [menuItem]: collectiveCurryItem }
 }
 
-
 export const displayPackageList = (eachItemObject) => {
     const packedItems = Object.keys(eachItemObject).map((iKey) => {
         return `${PACKAGE_TRANSLATION[iKey]}:  ${eachItemObject[iKey]}`
@@ -59,3 +60,22 @@ export const displayPackageList = (eachItemObject) => {
 
     return packedItems
 }
+
+/*
+export const testTrial = (quantity, menuItem, maxPackage,resultingPackage ={}) => {
+    const { quotitent, remainder } = fetchQuotitentRemainder(quantity, maxPackage)
+    if (quotitent > 0) {
+        resultingPackage = { ...resultingPackage, [`boxSize_${maxPackage}`]: quotitent }
+    }
+    if (remainder === 0) {
+        return resultingPackage
+    }
+    //remainder can be 9,8,7,6,5,4,3,2,1
+    const newMax = Math.max(...AVAILABLE_PACKAGES)
+    const newResult = testTrial(remainder, menuItem, newMax, resultingPackage)
+    return resultingPackage
+
+
+
+}
+*/

@@ -1,0 +1,82 @@
+#region Composition Vs Inheritance
+composition Vs Inheritance:
+https://kriss.io/composition-vs-inheritance-in-react-comparison-and-contrast/
+https://www.codementor.io/@imbhargav5/extending-react-components-inheritance-composition-qo59dqili
+
+In general programming ,always favour compostion over inheritence because inheritence tries to predict the future composition accomodates the future.
+
+"is-a-relationship" vs "has-a-relationship"
+class Parent {}
+
+class Child extends Parent //is A relationship
+{
+/**/
+}
+
+class Engine{}
+
+class Car extends Engine {} // A car is a Engine "is a relationship"
+
+class BullockCart {
+ctor () {
+var engine = new Engine() // BullockCart has a relionshisp with Engine 
+}
+}
+//has a relationship
+<A>
+<B></B>
+</A>
+//Is a relationship
+class A extends B{
+
+}
+
+
+#endregion
+
+#region Lists and Keys
+https://medium.com/@adhithiravi/why-do-i-need-keys-in-react-lists-dbb522188bbb
+indexes should not be used as keys, should be avoided, if an element is added to start of the list, there is change in index numbers of the list , in such cases state of the component behaves weirdly .
+#endregion
+
+#region Miscellanous
+Render Props Pattern :
+https://blog.bitsrc.io/understanding-render-props-in-react-1edde5921314
+
+
+Map helps to iterate over List and Object.keys() to iterate over object. 
+https://reactjs.org/docs/lists-and-keys.html
+
+Keys help React identify which items have changed, are added, or are removed. 
+The best way to pick a key is to use a string that uniquely identifies a list item among its siblings. 
+When you don’t have stable IDs for rendered items, you may use the item index as a key as a last resort. 
+We don’t recommend using indexes for keys if the order of items may change. This can negatively impact performance and may cause issues with component state. 
+https://medium.com/@robinpokorny/index-as-a-key-is-an-anti-pattern-e0349aece318 
+
+To generate the keys randomly, we can use the package https://www.npmjs.com/package/shortid 
+
+We can use index as key, if the list meet these conditions: 
+1) The list and items are static–they are not computed and do not change; 
+2) The items in the list have no ids.
+3) The list is never reordered or filtered.
+
+Example:
+https://jsbin.com/wohima/edit?js,output 
+
+A good rule of thumb is that elements inside the map() call need keys. Keys used in arrays need to be unique only in siblings. However, they don't need to be globally unique.
+Keys serve as a hint to React but they don’t get passed to your components. 
+
+In-depth explanation why keys are important: 
+https://reactjs.org/docs/reconciliation.html#recursing-on-children
+
+The state of the art algorithms have a complexity in the order of O(n3) where n is the number of elements in the tree. 
+If we used this in React, displaying 1000 elements would require in the order of one billion comparisons. This is far too expensive. Instead, React implements a heuristic O(n) algorithm based on two assumptions: 
+Two elements of different types will produce different trees. 
+The developer can hint at which child elements may be stable across different renders with a key prop.
+React uses Breadth first approach rather than Depth first while updating the DOM.
+
+Some good videos to watch: 
+VDOM Diffing Explained - https://www.youtube.com/watch?v=fJRWtoSaIew
+Learn to Code: How React.js Works - https://www.youtube.com/watch?v=mLMfx8BEt8g
+
+#endregion

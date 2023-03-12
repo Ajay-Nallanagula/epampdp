@@ -3,7 +3,7 @@
 class SimpleEarPhones {
     constructor() {
         this.attach = function () {
-            console.log('Simpeearphones attachment!!')
+            console.log('Simple earphones attachment!!')
         }
     }
 }

@@ -1,7 +1,7 @@
 //https://react-hook-form.com/get-started/
 import { useForm } from "react-hook-form";
 import './App.css';
-import { calculatePackages, calculateCumulativeTotal, displayPackageList } from "./utils";
+import { calculatePackages, calculateCumulativeTotal, displayPackageList, claculatePackageMax10 } from "./utils";
 import { useEffect, useState } from 'react'
 
 const menu = {
@@ -39,7 +39,8 @@ export default function TestForm() {
             const quantity = parseInt(data[item])
 
             if (quantity) {
-                const boxSize = calculatePackages(quantity, item)
+                // const boxSize = calculatePackages(quantity, item)
+                const boxSize = claculatePackageMax10(quantity, item)
                 cumulativeTotals = calculateCumulativeTotal(cumulative, { [item]: boxSize }, item)
             }
 
@@ -78,7 +79,7 @@ export default function TestForm() {
                     return (
                         <div className="flex-parent-element" key={menu[menuKey]}>
                             <div className="flex-child-element"><label name={menuKey}>{menu[menuKey]}</label></div>
-                            <div className="flex-child-element"><input  {...register(menuKey)} onBlur={handleBlur} placeholder="enter quantity" /></div>
+                            <div className="flex-child-element"><input  {...register(menuKey)} type="number" onBlur={handleBlur} placeholder="enter quantity" /></div>
                             {menuCollation?.[menuKey] && <div className="flex-child-element"><label name={menuKey}>{JSON.stringify(menuCollation[menuKey])}</label></div>}
                         </div>
                     )
@@ -105,6 +106,23 @@ export default function TestForm() {
         </>
     );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // <>
