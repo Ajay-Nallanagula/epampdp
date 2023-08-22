@@ -6,3 +6,8 @@ const areaCalc = new AreaCalculator();
 areaCalc.calculateArea(circle);
 areaCalc.calculateArea(rectangle);
 areaCalc.calculateArea(triangle);
+//LISKOV PRINCIPLE
+const shapesArray = [circle, rectangle, triangle];
+for (let index = 0; index < shapesArray.length; index++) {
+    areaCalc.calculateArea(shapesArray[index]);
+}

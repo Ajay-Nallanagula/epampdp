@@ -1,0 +1,101 @@
+
+Udemy: https://www.udemy.com/course/microfrontend-course/learn/lecture/24615508#overview
+
+npm install webpack@5.68.0 webpack-cli@4.10.0 webpack-dev-server@4.7.4 faker@5.1.0 html-webpack-plugin@5.5.0
+
+#region MISC/Questions
+
+How does Module Federation handle CORS, multiple different ports how is it handling?
+How do you call different endpoints in Microfrontends , Module federation
+Communication between various microfrontends ?
+
+#endregion MISC/Questions
+
+Project Info
+============
+1) There are three diffent apps cart,product, container
+2) Each of them can be run in isolation // i.e can be run locally 
+3) Container can be run, and execute both cart and product
+
+
+#region Basics of Microfrontend
+--> What is a microfrontend.
+--> What are the uses of microfrontend.
+--> Integration/Orchestration/Assemble Together.
+--> Build time integration:  Before  container is loaded it get access to product list
+--> Run time integration: After the container is loaded it gets access to product list
+--> Server Integration (SSR): while sending JS for container, server decides wether to send product list or not.
+
+--Product
+npm install webpack@5.68.0 webpack-cli@4.10.0 webpack-dev-server@4.7.4 faker@5.1.0 html-webpack-plugin@5.5.0
+
+--Container
+npm install webpack@5.68.0 webpack-cli@4.10.0 webpack-dev-server@4.7.4 html-webpack-plugin@5.5.0 nodemon
+
+#endregion Basics of Microfrontend
+
+#region Basics of Module federation webpack
+
+Steps to configure Module Federation
+=====================================
+--> designate one application as a host(container) and one as a remote(products).
+--> In remote decide which modules(files) you want to make available to other projects eg: prdict/index.js
+--> Set up webpack Module Federation plugin to expose those files
+--> In HOST, decide which file you want to get from remote.
+--> In host setup module federation plugin to fetch those files.
+--> In HOST refactor the entry poinnt to load asynchronously.
+--> In the host, import whatever files you need from remote.
+
+
+
+#endregion 
+
+#region Shared Modules:
+=======================
+Webpack--> ModuleFederation-->plugins-->ModuleFederation --> shared:['faker'] //this can also be an object.
+
+NOTE: shared can be used only with modules of same version, if there are different versions of the module its understood and correct way to loda two seperate modules , example faker@4.00, faker@5.0.0. two versions are to be loaded
+NOTE: The shared modules take int consideration all the major.min.patch versions ^,~ symbols etc. 
+
+When you mark some module as shared , it means that module will be loaded asynchronously.
+When you see independent projects product/cart index.html respectively faker is used immediately, but faker is loaded asynchronously because of shared hence we see below erroe:
+Error message when you run independent projects
+Shared module is not available for eager consumption: webpack/sharing/consume/default/faker/faker
+
+Solution to avoid this , we can load xthe index.html asynchronously , such that webpack gets time in the browser to load faker asynchronously.
+//index.html
+import('./bootstrap.js') //do this for both product and carts.
+
+Usecase: a library with multiple copies issue
+=============================================
+Faker library can be loaded multiple times in the browser, the faker can have multiple copies in the browser that doesn't harm, throw error etc
+But consider React like library, we we are loading multiple copies, react complains(warns/errors) saying you are running multiple copies in your browser.
+In this case the soultion can be shared modules can alo be loaded as "SINGLETONS", only one copy of the object will be available at any time.
+NOTE: In Singleton cases the major.minor.patch versionion DOES NOT APPLY, irrespective of different versions only one instance will be loaded by webpack.
+In this case you will get a conflicting warning message, the common modules must be in sync.
+
+Eg: Webpack--> ModuleFederation-->plugins--> ModuleFederation -->  shared:{ faker: { singleton: true }}
+
+#endregion Shared Modules
+
+#region Execution Context (sub-app Execution context)
+
+Problem:
+//products --> index.js
+document.querySelector("#products-dev").innerHTML = products 
+
+In the above line there is a n assumption we are taking that there is some container with id : products-dev
+This is not correct way .
+Always remember , all three apps are worked upon by different teams , cart, products, container.
+***Only in local index.html of cart and product work. In production only container.index.html works 
+
+This will lead us to two scenarions :
+Scenario1: In local where we have index.html root div with products-dev in both cart and product may or may not exist
+Scenario 2: In remote we may or  may not have the root div with products-dev in container app
+
+In such cases we make pass the root:ids as part of a function --> mount(el)
+
+Hence we need to refactor our code .
+NOTE: The same thing holds good in cart as well
+
+#endregion Execution Context (sub-app Execution context)

@@ -42,7 +42,7 @@ class AmazonStore {
 
 (function main() {
      //Here the userselection can be created in Factory Pattern
-     const mobileStrategy = new MobileTransfer()
+    const mobileStrategy = new MobileTransfer()
     const store = new AmazonStore(mobileStrategy)
     const result = store.payPrice()
     console.log(result)

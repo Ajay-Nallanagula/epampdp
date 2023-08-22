@@ -1,0 +1,111 @@
+{
+  "delivery_customer": [
+    {
+      "Date": "04/04/2023",
+      "Party Name": "MR. VENKATA NARAYANA VISHNUPURI",
+      "Invoice No.": 19596,
+      "Item Name": "Delivery",
+      "Quantity": 1,
+      "Unit": "Nos",
+      "Price/Unit": 35,
+      "Amount": 35
+    },
+    {
+      "Date": "01/04/2023",
+      "Party Name": "MR. VENKATA SATYANARAYANA A.S.RAO NAGAR",
+      "Invoice No.": 19421,
+      "Item Name": "Delivery",
+      "Quantity": 1,
+      "Unit": "Nos",
+      "Price/Unit": 40,
+      "Amount": 40
+    },
+    {
+      "Date": "03/04/2023",
+      "Party Name": "MRS. Venkat Lakshmi Ecil",
+      "Invoice No.": 19545,
+      "Item Name": "Delivery",
+      "Quantity": 1,
+      "Unit": "Nos",
+      "Price/Unit": 50,
+      "Amount": 50
+    },
+    {
+      "Date": "10/04/2023",
+      "Party Name": "Mr. Venkateshwar Anutex",
+      "Invoice No.": 20011,
+      "Item Name": "Delivery",
+      "Quantity": 1,
+      "Unit": "Nos",
+      "Price/Unit": 30,
+      "Amount": 30
+    },
+    {
+      "Date": "23/04/2023",
+      "Party Name": "MR. RAVI VENKAT RAO ANANDBAGH",
+      "Invoice No.": 20805,
+      "Item Name": "Delivery",
+      "Quantity": 1,
+      "Unit": "Nos",
+      "Price/Unit": 40,
+      "Amount": 40
+    },
+    {
+      "Date": "23/04/2023",
+      "Party Name": "MR. SRINIVAS RAO",
+      "Invoice No.": 20805,
+      "Item Name": "Delivery",
+      "Quantity": 1,
+      "Unit": "Nos",
+      "Price/Unit": 45,
+      "Amount": 40
+    }
+  ],
+  "delivery_naveen": [
+    {
+      "Date": "04/10/2023",
+      "Customer Name": "Venkateshwar",
+      "Location": "Malkajgir",
+      "Meal Type": "LUNCH",
+      "Kms": 2.1,
+      "Payout": 40,
+      "Rider": "NAVEEN"
+    },
+    {
+      "Date": "04/10/2023",
+      "Customer Name": "Venkat lakshmi",
+      "Location": "Ecil",
+      "Meal Type": "LUNCH",
+      "Kms": 7.2,
+      "Payout": 47.2,
+      "Rider": "NAVEEN"
+    },
+    {
+      "Date": "04/10/2023",
+      "Customer Name": "Venkat Narayana",
+      "Location": "Vishnupuri",
+      "Meal Type": "LUNCH",
+      "Kms": 2.5,
+      "Payout": 40,
+      "Rider": "NAVEEN"
+    },
+    {
+      "Date": "04/02/2023",
+      "Customer Name": "Venkata satyanrayana",
+      "Location": "A.S.Rao nagar",
+      "Meal Type": "LUNCH",
+      "Kms": 6,
+      "Payout": 40,
+      "Rider": "NAVEEN"
+    },
+    {
+      "Date": "04/10/2023",
+      "Customer Name": "SRINIVAS RAO",
+      "Location": "Malkajgir",
+      "Meal Type": "LUNCH",
+      "Kms": 2.1,
+      "Payout": 40,
+      "Rider": "NAVEEN"
+    }
+  ]
+}

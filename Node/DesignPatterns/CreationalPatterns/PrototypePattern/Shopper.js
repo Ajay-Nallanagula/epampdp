@@ -1,7 +1,7 @@
 class Shopper {
     constructor(name = 'unamed person') {
         this.name = name,
-            this.shopList = []
+        this.shopList = []
     }
 
     addItemToList(item) {

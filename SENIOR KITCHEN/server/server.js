@@ -5,9 +5,15 @@ const usersApi = require('./routes/users')
 const menuApi = require('./routes/menu')
 const excelApi = require('./routes/excel')
 const fileUploadApi = require('./routes/fileupload')
+const googleSheetLoader = require('./routes/googleSheetLoader')
 const path = require('path')
+const cors = require('cors')
 
 const app = express()
+
+app.use(cors({
+    origin: '*'//config.get('corsOrigin')
+}));
 
 //NOTE: Password should not have special characters, If yes then convert them to hexa 
 const { password, cluster, dbname, username } = config.get("mongoCreds")
@@ -32,6 +38,7 @@ app.use('/api/users', usersApi)
 app.use('/api/menu', menuApi)
 app.use('/api/excel', excelApi)
 app.use('/api/upload', fileUploadApi)
+app.use('/api/googleSheetLoader', googleSheetLoader)
 
 app.get('/', (req, res) => {
     res.send("Hello World!!!")

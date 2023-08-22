@@ -40,6 +40,7 @@ pubsub.on("USER:REGISTER", sendEmailToUser)
 pubsub.on("USER:REGISTER", sendSMSToUser)
 pubsub.on("USER:REGISTER", applyFirstUserDiscount)
 
+//Message-Broker or Event-Bus
 const registerUser = (user) => {
     //Both publisher/subscriber must rely on this object to interact
     pubsub.publish("USER:REGISTER", user)

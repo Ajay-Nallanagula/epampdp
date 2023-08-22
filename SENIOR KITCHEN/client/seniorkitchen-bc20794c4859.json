@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "seniorkitchen",
+  "private_key_id": "bc20794c4859e85d48ae65fd3a1edf73b518c95b",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCzoTQffEbKuIh4\nUa+jf9p/GCklraw0ZbLc9sktIUX86GDCnaeYwtub2/K7uC5vc/BlODr51uRJAYLC\nTsrfGjbnHzODbN22N1mX9pkAK1XUxgi9YxY6OYw1Vl1m/xB4W2+ERvOpqV8Z0Ti7\nUjnOIHvKfG2R2tR/hQziloIxGqJc/k4ByttohQOOGF0H9MPlz0Ch2Hz2nistNqem\n7oWGndAC2QBTD6irmWrByCNHpK8XOKEFhZK3mKA5mL+cw2KgH3BA4j/rHR0m/aDI\ncKUe93pqxpSJKlBCZVS7BYL2upGHQIDqr8Mnvf+2u0v/16Ra84tJ5m/UWiddIjVh\nPbx05aETAgMBAAECggEAAmi16tkF9euQbI4jr5a7tfrnUAz4Feqmt7n3qkElvud6\nz3Zp+AUOdN7jqz8WtMIZ85YyLcJGhpkSWiaaoR9KzPETQoxNdQCkqUyf5LkVHK3m\nfde6bfrJ3HSGPoVYZfbtbwUortNrR7HOLPHLLQlVEVySagiH+7g/19t3WvDCXvF1\nRxsK1QxSVhtM6J9RbV7giRjtsrJFmoSgvyo26Ti2J9Eup5q0yLiQryptwDF4SdNm\naB1rKVvmiiB7PJfKBSKvjgZtaonf83xhWc9HefuEEdy6aOq/RWH3x7+gkL9suPoO\no5Z2MwaNf2yzhFz/QvHICm9sa3FSaUfmkQoAP5vGCQKBgQD8CPChwgqkwge2QFaf\nKHeztPreQ7xkQNDY4L6aa7g9r12jyMC8Dft8E6o5MZAp3Womh2ucm5rnIeEeoOOA\nE2Opu/W3+vaUFiaxv8/NmWP0hZrbE/ZPmVYRPO3tC+giulGYlr/Zc+gdnZ22US1b\nWXAA4aCu4V85YOqSNdqlHnTJewKBgQC2dKeX+KGvwmXpT4L+zgJCg6EibAlPPlg9\nh++9tYvhz3h29kc8/PF2HO0TMidbwcPs2ToFDzIUsg8twj/+Lj/ornz8SS2LTGwG\neKa4yTS1VJfN+wB8VYTvCAK459feQvPZK6TjukEV2bcBytBxar2Llf8QczxOyyu3\nh5lh2NB3SQKBgQCBNxQn2pQaZGAP0GyYrOax+9einJe5zoFEr/UItrF+7qnTjtlB\nkOmec3aSXBbNX/dMSaGiaSTB21zPly0MPOSb4QHZkZFZ2wF7oBuqDTpx4w3BxDpE\nFRlLPTG+lpwtMdkjoiY6FnKqvGRfVL8sVm5WBVecUW/Auy+IRpQSk8rMgQKBgQCn\nlWA2Cs1fpRt7/2cfaNLUixheiILIgUgFRC1kvzJ7Nte71Js8HkweI5VxcziJY+D0\nU9WhvgJO1flxGyEx8wMKUfJEu2YUsx3pl7nysgQypT9Fl00r5lTSRDZT5cb1w+M7\nzoWGEZYkXrNj9wgblGICqsP7NQzohl5iFS9BmyZm2QKBgG2mJvzwA9dREpHXz7G2\nJI6Gw9WKh2K2AtmB6o9poPSSsn/X/hT+fo5Q2kA9Hjx+4sNyJa3oafW0rZg+N0Jn\nEJZ0pv6VNFBflTJC2U3FccTxA+DJpiBmHKg08P2FSWPGcPTxEZToIFNRj4NJITjV\nD+ZeG/eA1L96LW+sm05xsrnG\n-----END PRIVATE KEY-----\n",
+  "client_email": "ajaynallanagulaseniorkitchen@seniorkitchen.iam.gserviceaccount.com",
+  "client_id": "100028490129715751468",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/ajaynallanagulaseniorkitchen%40seniorkitchen.iam.gserviceaccount.com"
+}

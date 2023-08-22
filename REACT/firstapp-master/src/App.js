@@ -25,7 +25,7 @@ import SimplifyShouldComponentUpdate from "./lifecyclehooks/SimplifyShouldCompon
 import ComponentDidUpdateDOM from "./lifecyclehooks/ComponentDidUpdateDOM";
 import ParentMemo from "./MEMO/ParentMemo";
 import ParentRef from "./REF/ParentRef";
-import FreelanceTrial from './FreelanceTrial'
+// import FreelanceTrial from './FreelanceTrial'
 import * as moment from 'moment'
 import { ParentReducerHook } from './REDUCERDEMO'
 import { RoutingDemo } from './ROUTING'
@@ -43,7 +43,7 @@ function App() {
       <div className="App">
         <ErrorBoundaryApp />
         {/*<CodeSplitComponent1/>*/}
-        {/*<CodeSplittingRouteDemo/>*/}
+        {<CodeSplittingRouteDemo />}
         {/* <RoutingDemo/> */}
         {/* <RoutingDemoNested/> */}
         {/*<NestedRoutes/>*/}
@@ -58,7 +58,7 @@ function App() {
         {/*<ComponentDidUpdateDemoParent />*/}
         {/* <ComponentShouldComponentUpdateParent /> */}
         {/* <RenderEg/> */}
-        {<CtorComponent name='Ajay Nallanagula' />}
+        {/* {<CtorComponent name='Ajay Nallanagula' />} */}
         {/*<ComponentDidMountDemo label='VASISHT NALLANAGULA'/>*/}
         {/* {<ComponentDidMountMultipleParent />} */}
         {/* {<ComponentDidMountAPI/>} */}

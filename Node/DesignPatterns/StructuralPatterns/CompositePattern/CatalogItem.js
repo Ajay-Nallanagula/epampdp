@@ -31,7 +31,6 @@ class CatalogGroup {
         })
     }
 
-
     get total() {
         return this.composites.reduce((acc, item) => acc + item.total, 0)
     }

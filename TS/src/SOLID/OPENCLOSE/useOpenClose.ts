@@ -1,9 +1,9 @@
+import Shape from "./Shape";
 import AreaCalculator, {
   Rectangle,
   Circle,
   Triangle,
 } from "./goodOpenClose.js";
-
 
 const circle: Circle = new Circle(10);
 const rectangle: Rectangle = new Rectangle(10, 20);
@@ -13,3 +13,10 @@ const areaCalc = new AreaCalculator();
 areaCalc.calculateArea(circle);
 areaCalc.calculateArea(rectangle);
 areaCalc.calculateArea(triangle);
+
+
+//LISKOV PRINCIPLE
+const shapesArray: Shape[] = [circle, rectangle, triangle];
+for (let index = 0; index < shapesArray.length; index++) {
+  areaCalc.calculateArea(shapesArray[index]);
+}

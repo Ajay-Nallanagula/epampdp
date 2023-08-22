@@ -1,0 +1,1548 @@
+
+DESIGN PATTERNS
+===============
+#region What is a Design Pattern?
+Design patterns are tested solutions to common problems in software development. The different patterns can be categorized into three different categories: creational, structural, and behavioral.
+
+The greatest benefits from design patterns are:
+Solutions that work: Because they are used by a lot of developers, you can be sure that they work. And not just that, but as the patterns have been used a lot of times, several optimizations were made.
+Easily reusable: Design patterns are reusable by definition and even though they are very generic, they can be easily adapted to particular problems.
+They are expressive: Design patterns can describe a complex solution in an elegant format.
+Reduce the need for refactoring: When you write an application with design patterns in mind, it is easier to get to a clean code faster. This way we make less refactors. Specially in JavaScript, a language that allows for so many ways to write the same thing.
+Makes your code smaller: As design patterns are usually optimized, they need less code to be implemented, and less code means less bugs.
+
+#endregion What are Design patterns
+
+What is the best design pattern in React?
+Here, we shortlist a few recommended React patterns that you should definitely know about when building web apps.
+
+Functional vs. Container Components.
+Compound Components.
+Conditional Rendering.
+Render Props.
+Controlled Components.
+React Hooks.
+Higher-Order Component Pattern.
+
+#region What are Anti-Patterns
+https://www.paulirish.com/2009/perf/
+https://www.oreilly.com/library/view/learning-javascript-design/9781449334840/ch06.html#:~:text=To%20summarize%2C%20an%20anti%2Dpattern,variables%20in%20the%20global%20context.
+
+Imagine that you’re a soldier in the middle of war & you are supposed to kill your enemy with guns and army-related things, but you choose to kill your enemies with a scissor, at the end you may kill your enemy and achieve the goal and your reason to join the war but you’re doing it in a wrong way! You made this job harder, messier, and more unstructured.
+
+Not Following DRY , Donot Repeat Yourself.
+https://medium.com/developers-tomorrow/3-javascript-anti-patterns-that-make-your-code-smell-bad-379bf46a662
+To summarize, an anti-pattern is a bad design that is worthy of documenting
+1) Polluting the global namespace by defining a large number of variables in the global context.
+2) Passing strings rather than functions to either setTimeout or setInterval, as this triggers the use of eval() internally.
+3) Modifying the Object class prototype (this is a particularly bad anti-pattern).
+4) The use of document.write where native DOM alternatives such as document.createElement are more appropriate. document.write has been grossly misused over the years and has quite a few disadvantages, including that if it âs executed after the page has been loaded, it can actually overwrite the page we âre on, while document.createElement does not.
+
+ReactJs AntiPatterns:
+https://www.habilelabs.io/blog/reactJS-anti-patterns-everyone-should-learn-to-become-pro
+1) Prop-drilling
+2) Huge Components with multiple nested components 
+3) Index as a key prop : a key is the only thing React uses to identify DOM elements. What happens if you push an item to the list or remove something in the middle? If the key is same as before React assumes that the DOM element represents the same component as before. But that is no longer true. 
+https://robinpokorny.com/blog/index-as-a-key-is-an-anti-pattern/
+4) Not Memorizing Complex Calculations
+
+#endregion What are Anti-Patterns
+Why should we use design Patterns
+How do you determine to use a design Pattern
+What are indicators to use Design Patterns
+What design Patterns have you  in code
+Why is Singleton called Pattern and Anti-Pattern
+
+#region What are other types of Patterns (other than design patterns)
+Design Patterns: Creational,Structural,Behavioural
+Functional Patterns: Currying, HOF , Partial functions, 
+Architectural patterns : MVC, MVP, MVVM, Hexagonal Pattern
+Concurrency Design Patterns: Multi Threading Programming
+Flux Architecture
+Messaging Patterns : Event driven , pub-sub for example.
+
+#region The Difference Between Architectural and Design Pattern
+Let's start with the common term—pattern. In software, a pattern is a recurrent property that lets you break down a huge and complex structure into smaller, simpler components. You can use this pattern to craft a general solution for a class of problems.
+
+In each level of software development, you’ll use different tools. At smaller levels, these tools are design patterns. Architectural patterns exist at larger levels, and programming paradigms at the implementation level.
+#endregion The Difference Between Architectural and Design Pattern
+
+
+
+#region Hexagonal Architecture
+https://www.mitrais.com/news-updates/hexagonal-architecture-design-pattern/
+Diagram here: https://dzone.com/articles/hexagonal-architecture-what-is-it-and-how-does-it
+--> Hexagonal or ports and adapters architecture and used for designing software applications
+--> We insert inputs and outputs at the edge of our design with hexagonal architecture
+--> It allows us to isolate the central logic(domain logic) of the application
+--> Since our inputs and outputs are on edge, we can switch their handlers without affecting our core code.
+
+--> The sides of the hexagonal architecture represent ports in the model.
+--> 
+
+//From Inside
+Core Domain --> Domain --> Application --> Framework -->Sides(Ports) --> Adapters
+
+Benefits:
+• Maintainability: Our applications are highly regarded and trusted because of changes in one area's components.
+• Flexibility: Quickly toggle between different applications; without changing source code, you can produce new adapters.
+• Simple testing: Easily test in isolation as the code is separated from the implementation information of the outside.
+• Agnostic: You can develop the inner core before building external services as the application is independent of exterior areas.
+
+Disadvantages:
+• Decoupling: Intermediate classes could affect the overall performance of our application.
+• Debugging: Adapters can often be challenging to understand and debug.
+• Complex: Hexagonal architecture can be confusing as it can be challenging to decide what elements should go on the outside.
+
+Different Layers of Hexagonal Architecture:
+The outer layers may only depend on the inner layers, and the inner layers should not rely on the outer ones
+
+Infrastructure Layer : 
+controllers, UI, persistence, and gateways to external systems. A web framework or persistence library will provide many of the objects in this layer. Concretions of domain repositories are placed in this layer,
+
+Application Layer:
+The Application Layer provides an API for all functionality provided by the application. It accepts commands from the client (web, API, or CLI) and translates them into values understood by the domain layer
+
+Domain Layer
+The Domain Layer contains any core domain logic. It deals entirely with domain concepts and lacks knowledge of the outer layers.
+
+Use Cases
+Some use cases for hexagonal architecture include:
+
+Mining Application. Where on UI you select the minerals, the weightage of these minerals is calculated in domain logic, the exchange rates are calculated inside domain logic etc
+A banking application that allows us to send money from one account to another
+A system that will enable us to apply for a loan, go through verification, and receive an update when our application updates
+A loyalty application that allows us to register customers and upgrade or downgrade their memberships
+
+https://videoportal.epam.com/video/1JezeR7v
+
+#endregion Hexagonal Architecture
+
+#endregion What are other types of Patterns (other than design patterns)
+
+#region Creational
+Creational Patterns: How objects are created
+Creational design patterns are concerned with the way of creating objects. These design patterns are used when a decision must be made at the time of instantiation of a class
+
+#region SingleTon Pattern
+restricts the instantiation of a class to one object and provides a global point of access to that instance. In other words, it ensures that there is only one instance of a class and provides a way to access that instance from any part of the code.
+
+Singleton can be used in usecases such as 
+--> Logging
+--> DB Connection
+--> GUI Components like, Dialogs, Popups etc Because we need to maintain a single instance
+
+Singleton in React/WFR Ready:
+Most of the services that we use are sinletons, as they export 
+
+
+#region Singleton Anti-pattern
+Q) Why is Singleton called Pattern and Antipattern?
+The Singleton pattern is a design pattern that restricts the instantiation of a class to a single instance and provides a global point of access to that instance. While the Singleton pattern can be useful in certain contexts, it has also been criticized as both a pattern and an antipattern, depending on the circumstances.
+Here are some examples of why the Singleton pattern can be viewed as both a pattern and an antipattern:
+
+Examples of Singleton as a pattern:
+
+Logging: In a logging system, it is important to have only one instance of the logger to avoid duplicate log entries. Singleton can be used to ensure that there is only one instance of the logger in the system.
+
+Configuration settings: In an application, there may be several configuration settings that need to be loaded and accessed throughout the system. Singleton can be used to ensure that there is only one instance of the configuration settings class in the system.
+
+Pattern: Resource Manager
+One example where the Singleton pattern can be useful is when managing shared resources, such as a database connection or a file system. In this case, a single instance of the resource manager can ensure that all requests for the resource are handled in a consistent manner.
+
+Antipattern: Tight Coupling
+One of the main criticisms of the Singleton pattern is that it can lead to tight coupling between different parts of a system. For example, if a class relies on the Singleton instance, it can be difficult to substitute a different implementation for testing purposes or to change the behavior of the Singleton without affecting the entire system.
+
+Antipattern: Global State
+Another criticism of the Singleton pattern is that it can introduce global state into a system, which can make it difficult to reason about the behavior of the system. For example, if multiple parts of a system rely on the same Singleton instance
+
+On the other hand, it is also called an anti-pattern because it can lead to several problems in software development. Some of these problems include:
+
+Tight coupling: Singleton creates a global state, which can lead to tight coupling between objects in a system. This can make the code difficult to test and maintain.
+
+Difficulty in testing: Since there is only one instance of the class, it can be difficult to test different scenarios in isolation.
+
+Inflexibility: Singleton can be inflexible because it is designed to restrict the instantiation of a class to a single object. This means that it can be difficult to modify or extend the system if necessary.
+
+Dependency injection: Singleton can make dependency injection difficult because it creates a global state that can be difficult to manage.
+
+Garbage collention of singleton is complex, Multi-threading with singleton is difficult.
+#endregion Singleton Anti-pattern
+
+
+#endregion Singleton Pattern
+
+#region Factory Pattern
+The factory pattern is a creational design pattern that provides a way to create objects without exposing the creation logic to the client and refer to newly created objects using a common interface
+
+Use cases of Factory Pattern
+--> Creating Objects based on User Input: this can be with payments method like , Bank,Card,UPI etc . This can also be with product Category like , furniture, Footwear, Electronics etc
+--> Creating Objects based on Configuration.
+--> Creating Objects with complex intialization, The intialization logic can be encapsulated inside factory.
+
+Factory Pattern Example in ReactJs/Javascript
+In our Project we have module called as HR action, In short HR action is nothing but the actions like hire/rehire/terminate etc which are done manually following a sequence of steps , this can be automated as a template and be used upon user by user, so in this HR Component we can configure multiple controls ,sections.. each of these sections are created in a file called as ItemTypes.js  for eg type: PayGrade, type:PhoneControl, type: Address etc etc .
+
+#region How to make factory class more scalable
+
+The factory pattern can be made scalable by using several techniques. Here are some ways to make the factory pattern more scalable:
+
+Use an abstract factory: An abstract factory is a factory of factories. It provides an interface for creating families of related objects. By using an abstract factory, you can create related objects in a scalable way. For example, if you have multiple related types of objects that need to be created, you can create an abstract factory that creates factories for each type of object.
+
+Use dependency injection: Dependency injection is a technique where the dependencies of an object are passed in as parameters instead of being created within the object. By using dependency injection, you can decouple the creation of objects from their use. This makes it easier to replace object creation logic with different implementations, allowing the factory pattern to be more scalable.
+
+Use a configuration file: A configuration file can be used to specify the types of objects that need to be created and their configurations. This makes it easy to modify or add new objects without changing the code that creates the objects. A configuration file can be read at runtime, allowing the factory pattern to be more scalable.
+
+Use a registry: A registry is a centralized place where objects can be registered and retrieved. By using a registry, you can create objects dynamically at runtime and retrieve them by name or ID. This makes it easy to add or remove objects without changing the code that creates the objects. A registry can also be used in conjunction with a configuration file to allow for more dynamic object creation.
+
+Use a plugin system: A plugin system allows you to dynamically load and use plugins at runtime. By using a plugin system, you can extend the functionality of your application without changing the core code. Plugins can be created using the factory pattern, allowing for more scalable object creation.
+
+#endregion
+
+#region Disadvantages of Factory
+
+Complexity: Implementing the factory pattern can add complexity to the codebase, especially when dealing with multiple factories, abstract factories, or complex hierarchies of objects. This can make the code harder to read, understand, and maintain.
+
+Overhead: The factory pattern can add overhead to the application, especially when creating a large number of objects or when using complex factories. This can result in slower performance and higher memory usage.
+
+Tight Coupling: If not designed properly, the factory pattern can create tight coupling between the factory and the created objects. This can make it harder to change or replace the factory without affecting the created objects.
+
+Limited flexibility: The factory pattern can be inflexible in cases where you need to create objects dynamically at runtime, or where you need to change the behavior of the factory based on user input or external conditions.
+
+Increased development time: Implementing the factory pattern can require more development time and effort, especially when creating complex factories or dealing with complex object hierarchies.
+
+#endregion Disadvantages of Factory
+
+#endregion Factory Pattern
+
+#region Builder Pattern
+
+#region What is telescoping constructor?
+A telescoping constructor is a type of constructor in object-oriented programming languages that allows an object to be initialized with different sets of parameters, where each parameter set includes all of the parameters of the previous set, as well as an additional parameter.
+
+
+public Person(String name) {     this(name, 0);}
+public Person(String name, int age) {     this(name, age, "", ""); }
+public Person(String name, int age, String address){this(name, age, address, "");
+}
+public Person(String name, int age, String address, String phoneNumber) {
+    this.name = name;
+    this.age = age;
+    this.address = address;
+    this.phoneNumber = phoneNumber;
+}
+
+Disadvantages:
+1) Hard to read and maintain
+2) Code duplication
+3) Confusing Parameter order
+4) Dificulty in picking up the 
+5) Limited extensibility: If new attributes are added to the class, it may be necessary to modify all of the existing constructors to add a new parameter, which can be time-consuming and error-prone. This can make it difficult to extend the class with new functionality.
+
+How to avoid? 
+--> Use Builder Pattern
+--> Use Factory Pattern
+--> Using default values: When possible, it can be helpful to provide default values for object attributes, so that the object can be initialized with minimal or no parameters. This can simplify the initialization code and reduce the risk of errors.
+--> using Parameter Objects : like Persopn({name,age,address,phoneNumber})
+
+
+
+
+#endregion What is telescoping constructor?
+
+Builder Pattern
+The Builder Pattern is a creational design pattern that allows you to separate the construction of a complex object from its representation. This pattern provides a way to construct an object step by step, while allowing you to produce different types and representations of an object using the same construction code
+
+Builder Pattern in React.js/ Your Project:
+In out project we use something called as fluent API
+for example const txt = new TextInput().setIsVisible().setIsDisabled().setValue().setLabel()....
+
+class ButtonBuilder {
+  constructor() {     this.props = {};  }
+  withText(text) {    this.props.text = text;    return this;  }
+  withSize(size) {this.props.style = { ...this.props.style, fontSize: size };     return this;
+  }
+  withColor(color) {this.props.style = { ...this.props.style, color };
+    return this;
+  }
+  build() {     return 
+  <button {...this.props}>{this.props.text}</button>;
+  }
+}
+
+Usage :
+const button = new ButtonBuilder().withText().withSize().withColor().build()
+
+#endregion Builder Pattern
+
+#endregion Creational
+
+#region Structural
+Structural Patterns: How the objects are composed (instance functions, variables)
+Structural design patterns are concerned with how classes and objects can be composed, to form larger structures.
+The structural design patterns simplifies the structure by identifying the relationships.
+These patterns focus on, how the classes inherit from each other and how they are composed from other classes.
+
+#region Decorator Pattern
+Decorator pattern allows a user to add new functionality to an existing object without altering its structure. This type of design pattern comes under structural pattern as this pattern acts as a wrapper to existing class.
+
+SOLID: Close for modification, Open for extension is in Decorator
+
+Example 1: With the Decorator Pattern, you can add new methods or properties to an existing object without modifying its source code
+const obj = {   name: "John",   age: 25 };
+
+const logDecorator = (obj) => {   obj.log = () => console.log(obj.name + " is " + obj.age + " years old.");
+  return obj;
+};
+
+const decoratedObj = logDecorator(obj);
+decoratedObj.log(); // Output: "John is 25 years old."
+
+Example 2 : The Decorator Pattern allows you to modify the behavior of an object dynamically at runtime. For example, you can add validation to an object's properties to ensure that they meet certain criteria.
+
+class Book {
+  constructor(title, author) {this.title = title;this.author = author;  }
+}
+
+const validateDecorator = (obj) => {
+  obj.validate = () => {
+    if (!obj.title || !obj.author) {
+      console.log("Invalid book!");
+    }
+  };
+  return obj;
+};
+
+const book = new Book("The Catcher in the Rye", "J.D. Salinger");
+const validatedBook = validateDecorator(book);
+validatedBook.validate(); // Output: nothing, as the book is valid
+
+const invalidBook = new Book("", "J.D. Salinger");
+const validatedInvalidBook = validateDecorator(invalidBook);
+validatedInvalidBook.validate(); // Output: "Invalid book!"
+
+
+In conclusion, the Decorator Pattern can be a useful tool for adding new behaviors to objects in JavaScript, without modifying their source code
+
+#region Decorator in React/Your Project
+In React, a decorator is a higher-order component (HOC) that wraps a component to modify its behavior or properties
+const withLogging = (Component) => { 
+  return class extends React.Component {
+    componentDidMount() {
+      console.log("Component mounted with props:", this.props);
+    }
+
+    render() {
+      return <Component {...this.props} />;
+    }
+  };
+};
+
+const MyComponent = withLogging(() => {
+  return <div>Hello, world!</div>;
+});
+
+
+Example 2:
+const withStyle = (Component) => {
+  return class extends React.Component {
+    render() {
+      return (
+        <div style={{ backgroundColor: "blue", color: "white" }}>
+          <Component {...this.props} />
+        </div>
+      );
+    }
+  };
+};
+
+const MyComponent = withStyle(() => {
+  return <div>Hello, world!</div>;
+});
+
+
+#endregion Decorator in React/Your Project
+#endregion Decorator Pattern
+
+#region Composite Pattern (optional)
+The Composite Pattern is a structural design pattern that allows you to treat a group of objects the same way as a single object.
+
+Example 
+class CatalogItem{ 	print() }
+class CatalogGroup { 
+	ctor(name,composites){
+	this.composites = composites
+	} 
+	print(){ 	this.compoistes.forEach(item => item.print()) 	}
+}
+
+function run(){
+    const shoe = new CatalogItem('Reebok', 100)
+    const sneakers = new CatalogItem('Sneakers', 90)
+    const loafers = new CatalogItem('loafers', 80)
+
+    //Group of shoes
+    const footwearGroup = new CatalogGroup('footwear Group', [shoe, sneakers, loafers])
+	//son and so forth
+}
+
+#endregion Composite Pattern
+
+#region Adapter Pattern
+--> The Adapter Pattern is a design pattern that allows objects with incompatible interfaces to work together.
+Example:  If you want apples and Oranges to work together , we need a blender to make a cocktail. Blender here is an adapter 
+--> Adapter Pattern can be used to provide a common interface to objects with different interfaces or to modify an existing interface to meet the needs of a specific client.
+
+Example:
+// Adaptee
+//EuropeanSocket with Europe Interface
+class EuropeanSocket {
+  plugIn() { console.log('Plug in European socket');  }
+}
+
+// Adapter: creating an interface for incompatible, american european // incompatible
+/*
+We also have an AmericanSocket class, which acts as an adapter that wraps an instance of EuropeanSocket and provides a different interface.
+*/
+class AmericanSocket {
+  constructor(europeanSocket) {this.europeanSocket = europeanSocket;}
+  plugIn() {console.log('Plug in American socket');   this.europeanSocket.plugIn();
+  }
+}
+
+// Client : client connects to European Socket via American Adapter
+/*
+Finally, we have a Device class that needs a socket to connect to. It doesn't care about the interface of the socket as long as it has a plugIn() method. 
+
+This way, the Device class can connect to a socket with a different interface than it was originally designed for, without having to modify its code
+*/
+class Device {
+  constructor(socket) {this.socket = socket;  }
+  connect() {this.socket.plugIn();}
+}
+
+const europeanSocket = new EuropeanSocket();
+const americanSocket = new AmericanSocket(europeanSocket);
+const device = new Device(americanSocket);
+
+device.connect(); // Outputs: Plug in American socket
+                  //         Plug in European socket
+
+
+#region Adapter Pattern in React/Your Project
+In React, the Adapter Pattern can be used to create components that can work with different data sources or APIs. For example, if you have a component that needs to display a list of items, you can create an adapter that takes data from different sources (such as a REST API or a local data file) and converts it into a format that the component can understand.
+
+Lets say you have DefaultsData or SeedData, if its local show DefaultData, else show RestAPI response,
+***Here Adapter is RestAPI call because the response is styled like DefaultData Schema.
+
+// Adaptee
+/*
+--> In this example, we have an LocalData class that represents a data source with a local/*.json data file. 
+
+*/
+class LocalData { //Or DefaultData
+  getItems() {
+    return [{ id: 1, name: 'Item 1' },{ id: 2, name: 'Item 2' },{ id: 3, name: 'Item 3' }
+    ];
+  }
+}
+
+// Adapter
+/*
+-->  RestApi class, which acts as an adapter that fetches data from a REST API 
+*/
+class RestApi {
+  async getItems() {
+    const response = await fetch('/api/items');
+    const data = await response.json();
+    return data.map(item => ({ id: item.id, name: item.title }));
+  }
+}
+
+// Client
+/*
+ItemList component that needs a list of items to display. It doesn't care about the data source as long as it receives a list of items in the correct format.
+*/
+function ItemList({ items }) {
+  return (
+    <ul>
+      {items.map(item => <li key={item.id}>{item.name}</li>)}
+    </ul>
+  );
+}
+
+/*
+When the ItemListContainer component is created, it determines which data source to use (either "local" or "rest") and creates an instance of the appropriate adapter. 
+*/
+class ItemListContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { items: [] };
+  }
+
+  async componentDidMount() {
+    const adapter = this.props.dataSource === 'local'
+      ? new LocalData()
+      : new RestApi();
+    const items = await adapter.getItems();
+    this.setState({ items });
+  }
+
+  render() {
+    return <ItemList items={this.state.items} />;
+  }
+}
+
+ReactDOM.render(
+  <ItemListContainer dataSource="rest" />,
+  document.getElementById('root')
+);
+
+
+#endregion Adapter Pattern in React/Your Project
+
+#endregion Adapter Pattern
+
+#endregion Structural
+
+#region Behavioral
+Behavioral design patterns are a set of design patterns deals with communication and coordination between different objects or classes. These patterns deal with the behavior of objects and how they interact with each other to achieve specific functionality.
+
+#region Observer Pattern
+
+Observer pattern: This pattern defines a one-to-many dependency between objects so that when one object changes state, all its dependents are notified and updated automatically
+--> Let say a student attends classes of Math,Science,Social
+--> If student falls sick, It has to notified in all the classes.
+
+The Observer pattern is a behavioral design pattern that allows an object, called the subject, to notify a list of observers when a change occurs to its state.
+
+//In JAVSCRIPT
+class Subject {
+  constructor() {     this.observers = [];  }
+  addObserver(observer) {    this.observers.push(observer);  }
+  removeObserver(observer) {
+    const index = this.observers.indexOf(observer);
+    if (index !== -1) {       this.observers.splice(index, 1);     }
+  }
+  
+  notifyObservers() { 
+  this.observers.forEach(observer => observer());
+  }
+}
+
+// create a subject
+const subject = new Subject();
+// create an observer function
+const observer = () => console.log('Subject state changed');
+// add the observer to the subject's list of observers
+subject.addObserver(observer);
+// notify all observers of a change to the subject's state
+subject.notifyObservers();
+// remove the observer from the subject's list of observers
+subject.removeObserver(observer);
+
+#region Observer in ReactJs/Your Project
+In React, the Observer pattern is commonly used to manage the state of components and to notify them when the state changes.
+
+React provides a built-in way to implement the Observer pattern using the useState and useEffect hooks.
+
+#region useState+useEffect
+useState is the subject
+useEffect is the observer, subscriber
+
+import React, { useState, useEffect } from 'react';
+
+function App() {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    console.log('Count has changed');
+  }, [count]);
+
+  const handleClick = () => {     setCount(count + 1);  };
+
+  return (
+    <div><p>Count: {count}</p>
+      <button onClick={handleClick}>Increment</button> </div>
+  );
+}
+In above example
+--> uses the useState hook to manage the state of the count variable.
+-->  useEffect hook to subscribe to changes to the count variable
+--> When the user clicks the Increment button, the handleClick function is called, which updates the count variable by calling the setCount function. This triggers a re-render of the component and the useEffect hook is called with the new count value.
+
+
+#endregion useState+useEffect
+
+#region ContextAPI
+
+import React, { createContext, useState, useContext } from 'react';
+const CountContext = createContext();
+function App() {
+  const [count, setCount] = useState(0);
+  return (
+    <CountContext.Provider value={count}>
+      <CountDisplay />
+      <CountButton onClick={() => setCount(count + 1)} />
+    </CountContext.Provider>
+  );
+}
+
+function CountDisplay() {
+  const count = useContext(CountContext);
+  return <p>Count: {count}</p>;
+}
+
+function CountButton({ onClick }) {
+  return <button onClick={onClick}>Increment</button>;
+}
+
+In this example, we create a CountContext using the createContext function, and a CountDisplay component and a CountButton component. We use the CountContext.Provider component to pass the count value down the component tree to the CountDisplay component using the value prop.
+
+In the CountDisplay component, we use the useContext hook to subscribe to changes to the count value, and in the CountButton component, we use the onClick prop to update the count value by calling the setCount function. When the count value changes, the CountDisplay component is automatically re-rendered with the new value.
+
+#endregion ContextAPI
+
+#endregion Observer ReactJs/Your Project
+
+
+#endregion Observer Pattern
+
+#region Chain of Responsibility
+The Chain of Responsibility pattern is a behavioral design pattern that allows a series of objects to handle a request or event in a chain-like fashion
+--> the Chain of Responsibility pattern can be used to process a series of events or requests that pass through a pipeline of handlers.
+
+#region Example
+// Define a base class for handlers
+class Handler {
+  constructor() {
+    this.successor = null;
+  }
+  
+  setSuccessor(successor) {
+    this.successor = successor;
+  }
+  
+  handleRequest(request) {
+    if (this.successor) {
+      return this.successor.handleRequest(request);
+    }
+    
+    return null;
+  }
+}
+
+// Define some concrete handlers
+class ConcreteHandlerA extends Handler {
+  handleRequest(request) {
+    if (request === 'A') {
+      console.log('Handling request A');
+      return 'A';
+    } else {
+      return super.handleRequest(request);
+    }
+  }
+}
+
+class ConcreteHandlerB extends Handler {
+  handleRequest(request) {
+    if (request === 'B') {
+      console.log('Handling request B');
+      return 'B';
+    } else {
+      return super.handleRequest(request);
+    }
+  }
+}
+
+class ConcreteHandlerC extends Handler {
+  handleRequest(request) {
+    if (request === 'C') {
+      console.log('Handling request C');
+      return 'C';
+    } else {
+      return super.handleRequest(request);
+    }
+  }
+}
+
+// Set up the chain of handlers
+const handlerA = new ConcreteHandlerA();
+const handlerB = new ConcreteHandlerB();
+const handlerC = new ConcreteHandlerC();
+handlerA.setSuccessor(handlerB);
+handlerB.setSuccessor(handlerC);
+
+// Send requests through the chain
+console.log(handlerA.handleRequest('B'));
+console.log(handlerA.handleRequest('A'));
+console.log(handlerA.handleRequest('C'));
+console.log(handlerA.handleRequest('D'));
+
+#endregion Example
+
+Other known examples of Chain of responsibilty
+--> Middlewares in Node,Redux. request pass through pipline of handlers
+
+#region Chain of Responsibility in React/Your Project
+The Chain of Responsibility pattern can be used to handle events or requests that flow through a hierarchy of components.
+
+function ChildComponent(props) {
+  function handleClick() {
+    if (props.onClick) {
+      props.onClick();
+    }
+  }
+
+  return (
+    <button onClick={handleClick}>
+      Click me
+    </button>
+  );
+}
+
+function ParentComponent(props) {
+  function handleClick() {
+    console.log('Handling click in ParentComponent');
+  }
+
+  return (
+    <ChildComponent onClick={props.onClick || handleClick} />
+  );
+}
+
+function GrandparentComponent(props) {
+  function handleClick() {
+    console.log('Handling click in GrandparentComponent');
+  }
+
+  return (
+    <ParentComponent onClick={props.onClick || handleClick} />
+  );
+}
+
+function App() {
+  function handleClick() {
+    console.log('Handling click in App');
+  }
+
+  return (
+    <GrandparentComponent onClick={handleClick} />
+  );
+}
+
+In this example, we define a ChildComponent that can handle a click event and a ParentComponent that can optionally handle the click event itself or pass it up to its parent component. The GrandparentComponent also handles the click event in a similar way.
+
+Finally, we define the App component that renders the GrandparentComponent and handles the click event itself.
+
+In this way, the event flows through the hierarchy of components and is handled by the first component in the chain that can handle it. If a component does not handle the event, it can pass it up to its parent component, and so on.
+
+#endregion Chain of Responsibility in React/Your Projects
+
+#endregion Chain of Responsibility
+
+#region Strategy Pattern
+
+The Strategy pattern is a behavioral design pattern that allows you to define a family of algorithms, encapsulate each one as an object, and make them interchangeable at runtime. The pattern enables the algorithms to vary independently of the clients that use them.
+
+// Define the strategies
+const strategies = {
+  default: (props) => <div>{props.text}</div>,
+  uppercase: (props) => <div>{props.text.toUpperCase()}</div>,
+  lowercase: (props) => <div>{props.text.toLowerCase()}</div>
+};
+
+// Define the context
+function DisplayText(props) {
+  const { text, strategy } = props;
+  const renderStrategy = strategies[strategy] || strategies.default;
+
+  return renderStrategy(props);
+}
+
+// Use the context with different strategies
+function App() {
+  const [strategy, setStrategy] = useState('default');
+  const [text, setText] = useState('Hello World');
+
+  function handleButtonClick(newStrategy) {
+    setStrategy(newStrategy);
+  }
+
+  function handleInputChange(event) {
+    setText(event.target.value);
+  }
+
+  return (
+    <div>
+      <div>
+        <input type="text" value={text} onChange={handleInputChange} />
+      </div>
+      <div>
+        <button onClick={() => handleButtonClick('default')}>Default</button>
+        <button onClick={() => handleButtonClick('uppercase')}>Uppercase</button>
+        <button onClick={() => handleButtonClick('lowercase')}>Lowercase</button>
+      </div>
+      <DisplayText text={text} strategy={strategy} />
+    </div>
+  );
+}
+
+
+#endregion Strategy Pattern
+
+#endregion Behavioral
+
+#region Javascript Anti-Patterns
+JavaScript anti-patterns are common programming practices that are considered bad or harmful.
+These practices can lead to code that is difficult to read, understand, debug, or maintain
+
+#region Usage of Global Variables
+--> Global variables are variables declared outside of any function,and they can be accessed from any part of the code
+--> This makes it difficult to track where the variables are being used or modified, leading to potential bugs
+var count = 0;
+function increment() {  count++;}
+function decrement() {  count--; }
+
+Instead you can use closures 
+var counter = (function() {
+  var count = 0;
+    return {
+    increment: function() {      count++;    },
+    decrement: function() {      count--;     },
+    getCount: function() {       return count;    }
+  };
+})();
+counter.increment();
+counter.getCount(); // 1
+
+
+
+#endregion Usage of Global Variables
+
+#region "with"
+The with statement allows you to access properties of an object without specifying the object name. This can lead to unexpected behavior and slower code execution. For example:
+var obj = {
+  prop1: 1,
+  prop2: 2
+};
+
+with (obj) {
+  console.log(prop1 + prop2);
+}
+
+Rather use destructuring.. avoid with
+#endregion with
+
+#region eval
+The eval function allows you to execute code dynamically,
+but it is often misused and can introduce security vulnerabilities. 
+It also makes the code harder to read and debug. 
+
+var x = 10;var y = 20;
+var result = eval('x + y'); // 30
+
+//Instead use functions to achieve same result.
+var x = 10; var y = 20;
+function add(x, y) {   return x + y; }
+var result = add(x, y); // 30
+
+#endregion eval
+
+#region overusing anonymous functions
+Usage of anonymos functions in event handlers,
+Anonymous functions can make the code harder to read and debug
+It's better to use named functions that describe their purpose
+
+var btn = document.getElementById('myButton');
+btn.addEventListener('click', function() {
+  // do something
+});
+
+Instead we can use :
+function handleClick() {   // do something }
+var btn = document.getElementById('myButton');
+btn.addEventListener('click', handleClick);
+
+
+#endregion overusing anonymous functions
+
+
+#region 
+
+#endregion Javascript Anti-Patterns
+
+#region VSCODE
+
+https://springframework.guru/gang-of-four-design-patterns/
+
+Design Patterns in JQUERY:
+https://www.patterns.dev/posts/classic-design-patterns/
+
+AntiPatterns:
+https://www.patterns.dev/posts/classic-design-patterns/#antipatterns
+
+Creational Patterns: How objects are created
+Creational design patterns are concerned with the way of creating objects. These design patterns are used when a decision must be made at the time of instantiation of a class
+https://www.javatpoint.com/creational-design-patterns
+
+Structural Patterns: How the objects are composed (instance functions, variables)
+Structural design patterns are concerned with how classes and objects can be composed, to form larger structures.
+The structural design patterns simplifies the structure by identifying the relationships.
+These patterns focus on, how the classes inherit from each other and how they are composed from other classes.
+https://www.javatpoint.com/structural-design-patterns
+
+Behavioral Patterns: How the Object communicate with external sources
+Behavioral design patterns are concerned with the interaction and responsibility of objects.
+In these design patterns, the interaction between the objects should be in such a way that they can easily talk to each other and still should be loosely coupled.
+That means the implementation and the client should be loosely coupled in order to avoid hard coding and dependencies.
+https://www.javatpoint.com/structural-design-patterns
+
+
+#region Singleton
+Problem: In this case if you see there is a Logger instance in each of Store.js and Shoppers.js .
+Index.js gives the count of only two log messages, though the logs printing are 4
+What if we want the count of all the logs in different classes ?
+
+Solution : Singleton Implementation
+
+Usecases for Singleton
+--> Database connections, where the connectivity can be done once
+--> Logging
+--> Caching
+
+Two ways in Javascript
+--> Write a Singleton class
+--> Export instance of logger itself
+
+https://www.linkedin.com/learning/node-js-design-patterns/singletons-in-node?autoSkip=true&autoplay=true&resume=false&u=2113185
+
+What is "instance" keyword in JS?
+class SingleTon{
+constructor(){
+if(!SingleTon.instance){
+SingleTon.instance = {name:'Ajay'}
+console.log('instance works',SingleTon.instance)
+}
+}
+
+getInstance(){
+return SingleTon.instance
+}
+}
+module.exports = Singleton
+
+console.log('BEFORE', SingleTon)
+const s = new SingleTon()
+console.log('AFTER',s.getInstance())
+#endregion Singleton
+
+#region Decorator Pattern
+https://webtips.dev/the-decorator-design-pattern-in-javascript
+***Decorator is a STRUCTURAL Pattern.
+Consider a Car, you have less boot space. You decide to attach a trailer/trolley to it. Here your Car is decorated with trolley.
+If you remove trolley, your car will still work as is. 
+Decorators are basically used to add extra information to your objects, Metadata. ASP.NET MVC you have Action,Result, Authentication Filters .
+Decorators are really just syntactic sugar for higher-order functions. They essentially wrap a method or a property into another function that extends its original functionality.
+
+#region Example1
+const greetPatrick = (object, property, descriptor) => {
+    descriptor.value = () => {     	console.log('Hello Patrick!');     }
+}
+
+const spongeBob = {
+    @greetPatrick //DECORATOR APPLIED.
+    greet() {     	console.log('Hello!')     }
+}
+
+spongeBob.greet();
+#endregion Example1
+
+W.r.t React HOC is a slimmer version of decorator pattern , the subtle differences are 
+Two differences would be decorators are used to mutate the variable while HOC's are recommended not to. Another is specific to React, HOC's are supposed to render a component, while decorators can return different things depending on implementation.
+
+#region Example2
+var User = function (name) {
+    this.name = name;
+
+    this.say = function () {
+        console.log("User: " + this.name);
+    };
+}
+
+var DecoratedUser = function (user, street, city) {
+    this.user = user;
+    this.name = user.name;  // ensures interface stays the same
+    this.street = street;
+    this.city = city;
+
+    this.say = function () {
+        console.log("Decorated User: " + this.name + ", " +
+            this.street + ", " + this.city);
+    };
+}
+
+function run() {
+
+    var user = new User("Kelly");
+    user.say();
+
+    var decorated = new DecoratedUser(user, "Broadway", "New York");
+    decorated.say();
+}
+
+#endregion Example2
+
+
+#endregion Decorator Pattern
+
+
+#endregion VSCODE
+
+#region Architecture Patterns
+https://builtin.com/software-engineering-perspectives/mvvm-architecture
+
+1) **MVC Vs MVVM Vs MVP
+https://developer.mozilla.org/en-US/docs/Glossary/MVC
+https://www.youtube.com/watch?v=eHhXoCNCI1c
+****https://www.makeuseof.com/mvc-mvp-mvvm-which-choose/
+
+#region MVC
+Isolates Application logic from UserInterface
+**Supports Seperation of Concernst
+
+Model: Manages data and business logic.
+View: Handles layout and display.
+Controller: Have control to communicate with view and model ,Routes commands to the model and view parts.
+
+A user interacts with a particular view.
+The viewer contacts the controller to trigger an event.
+The controller updates the model.
+The model sends a message that the view changed.
+The view pulls the model data and updates itself.
+
+Example Assume a User adds Item(s) to Cart
+View: User clicks "addItem", sends input from user to Controller Oneway
+Controller: This item is sent to, Model asking the model to update the application state. Sometimes Controller directly updates view, lets say sorting, showing data in tabular form etc
+Model: Model takes the item makes necessary changes , sends/update the application state, notifies the view.
+
+NOTE: In MVC the three layers diretly or indirectly communicates with each other
+
+Model: Contains data and business logic
+-->  The model defines what data the app should contain
+--> the model will usually notify the view (so the display can change as needed)
+--> sometimes the controller (if different logic is needed to control the updated view).(dotted)
+
+View: The view defines how the app's data should be displayed.
+
+Controller: The controller contains **logic that updates the model only (different from business logic) and/or routes the view in response to input from the users of the app
+You might however also want to just update the view to display the data in a different format, sorting, tabular form etc
+
+***Javascript Frameworks that use MVC: Angular.js, Ember.js,Node.Js, Backbone.js
+
+#region Seperation Of Concerns
+
+What is SoC? 
+https://dev.to/tamerlang/separation-of-concerns-the-simple-way-4jp2
+Separation of concerns is a design principle for separating a computer program into distinct sections such that each section addresses a separate concern.
+
+Example:
+In a hospital you have Doctors, Accountants, Nurses, Janitors, drivers etc. You don't expect a know all person. Each one have their own responsibiltes and roles.. this is Seperation Of Concerns
+
+<!DOCTYPE html>
+<html>
+<head>
+//Css is written in Html file
+<style> body {background-color: powderblue;} h1   {color: blue;}</style>
+</head>
+<body>
+
+<h1>This is a heading</h1>
+<p>This is a paragraph.</p>
+
+</body>
+//JS is written in Html file
+<script> console.log("hello world") </script>
+</html>
+
+Move Js to its own file, move css to its own file, Html can stay in this file
+This way when its styling we go to *.css and so on
+This is called Seperation of concerns.
+
+What is Cohesion and Coupling?
+**Separation of Concerns involves two processes: reduction of coupling and increasing cohesion.
+
+Cohesion: Cohesion is the measure of how related a group of things is,
+Example :
+Cohesion:  is the measure of how related a group of things is, for example in your kitchen you usually put the knives in the knife block, the spoons with spoons, the forks with forks, you get it. In computer science, it's how strong the relationship is between the methods and data of a class.
+
+lets say you have drawTriangle(),drawCircle()..
+It makes sense to keep them together, in Draw Class
+
+Coupling: Coupling is basically a measure of dependence between two or more classes, modules, or components. Tight coupling is bad, and loose coupling is good.
+
+***You should always try to write code that is highly cohesive and has low coupling
+
+Benefits of SoC:
+--> Better Code Clarity
+--> Better Code reusability
+--> Better Testability
+--> Faster Development, less code conflicts
+--> When everything is neatly separated engineers can have a better development experience, by agreeing on which modules to work on and not to interfere with each other.
+
+#endregion Seperation Of Concerns
+
+Advantages of MVC
+
+Disadvantages of MVC 
+In MVC the three layers interact with each other, in a way tightly coupled.
+To remove the model dependency on the view, MVP pattern have been created
+
+#endregion MVC
+
+#region MVP
+MVP is another architectural pattern that separates the concerns of an application into three main components:
+Model: Represents the data and business logic of the application, similar to the MVC pattern.
+View: Represents the user interface of the application, but unlike the View in MVC, it is more passive and does not handle user input or data updates.
+Presenter: Acts as an intermediary between the Model and View. It receives input from the View, processes it, updates the Model, and updates the View accordingly.
+Example:
+Let's consider a mobile app that allows users to create and manage a to-do list. The Model would be responsible for storing the to-do items, adding, deleting, and updating to-do items. The View would be responsible for displaying the to-do items to the user in a list format. The Presenter would receive user input, such as adding a new to-do item or marking an item as completed, process it, update the Model with the new data, and then update the View to display the updated to-do list.
+#endregion MVP
+
+#region MVVM
+
+Model:
+--> The model represents the app’s domain model
+--> which can include a data model as well as business and validation logic
+--> Model Communicates with ViewModel, doesnot know about View at all.
+
+View:
+--> The View represents the user interface of the application and holds limited, purely presentational logic that implements visual behavior
+--> View is a dumb presentational comoponent
+--> View is agnostic to model, 
+--> View communicates through data-binding(callbacks, properties) with ViewModel.
+
+ViewModel:
+---------
+ViewModel is the link between Model and View
+It implements and exposes public properties and commands that the View uses by way of data binding
+If any state changes occur, the ViewModel notifies the View through notification events.
+
+Advantages:
+Easier to develop: Separating the View from the logic makes it possible to have different teams work on different components simultaneously. A team of designers can focus on the UI while developers work on implementing the logic (ViewModel and Model).
+
+Easier to Test , Easier to maintain
+
+Disadvantages:
+Complexity: Overkill for simple user interfaces
+Difficult to Debug: Because data binding is declarative, it can be harder to debug than traditional, imperative code
+
+JS Frameworks that use MVVM is Knockout.js , WPF
+
+#endregion MVVM
+
+#region MVC Vs MVVM
+
+1) In MVC, the View contains logic. MVVM attempts to have the least amount of code-behind (logic) in the View. That logic instead resides within the ViewModel
+2)In MVC, communication between the View and the Controller is one-way (the Controller has a reference to the View).
+In MVVM, communication is two-way, thanks to the data-binding technique. 
+3) 
+
+#endregion MVC Vs MVVM
+
+#region How to determine which architecture to use MVC or MVP or MVVM
+
+Deciding which software architecture pattern to use, whether it's MVC, MVP, or MVVM, depends on several factors, including the requirements and characteristics of your project. Here are some considerations that can help you determine which architecture to use:
+
+Project Requirements: The requirements of your project can influence your choice of architecture. For example, if your project requires a high level of separation of concerns and a clear separation between data, UI, and business logic, MVC or MVVM may be suitable. If your project requires a more modular and testable approach, MVP may be a better fit.
+
+Project Complexity: The complexity of your project can also affect your architecture choice. If your project is relatively simple with limited interactions between components, MVC may be sufficient. For more complex projects with complex UI interactions and data bindings, MVVM or MVP may provide better abstraction and separation of concerns.
+
+Team Skillset: The skills and expertise of your development team can also play a role in selecting the right architecture. If your team is familiar with a particular architecture and has experience in implementing it, it may be more practical to stick with that architecture. However, if your team is open to learning new patterns, you may have more flexibility in choosing the most appropriate architecture for your project.
+
+Platform and Technology: The platform and technology stack you are using for your project can also influence your architecture choice. Some architectures may be more suitable for certain platforms or technologies. For example, MVVM is often used in desktop applications, while MVP is commonly used in mobile app development. Consider the platform and technology stack you are using and choose an architecture that aligns well with them.
+
+Project Timeline and Budget: The timeline and budget of your project can also impact your architecture choice. Some architectures may require more time and effort to implement and may not be suitable for projects with tight deadlines or limited budgets. Consider the resources available to you and choose an architecture that can be feasibly implemented within your project timeline and budget.
+
+Project Scalability and Maintainability: The scalability and maintainability of your project are important factors to consider when choosing an architecture. If your project is expected to grow and evolve over time, you may want to choose an architecture that provides good scalability and maintainability, such as MVVM or MVP. These patterns often provide better separation of concerns and flexibility for future changes.
+
+In summary, the choice of architecture, whether it's MVC, MVP, or MVVM, depends on the specific requirements, complexity, team skillset, platform, timeline, budget, and scalability/maintainability considerations of your project. It's important to carefully evaluate these factors and choose the architecture that best fits your project's needs, while considering the trade-offs and advantages of each architecture pattern. Consulting with experienced developers and conducting a thorough analysis of your project's requirements can help you make an informed decision.
+
+#endregion How to determine which architecture to use MVC or MVP or MVVM
+
+#region Hexagonal Architecture
+https://www.youtube.com/watch?v=7HxwHWUq3zk
+
+The hexagonal architecture pattern, also known as Ports and Adapters or Clean Architecture, is a software design pattern that emphasizes separation of concerns and flexibility in software architecture. The key idea behind this pattern is to create a core business logic, surrounded by adapters and ports that handle external dependencies, such as databases, user interfaces, and external APIs.
+
+In the hexagonal architecture pattern, the core business logic is isolated from the outside world and does not depend on any external technologies or frameworks. Instead, the external dependencies are handled by adapters and ports, which act as a bridge between the business logic and the external systems.
+
+Here's an example of how the hexagonal architecture pattern can be applied to a simple e-commerce system:
+
+Core business logic: This is the heart of the e-commerce system, which contains the core domain objects, entities, and services that represent the business rules of the system. This layer is completely independent of the external systems and technologies and can be tested in isolation.
+
+Adapters: Adapters are the components that connect the core business logic to the external systems. In the case of an e-commerce system, adapters may include components for interacting with a database, a payment gateway, and a messaging system. Adapters may also include components for validating and sanitizing input data.
+
+Ports: Ports are the interfaces that define the communication between the core business logic and the adapters. In the e-commerce system, ports may include interfaces for placing orders, retrieving order history, and updating customer information.
+
+The hexagonal architecture pattern enables flexibility and testability in software architecture. The core business logic is decoupled from external systems, which makes it easier to change or update the system without affecting the business logic. The adapters and ports also allow for easy testing and mocking of external dependencies, which makes testing and maintenance of the system more manageable.
+
+Overall, the hexagonal architecture pattern is a powerful tool for building robust and flexible software systems that can adapt to changing business needs and technological advances.
+
+
+Port: It is the interface that our code should implement in order to abstract from technology. Here we define the method signatures that will exists.
+
+Adapter: It is the implementation of the interface itself. Here we will have our specific code to consume a concrete technology. It's important to know that this implementation should NOT be in our application, beyond the declaration, since its use will be realized through the port.
+
+#endregion Hexagonal Architecture
+
+#region Flux Architecture
+https://medium.com/@Killavus/hexagonal-architecture-in-javascript-applications-and-how-it-relates-to-flux-349616d1268d
+**https://github.com/juanm4/hexagonal-architecture-frontend
+
+--> Flux is great, but it’s great for use cases Facebook had. It absolutely shines when you have multiple representations of the same data — single source of truth principle helps you avoiding headaches with denormalized state
+
+Infact Hexagonal Architecture could be a better flux implementation
+
+The Flux architecture is a software architecture pattern that is used to build web applications. It was developed by Facebook and is commonly used with React, a popular JavaScript library for building user interfaces.
+
+The Flux architecture is based on the idea of unidirectional data flow, which means that data flows in a single direction through the application. This makes it easier to manage and reason about the state of the application, especially as it grows more complex.
+
+In the Flux architecture, the application's state is managed by a central store, which is responsible for holding all of the data that the application needs to function. The store is updated by actions, which are triggered by user interactions or other events in the application.
+
+When an action is triggered, it sends a message to a dispatcher, which is responsible for coordinating the flow of data between the various components of the application. The dispatcher then updates the store, and any components that are interested in changes to the store can subscribe to it and receive updates as they occur.
+
+One of the key benefits of the Flux architecture is that it makes it easy to reason about the behavior of the application, even as it becomes more complex. Because the data flows in a single direction, it's clear where changes are coming from and how they are propagating through the application.
+
+There are several popular implementations of the Flux architecture, including Redux and MobX, which are both commonly used with React.
+
+#endregion Flux Architecture
+
+#region Flux Vs Redux 
+
+Both Flux and Redux are architectures/patterns for managing the state of web applications. They are commonly used with React, but can also be used with other frameworks and libraries.
+
+The main difference between Flux and Redux is that Flux is a more general architecture that provides a set of guidelines for managing data flow, 
+while Redux is a specific implementation of the Flux architecture with a few additional features.
+
+Flux: More of Generic, [NO REDUCER , Action,dispatcher,store(s), view], unidirectional Data flow, Single source of truth, state management
+Redux: Based on flux but specific, [Reducer, Action,dispatcher,store, view, middlewares], unidirectional Data flow, Single source of truth, state management
+Middlewares are like boosters which allow to call API's in action.
+
+#region Flux:
+
+Flux is an architecture pattern that is based on the idea of unidirectional data flow. The pattern consists of four main components:
+
+Actions: Objects that describe user interactions or other events that occur in the application.
+Dispatcher: A central hub that receives actions and sends them to the appropriate store(s).
+Stores: Objects that hold the state of the application and provide methods for updating that state.
+Views: Components that render the state of the application and respond to user interactions.
+Here's an example of how Flux might be used in a simple to-do list application:
+
+User clicks "Add Item" button
+View sends an action to the dispatcher with the new item data
+Dispatcher sends the action to the appropriate store
+Store updates the state of the application with the new item data
+Store emits a change event
+View receives the change event and updates its display of the to-do list
+
+#endregion Flux
+
+#region Redux:
+
+Redux is a specific implementation of the Flux architecture that adds a few additional features, such as a single store and a set of middleware for handling asynchronous actions. The main concepts in Redux are:
+
+Store: A single object that holds the state of the application.
+Actions: Plain JavaScript objects that describe user interactions or other events that occur in the application.
+Reducers: Pure functions that take the current state and an action as input, and return a new state.
+Middleware: Functions that intercept actions before they reach the reducer and can modify them or perform side effects.
+Here's an example of how Redux might be used in a simple to-do list application:
+
+User clicks "Add Item" button
+View dispatches an action creator function that returns an action object with the new item data
+Redux Middleware intercepts the action and handles any asynchronous behavior, such as making an API call to save the new item to a database
+Redux Reducer updates the state of the application with the new item data
+Store emits a change event
+View receives the change event and updates its display of the to-do list
+
+Code Simple example : https://www.freecodecamp.org/news/what-is-redux-middleware-and-how-to-create-one-from-scratch/
+
+In summary, Flux is a general architecture pattern for managing data flow in web applications, while Redux is a specific implementation of the Flux architecture with a few additional features. Both patterns can be used effectively to manage the state of web applications, but the choice depends on the specific needs of the application.
+
+#region Advantages of Redux
+Centralized State Management: Redux provides a centralized store for the entire application state, making it easier to manage and maintain the state of the application. Redux is Uni directional Data flow.
+
+Predictable State Changes: Redux follows a strict set of rules for updating the state, which makes it easier to predict the changes that will occur as a result of user actions or other events.
+
+Time Travel Debugging: Redux allows developers to easily debug their applications by providing a time-traveling debugger that lets them step through the state changes and see how the state changes over time.
+
+Improved Code Organization: Redux encourages developers to separate the concerns of their application by separating the state logic from the UI logic, making it easier to maintain and scale the application.
+
+Easy Integration with Other Libraries: Redux is designed to work seamlessly with other libraries and frameworks, such as React, making it easy to integrate into existing projects.
+
+#endregion Advantages of Redux
+
+
+#region What are the disadvantages of Redux?
+Complexity : Redux adds another layer of complexity to an application. Developers must understand how to use the library and implement its concepts properly. This can be difficult, especially for beginners.
+
+Boilerplate code: Redux requires a significant amount of boilerplate code to set up. This can be time-consuming and tedious, especially for smaller projects.
+
+Steep learning curve: As mentioned before, Redux has a steep learning curve. It can take some time for developers to understand and master its concepts.
+
+File structure: Redux has a specific file structure that must be followed. This can be restrictive and may not work well with some projects.
+
+Debugging: Debugging can be difficult with Redux. Since it is a centralized state management library, it can be hard to pinpoint exactly where an error occurred.
+
+Performance: Redux can impact performance in large applications, as it requires extra processing power to manage state changes.
+
+Overuse: Developers may be tempted to overuse Redux, leading to an overly complex application. It's important to consider whether Redux is necessary for a particular project or component.
+
+Integration with other libraries: Integrating Redux with other libraries, such as React, can be tricky. Developers need to be aware of how Redux interacts with other libraries to avoid conflicts or performance issues
+
+#endregion What are the disadvantages of Redux?
+
+
+#endregion Redux
+
+#endregion Flux Vs Redux 
+
+
+#endregion Architecture Patterns
+
+#region Functional Patterns
+
+Functional Programming in React: https://javascript.plainenglish.io/functional-programming-concepts-used-in-react-215e277f3662
+
+Functional programming is a programming paradigm that emphasizes the use of functions and immutable data. In functional programming, there are several design patterns that can be used to write more concise and reusable code. Here are a few functional design patterns:
+
+#region Higher-Order Functions
+Higher-Order Functions: Higher-order functions are functions that take other functions as arguments or return functions as their results. They can be used to create more modular and reusable code.
+
+Map,filter,reduce are HOF, ,
+
+Advantages 
+Reusability: Higher-order functions can be reused with different arguments, making them more flexible and efficient.
+Modularity: Higher-order functions promote modularity by breaking down complex functions into smaller, reusable functions.
+Function Composition: Higher-order functions facilitate function composition, which is the process of combining smaller functions to create more complex ones.
+
+React uses HOC which is inspired by HOF
+
+#endregion Higher-Order Functions
+
+Immutable Data: Immutable data is data that cannot be changed after it has been created. This can help to prevent bugs and make code easier to reason about.
+useState uses Immutable data, react recommends, reducer uses immutable data for performance, because u are less prone to bugs realeted to rference Vs value types
+
+Recursion: Recursion is a technique where a function calls itself. It can be used to solve problems that involve repeated computations, such as traversing a tree or list. 
+
+#region Currying
+Currying: Currying is a technique where a function that takes multiple arguments is transformed into a series of functions that each take a single argument. 
+It can be used to create more specialized functions that can be composed together.
+function add(x) {
+  return function(y) {
+    return x + y;
+  };
+}
+
+// Usage
+const add5 = add(5);
+const result = add5(3); // 8
+
+
+Advantages of Currying:
+Reusability: Curried functions can be reused with different arguments, making them more flexible and efficient.
+Modularity: Currying promotes modularity by breaking down complex functions into smaller, reusable functions.
+Function Composition: Currying facilitates function composition, which is the process of combining smaller functions to create more complex ones.
+Customization: Currying allows for easy customization of functions by partially applying arguments, making it easier to create variations of existing functions.
+
+Currying in React:
+-----------------
+https://www.carlrippon.com/using-currying-to-pass-additional-data-to-react-event-handlers/
+
+//Without Currying, Functional Component
+const handleClick = (item)=>{}
+<ul> <li> items.map
+<button onClick={() => handleClick(item)}/>
+<End>
+
+//Using Currying
+const handleClick = (item)=> ()=> {} //Pretty neat
+<ul> <li> items.map
+<button onClick={handleClick(item)}/>
+<End>
+
+//Form HandleChange events 
+const handleChange = (fieldName: string) => (e) => {
+  setValues({
+    ...values,
+    [fieldName]: e.currentTarget.value,
+  });
+};
+
+middlewares, in Redux use currying : (store)=>(next)=>(action)
+
+#region Partial Functions
+function multiply(x, y) {
+  return x * y;
+}
+
+const double = multiply.bind(null, 2); // create a new function that doubles its argument
+
+console.log(double(5)); // 10
+console.log(double(10)); // 20
+
+Advantages:
+In this example, we create a new function double by binding the multiply function to the value 2. This creates a new function that takes a single argument, and multiplies it by 2. We can then call double with a new argument, and it will return the product of the argument and 2.
+
+The advantages of using partial functions in JavaScript include:
+
+Reusability: By creating partial functions, you can reuse the same function with different arguments, making your code more modular and efficient.
+Flexibility: Partial functions allow you to create new functions that have some of their arguments pre-set, which can make it easier to work with functions that require a lot of arguments.
+Customization: Partial functions allow you to customize existing functions by fixing some of their arguments, and creating new functions that have specific behavior.
+Function Composition: Partial functions can be composed with other functions to create more complex functions, making it easier to work with complex logic.
+
+Overall, partial functions are a useful tool in JavaScript that can help you write more modular and reusable code.
+
+#endregion Partial Functions
+
+#endregion Currying
+
+#region Composing Functions
+Composing Functions: Composing functions is a technique where two or more functions are combined to form a new function. It can be used to create more complex behavior out of simpler building blocks.
+
+Example:
+function add(x) {   return x + 1; }
+function multiply(y) {   return y * 2; }
+function square(z) {   return z * z; }
+const addAndMultiplyAndSquare = (x, y, z) => square(multiply(add(x), y), z);
+
+console.log(addAndMultiplyAndSquare(1, 2, 3)); // 36
+compose function in redux : compose(f1,f2,f3,f4,f5)....
+
+The advantages of composing functions in JavaScript include:
+-------------------------------------------------------------
+Reusability: Composing functions allows you to reuse smaller functions in a larger context, making your code more modular and efficient.
+Readability: Composing functions can make your code more readable and easier to understand, by breaking down complex logic into smaller, simpler functions.
+Flexibility: Composing functions allows you to easily customize the behavior of your code by reusing and combining existing functions.
+Maintainability: Composing functions makes your code more maintainable by making it easier to debug and refactor.
+
+React is all about composition 
+<Parent>
+<child>
+<grandChild> ...// these can be reused independently as well
+
+
+#endregion Composing functions
+
+Memoization: Memoization is a technique where the results of expensive function calls are cached so that they can be reused. It can be used to improve performance in functions that are called frequently with the same arguments.
+React uses useMemo hook, React.memo etc
+
+These are just a few of the functional design patterns that can be used in functional programming. By using these patterns, developers can write more concise, reusable, and maintainable code.
+
+
+#endregion Functional Patterns
+
+#region MISC
+
+#region Disadvantages of React
+React is a popular JavaScript library for building user interfaces. While it has many benefits, there are also some disadvantages to consider. Here are a few:
+
+Steep learning curve: React has a steep learning curve, especially for developers who are not familiar with the concepts of JSX and component-based architecture. It can take some time for developers to understand and master these concepts.
+
+Boilerplate code: React requires a significant amount of boilerplate code to set up, which can be time-consuming and tedious, especially for small projects.
+
+Lack of documentation: React's documentation is not always clear and can be difficult to navigate. It can be challenging for developers to find the information they need to use React effectively.
+
+JSX: JSX can be confusing for some developers, especially those who are used to traditional HTML. It requires a new way of thinking about markup and can be challenging to learn at first.
+
+Performance: React can be slower than other JavaScript frameworks, especially when dealing with large applications with many components. Developers need to be mindful of performance when building applications with React.
+
+Integration with other libraries: Integrating React with other libraries, such as Redux, can be tricky. Developers need to be aware of how React interacts with other libraries to avoid conflicts or performance issues.
+
+Changes in syntax and APIs: React is constantly evolving, which means that developers need to keep up with changes in syntax and APIs. This can be challenging, especially for those who are new to React.
+#endregion Disadvantages of React
+
+Q) What is Design Pattern ? Why do we use Design Pattern?
+
+#region How do you identify need of a design pattern
+Q) How do you identify need of a design pattern
+During Refactoring, when you skim through your source code, we can analyse...
+Identifying which design pattern is applicable to a given codebase requires an understanding of the different design patterns and their characteristics, as well as a thorough examination of the code.Identifying the need for a design pattern involves analyzing the requirements of the software system
+
+Here are some steps you can follow to identify which design pattern is applicable to a given codebase:
+
+Study the code: Start by studying the code to understand its structure, behavior, and purpose. Look for patterns and recurring themes that may indicate the use of a design pattern.
+
+Identify the problem: Identify the problem that the code is trying to solve. This will help you determine which design pattern is most appropriate.
+
+Understand the requirements: Understand the requirements of the system and the constraints that must be taken into account when selecting a design pattern.
+
+Look for common design patterns: Review common design patterns and their implementation to see if any match the structure and behavior of the code.
+
+Evaluate the benefits and drawbacks: Consider the potential benefits and drawbacks of using each applicable design pattern. Choose the design pattern that best meets the requirements of the system while minimizing potential drawbacks.
+
+Refactor the code: If a design pattern is applicable, refactor the code to implement the design pattern.
+
+Test the solution: Once you have implemented the design pattern, test the solution to ensure it meets the requirements and constraints of the system.
+
+Q) How does design patterns solve reusability issue?
+Design patterns are reusable solutions to common software design problems that have been proven to be effective through experience and best practices. By using design patterns, developers can create software that is more modular, flexible, and maintainable.
+
+Design patterns provide a standard template for solving specific problems in software development. This template can be applied to different situations, making it easy to reuse the same solution in different parts of the codebase.
+
+For example, if you need to implement a feature that involves complex interactions between multiple objects, you could use the Observer pattern. The Observer pattern defines a one-to-many relationship between objects so that when one object changes state, all of its dependents are notified and updated automatically. By using the Observer pattern, you can create a reusable solution for managing object interactions that can be used across different parts of your codebase.
+
+Overall, design patterns help solve reusability issues by providing a standard way of solving common problems in software development. This makes it easier to create modular and maintainable software that can be reused across different parts of the codebase.
+
+#endregion How do you identify need of a design pattern
+
+#region Apart from Creational,Structural & Architectural what are other patterns
+Q) Apart from Creational,Structural & Architectural what are other patterns
+Design patterns. In a widely cited book (Gamma et al. 1995), design patterns were described by four software designers—Erich Gamma, Richard Helm, Ralph Johnson, and John Vlissides—who were named in some quarters as the "gang of four." A design pattern is a small group of collaborating objects.
+
+Architectural patterns. This work was described by Buschmann et al. (1996) at Siemens. Architectural patterns are larger-grained than design patterns, addressing the structure of major subsystems of a system.
+
+Analysis patterns. Analysis patterns were described by Fowler (2002), who found similarities during analysis of different application domains. He described recurring patterns found in object-oriented analysis and described them with static models, expressed in class diagrams.
+#endregion Apart from Creational,Structural & Architectural what are other patterns
+
+#region What are FUNCTIONAL PATTERNS, what are used in react
+https://blog.logrocket.com/react-design-patterns/
+https://antistatique.net/en/blog/functional-programming-patterns-a-javascript-journey-10
+HOF --> React: HOC 
+Composition --> React: Composition Vs Inheritance
+Curried Function 
+
+#endregion What are FUNCTIONAL PATTERNS what are used in react
+
+Currying Vs Partial Apply
+RenderPorops do Inversion Of Control.
+MVC have solved Seperation of Concerns, Testable code, Loose Coupling, IoC
+Architectural Patterns: MVC, MVP, MVVM....
+
+Disadvantages of Redux
+======================
+Learning curve: Redux has a significant learning curve and can be difficult to understand for developers who are new to it. The concepts of actions, reducers, and stores can be challenging to grasp at first, and developers may need to spend time learning the Redux API and best practices.
+
+Boilerplate code: Redux requires a significant amount of boilerplate code to set up and maintain. Developers need to write actions, reducers, and store configurations for each feature in the application, which can lead to a lot of repetitive code.
+
+Over-engineering: There is a risk of over-engineering when using Redux. Developers may be tempted to use Redux for small applications or features, even when it is not necessary. This can lead to unnecessary complexity and make the application harder to maintain.
+
+Performance: Redux can have performance issues if not used correctly. For example, using too many reducers can slow down the application, and using the wrong data structures can cause unnecessary re-renders.
+
+Debugging: Debugging Redux applications can be challenging. The Redux DevTools can be helpful, but developers still need to understand the Redux API and how to use it to debug issues effectively.
+
+All the state in redux is inmemory, browser memory, its a hindrance to performance
+Should data go to store or not, components state thats shared among multiple components can go to state. else use the backend call to fetch the data 
+
+What quality should we have Good Architecture:
+--> Adhere to Design Principles
+--> adhere to Non-functional and Functional requirements
+--> Testable code, Loose coupling
+--> Good architecture must contain diverse technology, but minimum technologies.
+--> Good Arch. should be easy to understand and maintain, embrace new commers not to burden them with a huge learning curve
+--> Good Arch. should be extensible for future business needs
+
+Details on Functional & Non-Functional Requirements
+
+
+#endregion MISC

@@ -1,0 +1,2 @@
+npm i  @material-ui/core @material-ui/icons react react-dom react-router-dom 
+npm i --save -dev  @babel/core @babel/plugin-transform-runtime @babel/preset-env @babel/preset-react babel-loader clean-webpack-plugin css-loader html-webpack-plugin style-loader webpack webpack-cli webpack-dev-server webpack-merge 

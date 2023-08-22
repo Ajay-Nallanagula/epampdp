@@ -23,11 +23,13 @@ const UseMemoSolution = () => {
 
   const handleText = (e) => setText(e.target.value);
   const handleSearch = () => setSearch(text);
-  const filteredUsers = useMemo(() =>{
-   return(users.filter((user) => {
-     console.log('useMemo Solution filtered users running...')
-    return user.name.toLowerCase().includes(search.toLowerCase());
-  }))},[search]);
+  
+  const filteredUsers = useMemo(() => {
+    returnusers.filter((user) => {
+      console.log('useMemo Solution filtered users running...')
+      return user.name.toLowerCase().includes(search.toLowerCase());
+    })
+  }, [search]);
 
   return (
     <div>

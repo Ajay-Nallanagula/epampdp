@@ -24,6 +24,7 @@ const UseMemoProblem = () => {
 
   const handleText = (e) => setText(e.target.value);
   const handleSearch = () => setSearch(text);
+  
   const filteredUsers = users.filter((user) => {
       console.log('filteredUsers is running')
    return user.name.toLowerCase().includes(search.toLowerCase())

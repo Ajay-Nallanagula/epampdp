@@ -30,5 +30,6 @@
       "dinnerStartTime": 15,
       "dinnerEndTime": 21
     }
-  }
+  },
+  "corsOrigin": "http://localhost:3001"
 }
