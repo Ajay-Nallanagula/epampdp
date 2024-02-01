@@ -1,0 +1,171 @@
+Udemy : https://www.udemy.com/course/nextjs-react-the-complete-guide/learn/lecture/41160686#overview
+
+#region Getting Started
+
+NextJs Vs React: https://radixweb.com/blog/nextjs-vs-react#difference
+
+What is Next.Js? Its open source
+https://radixweb.com/blog/nextjs-vs-react#difference
+1) Next JS is a JavaScript framework that allows developers to create user-friendly and blazing fast static websites and static web applications with React. Next JS is an open-source, lightweight web development framework for React applications. It allows developers to build server-side rendering.
+
+2) Next.js is based on React babel and webpack, which provides an out-of-the-box solution for server-side rendering (SSR) of React components
+
+3) Next.js provides many features, such as static export, preview mode, pre-rendering, faster compilation, and automatic building size optimization.
+
+What is Next.js Used for?
+1) ECommerce Websites
+2) Marketing Websites
+3) Landing Pages
+
+Why do you need Next.Js when React is already there?
+
+Next. Js Provides oUt-of-box support for 
+Server-side Rendering (SSR)
+Static Export (SSG)
+Pre-rendering
+Automatic Build Size Optimization
+Enhanced Development Compilation
+Route Setup and Handling
+Form Submission
+Data Fetching
+Authentication.
+
+Next.js provides many features, such as static export, preview mode, pre-rendering, faster compilation, and automatic building size optimization, automatic Code-splitting
+
+What is Code-Splitting?
+https://web.dev/learn/performance/code-split-javascript#:~:text=Code%20splitting%20is%20a%20useful,loaded%20at%20any%20other%20time.
+
+Example:
+document.querySelectorAll('#myForm input').addEventListener('blur', async () => {
+  // Get the form validation named export from the module through destructuring:
+  const { validateForm } = await import('/validate-form.mjs');
+
+  // Validate the form:
+  validateForm();
+}, { once: true });
+
+When Should we use Next.js?
+
+PageRouter Vs AppRouter
+========================
+
+#endregion 
+
+#region NextJs App Router Essentials
+
+#region Reserverd Names in Next.js
+Here's a list of reserved filenames in NextJS - you'll, of course, learn about the important ones throughout this section:
+
+page.js => Create a new page (e.g., app/about/page.js creates a <your-domain>/about page)
+
+layout.js => Create a new layout that wraps sibling and nested pages
+
+not-found.js => Fallback page for "Not Found" errors (thrown by sibling or nested pages or layouts)
+
+error.js => Fallback page for other errors (thrown by sibling pages or nested pages or layouts)
+
+loading.js => Fallback page which is shown whilst sibling or nested pages (or layouts) are fetching data
+
+route.js => Allows you to create an API route (i.e., a page which does NOT return JSX code but instead data, e.g., in the JSON format)
+
+#endregion Reserverd Names in Next.js
+
+#region <Link> in Next.Js
+
+import Link from "next/Link"
+
+https://nextjs.org/docs/pages/api-reference/components/link
+<Link> is a React component that extends the HTML <a> element to provide prefetching and client-side navigation between routes. It is the primary way to navigate between routes in Next.js.
+
+What is Prefetch? 
+https://nextjs.org/docs/app/building-your-application/routing/linking-and-navigating#2-prefetching
+Prefetching is a way to preload a route in the background before the user visits it.
+
+What is Dynamic Routing?
+https://nextjs.org/docs/pages/building-your-application/routing/dynamic-routes
+When you don't know the exact segment names ahead of time and want to create routes from dynamic data, you can use Dynamic Segments that are filled in at request time or prerendered at build time
+
+What is Prerendering?
+https://nextjs.org/docs/pages/building-your-application/rendering
+By default, Next.js pre-renders every page. This means that Next.js generates HTML for each page in advance, instead of having it all done by client-side JavaScript. Pre-rendering can result in better performance and SEO. Each generated HTML is associated with minimal JavaScript code necessary for that page.
+
+#endregion <Link>
+
+#region <Image> in Next.js
+
+Html <img> Vs NextJs <Image> ?
+https://nextjs.org/docs/app/api-reference/components/image
+https://nextjs.org/docs/app/building-your-application/optimizing/images
+
+html : <img src={logo.src} alt="Food served on Plate" />
+NextJs: <Image src={logo} alt="Food served on Plate" />
+
+The Next.js Image component extends the HTML <img> element with features for automatic image optimization:
+
+Size Optimization: Automatically serve correctly sized images for each device, using modern image formats like WebP and AVIF.
+Visual Stability: Prevent layout shift automatically when images are loading.
+Faster Page Loads: Images are only loaded when they enter the viewport using native browser lazy loading, with optional blur-up placeholders.
+Asset Flexibility: On-demand image resizing, even for images stored on remote servers
+
+"Priority" prop on <Image>:  this prop is added to tell the Image component to not load using lazy loading, thus avoiding the flickering effect
+
+#endregion <Image>
+
+#region Css and Styling in Next.Js
+What are various CSS Styles followed in Next.Js?
+https://nextjs.org/docs/app/building-your-application/styling
+
+What is Css-in-Js?
+https://blog.logrocket.com/css-vs-css-in-js/
+
+#endregion Css and Styling in Next.Js
+
+#region ****Server Vs Client Components
+
+Scenario: assume we have a React component(SlideShow) that needs to be displayed on the Next.Js Page route 
+When you careate the compnent and try to render the component we see an error saying 
+ERROR MESSAGE: You're importing a component that needs useEffect. It only works in a Client Component but none of its parents are marked with "use client", so they're Server Components by default.
+Learn more: https://nextjs.org/docs/getting-started/react-essentials
+
+Answer: That difference is there in React itself Vanilla React appas is a client library, that render components on the client. Where as Next.Js is a full stack app(Server side + Client-Side) Which means code executes in the Backend
+--> Backend executes the server component functions and hence derives the to-be-rendered HTML
+--> The client side recieves and renders the to-be-rendered HTML
+Hence in the nextJs apps on backend side the react isn't understandable , its not recognized
+
+This is the advantage of Next-Js because of Less client-side JS, great for SEO.
+Websearch crawlers will now see the complete finished content , chances are that your website will be ranked high.
+
+
+But How do we render the client-side-react components in NextJs ?
+Answer: We need to use 'use client' directive on the react components that needs to be rendered on the client side, Next Js pre-renders the pages, but react component can be opted in using "use client"
+In Backend of NextJs, the code doesn't understand what is useState, useReact and other hooks
+In Backend of NextJs, the code doesn't understand what the evenets like onClick, onHover and other events they are browser events 
+To 
+
+** Always separate the client components, even though they are small parts.
+**Maximise the use of server rendering supported by NextJs.
+
+
+
+
+#endregion Server Vs Client components
+
+#region NextJs Hooks
+
+#region usePathname https://nextjs.org/docs/app/api-reference/functions/use-pathname
+ usePathname(): [import { usePathname } from "next/navigation"]
+--> usePathname is a Client Component hook that lets you read the current URL's pathname.
+
+How do you fetch data in NextJs app?
+--> NextJs is both BE + FE 
+--> So in FE or in REACT you use useEffect
+--> NextJs by default renders components from BE, so it can directly access the data from the database ,
+
+
+#endregion usePathname
+
+continue from 110.
+
+#endregion
+
+#endregion NextJs App Router Essentials
