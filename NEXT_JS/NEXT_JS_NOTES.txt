@@ -51,7 +51,103 @@ PageRouter Vs AppRouter
 
 #endregion 
 
-#region NextJs App Router Essentials
+#region NextJs Interview Questions
+
+#region Links
+https://hackernoon.com/30-nextjs-interview-questions-get-ready-for-your-dream-job
+https://mindmajix.com/next-js-interview-questions
+
+<a href> Vs <Link href=/>
+=========================
+With anchor tag, there is a new http request sent to theserever to fetch the page , which means stateless, all the state in redux/context will be lost 
+With <Link>  this is client side routing happens , HTTP request is not sent to the server. app state is not lost.
+Automaticall pre-fetches the data , pages that we might need are eagerly downloaded.
+
+There are two ways of configuring a route in the <Link>
+const client = [
+        { id: 'ajay', name: 'AjayNallanagula' },
+        { id: 'Divya', name: 'DivyaNallanagula' }
+    ]
+ client.map(route => <li key={route.id}>
+ //WAY 1: 
+                <Link href={`/client/${route.id}`}>{route.name}</Link> 
+				
+			//WAY 2
+                <Link href={{
+                    pathname: '/client/[id]',
+                    query: { id: route.id }
+                }}>{route.name}</Link>
+            </li>
+
+
+
+Incase If you need to navigate progamatically :
+const router = useRouter()
+    console.log('ClientId', { router })
+    const handleNavigate = () => {
+        router.push('/client/max/routeOnClick')
+    }
+
+#endregion Links
+
+#region Questions
+NextJs can be used to build :
+Several types of websites and applications can be built. But the most popular are-
+Desktop websites
+Static websites
+Server rendered applications
+SEO friendly websites
+Progressive web applications (PWA)
+
+What is meant by Styled JSX in Next JS?
+We use this CSS-in-JS library for writing encapsulated and scoped CSS for styling Next JS components. No other component gets affected by introducing the styles to a component using Styled JSX. This allows adding, changing, and deleting the styles without any complications.
+
+Is Next JS backend, frontend, or full-stack?
+Next JS is full-stack. This means that it allows rendering client-side as well as server-side content. And this is the reason it is highly valued on React, as React allows only frontend development without it.
+
+Next JS provides two types of pre-rendering- Server-side rendering and Static rendering.
+Static Generation- It generates the HTML at build time, and we can reuse it on each request. It is the recommended one of the two. For using Static generation, either the page component has to be exported or 'getStaticProps'
+
+Server-side rendering- It generates the HTML on each request. For using Server-side rendering, 'getServerSideProps' has to be exported.
+
+NOTE: By default, Static Generation is the pre-render available in Next JS without any data fetched
+
+What are the most important features introduced in Next.js 12.1?
+The most important features are given below-
+New Rust-based compiler
+Faster image optimization
+On-demand incremental static regeneration (Beta)
+Self-hosted Next JS improvements
+Zero-configuration Jest plugin
+React 18 support
+
+Which key features are provided by Next JS in terms of SEO?
+The following perks are there-
+
+Jamstack compatibility
+Increased flexibility in designing the UX of our website
+Automatic static optimization
+Improved data security
+Fast static websites
+Responsiveness and adaptability
+
+List some competitors and alternatives to Next JS.
+Some alternatives to Next JS are listed below-
+
+Gatsby
+React
+Create React App
+Hexo
+Hugo
+LoopBack
+Angular Universal
+React Router
+
+#endregion Questions
+
+#endregion NextJs Interview Questions
+
+#region NextJs Concepts 
 
 #region Reserverd Names in Next.js
 Here's a list of reserved filenames in NextJS - you'll, of course, learn about the important ones throughout this section:
@@ -122,6 +218,7 @@ https://blog.logrocket.com/css-vs-css-in-js/
 
 #region ****Server Vs Client Components
 
+
 Scenario: assume we have a React component(SlideShow) that needs to be displayed on the Next.Js Page route 
 When you careate the compnent and try to render the component we see an error saying 
 ERROR MESSAGE: You're importing a component that needs useEffect. It only works in a Client Component but none of its parents are marked with "use client", so they're Server Components by default.
@@ -136,6 +233,7 @@ This is the advantage of Next-Js because of Less client-side JS, great for SEO.
 Websearch crawlers will now see the complete finished content , chances are that your website will be ranked high.
 
 
+#region "use server" directive
 But How do we render the client-side-react components in NextJs ?
 Answer: We need to use 'use client' directive on the react components that needs to be rendered on the client side, Next Js pre-renders the pages, but react component can be opted in using "use client"
 In Backend of NextJs, the code doesn't understand what is useState, useReact and other hooks
@@ -145,6 +243,65 @@ To
 ** Always separate the client components, even though they are small parts.
 **Maximise the use of server rendering supported by NextJs.
 
+How do you execute a specific functionality on server side ?
+"use server" : This will enable a specific functionality or funtion to be executed on Server
+
+//The below function is guranteed to execute on the server
+//To really turn this action into server action we need to add "async" //keyword
+//If async is missed Error: Server actions must be async functions
+async function shareMeal(){
+	"use server"
+	.......
+}
+
+consider a <form onSubmit={handleSubmit}> element in general this 
+is the way we design forms on client side where on handleSubmit will send the formData to backend, but when we are rendering this from backend itself , How do we achieve it 
+--> We achieve it using <form action={evaluateFormData}/> in this case the "use server" will be used .
+//The below function is guranteed to execute on the server
+//To really turn this action into server action we need to add "async" //keyword
+//If async is missed Error: Server actions must be async functions
+async function evaluateFormData(formData){
+	"use server"
+	.......
+}
+--> action method in HTML5 is used to give the "post endpoint", in NextJs its been customised to give the server function, this is available out of the box.
+
+What will happen If my component is rendered on client("use client"), and I want to do "use server"
+Example:
+"use client"
+//Client Component
+Client_Comp{
+
+//NOTE: THIS IS ERROR LIKE TOM_JERRY, 
+async function evaluateFormData(formData){
+	"use server"
+	.......
+}
+
+}
+
+//Error From NextJs
+Error: 
+  × It is not allowed to define inline "use server" annotated Server Actions in Client Components.
+  │ To use Server Actions in a Client Component, you can either export them from a separate file with "use server" at the top, or pass them down through props from a Server Component.
+  │ 
+  │ Read more: https://nextjs.org/docs/app/api-reference/functions/server-actions#with-client-components
+
+Why does server Vs client error occur ?
+This error of server Vs client occur because, NEXT.JS will lead to ambiguity, NextJs will not be able to separate the client and server side code in an effective manner.
+
+How to resolve it ?
+Move the server related actions to separate file, with first line as "use server"
+//Inside server-actions.Js
+"use server"
+
+export async function shareMeal(){
+}
+
+NOTE: In short this is like writing mock server methods for client during Unit testing , but rather we are not mocking :)
+
+
+#endregion  "use server"
 
 
 
@@ -164,8 +321,175 @@ How do you fetch data in NextJs app?
 
 #endregion usePathname
 
-continue from 110.
+error.js
+--> error.js should be a client component
+--> error.js primarily depends on page.js, error page is limited to any pages and nested pages within the boundaries of page.js its defined.
+--> if error.js is defined on root then its ablicable to all the pages.
 
-#endregion
+HTTP 404: Resource Not found
+not-found.js :  This name is conventional , NextJs recognises this page if an invalid-route is encountered
+--> not-found.js can be at gloabl level which covers all the routes and nested routes 
+--> not-found.js can be at folder/granular level as well for specific cases.
+NOTE: without not-found.js we would still get HTTP 404 error
+--> Next.Js have a method called as "notFound() --> import {notFound} from next/navigation" This method will find the closest not-found.js or error.js page and renders it. It shortcircuits the component rendereing and shows not-found page.
 
-#endregion NextJs App Router Essentials
+#region useFormStatus() from 'react-dom'
+
+https://react.dev/reference/react-dom/hooks/useFormStatus
+--> should be used on Client-Side Component so decorate the component with "use client" 
+syntax: 
+const { pending, data, method, action } = useFormStatus();
+
+
+#endregion useFormStatus() 'react-dom'
+
+#region useFormState() from 'react-dom'
+--> https://react.dev/reference/react-dom/hooks/useFormState
+--> should be used on Client-Side Component so decorate the component with "use client" 
+useFormState is similar to useState, syntax:
+
+const [state, formAction] = useFormState(fn, initialState, permalink?);
+
+Example
+
+import { useFormState } from "react-dom";
+
+//This is a server-action, in general if useFormState is NOT used this will be given in <form action={increment}/> 
+async function increment(previousState, formData) { // previousState is supplied by useFormState
+  return previousState + 1;
+}
+
+function StatefulForm({}) {
+  const [state, formAction] = useFormState(increment, 0);
+  return (
+    <form>
+      {state}
+      <button formAction={formAction}>Increment</button>
+    </form>
+  )
+}
+
+Caveats 
+The useFormStatus Hook must be called from a component that is rendered inside a <form>.
+useFormStatus will only return status information for a parent <form>. It will not return status information for any <form> rendered in that same component or children components.
+
+#endregion useFormState() 'react-dom'
+
+#endregion NextJs Hooks
+
+#region revalidatePath()
+
+https://nextjs.org/docs/app/api-reference/functions/revalidatePath
+
+Syntax: 
+revalidatePath(path: string, type?: 'page' | 'layout'): void;
+
+Example:
+import { revalidatePath } from 'next/cache'
+revalidatePath('/blog/post-1')
+
+Scenario:
+Consider during build process, NextJs creates a bundle for server deployment . During this point
+NextJs agressively caches the pages where there is no client related involvement in component
+But when we perform CRUD operations and redirect to cached pages the newly added/updated/deleted item will not be seen because cache data is not invalidated, the fetch opertaion will not be called due to caching... Now the solution is invalidate caching for specific pages where there is a fetch call  to server for that we use revalidatePath . revalidate accepts path and second param as either page(only url) or layout(url/nested url)
+
+allows you to purge cached data on-demand for a specific path
+
+'use server'
+ 
+import { revalidatePath } from 'next/cache'
+ 
+export default async function submit() {
+  await submitForm()
+  revalidatePath('/')
+}
+
+
+#endregion revalidatePath()
+
+#region Metadata
+
+Static Pages Metadata:
+======================
+In static pages metadata is added by the next.js if we supply the Metadata object as part of the root-layout  
+
+//NOTE: THE NAME OF THE OBJECT MUST BE "metadata" ONLY
+export const metadata = {
+  title: 'NextLevel Food',
+  description: 'Delicious meals, shared by a food-loving community.',
+};
+
+This metadata will be passed to subsequent children, until another "metadata" is found specific to page , in that case page "metadata" will take precedence
+
+Dynamic Page Metadata: [slug]
+==============================
+In case of Dynamic pages Metadata will be generated when we include a method 
+
+////NOTE: THE NAME OF THE METHOD MUST BE async and "generateMetadata" ONLY
+"export async function generateMetadata({params})" 
+
+The params object will give the dynamic url fragments , form there we can give a metadata object 
+
+export async function generateMetadata({params}){
+    const meal = getMeal(params?.slug)
+    if (!meal) {         return notFound()     }
+    return {
+        title: meal.title,
+        description: meal.summary
+    }
+}
+
+
+
+#endregion Metadata
+
+
+#endregion NextJs Concepts
+
+#region Pages and File Based Routing
+
+Code Snapshots :
+https://github.com/mschwarzmueller/nextjs-course-code.
+
+What is File Based Routing?
+===========================
+React uses routing from react-router , where we define routes and give components as as children ,
+But In NextJs we give routes in a separate folder "/pages", NextJs will infer routes from that folder , without any JSX code at all. Routing is done based on convention.
+Consider the following route paths in NextJs , 
+
+/pages
+	index.js // route: my-domain.com/ 
+	about.js // route: my-domain.com/about
+	/products
+		index.js // route: my-domain.com/products
+		[id].js	 // route: my-domain.com/products/1
+	/blogs
+		[...slug].js // ***route: my-domain.com/products
+
+* empty path is index page by default , 
+* [id].js is special type of dynamic routes , [id] here serves as a placeholder for url fragment.
+*** catch-all routes, assume you want to search a blogpost over a period of time , in a year, in a month, on a specific date , etc  but consistently show the same page in that case we use catch all route nextJs notation for catch all route is [...slug].js 
+
+How do you catch the dynamic  fragments of a route in your React component inside NextJs ?
+
+we can use a special hook "useRouter" 
+import { useRouter } from "next/router"
+const router = useRouter()
+In case of catch all routes , for Example all the fragments will be given as an array by router.query 
+url used: http://localhost:3000/blog/2021/10/8
+console.log(router.query) //slug: ["2021","10","8"]
+
+Page Based Routing- NotFound page
+=================================
+NextJs looks for "404.js" if there is no matching route.
+
+File-Based-Routing(FBR) Vs React-Based-Router(RBR) or Code-Based
+==========================================================
+--> FBR has no extra boilerplate code required, RBR setup in code required <Switch>,<Route>
+--> FBR is intutive, by convention where as RBR is straight forwrd but includes new components and Concepts
+--> FBR has File+folder structure(in pages/folder) influences routes, RBR File+folder doesn't matter at all
+
+
+
+
+#endregion Pages and File Based Routing

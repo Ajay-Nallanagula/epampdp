@@ -35,6 +35,11 @@ import NestedRoutes from './ROUTING/NestedRoutes/NestedRoutes'
 import CodeSplitComponent1 from './CODESPLITTING/CodeSplittingDemo'
 import CodeSplittingRouteDemo from "./CODESPLITTING/CodeSplittingRouteDemo";
 import ErrorBoundaryApp from "./ERRORBOUNDARIES/ErrorBoundaryApp";
+import ThemeComponent1 from "./CONTEXT/THEMECONTEXT/ThemeComponent1";
+import ThemeProvider from "./CONTEXT/THEMECONTEXT/ThemeProvider";
+import ThemeComponent2 from "./CONTEXT/THEMECONTEXT/ThemeComponent2";
+import HookUseStateTimer from "./HOOKS/USESTATE/hookUseStateTimer";
+import CountInputChanges from "./HOOKS/USESTATE/challenge2";
 function App() {
 
   return (
@@ -42,8 +47,14 @@ function App() {
     <Router>
       <div className="App">
         <ErrorBoundaryApp />
+        {/* <HookUseStateTimer /> */}
+        <CountInputChanges />
+        {/* <ThemeProvider>
+          <ThemeComponent1 />
+          <ThemeComponent2 />
+        </ThemeProvider> */}
         {/*<CodeSplitComponent1/>*/}
-        {<CodeSplittingRouteDemo />}
+        {/* {<CodeSplittingRouteDemo />} */}
         {/* <RoutingDemo/> */}
         {/* <RoutingDemoNested/> */}
         {/*<NestedRoutes/>*/}

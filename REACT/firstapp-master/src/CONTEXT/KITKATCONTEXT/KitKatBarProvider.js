@@ -3,6 +3,7 @@ import {Provider} from './KitKatBarContext'
 
 export class KitKatBarProvider extends React.Component {
     state = { open: false, message: "" };
+    
     btnClickHandler = (event) => {
       this.setState({
         open: true,
