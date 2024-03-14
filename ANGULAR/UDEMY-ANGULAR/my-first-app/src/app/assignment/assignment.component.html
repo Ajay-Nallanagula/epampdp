@@ -1,0 +1,21 @@
+<div class="row">
+  <h2>Assignment NgDirectives</h2>
+
+  @if(isShowSecret){
+  <p>Secret Passord is Tuna</p>
+  }
+
+  <button (click)="handleToggleBtnClick()">Display Details</button>
+
+  <div
+    *ngFor="let item of btnClickMeasure; let i = index"
+    [ngStyle]="{
+      backgroundColor: i >= 4 ? 'blue' : 'transparent'
+    }"
+    [ngClass]="{ textColorWhite: i >= 4 }"
+  >
+    <p>
+      {{ item }}
+    </p>
+  </div>
+</div>

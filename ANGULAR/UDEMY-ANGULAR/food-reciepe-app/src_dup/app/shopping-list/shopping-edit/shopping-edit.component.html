@@ -1,0 +1,20 @@
+<hr />
+<div class="row">
+  <form>
+    <div class="row">
+      <div class="col-sm-5">
+        <label for="name">Name</label>
+        <input id="name" class="form-control" #nameElement />
+      </div>
+      <div class="col-sm-2">
+        <label for="amount">Amount</label>
+        <input id="amount" class="form-control" #amountElement />
+      </div>
+    </div>
+    <div class="row">
+      <button class="btn btn-success margin-10" type="submit" (click)="onAdd()">Add</button>
+      <button class="btn btn-danger margin-10" type="button">Delete</button>
+      <button class="btn btn-primary margin-10" type="button">Clear</button>
+    </div>
+  </form>
+</div>

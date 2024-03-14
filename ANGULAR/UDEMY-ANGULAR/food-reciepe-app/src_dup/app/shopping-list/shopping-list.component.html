@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="col-sm-10">
+    <app-shopping-edit (addIngredient)="onAddIngredient($event)"></app-shopping-edit>
+  </div>
+  
+  <div class="row">
+    <div class="col-sm-12">
+      <ul class="list-group">
+        @for(ingredient of ingredients; track ingredient.name){
+        <li>
+          <a style="cursor: pointer" class="list-group-item">
+            {{ ingredient.name }}</a
+          >
+        </li>
+        }
+      </ul>
+    </div>
+  </div>
+</div>

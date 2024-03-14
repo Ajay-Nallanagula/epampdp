@@ -1,0 +1,7 @@
+<main-header (activeRoute)="onNavigate($event)"></main-header>
+<div class="container">
+  <app-reciepes *ngIf="selectedRoute === 'reciepe'"></app-reciepes>
+  <app-shopping-list
+    *ngIf="selectedRoute === 'shopping list'"
+  ></app-shopping-list>
+</div>

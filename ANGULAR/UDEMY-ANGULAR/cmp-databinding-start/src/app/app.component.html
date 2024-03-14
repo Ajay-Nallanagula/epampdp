@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row">
+    <app-game-control
+      (intervalFired)="onIntervalFiredEmitter($event)"
+    ></app-game-control>
+  </div>
+  <!-- <div class="row bg-yellow">
+    {{ timer }}
+  </div> -->
+  <div>
+    <app-even [timerCountEven]="evenNumber"></app-even>
+    <app-odd [timerCountOdd]="oddNumber"></app-odd>
+  </div>
+</div>
+
+<!-- <div class="container">
+  <app-cockpit
+    (serverCreated)="onServerAdded($event)"
+    (blueprintcreated)="onBlueprintCreated($event)"
+  ></app-cockpit>
+  <hr />
+  <div class="row">
+    <div class="col-xs-12">
+      @for(serverElement of serverElements; track $index){
+      <app-server [srvElement]="serverElement">
+        <H1>HELLO WORLD....</H1>
+      </app-server>
+      }
+    </div>
+  </div>
+</div> -->

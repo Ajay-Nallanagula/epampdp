@@ -4,6 +4,7 @@ class Observable {
     }
 
     addObservers(obrs) {
+        //Here observer is a function
         this.observers.push(obrs)
     }
 
@@ -39,7 +40,7 @@ const applyFirstUserDiscount = (user) => {
     console.log(`Dear ${user.name} discount of 30% is given!!`)
 }
 
-//Observer
+//register observers
 const registerNewUser = (user) => {
     const userList = new UserList()
 

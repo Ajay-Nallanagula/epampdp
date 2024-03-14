@@ -1,0 +1,8 @@
+https://hackernoon.com/the-7-software-architecture-books-experienced-developers-need-to-read
+
+Mastering the System Design Interview by Frank Kane
+
+https://github.com/unlight/solution-architecture
+
+Collation Of Books
+https://github.com/mguludag/book-1/blob/master/%5BJAVASCRIPT%5D%5BAsync%20JavaScript%5D.pdf

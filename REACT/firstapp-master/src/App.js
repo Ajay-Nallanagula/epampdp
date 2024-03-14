@@ -40,6 +40,7 @@ import ThemeProvider from "./CONTEXT/THEMECONTEXT/ThemeProvider";
 import ThemeComponent2 from "./CONTEXT/THEMECONTEXT/ThemeComponent2";
 import HookUseStateTimer from "./HOOKS/USESTATE/hookUseStateTimer";
 import CountInputChanges from "./HOOKS/USESTATE/challenge2";
+import Interview from "./INTERVIEW/interview";
 function App() {
 
   return (
@@ -47,8 +48,9 @@ function App() {
     <Router>
       <div className="App">
         <ErrorBoundaryApp />
+        <Interview />
         {/* <HookUseStateTimer /> */}
-        <CountInputChanges />
+        {/* <CountInputChanges /> */}
         {/* <ThemeProvider>
           <ThemeComponent1 />
           <ThemeComponent2 />
@@ -87,7 +89,7 @@ function App() {
     <Car1>This is a CAR</Car1>
     <Bike1>This is a BIKE</Bike1>
     <TruckWay11>This is a TRUCK<span>This is Heavy Vehicle</span></TruckWay11>*/}
-      </div>
+        </div>
       <div id="portal"></div>
     </Router>
   );

@@ -1,0 +1,15 @@
+<div class="list-group">
+  <a href="#" class="list-group-item" class="m-2" >
+    <h4 class="list-group-item-heading">{{ reciepe.name }}</h4>
+
+    <p class="list-group-item-text">
+      {{ reciepe.desc }}
+      <img
+        [src]="reciepe.imagePath"
+        [alt]="reciepe.name"
+        style="max-height: 50px"
+      />
+    </p>
+  </a>
+  <hr />
+</div>

@@ -38,10 +38,45 @@ Immer.js/ Immutable.js
 Redux is build on top of funtional programming.
 We cannot mutate the object.
 
+Install Redux: and redux toolkit redux-devtools
+https://redux.js.org/introduction/installation
+
+npm install redux react-redux @reduxjs/toolkit @redux-devtools/extension --save 
+
+Organize Redux Code
+====================
+--> redux holds state, state should be isolated from the rest of the UI-code .
+--> you can configure under store/... folder structure or any other name
+--> inside that configure based on the feature that you are doing 
+	like store/auth/, store/orders/, store/products/, store/billing/ etc 
+	 inside each feature folder you can have actions.js, actionTypes.js, reducer.js ...
+--> For every change , we will have to touch three files , to reduce that complexity we can follow "DUX PATTERN"
+ where all actions,actionTypes,reducer stay in one file like store/auth.js, store/products.js, store/billing.js 
+ --> Finally one store/index.js file where we 
+		-->combine reduducers
+		--> confingure/create store , with preloaded state 
+
+NOTE: redux-dev-tools is different from @redux/toolkit
+@redux/toolkit provides bunch of utility functions 
+--> configureStore(), createAction()/* used for actionCreators*/
+--> Will allow you to dispatch async actions like api calls, if toolkit wasn't there we will have to make use of middlewares to achieve the same .
+
+
 The building blocks of redux are
-1) Action : Will tell what happened, user performs action
-2) Store
-3) Reducer : Pure functions, which  take state and action and return new state(coffee machine)
+=================================
+Summary
+=======
+With the three step recipe, Redux allows us to easily manage advanced React applications:
+
+The Store represents the state of our Redux application as one giant object.
+Reducers describe ways in which we can update the store.
+Actions activate reducers to eventually update the store
+Altogether, Redux boils down to these three simple items: the store, reducers, and actions. As a team, they provide a simple yet highly powerful method to handle data in our apps.
+
+
+1) Store: The Store represents the state of our Redux application as one giant object.This store is accessible from any part of the application.
+2) Action(like events) : Will tell what happened, user performs action.
+3) Reducer(like event handlers) : Pure functions, which  take state and action and return new state(coffee machine)
  Pure functions:
  1) No mutations
  2) No side effects
@@ -49,12 +84,12 @@ The building blocks of redux are
  4) Always return the same output, given the input 
 
 How does these building blocks work ?
+--------------------------------------
 scenario : Lets say we are adding an item to shopping cart
-1) An "Action" is created with object schema as , for an action "type" property is mandatory
-else redux will throw an error
+1) An "Action" is created with object schema as , for an action "type" property is mandatory else redux will throw an error
 {
- type:"ITEM_ADDED", 
-  payload:{
+ type:"ITEM_ADDED", //This is mandatory
+  payload:{ //this can be anything 
   itemDescription:{
    itemId:'bla ba'
    itemName:'blah blah'
@@ -63,10 +98,12 @@ else redux will throw an error
 }
 
 2)Action will in turn trigger dispatch, which is provided by the Store, this dispatch takes an action as an argument,
-3) This action via dispatch is forwarded to reducer. The store calls the reducer. The reducer inturn computes the new state and returns/updates the store.
+3) This action via dispatch is forwarded to reducer. The store calls the reducer. The reducer inturn computes the new state and returns/updates the store, then store will update the state internally and  notify the UI component, then UI component will update their data and refresh themselves.
 4) We don't call reducer directly.
 
-In this style of architecture we are sending all the actions through on single entrance (pipe like structure), we have central location where the actions apply, this is helpful in logging redo/undo etc
+Why is redux designed this way?
+================================
+In this style of architecture we are sending all the actions through one single entrance (pipe like structure), we have central location where the actions apply, this is helpful in logging redo/undo etc
 
 Lets follow with an example
 We are Trying to build bug tracking system 
@@ -85,10 +122,11 @@ To build redux we need to follow 4 steps
 Redux is not included in react, we need to seperately install redux library "npm i redux"
 here the latest version is  4.0.5
 
+
+
 Design the store
 ----------------
-structure of store, simple array with bug objects, the state can be anything, can also be an object,
-in case is state is objects we may create reducer for each property 
+structure of store, simple array with bug objects, the state can be anything, can also be an object, in case is state is objects we may create reducer for each property 
 [
     {
     id:'',
@@ -127,6 +165,30 @@ Redux is inspired by flux, In flux the action object is slightly different
 But redux doesnt restrict to use of flux, but using this makes your consistent
 payload contains minimum info of the action.
 
+Sample action example
+======================
+//The following action adds a superPower to the dashboard, from list of defaultSuperPowers given
+//This is using without @redux/toolkit
+export const addSuperPower = (id, name) => {
+    return {
+        type: SUPERPOWER_ADDED,
+        payload: {
+            id,
+            name
+        }
+    }
+}
+//usage
+dispatch(addSuperPower({id:p.id,name:p.name})
+
+Create Action using @redux/Toolkit-->createAction()
+===================================================
+import { createAction } from "@reduxjs/toolkit"
+export const addSuperPower =  createAction('superPowerAdded')
+console.log(addSuperPower.type) //superPowerAdded
+//usage
+dispatch(addSuperPower({id:p.id,name:p.name}) //payload should be passed as an object
+
 Create Reducers
 ---------------
 see reducers.js
@@ -134,14 +196,77 @@ const reducer = (state = [], action) => { switch (action.type) { case actions.BU
 
 export default reducer;
 
+
+Create Reducer using @redux/Toolkit-->createReducer()
+=====================================================
+//See createaction implementation above
+import { createAction,createReducer } from "@reduxjs/toolkit"
+
+//@param1 is value of initial state which is []
+//@param2 is an object with actions key=>value, event=>eventHandler
+export default createReducer([],{
+[addSuperPower.type] : (state,action){
+//Here we can write mutating code because, internally redux/toolkit implements immer.js which is immutability library
+state.push()
+state[i] = 1000
+}
+})
+
+NOTE: createReducer we can write mutating code because, internally redux/toolkit implements immer.js which is immutability library
+
+
+***createSlice(): import { createSlice } from "@reduxjs/toolkit"
+==============================================================
+https://redux-toolkit.js.org/api/createSlice
+What does createSlice do?
+A function that accepts an initial state, an object of reducer functions, and a "slice name", and automatically generates action creators and action types that correspond to the reducers and state.
+
+const slice = createSlice({
+	name: 'bug',
+	initialState:[],
+	reducers: {
+		bugAdded: (state,action) => {
+		   //Can write mutating code here , uses Emmer.js
+		   state.push()
+		   state[i] = 1000
+		},
+		bugResolved:() => {
+		//Can write mutating code here , uses Emmer.js
+			state.push()
+			state[i] = 1000
+		}
+	}
+})
+
 Create store
 ----------
 see store.js
+Way 1:
+=======
 //Create store is a higher order function which takes in reducer, i.e function as an argument
 import {createStore} from 'redux' import reducer from './reducer'
+import {devToolsEnhancer} from 'redux-devtools-extension'
 //Only reference of reducer should be passed 
-const store = createStore(reducer)
+//Preloadedstate is the default state that can be passed, its like schema
+const store = createStore(reducer, 
+						  [preloadedstate],
+						  ***//window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() //To enable Redux dev tools 
+						       devToolsEnhancer({trace: true}) //HOF, by default configures *** line and also give config options.		  
+						  )
+						  
 export default store
+
+Way 2: 
+======
+import { configureStore } from "@reduxjs/toolkit";
+import rootReducer from "./rootReducer";
+/*
+    configureStore automatically sets up the Redux DevTools Extension for you, 
+    automatically turns on the thunk middleware, and also makes it very easy to add additional store enhancers if desired.
+*/
+const store = configureStore({ reducer: rootReducer })
+console.log(store.getState())
+export default store 
 
 
 What does the store object have 
@@ -155,11 +280,11 @@ console.log({store})
         replaceReducer:function,
     }
 
-    If you see there is no direct way to access state .
+If you see there is no direct way to access state .
 
 dispatch actions
 ----------------
-see index.js
+//see index.js
 export const addBug = (description) => ({
   type: actions.BUG_ADDED,
   payload: { description },
@@ -183,8 +308,61 @@ store.subscribe return refernce to unsubscribe method. When your component unmou
 
 see index.js for example.
 
+STORE in detail
+================
+consider store is 
+{
+categories:[], //Categories can have separate reducer.
+products:[], //products can have separate reducer.
+cart:[], // cart can have separate reducer .
+user:[], // user ca have separate reducer.
+}
 
 
+#region Connect Component to Redux
+
+Connect your UI component to Redux store
+=========================================
+
+Way 1 : using CLASS Components 
+===================================
+import { connect } from "react-redux";
+
+//Inside DefaultCharactersClass
+//This comes from mapDispatchToProps
+ handleClick(character) {  this.props.addSuperPower(character)  }
+  const { characters } = this.props //this comses from mapStateToProps
+
+const mapStateToProps = (state) => {  return { characters: state.defaultCharacters } }
+
+const mapDispatchToProps = (dispatch) => {     return {
+        addSuperPower: (character) => dispatch(addSuperPower(character.id, character.name))
+    }
+}
+//connect HOC takes two functions as parameters 
+export default connect(mapStateToProps, mapDispatchToProps)(DefaultCharactersClass)
+
+
+WAY 2: using Functional components : connect() function is not required in Funct.Comp 
+======================================================================================
+import { useDispatch, useSelector } from "react-redux"
+
+//Inside functional components ,
+const characters = useSelector(state => state.defaultCharacters)
+    const dispatch = useDispatch()
+    const selectedCharacters = useSelector(state => state.selectedCharacters)
+
+    // console.log(characters)
+
+    const handleClick = (character) => {
+        //console.log('Add Clicked', character)
+        dispatch(addSuperPower(character.id, character.name))
+    }
+
+
+
+
+#endregion Connect Component to Redux 
 
 
 
@@ -230,3 +408,8 @@ see index.js for example.
 
 #endregion
 
+
+
+#region Mosh Tutorials Turn2
+
+#endregion Mosh Tutorials Turn2

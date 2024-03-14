@@ -1,4 +1,111 @@
 Udemy : https://www.udemy.com/course/nextjs-react-the-complete-guide/learn/lecture/41160686#overview
+Interview Questions: https://www.geeksforgeeks.org/next-js-interview-questions-answers2024/
+
+#region Javascript pre-render, pre-fetch, pre-generate, pre-load, async, defer
+
+
+1. JavaScript Pre-render: Pre-rendering loads a webpage in the background before the user navigates to it. If you know that a user is likely to navigate to a certain page next, you can pre-render that page so it loads instantly when the user decides to visit it. 
+
+Example: `<link rel="prerender" href="https://yourwebsite.com/page2.html">`
+
+2. JavaScript Pre-fetch: Pre-fetching is similar to pre-rendering, but with a twist. It fetches the necessary files and data needed for the page before the user actually navigates to it.
+
+Example: `<link rel="prefetch" href="https://yourwebsite.com/file.js">`
+
+#region pre-render Vs pre-fetch
+When optimizing your website for performance, understanding the difference between `pre-render` and `pre-fetch` helps you decide which process to use based on your website's needs.
+
+**Pre-render**
+`Pre-rendering` is a process where an entire webpage is rendered in the background before a user navigates to it, making it readily available as soon as it's requested. This can drastically improve perceived performance as the webpage appears to load instantly.
+
+However, `pre-rendering` can be resource-intensive as it requires significantly more memory and CPU power, rendering the entire DOM in the background. This can be a problem if the end user doesn’t ever visit the pre-rendered page, leading to unnecessary use of resources.
+
+An example of pre-render is: `<link rel="prerender" href="https://example.com/next-page.html">`
+
+**Pre-fetch**
+`Pre-fetching`, on the other hand, only downloads and stores the necessary resources (like JavaScript, CSS, and image files) for future use, without actually rendering the page. When a user navigates to a pre-fetched page, the browser has most, if not all, of the necessary resources and is able to render the page more quickly.
+
+But unlike pre-rendering, it doesn't process or execute the downloaded files, resulting in a less obvious increase in page load speed, but uses less resources compared to pre-rendering.
+
+An example of prefetch is: `<link rel="prefetch" href="https://example.com/next-page.html">`
+
+Choosing between pre-rendering and pre-fetching will depend on the specific needs and resources of your website. If instant page load is a high priority and resources are plentiful, `pre-render` could be an appropriate choice. However, if resource usage is a concern, `pre-fetch` might be a better option.
+
+#endregion pre-render Vs pre-fetch
+
+3. JavaScript Pre-generate: This isn't a standard JavaScript attribute or method, but it generally refers to the concept of generating HTML, CSS, and JavaScript files at build time instead of run time.
+
+4. JavaScript Pre-load: Preloading allows the browser to start loading resources early in the background, without rendering them, until they are needed. This is used for resources that are necessary for the page's first load.
+
+Example: `<link rel="preload" href="https://yourwebsite.com/styles.css" as="style">`
+
+#region Pre-load Vs pre-fetch
+Preload and Prefetch are both directives to browsers sent via HTML or HTTP headers that can increase the performance of a page load. They have different ways and uses:
+
+**Preload**
+The `preload` value of the `link` tag's `rel` attribute lets you declare fetch requests in the HTML's `head`, specifying resources that your page will need very soon, which you want to start loading early in the lifecycle of a page, before browser's main rendering machinery kicks in. This way, they are available earlier and are less likely to block the page's render.
+
+```html
+<link rel="preload" href="style.css" as="style">
+<link rel="preload" href="main.js" as="script">
+```
+
+`As` attribute is necessary to correctly setup the request and the correct content type.
+
+**Prefetch**
+The `prefetch` value of the `link` tag's `rel` attribute tells the browser to fetch resources in the background (low priority) that might be used in the navigation to the next page. This could be, for example, the JavaScript or CSS file for the next page.
+
+```html
+<link rel="prefetch" href="page2.js">
+```
+
+Unlike `preload`, `prefetch` does not block the `window.onload` event, meaning that prefetching has a lower priority than resources needed for the current page. 
+
+In summary, `preload` is used to load resources that are needed right now, while `prefetch` is used more as a performance optimization for future navigations. Each one is better for different scenarios and they can be used together as well.
+
+#endregion Pre-load Vs pre-fetch
+
+5. JavaScript async: Async stands for “asynchronous” and is used when you want your scripts to load asynchronously alongside the rest of your web page, without blocking the parsing of the HTML document. 
+
+Example: `<script src="script.js" async></script>`
+
+6. JavaScript defer: Defer is used when you want your scripts to load in the background while the rest of your webpage loads and renders, but you want it to only execute after the page has been fully parsed. 
+
+Example: `<script src="script.js" defer></script>`
+
+#region async Vs defer
+
+`async` and `defer` are two attributes that can be added to a script tag to change when the JavaScript file is executed. They're both useful for improving page load speed, but they have different use cases.
+
+**Async**
+The `async` attribute allows the browser to continue parsing the HTML document while the script is being downloaded. Once the script is downloaded, the HTML parsing is paused while the script is executed, and then resumed when the script has finished running. 
+
+If you have multiple `async` scripts, they're executed in the order they were downloaded, which might not be the same as the order they're listed in the HTML.
+
+This is useful when the script is independent from any others on the page and it doesn't alter the DOM (Document Object Model).
+
+Example:
+```html
+<script async src="script.js"></script>
+```
+
+**Defer**
+The `defer` attribute, meanwhile, also allows the browser to continue parsing the HTML document while the script is being downloaded, just like `async`. However, defer ensures that scripts are executed in the order they appear in the HTML document, and only after the HTML document has finished parsing.
+
+This is useful when the script depends on other scripts or when it alters the DOM.
+
+Example:
+```html
+<script defer src="script.js"></script>
+```
+
+In summary, both `async` and `defer` are used to prevent scripts from blocking the parsing of HTML. The key differences are that `async` will execute as soon as the script is available (potentially blocking the HTML parsing), whereas `defer` will maintain the order of scripts and ensure they're executed only after the entire HTML document has been parsed.
+
+#endregion async Vs defer
+
+Remember, all these tags and attributes help facilitate a more performant loading and rendering of your web application by allowing the browser to better prioritize its network requests and parsing of resources.
+
+#endregion Javascript pre-render, pre-fetch, pre-generate, pre-load,async, defer
 
 #region Getting Started
 
@@ -46,51 +153,13 @@ document.querySelectorAll('#myForm input').addEventListener('blur', async () => 
 
 When Should we use Next.js?
 
-PageRouter Vs AppRouter
-========================
+
 
 #endregion 
 
 #region NextJs Interview Questions
 
-#region Links
-https://hackernoon.com/30-nextjs-interview-questions-get-ready-for-your-dream-job
-https://mindmajix.com/next-js-interview-questions
 
-<a href> Vs <Link href=/>
-=========================
-With anchor tag, there is a new http request sent to theserever to fetch the page , which means stateless, all the state in redux/context will be lost 
-With <Link>  this is client side routing happens , HTTP request is not sent to the server. app state is not lost.
-Automaticall pre-fetches the data , pages that we might need are eagerly downloaded.
-
-There are two ways of configuring a route in the <Link>
-const client = [
-        { id: 'ajay', name: 'AjayNallanagula' },
-        { id: 'Divya', name: 'DivyaNallanagula' }
-    ]
- client.map(route => <li key={route.id}>
- //WAY 1: 
-                <Link href={`/client/${route.id}`}>{route.name}</Link> 
-				
-			//WAY 2
-                <Link href={{
-                    pathname: '/client/[id]',
-                    query: { id: route.id }
-                }}>{route.name}</Link>
-            </li>
-
-
-
-Incase If you need to navigate progamatically :
-const router = useRouter()
-    console.log('ClientId', { router })
-    const handleNavigate = () => {
-        router.push('/client/max/routeOnClick')
-    }
-
-#endregion Links
-
-#region Questions
 NextJs can be used to build :
 Several types of websites and applications can be built. But the most popular are-
 Desktop websites
@@ -143,11 +212,122 @@ LoopBack
 Angular Universal
 React Router
 
-#endregion Questions
+What are CSS Modules?
+https://css-tricks.com/css-modules-part-1-need/
+https://nextjs.org/docs/app/building-your-application/styling/css-modules
+CSS Modules locally scope CSS by automatically creating a unique class name. This allows you to use the same class name in different files without worrying about collisions. This behavior makes CSS Modules the ideal way to include component-level CSS.
+
 
 #endregion NextJs Interview Questions
 
+#region Links
+https://hackernoon.com/30-nextjs-interview-questions-get-ready-for-your-dream-job
+https://mindmajix.com/next-js-interview-questions
+
+<a href> Vs <Link href=/>
+=========================
+With anchor tag, there is a new http request sent to theserever to fetch the page , which means stateless, all the state in redux/context will be lost 
+With <Link>  this is client side routing happens , HTTP request is not sent to the server. app state is not lost.
+Automaticall pre-fetches the data , pages that we might need are eagerly downloaded.
+
+There are two ways of configuring a route in the <Link>
+const client = [
+        { id: 'ajay', name: 'AjayNallanagula' },
+        { id: 'Divya', name: 'DivyaNallanagula' }
+    ]
+ client.map(route => <li key={route.id}>
+ //WAY 1: 
+                <Link href={`/client/${route.id}`}>{route.name}</Link> 
+				
+			//WAY 2
+                <Link href={{
+                    pathname: '/client/[id]',
+                    query: { id: route.id }
+                }}>{route.name}</Link>
+            </li>
+
+
+
+Incase If you need to navigate progamatically :
+const router = useRouter()
+    console.log('ClientId', { router })
+    const handleNavigate = () => {
+        router.push('/client/max/routeOnClick')
+    }
+
+#endregion Links
+
 #region NextJs Concepts 
+
+
+#region PageRouter Vs AppRouter
+================================
+https://www.freecodecamp.org/news/routing-in-nextjs/#:~:text=A%20key%20difference%20between%20the,routes%20within%20the%20app%20folder.
+
+The Pages Directory automatically creates routes within the pages folder, whereas the App Router organizes routes within the app folder
+
+From ChatGPT: https://chat.lab.epam.com/
+These routing models differ in terms of how they organize code and handle routing logic
+
+1. Page-Based Routing: 
+=====================
+Page-based routing in Next.js is file-system based. Every file inside the `pages` directory becomes a route automatically.
+This way, you don't have to maintain a separate routing configuration file, and the file organization itself determines the URLs.
+For example, if you create a file at `pages/about.js`, it will be accessible at `your-website/about`.
+NOTE: PAGES DIRECTORY SHOULBE BE THERE TO CREATE ROUTES 
+
+Example "pages/about.js":
+
+```jsx
+function About() {
+  return <div>About</div>
+}
+
+export default About
+```
+
+Here, About function in `about.js` will be served when `/about` is requested.
+
+
+App Router:
+============
+
+
+REACT router-dom-based Routing:
+===============================
+App-based routing provides more flexibility than page-based routing and is often used for applications with complex routing requirements, such as nested routes or dynamic routes. 
+With app-based routing, you'll configure your routes manually in a central location (e.g., `app.js` or `routes.js`). This model gives you fine-grained control over routing and lets you take advantage of libraries such as react-router-dom.
+
+Example "app.js":
+
+```jsx
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import About from "./pages/About";
+import Home from "./pages/Home";
+
+function App() {
+  return (
+    <Router>
+      <Switch>
+        <Route path="/about">
+          <About />
+        </Route>
+        <Route path="/">
+          <Home />
+        </Route>
+      </Switch>
+    </Router>
+  );
+}
+
+export default App;
+```
+With this approach, if you ever decide to change URL structure, you'd have to refactor your app routing file.
+
+To summarize, if you’re building a simple website with straightforward navigation, the automatic, page-based routing provided by Next.js may save you some time. Alternatively, for more complex applications, manually routing using an app-based approach may provide the flexibility you need.
+
+#endregion PageRouter Vs AppRouter
 
 #region Reserverd Names in Next.js
 Here's a list of reserved filenames in NextJS - you'll, of course, learn about the important ones throughout this section:
@@ -375,6 +555,36 @@ useFormStatus will only return status information for a parent <form>. It will n
 
 #endregion useFormState() 'react-dom'
 
+#region useRouter
+If you want to access the router object inside any function component in your app, you can use the useRouter hook
+https://nextjs.org/docs/pages/api-reference/functions/use-router
+
+Example:
+import { useRouter } from 'next/router'
+ 
+function ActiveLink({ children, href }) {
+  const router = useRouter()
+  const style = {
+    marginRight: 10,
+    color: router.asPath === href ? 'red' : 'black',
+  }
+ 
+  const handleClick = (e) => {
+    e.preventDefault()
+    router.push(href)
+  }
+ 
+  return (
+    <a href={href} onClick={handleClick} style={style}>
+      {children}
+    </a>
+  )
+}
+ 
+export default ActiveLink
+
+#endregion useRouter
+
 #endregion NextJs Hooks
 
 #region revalidatePath()
@@ -443,8 +653,10 @@ export async function generateMetadata({params}){
 
 #endregion Metadata
 
+#region Debug NextJs
+https://nextjs.org/docs/pages/building-your-application/configuring/debugging
 
-#endregion NextJs Concepts
+#endregion Debug NextJs
 
 #region Pages and File Based Routing
 
@@ -493,3 +705,289 @@ File-Based-Routing(FBR) Vs React-Based-Router(RBR) or Code-Based
 
 
 #endregion Pages and File Based Routing
+
+#region Page Re-rendering and Data fetching
+NextJs is not Just about Routing...
+
+https://nextjs.org/docs/pages/building-your-application/data-fetching/get-static-props
+
+Page Pre-rendering:
+------------------
+ROUTE : Request --> /first-route 
+
+RESPONSE BY REACT :
+<html>
+<head></head>
+<body>
+<div id="root></div>
+<script src="blah/blah/bundle.js"/>
+</body> </html>
+
+RESPONSE BY NEXT.JS:
+<html>
+<head></head>
+<body>
+<div id="root>
+1) Item 1
+2) Item 2
+3) Item 3
+</div>
+<script src="blah/blah/bundle.js"/>
+</body> </html>
+
+Assume you are sending a FIRST request to a ROUTE,
+
+In REACT the http request will give the RESPONSE BY REACT , empty html with placeholder and scripts
+This is not good for Search Engine Optimization . To Improve the SEO, we need to PRE-RENDER the page with data 
+
+***NOTE: Its good to know How SEO works briefly
+
+Next.Js exactly does the same, NextJs pre-renders the page with suitable data(RESPONSE BY NEXT.JS), The search engines can index your page based on the data that is available on the pre-rendered page, This is only for first request. This is good for SEO. Once the page is rendered , this has to bind with React framework on the frontend/browser, this process is called as "HYDRATION".   ONce NextJs is loaded, Hydration takes place, React framework takes over and works as is.
+
+By default Next.Js pre-renders all your pages by default, to check this render some conent and check "View Page Source" in chrome all the data is pre-rendered from server . 
+
+Two types of Pre-Rendering in NEXT.Js
+1) Static Generation:
+2) Server Side rendering
+
+Static Generation :
+-------------------
+--> Pre-generate a page(with data prepared on server-side) during build-time(CI/CD Build Step). Here Build Time means CI/CD during that process BUILD STEP(npm build)--> DEPLOY STEP
+--> Then these pages are cached by server/served to CDN serving the app.
+
+For pre-genarting a page, NExtJs automatically calls 
+//Written on individual component level
+export async function getStaticProps(context){
+return { props:{}} //returns Object with props 
+}
+
+These props will be made available to the component in which getStaticProps have been implemented.
+
+What does context have?
+--> Context contains, execute times, locals, dynamic path values etc.
+
+This method contains all the script/code/html to build the pre-rendered page, this method works on server side hence you will not have access to window object, Browser API's like setTimeout, Fetch, GeoLoacation, local/session storage, Audio/Video APIS, DOM API etc.
+
+
+If you have static content on your page, no dynamic data attached to it , such pages are static pages(Welcome-On-board pages, Thank you pages, Intro-pages, blogs, articles etc) such type of pages are Static Pages, right candidates for Static Generation. SEO, Data available right from start to your end-users are advantages.
+
+Incremental Static Generation:(ISG):
+So the prerendered page will be built during the build step , what if the pre-rendered data is stale, to handle that case NextJs have two options
+
+Way 1: Introduce useEffect Inside the componenet that is been pre-rendered , so that after first render which is filled with data from server , useEffect will run and fetch the data.
+
+Way 2: Is Incremental Static Generation 
+export async function getStaticProps(context) {
+  const pathName = path.join(process.cwd(), 'data', 'dummy-data.json')
+    const productsData = await fs.readFile(pathName)
+  const parsedProds = JSON.parse(productsData)
+
+  return {
+    props: { products: parsedProds.products },
+    revalidate: 60, //The revalidate option indicates //incremental static generation 
+	 notFound: false // if set to true ,the given page is not found,  a 404 Page is returned 
+	 redirect: {destination: '/no-data'}//Can also redirect from getStaticProps
+  }
+ }
+ 
+The prop with revalidation takes 60s , after which for every request the build step takes automatically by nextJs and pre-renders the page .
+NextJs  runs getStaticProps code during npm run build step 
+  
+Scenario : When you do the following in Product-Detail Page... ProductDetail Page is a dynamic page-->[pid].js
+
+dummy-data:
+{
+  "products": [
+    { "id": "p1", "title": "Product 1", "description": "This is product 1" },
+    { "id": "p2", "title": "Product 2", "description": "This is product 2" },
+    { "id": "p3", "title": "Product 3", "description": "This is product 3" }
+  ]
+}
+//Inside [pid].js
+const ProductDetailPage = (props) => {      return <h2>Product Detail Page of....</h2> } 
+export default ProductDetailPage
+
+export async function getStaticProps(context) {
+    const { params } = context
+    const pathName = path.join(process.cwd(), 'data', 'dummy-data.json')
+    const productsData = await fs.readFile(pathName)
+    const parsedProds = JSON.parse(productsData)
+    const items = parsedProds.filter(item => item.id === params.pid)
+    return {         props: { items }     }  }
+
+//end Inside [pid].js
+
+Output: Server Error
+Error: getStaticPaths is required for dynamic SSG pages and is missing for '/[pid]'.
+Read more: https://nextjs.org/docs/messages/invalid-getstaticpaths-value
+
+Why do we see this server error?
+================================
+--> NextJs Pre-generate the static pages, but product-detail.js is a dynamically generated page [pid].js
+--> Which means by default NextJs doesn't pre-generate dynamic pages , NextJs wouldn't know for how many pages it should pre-generate because pid's can be 1 or 2 or 1000, hence logically its not possible to pre-generate and pre-render using getStaticProps(context)
+
+How do we solve this issue?
+===========================
+We can solve this issue by keeping NextJs informed about which part of the data will be used to generate the dynamic-paths(routes) for eg: in this case its product-id[pid] , and to keep NextJs informed about this dynamic fragment we have another method called 
+export async function getStaticPaths() which will be used to pre-generate paths(routes) . The same is mentioned in the error message above .
+Eg: 
+//Inside [pid].js beneath getStaticProps()
+//getStaticPaths will be executed first will pass the //execution to getStaticProps and then react.component
+export async function getStaticPaths() {
+//We should give the fragments on which dynamic pages will
+//be generated in advance in below format
+//You can also generate the data structure using Javascript code.
+   return {
+        paths: [
+            {params:{pid:'1'}},
+			{params:{pid:'2'}},
+			{params:{pid:'3'}},
+        ],
+        fallback: false|true|'blocking'
+    }
+}
+
+What is the usage of fallback?
+--> if fallback is FALSE , all the pages for params are pre-generated by NextJs , When we switch to the product detail, a fetch call goes to p1.json and the data is loaded without any intervention from client-side, its all taken care by NextJs
+--> if fallback is TRUE, assume pid's can 1 or 2 or 1000  pre-genarting 1000's of page is a overkill even on server 
+		so from getStaticPaths() generate pre-rendered page only for few values like below generate only for params 1, which might be frequently accessed 
+		export async function getStaticPaths() {
+				return {
+					paths: [{params:{pid:'1'}}],
+					fallback: true,
+		}
+In this case, the pid2, and pid3 are not pre-generated, You can check that by directly typing in the URL because fallback is true . You will see an error in the React component if you haven't written any fallback code . I Fallback code is written then the request is sent to backend to load the p2 or p3 page which is not pre-rendered or pre-generated.
+const ProductDetailPage = ({ item }) => {
+//FALLBACK CODE, Below If condition is fallback code.
+    if (!item) { return <h2>Loading....</h2>  }
+    return (
+        <>
+            <h2>{item.title}</h2>
+            <h3>{item.description}</h3>
+        </>
+    )
+}
+
+-->if fallback:'blocking' , If fallback is blocking you don't need to specify the fallback code in the product-detail componnent, The nextJs will automatically fetch the requested Resources
+const ProductDetailPage = ({ item }) => {
+    return (
+        <>
+            <h2>{item.title}</h2> <h3>{item.description}</h3> 
+        </>
+    )
+}
+
+What if you are querying for a product which doesn't exisit?
+In that case :
+--> fallback: true
+--> Product-detail component should have fallback code
+--> in getStaticProps if the product is non-existent instead of returning props, return {notFound:true} , this will render a notFound404 page by NextJs
+export async function getStaticProps(context) {
+    const { params } = context
+    const products = await parseData()
+    const item = products?.find(item => item.id === params.pid)
+    if (!item) { return { notFound: true }}
+    return {props: { item }}
+}
+
+***How do you know if Pages are statically generated or ISG(incremental static gen.) or SSG(Server Side Gen) is used during dev time?
+====================================================================================
+Way 1: 
+To know that you can run "npm build", this will give all the stats like below 
+ ✓ Generating static pages (6/6)
+ ✓ Collecting build traces
+ ✓ Finalizing page optimization
+
+Route (pages)                              Size     First Load JS
+┌ ● /                                      2.66 kB          82 kB
+├   /_app                                  0 B            79.3 kB
+├ ● /[pid] (438 ms)                        312 B          79.6 kB
+├   ├ /p1
+├   ├ /p2
+├   └ /p3
+└ ○ /404                                   180 B          79.5 kB
++ First Load JS shared by all              79.5 kB
+  ├ chunks/framework-0c7baedefba6b077.js   45.4 kB
+  ├ chunks/main-c379b48138cf9870.js        32.9 kB
+  ├ chunks/pages/_app-2ba67b4e2e44dba9.js  294 B
+  ├ chunks/webpack-fd8027ecb5121007.js     770 B
+  └ css/49861c0d8668ac82.css               186 B
+
+○  (Static)  automatically rendered as static HTML (uses no initial props)
+●  (SSG)     automatically generated as static HTML + JSON (uses getStaticProps)    
+
+Way 2:
+There is ".next" folder there we can see the all the generated pages at .next/server/pages folder.
+
+***NOTE: When you write console.log() in getStaticProps() the statments will be logged during build-step itself
+
+Server Side Rendering: getServerSideProps()
+=============================================
+Now assume a scenario , where you need access to complete request object , or access to cookies or headers . In this case
+--> getStaticPaths and getStaticProps cannot be used because they are been called at the time of BUILD STEP, even if use ISG(incremnetal Static Generation) still that might be called at iterating builds 
+--> You get request object when the route is rendered or during Navigation during that point of time we might get Request Object, So NEXTJS gives us getServerSideProps() whenever a request reaches the server getServerSideProps() gets executed.
+
+--> **NOTE: YOU CAN EITHER USE getStaticPaths/getStaticProps OR getServerSideProps().
+YOU CANNOT USE BOTH AT A TIME. THEY RUN AT DIFFERENT TIMES.
+
+Return types of getServerSideProps()
+=====================================
+async getServerSideProps(context){
+const {params,headers,req,res, ...rest} = context
+
+return {props: {}}
+return {notFound:true}
+return {redirect: {destination:'/some-path'}} //Absolute-path
+//NO REVALIDATE IN getServerSideProps, it will always run on every request
+}
+
+How do you use getServerSideProps() with dynamic page like [uid].js?
+====================================================================
+
+export async function getServerSideProps(context){
+const {params} = context
+return {
+	props:{
+		userid: params.uid
+	}
+  }
+}
+
+When you run npm run build , you can see 
+
+✓ Linting and checking validity of types
+ ✓ Creating an optimized production build    
+ ✓ Compiled successfully
+ ✓ Collecting page data    
+ ✓ Generating static pages (5/5)  // ONLY 5 PAGES are PRE_GENERATED, except                                 // userProfile
+ ✓ Collecting build traces
+ ✓ Finalizing page optimization
+
+Route (pages)                              Size     First Load JS
+┌ ● /                                      2.66 kB          82 kB
+├   /_app                                  0 B            79.3 kB
+├ ● /[pid]                                 329 B          79.6 kB
+├   └ /1
+├ ○ /404                                   180 B          79.5 kB
+└ λ /userProfile                           274 B          79.6 kB
++ First Load JS shared by all              79.5 kB
+  ├ chunks/framework-0c7baedefba6b077.js   45.4 kB
+  ├ chunks/main-c379b48138cf9870.js        32.9 kB
+  ├ chunks/pages/_app-2ba67b4e2e44dba9.js  294 B
+  ├ chunks/webpack-fd8027ecb5121007.js     770 B
+  └ css/49861c0d8668ac82.css               186 B
+
+λ  (Server)  server-side renders at runtime (uses getInitialProps or getServerSideProps)     
+○  (Static)  automatically rendered as static HTML (uses no initial props)
+●  (SSG)     automatically generated as static HTML + JSON (uses getStaticProps)
+
+***NOTE: When you write console.log() in getServerSideProps() the statments will be logged during route is rendered
+
+Client-side Data Fetching using NextJs
+=======================================
+stock-Data pre-rendering , pre-fetching will not make much sense 
+
+
+#endregion Page Re-rendering and Data fetching
+
+#endregion NextJs Concepts

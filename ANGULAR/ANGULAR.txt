@@ -1,0 +1,863 @@
+Udemy:
+nallanagula.ajay@gmail.com
+18@Vasisht
+
+Udemy: https://www.udemy.com/course/the-complete-guide-to-angular-2/learn/lecture/13914134#overview
+
+Setup the project using:
+ng new my-first-app --no-strict --standalone false --routing false
+
+
+How are Angular application Bootstrapped? 
+Angular-cli adds the bundles in index.html during the rendering.
+
+How does your app-root get filled?
+
+What do you have in main.ts?
+Can you bootstarp multiple appModules?
+
+Decorators : @Component, @NgModule, 
+
+@NgModule => declarations:[], imports:[], providers:[],bootstrap:[]
+
+Standalone  Components: components that need not be added in modules and can still be used without a mention in module Standalone components can reduce the amount of boilerplate code you have to write - after all, you don't have to add and manage those extra @NgModules anymore.
+Eg: 
+@Component({
+  standalone: true,
+  selector: 'app-cmp',
+  template: '<app-some-other-component />',
+  imports: [SomeOtherComponent]
+})
+export class SomeComponent {}
+
+Shortcut to create components :
+via cli : ng generate component <component_name>
+or ng g c <component_name>
+styleUrl/styleUrls/style(inline, inside [])
+templateUrl/template(inline)
+
+Selector in Components works like css property ,
+we can giev the selectors 
+selector: 'app-servers', // as an element <app-serevers/>
+  //selevtor: ['app-servers'] // as attribute <div app-servers/>
+  //selector: '.app-server' //as class <div class="app-server/>
+ 
+Note: For Directive it can also work like elements 
+FUN FACT:  In AngularJs they also used to work if placed in comments 
+  
+ DataBinding:
+ Output Data : to Html
+ --> String Interpolation {{string}}
+ --> Property Binding : [property] = "data"  eg:
+ <button [disabled] = "!someBoolVal"/>
+ From Html to Ts:
+ Event Binding (event) = "expresion" 
+ Eg:  (click) = "handleClickEvent($event)"
+ //$event will give you access to event-data 
+
+ Two-way Data Binding [(ngModel)] = "data"
+
+You can basically bind to all Properties and Events - a good idea is to console.log()  the element you're interested in to see which properties and events it offers.
+
+Important: For events, you don't bind to onclick but only to click (=> (click)).
+
+Important: FormsModule is Required for Two-Way-Binding!
+ For Two-Way-Binding (covered in the next lecture) to work, you need to enable the ngModel  directive. This is done by adding the FormsModule  to the imports[]  array in the AppModule.
+ import { FormsModule } from '@angular/forms'; 
+ 
+Most often directives are added as attribute to elements.
+*ngIf: structural directive, will change the structure of DOM. This means you html DOM needs to be rendered again.
+Will angular ngIf causes Layout-Thrashing?
+
+In Angular17 : *ngIf can also be used as
+@if (someCondition) {
+  <p>Only visible if 'someCondition' is true</p>
+ }
+
+<app-server *ngFor="let server of servers"></app-server>
+
+similarly @for in Ng17
+@for (item of items; track item.id) {
+  <li>{{ item.title }}</li>
+}
+ 
+ The advantage of the new syntax is that it can be slightly more efficient under the hood and that it does not rely on NgFor or the CommonModule being imported / available.
+ 
+ Apart from structural directives, attribute directives don't add or remove elements, they only change behaviour of element they were placed on.
+ 
+ Attribute Directives: 
+ ngStyle: 
+ <p [ngStyle] = "{backgroundColor:getColor()}"/>
+ 
+ ngClass:
+ <p [ngClass] = "{className:condition or a method}"/>
+ 
+ Source maps are generated only during development, Source maps should be disabled during production mode
+ 
+ NOTE: You cannot use more than one structural directive on one element. 
+ 
+How Does Change detection Takes place in Angular?
+Ans : Zone.Js, In detail change detection is explained in below blog. https://javascript.plainenglish.io/angular-zone-js-change-detection-understanding-the-core-concepts-7c78b8aa8818#:~:text=In%20Angular%2C%20Zone.,change%20detection%20mechanism%20when%20necessary.
+ 
+Component Communication :
+Way 1:
+How do you expose properties of one component to another component ?
+ 
+ Parent-Child Communication: @Input()
+ Using @Input('<alias-name>') directive 
+ 
+ 
+ Child-Parent Communication: @Output-CustomEvents-EventEmitter
+ Using @Output('<alias-name>') directive 
+ //Inside TS
+ @Output() serverCreated = new EventEmitter<ServerElementType>();
+ serverCreated.emit
+ 
+Way 2: 
+Not in all scenarios this @Input/@Output will be optimum/faster ,  Another way of Component Comunication could be services.
+
+
+What is ViewEncapsulation?
+Example : --> cockpitComponent --> p{color : blue}
+Css applied for one component will not overlap or be applied globally to other components , specific to one component only. CSS rule will be applied globally, but this will not work with Angular.
+Only <p> in cockpit component will have text as blue.
+
+--> How does angular identify <p> of cockpitComponent only?
+Angular will add an attribute with unique identifier in DOM see in browser tools , this is called "STYLE ENCAPSULATION"
+<p__ngcontent-ejo-2>......
+Css p[__ngcontent-ejo-2] {color: blue}
+This identifier "__ngcontent-ejo-2" will be available for all the elements in cockpitComponent
+
+This is Emulation of "ShadoDom" this will not be supported by all browsers hence Angular Emulates it 
+
+Can we Override this behaviour of Angular?
+import {ViewEncapsulation} from '@angular/core'
+Yes
+@Component({
+encapsulation : ViewEncapsulation.Emulate(default) [None, ShadoDom] //ShadoDom is formerly called as Native
+})
+
+ViewEncapsulation.None: In this case , if you apply "None" the css that are applied in this component will be global,  and affect other components 
+can override.
+
+ViewEncapsulation.ShadoDom: This direct implementation of shadow DOM, not all browsers support Shadow dom.
+
+
+What is "SHADOW DOM"?
+https://javascript.info/shadow-dom
+Shadow DOM serves for encapsulation. It allows a component to have its very own “shadow” DOM tree, that can’t be accidentally accessed from the main document, may have local style rules, and more.
+
+Local Reference in Angular :
+===========================
+ <input
+    type="text"
+    class="form-control"
+    class="margin-10"
+    #serverName //LOCAL REFERENCE 
+  />
+Now the reference can be used any where in HTML file only in this component.
+//Usage
+ <button class="btn btn-primary margin-10" (click)="onAddServer(serverName)">
+      Add Server
+  </button>
+ 
+//IN Ts
+onAddServer(serverName:HTMLInputElement){
+// You will get entire element 
+}
+
+Other ways to pull Local Reference :
+
+@ViewChild()
+<input
+    type="text"
+    class="form-control"
+    class="margin-10"
+    #serverContent //LOCAL REFERENCE 
+  />
+
+//In TS
+import {ElementRef,ViewChild, } from '@angular/core';
+@ViewChild('serverContent', { static: true }) serverContentText: ElementRef;
+
+console.log(this.serverContentText.nativeElement.value)
+
+NOTE: For custom components , the children that you pass are ignored in anagular
+//Like below <h1> is ignored by Angular
+ <app-server>
+        <H1>HELLO WORLD....</H1>
+  </app-server>
+
+To avoid this we use <ng-content><ng-content> works as a place holder
+//Inside server.component.html we will have to ut this place holder
+<div> <ng-content> </ng-content> </div>
+
+@ContentChild()
+================
+@ContentChild()- is similar to @ViewChild intro from Angular8+
+To access elements(that are on parent-component) that are going to be rendered in place holder 
+<ng-content #parentComponentIdentifier> in some-other component.html we use @ContentChild()
+ In some-other component
+ //someother.component.ts 
+ @ContentChild('parentComponentIdentifier',{static:true})
+
+
+Angular Component LifeCycleHooks
+=================================
+https://www.freecodecamp.org/news/angular-lifecycle-hooks/
+Order in which Lifecycle events are called.
+--> All lifecycle methods are available from @angular/core 
+-->
+
+ngOnChange(changes:SimpleChange):
+--------------------------------- 
+--> triggers following the modification of @Input bound class members
+--> When the external source alters that data in a detectable manner, it passes through the @Input property again.
+
+ngOnInit():
+------------
+--> ngOnInit fires once upon initialization of a component’s input-bound (@Input) properties. 
+--> ngOnInit is a one-and-done hook. Initialization is its only
+
+ngOnDoCheck():
+--------------
+ngDoCheck fires with every change detection cycle. Angular runs change detection frequently. Performing any action will cause it to cycle. ngDoCheck fires with these cycles. Use it with caution. It can create performance issues when implemented incorrectly
+--> ngDoCheck lets developers check their data manually
+--> In conjunction with ChangeDetectorRef, developers can create their own checks for change detection.
+
+ngAfterContentInit():
+--------------------
+***DOM Vs View DOM
+===============
+The content DOM defines the innerHTML of directive elements. Conversely, the view DOM is a component’s template excluding any template HTML nested within a directive
+--> ngAfterContentInit fires after the component’s content DOM initializes
+
+ngAfterContentChecked():
+------------------------
+ngAfterContentChecked fires after every cycle of change detection targeting the content DOM.
+ngAfterContentChecked fires during a component’s initialization stages too. It comes right after ngAfterContentInit
+
+ngAfterViewInit():
+-------------------
+ngAfterViewInit fires once after the VIEW DOM finishes initializing. 
+
+ngAfterViewChecked():
+--------------------
+ngAfterViewChecked fires after any change detection cycle targeting the component’s view
+
+ngOnDestroy()
+-------------
+ngOnDestroy fires upon a component’s removal from the view and subsequent DOM. This hook provides a chance to clean up any loose ends before a component’s deletion
+
+
+Directives:
+===========
+Structural will change the DOM
+Attribute : will not change the DOM
+
+custom Attribute directives
+============================
+Angular is not limited to Browsers, It can also run in service workers, In that case there might not be The DOM API , hence its always recommended to use renderer:Renderer2
+method to set attributes to native Html elements.
+https://angular.io/api/core/Renderer2
+
+@Directive
+@HostListener('mouseover'|'mouseleave'\.... other events)
+renderer:Renderer2
+@HostBinding
+
+Example of Directive
+====================
+@Directive({
+  selector: '[appTest]',
+})
+export class TestDirective {
+  constructor(private elementRef: ElementRef) {}
+
+  ngOnInit() {
+    //***This is raw way, prohibited way of working with an element inside a directive 
+    this.elementRef.nativeElement.style.background = 'Yellow';
+  }
+}
+
+//Usage:
+ <div class="row">     <div appTest><h3>Directive Experiment</h3></div>  </div>
+
+To avoid working with native elements we have Renderer
+import { Directive, ElementRef, Renderer2 } from '@angular/core';
+
+@Directive({
+  selector: '[appTest]',
+})
+export class TestDirective {
+  constructor(private elementRef: ElementRef, private renderer:Renderer2) {}
+
+  ngOnInit() {
+    //***This is a bettere way to work with html elements inside directive 
+    this.renderer.setStyle(this.elementRef.nativeElement,'background','yellow')
+  }
+}
+//Usage:
+ <div class="row">     <div appTest> <h3>Directive Experiment</h3> </div>  </div>
+ 
+ //Another alternate way to use this.renderer is using @HostBinding , if its a simple value strings, boolean etc 
+ @HostBinding('style.backgroundColor') backgroundColor: string;
+
+  constructor(private elementRef: ElementRef, private renderer: Renderer2) {}
+
+  ngOnInit() {
+   //Rather than using rendere we are using HostBinder property here .
+   this.backgroundColor = 'cyan';
+  }
+
+
+To listen to events on Elements where directive is placed 
+-->//HostListener(<Give the HTML EVENT name>)
+
+#region Listen to EVENTS on elements where Directive is used 
+  @HostListener('mouseenter') mouseenter() {
+    this.renderer.setStyle(
+      this.elementRef.nativeElement,
+      'background',
+      'green'
+    );
+  }
+
+  @HostListener('mouseleave') mouseleave() {
+    this.renderer.setStyle(
+      this.elementRef.nativeElement,
+      'background',
+      'yellow'
+    );
+  }
+
+ #endregion
+
+To give an input element to Directive
+======================================
+@Directive({
+  selector: '[appTest]',
+})
+export class TestDirective {
+  @HostBinding('style.backgroundColor') backgroundColor: string;
+  @Input('defaultColor') defaultColor: string = 'blue';
+  @Input('someObj') someObj:Object
+  constructor(private elementRef: ElementRef, private renderer: Renderer2) {}
+  ngOnInit() {
+  console.log(this.someObj)
+    this.backgroundColor = this.defaultColor;
+  }
+
+//Usage
+ <div appTest [defaultColor]="'black'" [someObj]="{ t1: 't1', t2: 't2' }">  <h3>Directive Experiment</h3>  </div>
+
+//Usage of defaultcolor 
+ <div appTest [defaultColor]="'black'" someObj><h3>Directive Experiment</h3></div>
+
+If @Input is a simple string 
+<div appTest defaultColor="black"><h3>Directive Experiment</h3></div>
+
+
+Custom Structural Directive
+===========================
+import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
+
+@Directive({
+  selector: '[appMyIf]',
+})
+export class MyIfDirective {
+  @Input() set appMyIf(boolExpr: boolean) { //The "appMyIf" here should exactly  match with the directive name , else Angular doesn't recognise it once it strips the *appMyIf from usage 
+    if (boolExpr) {
+      this.viewContainerRef.createEmbeddedView(this.templateRef);
+    } else {
+      this.viewContainerRef.clear();
+    }
+  }
+
+  constructor(
+    private templateRef: TemplateRef<any>, // This is the template where directive is applied <div *appMyIf="!0"><h3>If true Show this</h3></div> 
+    private viewContainerRef: ViewContainerRef // This is the view where the template is there .
+  ) {}
+}
+
+//Usage:
+<div>     <div *appMyIf="!0"><h3>If true Show this</h3></div>   </div>
+
+<ng-template> is like Fragment in React
+
+For angular there is no difference between structural directuve or attribute directive , behind the scenes both are treated alike by Angular
+To prove you can write *ngIf= "bool epxression"
+like [ngIf] = "bool Expression"
+<ng-template [ngIf] = "bool Expression">
+some content....
+</ng-template>
+
+<div [ngSwitch] ="value">
+<p *ngSwitchCase="5"> Value is 5 </p>
+<p *ngSwitchCase="10"> Value is 10 </p>
+<p *ngSwitchCase="15"> Value is 15 </p>
+<p *ngSwitchDefault> Value is NONE </p>
+</div>
+
+
+Services:
+=========
+Theory: https://www.freecodecamp.org/news/angular-dependency-injection/
+
+Angular directly instantiates a service when followed these steps 
+--> inject in constructor, This is "INJECTION"
+ constructor(
+    private loggerService: LoggerService,
+    private accoutService: AccountsService
+  ) {}
+  
+                  (OR)
+	 
+  constructor() {
+    this.loggingService = inject(LoggingService);
+  }
+  
+--> provide the service in @Directive/@Component/Service/NgModule itself. This tells angular how to create a service i.e "INSTATIATION"
+@Component/@Directive/@NgModule({
+   providers: [LoggerService, AccountsService],
+})
+
+--> Angular Injects the service Hierarchially 
+Lets Say the components are componsed like below 
+ParentComponent-->ChildComponent-->GrandChildComponent 
+There is a loggingService 
+--> When LoggingService is injected and instantiated(see above) in Parent Component, the same service is propogated to its Child and GrandChild component .
+In this case Child and GrandChild , just need to inject the service NO NEED TO INSTANTIATE.
+
+In Angular Service are SINGLETON, one instance is shared among the hierarchy , Parent,Child and Grand child.
+
+If either CHILD or GRANDCHILD, INSTANTIATE AND INJECT the same loggingService even though its included in PARENT , 
+The child and grandchild recieves  NEW INSTANCE ,which is different from what parent service object.
+
+A service in Angular is a simple Javascript class without any metadata like @Directive or @Component. Now 
+How will we Inject ServiceA into another ServiceB 
+
+In that case if ServiceB needs ServiceA decorate ServiceB with "@Injectable()" 
+
+NOTE: Recieving Service should be decorated with @Injectable, So in this case ServiceB will recieve Service A hence ServiceB should have @Injectable
+NOTE: AS a good and safe practicse, decorate all the services with @Injectable ....
+
+@Injectable()
+export class ServiceB { ctor(private serviceA: ServiceA){....}  }
+No this can be used in any other Service 
+
+What does angular Injectable({providedIn:root}) mean? This is introduced in Angular6
+https://stackoverflow.com/questions/50848357/what-is-the-purpose-of-providedin-with-the-injectable-decorator-when-generating
+providedIn: 'root' is the easiest and most efficient way to provide services since Angular 6:
+
+The service will be available application wide as a singleton with no need to add it to a module's providers array (like Angular <= 5).
+If the service is only used within a lazy loaded module it will be lazy loaded with that module
+If it is never used it will not be contained in the build (tree shaked).
+
+When to Use Providers in @Component/@Directive?
+1) If you don't want a application-wide singleton use the provider's array of a component instead.
+2) If you want to limit the scope so no other developer will ever use your service outside of a particular module, use the providers array of NgModule instead.
+
+Routing
+========
+--> import {Routes,RouterModule} from "@angular/router"
+--> <router-outlet> //This is element-directive and NOT a Component
+--> <a routerLink='/'></a> //href will reload the page routerLink doesn't
+routerLinkActive and routerLinkActiveOptions--> style/css for active route
+Assume your currentUrl is localhost:4200/someRoute
+--> Relative Path : <a routerLink='someroute'/>
+Relatiive path will translate to localhost:4200/someRoute/someroute, it gets appended
+In case you want to use relative paths use filepaths like ../someroute or ./someroute etc
+--> Absolute Path: <a routerLink='/someroute'/>
+Absolute path will translate to localhost:4200/someRoute
+This will replace the routepath.
+
+//Inside app.module.TS
+const appRoutes: Routes = [
+  { path: '', component: HomeComponent },
+  { path: 'users', component: UsersComponent },
+  { path: 'servers', component: ServersComponent },
+];
+
+@NgModule({
+  declarations: [
+   <All Components>
+  ],
+  imports: [
+  BrowserModule, 
+  FormsModule,
+  RouterModule.forRoot(appRoutes)
+  ],
+  providers: [ServersService],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
+
+//Inside app.component.html
+<div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <ul class="nav nav-tabs">
+	  //<a href='/route'> this will reload the entire page// thus loosing the state of the application
+         <li class="active">
+          <a routerLink="/" routerLinkActive="active">Home</a>
+        </li>
+        <li><a routerLink="/servers" routerLinkActive="active">Servers</a></li>
+        <li>
+          <a [routerLink]="['/users']" routerLinkActive="active">Users</a>
+        </li>
+      </ul>
+    </div>
+<div>
+//Place where the routes load
+<router-outlet></router-outlet> 
+</div>
+
+What will happen if we don't use routerLinkActiveOptions?
+In that case routeLinkActive w.r.t home("/") will remain active for all the routes, routerLinkActive checks for match of the route in which case it will match all the routes, so to avoid we will have to mention [routerLinkActiveOptions]="{exact:true}
+Eg:   <li
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <a routerLink="/">Home</a>
+        </li>
+
+
+Routing Programatically:
+--> 
+import { ActivatedRoute, Router } from '@angular/router';
+
+export class HomeComponent implements OnInit {
+//Inject router here 
+  constructor(
+    private serversService: ServersService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {}
+
+  ngOnInit() {}
+
+//In html there will be button (click) event
+  onLoadUsers() {
+    this.router.navigate(['/users']);
+  }
+  //In html there will be button (click) event
+  onLoadServers() {
+    this.router.navigate(['/servers']);
+  }
+  
+   onServersRefresh() {
+    //This is a relative route, 
+    //navigate() doesn't know what the current route is unlike routerLink,routerActiveLink
+    //used in template, for navigate we need to explicty set "relativeTo"
+    this.router.navigate(['servers'], { relativeTo: this.activatedRoute });
+  }
+}
+
+How to get Url Parameters, dynamically load pages based on usersId etc 
+//app.module --> appRoutes = [{ path: 'users/:id/:name', component: UserComponent }]
+Here :id and name are url fragments , they can be fetched using 
+//Inside class
+//import {ActivatedRoute} from '@angular/router'
+ctor(private activeRoute:ActivatedRoute} 
+ngOnInit(){ this.activeRoute.snapshot.params['id' | 'name '] etc }
+
+The "this.activeRoute.snapshot.params"  will always give the parameters which are used for when the route is loaded, or snapshot.params are used for initialization 
+
+** the disadvantage of this approach is 
+Assume your are in route "users/3/Max" a UserComponent is loading with 
+User Id:3 and Username: Max
+Within the UserComponent we have another route <a href="users/10/Ajay"/>
+In that case the active.snapshot will not work , because Angular will not re-render while you are already in that route/component 
+tIn such cases we will have to use below in ngOnInIt()
+this.activeRoute.params.subscribe((newParams:Params)=> { this.user.id= params["id"]})
+Params is an <Observable> 
+
+Scenario : 
+Assume you want to achieve a url "/servers/5/edit?allowEdit=1#loading" 
+--> Step 1:  add a route to app.module -->appRoutes 
+{ path: 'servers/:id/edit', component: EditServerComponent },
+Way 1:
+--> Step 2: In component.html we can add a link as shown below 
+  <a
+        [routerLink]="['/servers', 5, 'edit']"
+        [queryParams]="{ allowEdit: 1 }"
+        fragment="loading" 
+     >
+        {{ server.name }}
+   </a>
+Way 2:
+--> Step 3: We can also achieve this programatically 
+ constructor(private router: Router) {}
+ //Click event or any other event
+  this.router.navigate(['/servers', 5, 'edit'], {
+      queryParams: { allowEdit: 1 },
+      fragment: 'loading',
+    });
+
+How do we retrieve these fragments and queryParams ?
+import ActivatedRoute from '@angular/core'
+constructor(private activatedRoute: ActivatedRoute) {}
+//In any function code block 
+this.activatedRoute.snapshot.queryParams 
+this.activatedRoute.snapshot.fragment
+//snapshot can get stale , in that case you can use Observable
+this.activatedRoute.queryParams.subscribe(qp => {console.log(qp)}
+this.activatedRoute.fragment.subscribe(fg => {console.log(fg)}
+***These observerables will automatically be unsubscribed by Angular
+
+How do you introduce Child/Nested Routes?
+
+const appRoutes: Routes = [
+  { path: '', component: HomeComponent }, //NO CHILD
+  {
+    path: 'users',
+    component: UsersComponent,
+	//Child route --> URL will be users/10/Ajay
+    children: [{ path: ':id/:name', component: UserComponent }],
+  },
+
+  {
+    path: 'servers',
+    component: ServersComponent,
+    children: [
+	  //Child route --> URL will be servers/10
+      { path: ':id', component: ServerComponent },
+	  //Child route --> URL will be servers/10/edit
+      { path: ':id/edit', component: EditServerComponent },
+    ],
+  },
+];
+
+To rendere the child route we can use <router-outlet> in the parent component
+In above example:  ServersComponent and UsersComponent
+
+In case you want to preserve the route parameters between the routing different routes we need to use : 
+this.router.navigate(['servers'], { relativeTo: this.activatedRoute, queryParamsHandling:'preserve' });
+https://angular.io/api/router/QueryParamsHandling
+"merge" : Merge new parameters with current parameters.
+"preserve" : Preserve current parameters.
+"" : Replace current parameters with new parameters. This is the default behavior.
+https://dzone.com/articles/how-to-use-it-queryparamshandling-in-angular
+
+How do you redirect using Routes?
+const appRoutes = [
+{
+    path: 'servers',
+    component: ServersComponent,
+},
+{
+//Rather than mentioning component we can also mention redirectTo another route 
+    path: 'clients', redirectTo: '/servers'
+ }
+]
+
+How do you write catchAll routes ?
+{
+    path: '**', //Wildcard character for catch all routes 
+    component: PageNotFound,
+},
+
+Important: Redirection Path Matching
+=====================================
+In our example, we didn't encounter any issues when we tried to redirect the user. But that's not always the case when adding redirections.
+
+By default, Angular matches paths by prefix. That means, that the following route will match both /recipes  and just / 
+
+{ path: '', redirectTo: '/somewhere-else' } 
+
+Actually, Angular will give you an error here, because that's a common gotcha: This route will now ALWAYS redirect you! Why?
+
+Since the default matching strategy is "prefix" , Angular checks if the path you entered in the URL does start with the path specified in the route. Of course every path starts with ''  (Important: That's no whitespace, it's simply "nothing").
+
+To fix this behavior, you need to change the matching strategy to "full" :
+
+{ path: '', redirectTo: '/somewhere-else', pathMatch: 'full' } 
+
+Now, you only get redirected, if the full path is ''  (so only if you got NO other content in your path in this example).
+
+How to design a separate Route-file for the app.module?
+--> Step 1: Create a app-route.module.ts file, In that do below
+-----------------------------------------------------------------
+const appRoutes= [
+ { path: '', component: HomeComponent },
+  {
+    path: 'users',
+    component: UsersComponent,
+    children: [{ path: ':id/:name', component: UserComponent }],
+  },
+]
+
+//NOTE: We should not declare the components here again Angular will throw error
+@NgModule({
+  imports: [RouterModule.forRoot(appRoutes)],
+  exports: [RouterModule], //Here we export the Router module 
+})
+export class AppRouteModule {
+  constructor() {}
+}
+
+Step 2: Include the AppRouteModule , inside the app-module.ts 
+--------------------------------------------------------------
+@NgModule({
+  declarations: [
+    AppComponent,
+    HomeComponent,
+   ],
+   //Include AppRoutemodule in the imports section 
+  imports: [BrowserModule, FormsModule, AppRouteModule],
+  providers: [ServersService],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
+
+ROUTE GUARDS IN ANGULAR
+========================
+Functionality that can be executed when you enter a route or leave a route , that can be done in GUARDS
+
+Scenario: 
+A guest user should be shown few routes 
+A LoggedIn user will have access to all the routes 
+To achieve such a functionality we can make use of ROUTE GUARDS
+
+Steps to Create GUARDS
+=======================
+Step 1: Implement a fake Authentication service, Ideally this should come from backend 
+export class AuthService {
+  constructor() {}
+  loggedIn = false;
+  isAuthenticated() {
+    const promise = new Promise((resolve, reject) => {
+      setTimeout(() => resolve(this.loggedIn), 1000);
+    });
+    return promise;
+  }
+  login() {     this.loggedIn = true;  }
+  logout() {     this.loggedIn = false;   }
+}
+
+Step 2:  Create an auth-guard.service.ts , implement the guard in this calss
+import { CanActivateFn, Router } from '@angular/router';
+import { Injectable } from '@angular/core';
+//Even Guards are Services only
+@Injectable()
+export class AuthGuard {
+  constructor(private authService: AuthService, private router: Router) {}
+  canActivate: CanActivateFn = (route, state) => {
+    return this.authService.isAuthenticated().then((loggedInStatus) => {
+      if (!loggedInStatus) {
+        //If loggedInStatus is false , navigate to homepage
+        this.router.navigate(['/']);
+      }
+      return true;
+    });
+  };
+  
+  //Apply AuthGuard to only Child routes 
+  canActivateChild: CanActivateFn = (route, state) => {
+    return this.canActivate(route, state);
+  };
+}
+
+Step 3: Create a Login/Logout buttons calling AuthService in Html , Include AuthService and AuthGuard in @NgModule({}) in app.module.ts 
+
+Step4: Now Auth-Guard for actiavte is ready we can include this in our routes 
+--> If Included in Parent will also be applicable for Nested routes
+{
+    path: 'servers',
+    component: ServersComponent,
+	canActivate: [AuthGuard],
+    children: [
+      { path: ':id', component: ServerComponent},
+      { path: ':id/edit', component: EditServerComponent },
+    ],
+  },
+--> applying Only for specific Child routes is also possible 
+{
+    path: 'servers',
+    component: ServersComponent,
+    children: [
+      { path: ':id', component: ServerComponent, canActivate: [AuthGuard] },
+      { path: ':id/edit', component: EditServerComponent },
+    ],
+  },
+
+**NOTE: The disadvantage of this approach is ... what will happen if we have 20 more child routes, will we go and add to all these routes... its cumbersome.. So there is another easy way 
+{
+    path: 'servers',
+    component: ServersComponent,
+	canActivateChild: [AuthGuard] // This will apply for all the childs 
+    children: [
+      { path: ':id', component: ServerComponent },
+      { path: ':id/edit', component: EditServerComponent },
+    ],
+},
+
+CanDeactivate Routes, When to DeActivate or leave a route
+==========================================================
+Scenario: You have edited a form and without hitting "Save", you are redirecting to another page... In that case a Popup reminding you to save your data ....
+
+Check the udemy- video for implementation 
+https://jnpiyush.medium.com/angular-deep-dive-into-candeactivate-route-guard-51b9e1b046da
+
+Data to Routes Statically and Dynamically 
+===========================================
+Statically : 
+============
+you pass data to routes like following way 
+//Inside app-routes.ts 
+ {
+    path: 'users',
+    component: UsersComponent,
+    children: [{ path: ':id/:name', component: UserComponent }],
+    data:{messages:'Test Message Check'}  // Include data as an object 
+  },
+  
+ //Inside users.component.ts 
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe((data) => {
+      this.message = data['messages'];
+    });
+ }
+ 
+ Dynamically : 
+ ============
+ For this you need resolve-guard , there might be a scenario where you might need the data even before the route is been rendered , like a backend call etc In such cases you need resolvers.
+ 
+ Step 1: ng generate resolver server.resolvers
+ Step 2: Routes are availabe here along with its parameters , Take a note this is just a function but in udemy-video-155 you can see this as  class implementation 
+ export const ServerResolver: ResolveFn<Server> = (route, state) => {
+ //Note: This is another way to inject service here 
+  const serverInfo = inject(ServersService).getServer(+route.params['id']);
+  console.log('ServerResolver', { serverInfo });
+  return serverInfo;
+};
+Step 3: Function implementation need not be provided in app.module.ts in "providers array".
+Step 4: Include this in your app.routes.ts 
+{
+    path: 'servers',
+    component: ServersComponent,
+    // canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
+    children: [
+      {
+        path: ':id',
+        component: ServerComponent,
+        resolve: { server: ServerResolver }, //Include the resolver here 
+		
+      },
+    ],
+  },
+ 
+Step 5: Inside the ServerComponent class , the server information is readily available  ngOnInit() {
+   this.activatedRoute.data.subscribe((data: Data) => {
+      this.server = data['server'];
+    });
+  }
+
+For Older Browsers you can  use Hash-bang Urls like 
+@NgModule({
+  imports: [RouterModule.forRoot(appRoutes,{useHash:true})],
+  exports: [RouterModule],
+})
+
+Understanding Observables
+==========================
