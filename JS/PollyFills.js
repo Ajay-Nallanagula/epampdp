@@ -61,3 +61,5 @@ const result = arr.myReduce((acc, item, index) => {
 }, 0)
 
 console.log(result)
+
+myFlat

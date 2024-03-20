@@ -9,6 +9,10 @@ How does Module Federation handle CORS, multiple different ports how is it handl
 How do you call different endpoints in Microfrontends , Module federation
 Communication between various microfrontends ?
 
+What is Piral ?
+Priral is a library to build Microfrontends easily.
+https://docs.piral.io/guidelines/tutorials/02-getting-started
+
 #endregion MISC/Questions
 
 Project Info
@@ -19,15 +23,118 @@ Project Info
 
 
 #region Basics of Microfrontend
---> What is a microfrontend.
---> What are the uses of microfrontend.
---> Integration/Orchestration/Assemble Together.
---> Build time integration:  Before  container is loaded it get access to product list
---> Run time integration: After the container is loaded it gets access to product list
---> Server Integration (SSR): while sending JS for container, server decides wether to send product list or not.
+
+#region What is a MICROFRONTEND?
+
+1) A microfrontend is an architectural style where a front-end app is decomposed into "microapps", working loosely together. 
+2) Each microapp is developed, tested and deployed independently, by separate teams with their own lifecycle, allowing for simpler, more localized and effective project management.
+
+Advantages of microfrontends:
+=============================
+- **Independence**: Each microfrontend can be independently developed, tested and deployed by separate teams.
+- **Simplicity**: Small, dedicated codebases are usually easier to maintain.
+- **Parallelism**: Multiple teams can work on different features at the same time.
+- **Scalability**: Teams and features can scale horizontally.
+- **Diversity**: Each microfrontend can be written using the technologies best suited for its feature set.
+- **Resilience**: A problem in one microfrontend does not affect the others.
+
+Disadvantages of Microfrontend:
+===============================
+- **Complexity**: Intercommunication and integration among microfrontends can be complex.
+- **Inconsistency**: Different teams using different technologies can lead to an inconsistent user interface.
+- **Redundancy**: Certain areas, like common utilities or components, can be duplicated across teams, leading to code redundancy.
+- **Performance issues**: Microfrontends have additional overhead compared to traditional monolithic frontends, such as run-time integration and additional HTTP requests.
+
+An example of microfrontend architecture would be an e-commerce site:
+- One microfrontend represents the product listing.
+- Another microfrontend represents product details.
+- Another one represents the shopping cart.
+Each of these would be a separate application, developed by a separate team, possibly using different web technologies, but they all work together to create a seamless user interface.
+
+
+#region Microfrontened vs Monolith Vs Monorepo
+https://levelup.gitconnected.com/microfrontends-vs-monolithic-frontend-which-is-right-for-your-project-2980c6939a36
+
+--> Monolithic Frontend is a frontend architecture in which all the UI components and features of an application are handled by a single, large codebase. In this architecture, the frontend is tightly coupled with the backend and cannot be easily separated. This means that the entire application runs on a single server and any updates or changes to the frontend require redeploying the entire application.
+
+--> Monolith is know for simplicity, low cost maintenance and ease of development 
+However Monlith is difficult to scale and one part of the codebase can have unintended consequences in other parts .
+
+--> Monolithic Frontends are suitable for small projects or projects that require a simple UI, where the simplicity and ease of development outweigh the disadvantages of the architecture.
+
+--> Microfrontends, can be developed and deployed independently, allowing for greater flexibility, scalability, and maintainability of the overall frontend application
+
+--> Microfrontends can be developed using different programming languages, frameworks, and technologies, as long as they can communicate with each other through well-defined APIs. 
+--> Microfrontends also provide greater fault isolation, as any issues or failures in one microfrontend can be contained and resolved without affecting the rest of the application. This can result in improved resilience and availability of the overall application.
+
+
+#endregion Microfrontened vs Monolith Vs Monorepo
+
+
+
+#endregion What is a microfrontend.
+
+#region Integration/Orchestration/Assemble Together.
+https://tkssharma.com/building-micro-frontend-build-time-and-compile-time/
+
+#region Build time integration: 
+Scenario: Before container is loaded it get access to product-list microapp. 
+One way of achieve that by Publish each micro frontend as a npm package and have the container application include those npm packages as library dependencies.
+Like we are loading loadash, ramadaJs, momentJs etc 
+
+Advantages:
+----------
+Apps are independent
+Since all the apps are divided and developed separately these are independent of each other
+Apps are easier to understand, develop and deploy.
+
+Disadvantages:
+--------------
+Huge App and Bundle at build time. 
+Since all the apps are added as the size of the package grows and it becomes a bigger bundle in size
+Apps are tightly coupled and lots of documentationApps are coupled with versions and you have to use the proper version of the package of the dependent module
+Now apps are coupled and we are using different versions of external packages so we have to maintain the discipline to use provided packages, breaking change in the package can become a problem for the whole app
+
+#endregion Build Time Integration 
+		
+#region Run time integration
+Scenario : "After the container is loaded" it gets access to product-list. 
+One of the simplest approaches to composing applications together in the browser is the humble iframe.
+Doing it using iframe is just an old way of doing it, now we have different tools which can manage that example like webpack, webpack 5 provided module federation
+ 
+In simple terms using runtime composition we just render other site components into a container or shell/main application, it is all runtime means at runtime we will download the bundle and render its component on UI.
+
+app1.js and app2.js will be loaded at runtime from a different site from the same domain (sub-domains) and the host application will manage to render the required components from it.
+
+ We can achieve this using Module Federation or Next.Js
+ 
+ Advantages:
+ 1) Development is faster: The whole development becomes faster and easier because of separate teams and we are getting all package sin hand from different modules.
+ 2) CI/CD process is easy : Each app/package can be integrated and deployed separately and this makes the CI/CD process a lot easier. When we fix the app or introduce a new feature we don’t have to worry about the entire application since all the features are independent.
+ 3)Independent Stacks and versions :We can choose our own stack for each app but this doesn’t happen so often But, we can have different versions of the same stack. For example, Some teams have the flexibility and time to introduce and test newer versions of the same stack.
+ 4) No Shared Code : In large applications, we tend to share code across features but, this doesn’t scale well and introduces a lot of bugs and interdependency as the app grows bigger and bigger. This doesn’t apply to the Micro-frontends as we do not share the code unless it is a dumb component.
+ 
+ Disadvantages:
+ =============
+ No Shared Code: In large applications, we tend to share code across features but, this doesn’t scale well and introduces a lot of bugs and interdependency as the app grows bigger and bigger. This doesn’t apply to the Micro-frontends as we do not share the code unless it is a dumb component.
+  Runtime failures: There may be runtime failure as we don’t know how other services are doing.
+  
+ 
+ #endregion Run time integration
+ 
+#region Server Integration 
+--> Server Integration (SSR): while sending JS for container, server decides wether to send product list or not. This Server-Side-Rendering 
+
+#endregion Server Integration
+
+**Main -focus here is on Run Time Integration.**
+
+
+
+#endregion Integration/Orchestration/Assemble Together.
 
 --Product
-npm install webpack@5.68.0 webpack-cli@4.10.0 webpack-dev-server@4.7.4 faker@5.1.0 html-webpack-plugin@5.5.0
+npm install webpack@5.88.0 webpack-cli@4.10.0 webpack-dev-server@4.7.4 faker@5.1.0 html-webpack-plugin@5.5.0
 
 --Container
 npm install webpack@5.68.0 webpack-cli@4.10.0 webpack-dev-server@4.7.4 html-webpack-plugin@5.5.0 nodemon
@@ -36,15 +143,96 @@ npm install webpack@5.68.0 webpack-cli@4.10.0 webpack-dev-server@4.7.4 html-webp
 
 #region Basics of Module federation webpack
 
+https://webpack.js.org/concepts/module-federation/
+
 Steps to configure Module Federation
 =====================================
---> designate one application as a host(container) and one as a remote(products).
---> In remote decide which modules(files) you want to make available to other projects eg: prdict/index.js
---> Set up webpack Module Federation plugin to expose those files
---> In HOST, decide which file you want to get from remote.
---> In host setup module federation plugin to fetch those files.
---> In HOST refactor the entry poinnt to load asynchronously.
---> In the host, import whatever files you need from remote.
+Step 1: designate one application as a host(container) and one as a remote(products).
+	Assume you have a ecommApp where in you have different modules like cart, productlist, billing etc 
+	Host application is "container"
+	remoteapps are cart, productlist etc 
+Step 2:  In remote decide which modules(files) you want to make available to other projects eg: product/index.js
+Step 3:  Set up webpack Module Federation plugin to expose those files
+	//inside billing webpack.config.js , similar to other modules 
+	const HtmlWebpackPlugin = require("html-webpack-plugin");
+   const { ModuleFederationPlugin } = require('webpack').container
+	module.exports = {
+    mode: 'development',
+    devServer: { port: 8083 },
+    plugins: [
+        new ModuleFederationPlugin({
+            name: 'billing', //STEP-3_MANDATORY**
+            filename: 'remoteEntry.js', //name is remoteEntry by convention 
+            exposes: {
+                './BillingIndex': './src/bootstrap.js' // bootstrap.js or index.js where root is constructed
+            }
+        }),
+        new HtmlWebpackPlugin({ template: './public/index.html'})
+    ]
+}
+//Inside index.js/bootstrap.js 
+import faker from 'faker'
+export function mount(selector) {
+    let products = ''
+    for (let index = 0; index < 3; index++) {
+        const name = faker.commerce.productName()
+        products += `<div><b>${name}</b></div>`
+    }
+    selector.innerHTML = products //this selector will come from container/host app
+}
+
+	
+Step 4: In HOST, decide which file you want to get from remote, and set up module federation plugin to fetch those files
+i.e in container which file should we get, in this example its bootstrap.js 
+
+//Inside container, webpack.config.js
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { ModuleFederationPlugin } = require("webpack").container;
+module.exports = {
+    mode: 'development',
+    devServer: {port: 8080},
+    plugins: [
+        new ModuleFederationPlugin({
+            name: 'container', //For container 'name' is not mandatory
+            remotes: {
+                //products: 'products@http://localhost:8081/remoteEntry.js',
+                //cart: 'cart@http://localhost:8082/remoteEntry.js', //url.starts('cart') the name cart should exactly match with cartApp-->webpack.config--> //modulefederation-->'name' property, see example here : STEP-3_MANDATORY**
+                billing: 'billing@http://localhost:8083/remoteEntry.js' //This is the way we refere remotes in host application
+            }
+        }),
+        new HtmlWebpackPlugin({
+            template: './public/index.html'
+        })
+    ]
+}
+
+STEP6: In HOST refactor the entry poinnt to load asynchronously.  In the host, import whatever files you need from remote.
+//Inside index.js/bootstrap.js ,index.html of container application:
+import { mount as billingMount } from 'billing/BillingIndex';
+billingMount(document.querySelector('#dev-billing'))
+//Index.html
+<div id='dev-billing'><div>
+
+Why is STEP-3_MANDATORY** name important?
+The host application will recognise the cart with the name mentioned here , If you see the network tab the remoteEntry.js w.r.t billing/car/productlist the entire index/bootstrap.js of the cart application is save like below
+//Inside remoteEntry.js 
+var cart;
+/******/
+(()=>{
+    // webpackBootstrap
+    /******/
+    var __webpack_modules__ = ({
+
+        /***/
+        "./node_modules/ansi-html-community/index.js": /*!***************************************************!*\
+  !*** ./node_modules/ansi-html-commun...
+  ......othe related code.........................................
+
+Hence that name is important.
+
+****GOTCHA:
+we cannot give a div with id ' cart' or 'billing'  inside container-app , that you gave as name in module-federation of respective apps .
+module-federation will over-ride STEP-3_MANDATORY** thingy with tht of html-document id.
 
 
 
@@ -54,11 +242,11 @@ Steps to configure Module Federation
 =======================
 Webpack--> ModuleFederation-->plugins-->ModuleFederation --> shared:['faker'] //this can also be an object.
 
-NOTE: shared can be used only with modules of same version, if there are different versions of the module its understood and correct way to loda two seperate modules , example faker@4.00, faker@5.0.0. two versions are to be loaded
-NOTE: The shared modules take int consideration all the major.min.patch versions ^,~ symbols etc. 
+NOTE: shared can be used only with modules of same version, if there are different versions of the module its understood and correct way to loda two seperate modules , example faker@4.00, faker@5.0.0. two versions are to be loaded .. by default that is the behaviour of moduleFederation which is dexirable and expected.
+NOTE: The shared modules take into consideration all the major.min.patch versions ^,~ symbols etc. 
 
 When you mark some module as shared , it means that module will be loaded asynchronously.
-When you see independent projects product/cart index.html respectively faker is used immediately, but faker is loaded asynchronously because of shared hence we see below erroe:
+When you see independent projects product/cart index.html respectively faker is used immediately, but faker is loaded asynchronously because of 'shared' hence we see below error:
 Error message when you run independent projects
 Shared module is not available for eager consumption: webpack/sharing/consume/default/faker/faker
 
@@ -75,6 +263,8 @@ NOTE: In Singleton cases the major.minor.patch versionion DOES NOT APPLY, irresp
 In this case you will get a conflicting warning message, the common modules must be in sync.
 
 Eg: Webpack--> ModuleFederation-->plugins--> ModuleFederation -->  shared:{ faker: { singleton: true }}
+
+Incompatible Versions + Singleton rule:  Webpack will follow singleton rule, and load only one copy, but with a warning message in console with incompatible versions.
 
 #endregion Shared Modules
 
@@ -98,4 +288,64 @@ In such cases we make pass the root:ids as part of a function --> mount(el)
 Hence we need to refactor our code .
 NOTE: The same thing holds good in cart as well
 
+//Refactored code 
+function mount(el) {
+    let products = ''
+    for (let index = 0; index < 6; index++) {
+        const name = faker.commerce.productName()
+        products += `<div>${name}</div>`
+    }
+    console.log(products)
+    // document.querySelector("#products-dev").innerHTML = products
+    el.innerHTML = products // something like ReactDOM.render(<App/>)
+}
+
+//Scenario 1 : This will run in local, when producst is run in isolation
+//This will be set by webpack, mode property 
+if (process.env.NODE_ENV === 'development') {
+    const el = document.querySelector("#products-dev")
+    if (el) {
+        mount(el)
+    }
+}
+
+//Scenario2: May not be exceuted, immediately/locally. Needs not render immediately, container will render
+export { mount }
+
 #endregion Execution Context (sub-app Execution context)
+
+#region Linking Multiple Apps Together
+
+Why should we export mount?
+
+Scenario: Container App is in React, Marketing App is in React .
+================================================================
+--> We should not make an assumption and render MarketingApp as an React Component inside Container.
+--> This might Change hence , the container logic to render the micro-apps should be generic , for example if we are writing Container in react we can do this way 
+//Inside ContainerForlder, create a file.js
+import marketingMount from 'marketing/MarketingApp'
+
+//If you look at this code its most generic it will work if marketing microapp is build in React or Angular Or Vue or Flubber any thing 
+const mount = () =>{
+  const ref = useRef(null)
+	useEffect(() => {
+	     maketingMOUNT(ref.current) //mount take an element 
+	})
+  return <div ref={ref}><div>
+}
+
+
+We can also "require"  package.json file like 
+//Inside webpack.common.js
+const packageJson = require('../package.json')
+
+//Inside moduleFederation 
+plugins:[
+new moduleFederation({
+	shared:[...packageJson.dependencies] //This is a shortcut way to share the dependencies 
+})
+]
+
+
+
+#endregion Linking Multiple Apps Together

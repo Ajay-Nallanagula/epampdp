@@ -1,16 +1,22 @@
 import { createAction } from "@reduxjs/toolkit"
 import { SUPERPOWER_ADDED, SUPERPOWER_REMOVED, SUPERPOWER_STATS } from "./actionTypes"
 
-export const addSuperPower = createAction(SUPERPOWER_ADDED, (payload) => payload)
-console.log(addSuperPower)
+// export const addSuperPower = createAction(SUPERPOWER_ADDED, (payload) => payload)
+// console.log(addSuperPower)
 
-// export const addSuperPower = (id, name) => {
-//     return {
-//         type: SUPERPOWER_ADDED,
-//         payload: {
-//             id,
-//             name
-//         }
+export const addSuperPower = (id, name) => {
+    return {
+        type: SUPERPOWER_ADDED,
+        payload: {
+            id,
+            name
+        }
+    }
+}
+
+// export const addSuperPower = () => {
+//     return function () {
+//         return 'anything'
 //     }
 // }
 

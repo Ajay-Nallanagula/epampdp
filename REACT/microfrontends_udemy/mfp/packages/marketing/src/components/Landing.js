@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import MaterialLink from '@material-ui/core/Link';
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 
 function Copyright() {
   return (
@@ -63,11 +63,12 @@ const useStyles = makeStyles((theme) => ({
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-export default function Album() {
+function Landing() {
   const classes = useStyles();
-
+  console.log(classes)
   return (
     <React.Fragment>
+
       <main>
         {/* Hero unit */}
         <div className={classes.heroContent}>
@@ -161,6 +162,10 @@ export default function Album() {
         <Copyright />
       </footer>
       {/* End footer */}
+      <Outlet />
     </React.Fragment>
   );
 }
+
+
+export default Landing

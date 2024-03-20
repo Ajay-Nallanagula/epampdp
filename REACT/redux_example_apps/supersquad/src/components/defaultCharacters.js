@@ -13,7 +13,8 @@ const DefaultCharacters = () => {
 
     const handleClick = (character) => {
         //console.log('Add Clicked', character)
-        dispatch(addSuperPower({ id: character.id, name: character.name }))
+       dispatch(addSuperPower(character.id, character.name))
+       
     }
 
     return (

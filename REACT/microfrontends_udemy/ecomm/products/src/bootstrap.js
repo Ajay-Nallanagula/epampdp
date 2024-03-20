@@ -6,7 +6,7 @@ function mount(el) {
         const name = faker.commerce.productName()
         products += `<div>${name}</div>`
     }
-
+    console.log(products)
     // document.querySelector("#products-dev").innerHTML = products
     el.innerHTML = products // something like ReactDOM.render(<App/>)
 }

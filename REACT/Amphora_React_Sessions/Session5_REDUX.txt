@@ -1,3 +1,7 @@
+Fake API:
+https://dummyjson.com/docs/products
+https://jsonplaceholder.typicode.com/
+
 Reference: https://www.youtube.com/watch?v=poQXNp9ItL4
 
 Redux is state management library for JS apps.
@@ -11,6 +15,9 @@ Redux:
 2) Makes data flow transparent and predictable
 3) We can track why/where/what/when/how of data changes.
 4) All the different components pulls the data from store and display
+5) Cachebility
+6) Easy debugging
+
 
 Redux dev tools chrome extension.
 Time Travel debugging
@@ -33,15 +40,29 @@ NOTE: spread operator of JS is only shallow copy, nested objects are shared.
 These are used for immutability Apart from sprad operator.
 Immer.js/ Immutable.js
 
+#region Investigate Questions On:
+
+1) Redux 5 normal middleware like logger.
+2) Caching/Reselect in Redux
+3) Redux-NextJs 
+4) RTK Query
+
+#endregion Investigate Questions On
+
 
 #region Mosh tutorials
 Redux is build on top of funtional programming.
 We cannot mutate the object.
 
+all redux related packages:
+npm install redux react-redux @reduxjs/toolkit  @redux-devtools/extension react-router-dom react-bootstrap --save
+
 Install Redux: and redux toolkit redux-devtools
 https://redux.js.org/introduction/installation
 
 npm install redux react-redux @reduxjs/toolkit @redux-devtools/extension --save 
+HOOKS in REDUX: https://www.almabetter.com/bytes/tutorials/reactjs/hooks-in-redux
+
 
 Organize Redux Code
 ====================
@@ -147,7 +168,7 @@ Define actions
 3) We can resolve a bug, changing boolean property to true 
 
 actions are plain js objects, but redux expects one of the property be 
-"type" , type can be any of the serilizable type, i.e we can store on the disk
+"type" , type can be any of the serializable type, i.e we can store on the disk. functions are not serializable.
 we can use strings, numbers, but numbers are not descriptive.
 {type:'bugAdded',description:''}
 
@@ -202,6 +223,10 @@ Create Reducer using @redux/Toolkit-->createReducer()
 //See createaction implementation above
 import { createAction,createReducer } from "@reduxjs/toolkit"
 
+//https://redux-toolkit.js.org/api/createReducer create reducer is deprecated 
+https://stackoverflow.com/questions/77740027/getting-an-error-with-redux-toolkit-the-object-notation-for-createslice-extr
+
+//NOTE: This style of reducer is been deprecated 
 //@param1 is value of initial state which is []
 //@param2 is an object with actions key=>value, event=>eventHandler
 export default createReducer([],{
@@ -214,11 +239,44 @@ state[i] = 1000
 
 NOTE: createReducer we can write mutating code because, internally redux/toolkit implements immer.js which is immutability library
 
+In Latest Versions of Redux create Reducer is used with "Builder Callback"
+==========================================================================
+https://redux-toolkit.js.org/api/createReducer
+
+export const addToCart = createAction('addToCart')
+const reducer = createReducer(preloadedState, builder => {
+    //similar to switch-case
+    builder.addCase(addToCart.type, (state, action) => {
+        //https://stackoverflow.com/questions/64586207/redux-toolkit-state-showing-as-proxy-undefined-within-reducer
+        //State here will give a proxy Object, because immer will wrap state inside proxy Object
+        console.log(current(state)) //current() is used only for debugging purpose 
+        const selectedItem = state.items.find(item => item.id === action.payload)
+        console.log(selectedItem)
+        state.addedItems = [...state.addedItems, selectedItem]
+        // state.addedItems.push(selectedItem)
+        //  addedItem = [...state.addedItem, selectedItem]
+        //state.total = state.total + 1
+    })
+	// You can apply a "matcher function" to incoming actions
+      .addMatcher(isActionWithNumberPayload, (state, action) => {})
+      // and provide a default case if no other handlers matched
+      .addDefaultCase((state, action) => {})
+})
+
+function isActionWithNumberPayload(action) {
+  return typeof action.payload === 'number'
+}
+
+export default reducer
+
 
 ***createSlice(): import { createSlice } from "@reduxjs/toolkit"
 ==============================================================
 https://redux-toolkit.js.org/api/createSlice
+
+https://chanugatharindu1995.medium.com/make-api-call-in-react-redux-toolkit-react-redux-5cf999f2395c
 What does createSlice do?
+In short create slice creates needed actions and reducers in one go.
 A function that accepts an initial state, an object of reducer functions, and a "slice name", and automatically generates action creators and action types that correspond to the reducers and state.
 
 const slice = createSlice({
@@ -226,17 +284,52 @@ const slice = createSlice({
 	initialState:[],
 	reducers: {
 		bugAdded: (state,action) => {
-		   //Can write mutating code here , uses Emmer.js
+		   //Can write mutating code here , uses Immer.js
 		   state.push()
 		   state[i] = 1000
 		},
 		bugResolved:() => {
-		//Can write mutating code here , uses Emmer.js
+		//Can write mutating code here , uses Immer.js
 			state.push()
 			state[i] = 1000
 		}
-	}
+	},
+//This extraReducers is only for demo purposes	
+extraReducers: (builder) => {
+   builder.addCase(fetchTodos.pending, (state, action) => {
+    state.isLoading = true;
+   })
+   builder.addCase(fetchTodos.fulfilled, (state, action) => {
+    state.isLoading = false;
+    state.data = action.payload;
+   })
+   builder.addCase(fetchTodos.rejected, (state, action) => {
+    state.isError = true;
+   })
+  }
 })
+
+const { reducer, actions } =  slice
+export const {bugAdded, bugResolved} = actions
+export default reducer
+
+Real-Time example of a createSlice:
+===================================
+const { reducer, actions } = createSlice({
+    name: 'cart',
+    initialState: preloadedState,
+    reducers: {
+        addToCart: (state, action) => {
+            console.log(current(state)) //current() is used only for debugging purpose 
+            const selectedItem = state.items.find(item => item.id === action.payload)
+            console.log(selectedItem)
+            state.addedItems = [...state.addedItems, selectedItem]
+            state.total = state.total + 1
+        }
+    }
+})
+
+
 
 Create store
 ----------
@@ -258,6 +351,8 @@ export default store
 
 Way 2: 
 ======
+
+
 import { configureStore } from "@reduxjs/toolkit";
 import rootReducer from "./rootReducer";
 /*
@@ -318,11 +413,472 @@ cart:[], // cart can have separate reducer .
 user:[], // user ca have separate reducer.
 }
 
+#region Selectors, Normalize data 
+
+Which values shouldn't be saved in redux-store?
+================================================
+--> Form State:
+	1) Form Values are temporary values , until the submit Clicked
+	2) Too many dispatches will slow down your application , for eg dispatch on every keyStroke/keyPress
+	3) Hard to debug the form state when saved to redux-store.
+	
+
+Selectors
+=========
+Selectors are functions that take state as parameter and return computed state.
+const getUnResolvedBugs = (state) => state.entites.bugs.filter(bug => !bug.resolved)
+Problem with this approach is 
+const x = getUnresolvedBugs(store.getState())
+const y = getUnresolvedBugs(store.getState())
+console.log(x === y) // false, because filter method returns two different arrays .
+//Which means unseolvedBugs are getting computed each time even when sate.entites.bugs is not been changeg
+TO AVOID THIS WE HAVE TO USE "MEMOIZATION", there is a library called as reselect
+
+npm i reselect
+
+import {createSelector} from 'reselect'
+ecport const getUnresolvedBugs = createSelector(
+state=> state.entites.bugs,
+state=>state.entites.projects
+(bugs,projects)=> bugs.filter(bug=>!bug.resolved)
+)
+const x = getUnresolvedBugs(store.getState())
+const y = getUnresolvedBugs(store.getState())
+console.log(x === y) // true
+
+Normalize Data 
+===============
+You can use a package called as npm i normalizr
+//NOT NORMALIZED Data
+[
+	{ 
+		id:1,
+		project:{id:20, name:'xx'}
+		
+	},
+	{
+		id:1,
+		project:{id:20, name:'xx'}
+		
+	}
+]	
+
+//Normalized Data 
+[
+	{
+		id:1,
+		projectId:20
+		
+	},
+	{
+		id:1,
+		projectId:20
+		
+	}
+]
+
+#endregion Selectors, Normalize data 
+
+#region Middlewares 
+
+What are Middlewares?
+Redux Middleware allows you to intercept every action sent to the reducer so you can make changes to the action or cancel the action.
+Middleware helps you in executing side effects like logging error reporting, analytics, async requests
+
+
+Step 1: Write a middleware 
+---------------------------
+//SNA => like DNA
+export const loggerMiddleware = store => next=>action=>{
+console.log(store) // {getState, reducer}
+console.log(next)
+console.log(action)// {type:'blahblah',payload:{xxxxxx}}
+next(action) //IMPORTANT TO CALL FOR FURTHER EXECUTION, PASS action TO NEXT MIDDLEWARE
+}
+
+Step 2: Register middleware with store
+--------------------------------------
+import from '@redux/toolkit'
+configureStore({
+reducers,
+middlewares:[loggerMiddleware]
+})
+
+//If you are not using toolkit then 
+import {createstore, applyMiddleware} from 'redux'
+createStore(reducers, applyMiddleware(loggerMiddleware,mw2,mw3......))
+
+How do you pass Parameters to middlewares 
+-----------------------------------------
+import from '@redux/toolkit'
+configureStore({
+reducers,
+middlewares:[loggerMiddleware(params)] //mw with params
+})
+
+export const loggerMiddleware = params => store => next=>action=>{ //this is currying, params is another parameter added
+console.log(params)
+console.log(store) // {getState, reducer}
+console.log(next)
+console.log(action)// {type:'blahblah',payload:{xxxxxx}}
+next() //IMPORTANT TO CALL FOR FURTHER EXECUTION
+}
+
+
+#region Async/Promises with middleware
+
+
+https://redux.js.org/tutorials/essentials/part-5-async-logic
+There is another modern-day-approach called RTK query 
+
+Scenario 1: Consider an action with empty object like below 
+export const addSuperPower = (id, name) => {
+    return {} //NO TYPE PROPERTY 
+}
+Error :  Actions may not have an undefined "type" property. Have you misspelled a constant?
+
+Scenario 2: Consider an action returning a function :
+dispatch(()=>{})
+Error: Actions must be plain objects, Use custom Middleware for async actions.
+
+So to avoid this we can make use of middlewares 
+ Example middle ware 
+ //THIS IS CALLED AS THUNK
+export default func = params=>store=>next=>action {
+ if(action ===function){
+	action(store.dispatch, store.getState)
+ }else{
+	next(action)
+ }
+}
+
+
+What are Thunks?
+https://www.freecodecamp.org/news/redux-thunk-explained-with-examples/
+Redux Thunk is middleware that allows you to return functions, rather than just actions, within Redux. 
+This allows for delayed actions, including working with promises.
+One of the main use cases for this middleware is for handling actions that might not be synchronous, for example, using axios to send a GET request. Redux Thunk allows us to dispatch those actions asynchronously and resolve each promise that gets returned.
+Install Redux Thunk can be installed by running npm install redux-thunk --save
+
+WAY 1: To apply "thunk" w.r.t create store we will have to configure as follows :
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import rootReducer from './reducers/index';
+
+const store = createStore(
+  rootReducer,
+  applyMiddleware(thunk)
+);
+
+WAY 2: @redux/toolkit have already implemented this for you 
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import rootReducer from "./rootReducer";
+/*
+    configureStore automatically sets up the Redux DevTools Extension for you, 
+    automatically turns on the thunk middleware, and also makes it very easy to add additional store enhancers if desired.
+*/
+configureStore({
+reducers,
+middlewares:(getDefaultMiddleware)=> ([...getDefaultMiddleware(), loggerMiddleware])
+})
+
+
+
+
+
+#region Calling API's using Middlewares 
+
+consider an action:
+====================
+const getApiCall = () => ({
+type:'apiGetCall',
+payload:{
+	url: 'dummy/url/fragment',
+	payload:{
+		id:100,
+		onSuccess:'successActionType',
+		onError:'errorActionType'
+	}
+
+}
+})
+
+//dispatch
+store.dispatch(getApiCall())
+
+//Thunk/Middleware 
+const apiMiddleware = params =>  store => next=> async action => {
+	if(action.type !== 'apiGetCall'){
+		return next(action)
+	}
+	
+	next(action) //apiGetCall will appear in redux-dev-tools , if we skip there will be no action registered.
+	const {url, id,onSuccess,onError} =  action.payload
+	
+	try{
+		const fetchResponse = await fetch(url)
+		const response = await fetchResponse.json()
+		store.dispatch({type:onSuccess, payload:{response})
+	}
+	catch(error){
+		store.dispatch({type:onError, payload:{error})
+	}
+}
+
+//Refactored Middleware/Thunk
+//In actionsCreator file
+const apiGetCall = createAction('api/getCall')
+const apiSuccessCall = createAction('api/successCall')
+const apiErrorCall = createAction('api/errorCall')
+
+//We can trigger action like below.
+store.dispatch(actionCreator.apiGetCall({
+		id:100,
+		}))
+
+const apiMiddleware = params =>  store => next=> async action => {
+	if(action.type !== apiGetCall.type){ //changed here 
+		return next(action)
+	}
+	
+	next(action) //apiGetCall will appear in redux-dev-tools , if we skip there will be no action registered.
+	const {url, id,onSuccess,onError} =  action.payload
+	
+	try{
+		const fetchResponse = await fetch(url)
+		const response = await fetchResponse.json()
+		//For generic success we can make use of this 
+		store.dispatch(apiSuccessCall(response.data))
+		//Specific 
+		if(onSuccess){
+			store.dispatch({type:onSuccess, payload:{response})
+		}
+	}
+	catch(error){
+	//For generic errors we can make use of this 
+		store.dispatch(apiErrorCall(error))
+		//Specific
+	  if(onError){
+		store.dispatch({type:onError, payload:{error})
+	  }
+	}
+}
+
+
+#region MODERN WAY OF CALLING APIS as of Redux Version 5
+=================================================
+Refer epampdp --> C:\Ajay_EPAM\PDP_PRACTICSE\epampdp\REACT\redux_example_apps\crudredux
+
+//INSIDE STORE.JS
+#region Store
+import { configureStore } from "@reduxjs/toolkit";
+import reducer from "./reducer";
+const store = configureStore({
+    reducer
+})
+
+export default store
+
+#endregion store
+
+#region Reducer
+//INSIDE REDUCER.JS
+//Example Reference: https://dev.to/julfikarhaidar/redux-toolkit-crud-example-with-react-hooks-4d98
+
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { buildCreateSlice, asyncThunkCreator } from '@reduxjs/toolkit'
+
+/*
+    When you use createSlice  we see following error:
+    Cannot use `create.asyncThunk` in the built-in `createSlice`. 
+    Use `buildCreateSlice({ creators: { asyncThunk: asyncThunkCreator } })` to create a customised version of `createSlice`.
+
+    To avoid that we make use of 
+    export const createProductsSlice = buildCreateSlice({
+    creators: { asyncThunk: asyncThunkCreator },
+    })
+*/
+
+
+export const createProductsSlice = buildCreateSlice({
+    creators: { asyncThunk: asyncThunkCreator },
+})
+
+const slice = createProductsSlice({       //createSlice({
+    name: 'products',
+    initialState: {
+        products: [],
+        error: "",
+        loading: false,
+        selectedProductDetail: {}
+    },
+    reducers: (create) => ({
+        fetchAllProducts: create.asyncThunk(
+            async (obj1, obj2) => {
+                console.log({ obj1 }, { obj2 })
+                const productsPromise = await fetch('https://dummyjson.com/products')
+                const productsResponse = await productsPromise.json()
+                return productsResponse.products
+            },
+            {
+                pending: (state) => {
+                    state.loading = true
+                },
+                rejected: (state, _action) => {
+                    state.loading = false
+                },
+                fulfilled: (state, action) => {
+                    state.products = [...action.payload]
+                }
+            }
+        ),
+
+        fetchProductById: create.asyncThunk(
+            async (product) => {
+                const id = product.id
+                const productsPromise = await fetch(`https://dummyjson.com/products/${id}`)
+                const productsResponse = await productsPromise.json()
+                return productsResponse
+            },
+            {
+                pending: (state) => {
+                    state.loading = true
+                },
+                rejected: (state, _action) => {
+                    state.loading = false
+                },
+                fulfilled: (state, action) => {
+                    state.selectedProductDetail = { ...action.payload }
+                }
+            }
+        )
+    })
+    // Old Way, there is also ancientway  using speciffic middleware THE STORE=>NEXT=>ACTION way
+    
+    // reducers: {
+    //     loadProducts: (state, action) => {
+    //         state.currentPage = action.payload;
+    //     },
+    // },
+    // extraReducers: {
+    //     [fetchAllProducts.pending]: (state, action) => {
+    //         state.loading = true
+    //     },
+    //     [fetchAllProducts.fulfilled]: (state, action) => {
+    //         state.loading = false
+    //         state.products = [action.payload]
+    //     },
+    //     [fetchAllProducts.rejected]: (state, action) => {
+    //         state.loading = false
+    //         state.error = action.payload.message
+    //     }
+    // }
+    
+})
+
+
+const { reducer, actions } = slice
+
+console.log(actions)
+
+export const { fetchAllProducts, fetchProductById } = actions
+
+export default reducer
+#endregion reducer
+
+#region React Component UI 
+import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { fetchAllProducts, fetchProductById } from "../crud-store/reducer"
+
+const App = () => {
+    const products = useSelector(state => state.products)
+    const selectedProductDetail = useSelector(state => state.selectedProductDetail)
+    const [isShowDetail, setIsShowDetail] = useState(false)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(fetchAllProducts())
+    }, [])
+
+    const handleShowDetailsClick = (product) => {
+        dispatch(fetchProductById(product))
+        setIsShowDetail(true)
+    }
+
+    return (
+        <div>
+            {isShowDetail && <div>
+                {JSON.stringify(selectedProductDetail)}
+                <br></br>
+                <button onClick={() => setIsShowDetail(false)}>Hide Details</button>
+            </div>}
+            <div>
+                <ul>
+                    {products.map(product => {
+                        return <li>
+                            <p><b>{product.title} {",  "} Rs.{product.price}</b></p>
+                            <p>{product.description}</p>
+                            <button onClick={() => handleShowDetailsClick(product)}>Show Details</button>
+                            <hr />
+                        </li>
+                    })}
+                </ul>
+            </div>
+
+        </div>
+    )
+}
+
+export default App
+
+
+#endregion React Component UI 
+
+#endregion MODERN WAY OF CALLING APIS as of Redux Version 5
+
+#endregion Calling API's using Middlewares 
+
+#endregion Async/Promises with middleware
+
+#endregion Middlewares 
 
 #region Connect Component to Redux
 
 Connect your UI component to Redux store
 =========================================
+Step 1: Wrap your <App/> inside <Provider>
+===========================================
+Way 1:
+//Inside context.JS
+const StoreContext = React.createContext()
+export default StoreContext
+
+//In index.JS
+const store = createStore()
+<StoreContext.Provider value={store} > <App/> </StoreContext.Provider>
+
+//Inside a UI React Component
+class SomeXyz{
+ static contextType = StoreContext
+ componentDidMount(){
+	const store = this.context
+	this.unsubscribe = store.subscribe(() => {this.setState({....})})....
+ }
+ componentWillUnMount(){
+	this.unsubscribe()
+ }
+}
+
+Way 2: npm i react-redux
+========================
+import {Provider, connect} from 'react-redux'
+<Provider value={store} > <App/> </Provider>
+This Provider will take care of subscribing and Unsubscriping of events 
+The store-state is passed on as props using connect, mapStateToProps, mapDispatchToProps
+
+
+
 
 Way 1 : using CLASS Components 
 ===================================
@@ -356,60 +912,21 @@ const characters = useSelector(state => state.defaultCharacters)
 
     const handleClick = (character) => {
         //console.log('Add Clicked', character)
-        dispatch(addSuperPower(character.id, character.name))
+        dispatch(addSuperPower(character.id, character.name)) // call this function
     }
 
 
 
+	
+
 
 #endregion Connect Component to Redux 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #endregion
 
-
-
 #region Mosh Tutorials Turn2
+
+https://medium.com/@ayabellazreg/make-a-simple-shopping-cart-app-using-react-redux-1-3-fefde93e80c7
+https://medium.com/@ayabellazreg/make-a-simple-shopping-cart-app-using-react-redux-part-3-32b182e02cc9
 
 #endregion Mosh Tutorials Turn2

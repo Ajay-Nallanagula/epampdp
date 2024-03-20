@@ -4,14 +4,16 @@ import App from './App';
 
 // Mount function to start up the app
 const mount = (el) => {
-  ReactDOM.render(<App />, el);
+  return ReactDOM.render(<App />, el);
 };
+
+console.log('process.env.NODE_ENV ')
 
 // If we are in development and in isolation,
 // call mount immediately
 if (process.env.NODE_ENV === 'development') {
-  const devRoot = document.querySelector('#_marketing-dev-root');
-
+  const devRoot = document.getElementById('marketing-dev-root');
+  console.log(devRoot)
   if (devRoot) {
     mount(devRoot);
   }

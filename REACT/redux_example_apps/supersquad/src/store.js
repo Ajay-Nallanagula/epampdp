@@ -35,15 +35,19 @@ reducer(state=[],action){
 }
 */
 
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore,getDefaultMiddleware } from "@reduxjs/toolkit";
 import rootReducer from "./rootReducer";
 import charactersArr from './characters.json'
+
 
 //setup the store 
 /*
    configureStore automatically sets up the Redux DevTools Extension for you, 
     automatically turns on the thunk middleware, and also makes it very easy to add additional store enhancers if desired.
 */
-const store = configureStore({ reducer: rootReducer })
+const store = configureStore({ 
+    reducer: rootReducer,  
+    //middleware: (getDefaultMiddleware) => ([...getDefaultMiddleware()])
+})
 console.log(store.getState())
 export default store 

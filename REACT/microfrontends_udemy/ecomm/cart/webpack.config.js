@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin")
-const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin')
+//const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin')
+const { ModuleFederationPlugin } = require("webpack").container;
 
 module.exports = {
     mode: 'development',
@@ -16,7 +17,7 @@ module.exports = {
             //shared: ['faker'],
             shared: {
                 faker: {
-                    singleton: true
+                    singleton: true,
                 }
             }
         }),
