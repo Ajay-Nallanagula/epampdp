@@ -1,8 +1,22 @@
+<div>
 https://hackernoon.com/the-7-software-architecture-books-experienced-developers-need-to-read
-
 Mastering the System Design Interview by Frank Kane
+</div>
 
-https://github.com/unlight/solution-architecture
 
+<p>https://github.com/unlight/solution-architecture</p>
+
+<div>
 Collation Of Books
 https://github.com/mguludag/book-1/blob/master/%5BJAVASCRIPT%5D%5BAsync%20JavaScript%5D.pdf
+</div>
+
+<div>
+System Design:
+https://www.youtube.com/watch?v=sV_4pOGosnU&list=PL4CFloQ4GGWICE0Tz6iXKfN3XWkXRlboU
+
+<img src="C:\Ajay_EPAM\PDP_PRACTICSE\epampdp\SYSTEM_DESIGN\MATERIAL\Imppoints_Sys_Design.JPG" >
+
+<p>https://www.youtube.com/watch?v=44mOnnt5pic&list=PL4CFloQ4GGWICE0Tz6iXKfN3XWkXRlboU&index=3</p>
+
+</div>

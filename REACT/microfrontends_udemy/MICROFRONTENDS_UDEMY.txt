@@ -349,3 +349,64 @@ new moduleFederation({
 
 
 #endregion Linking Multiple Apps Together
+
+#region Deployment
+--> Want to deploy microfrontend independently(including container)
+
+--> Location of child app remoteEntry.js files must be know at build time , consider container app ,
+		a) index.js+bootstarp.js+ dependencies ->WEBPACK -> main.js
+		This main.js should know the location of remoteEntry.js files at build-time, there is no magic way to know the locations of these remotes at runtime.
+		
+--> Many front-end deployment solutions assume you are deploying a monolith application , we need something that can handle multiple different ones.
+
+
+--> Probably need CI/CD pipeline of some sort
+--> At present, the remoteEntry.js file name is fixed!Need to think about caching issues.
+
+Step 1: index.js+bootstarp.js+ dependencies ->WEBPACK -> main.js
+Step2: Git Monorepo Or Git independent repos 
+	container, marketing, dashboard, auth
+	
+Step 3:
+container--> did container change?--> Build Prod version of container with webpack--> Upload to AWS S3 <--> AWS CDN--> Browser/Client.
+marketing--> did marketing change?--> Build Prod version of marketing with webpack--> Upload to AWS S3 <--> AWS CDN--> Browser/Client.
+dashboard--> did dashboard change?--> Build Prod version of dashboard with webpack--> Upload to AWS S3 <--> AWS CDN--> Browser/Client.
+auth--> did auth change?--> Build Prod version of auth with webpack--> Upload to AWS S3 <--> AWS CDN--> Browser/Client.
+
+
+
+#endregion Deployment
+
+#region CSS in Microfrontends
+
+There are challenges with CSS in microfrontends
+
+Scenario : assume we have two microapps --> Pricing and auth
+Pricing: /pricing --> have no css <h1>Pricing</h1> displayed in black 
+Auth: /auth --> have css h1{color:red} <h1>SignIn</h1> displayed in green color 
+
+Now when we go to SignIn page from pricing, "SignIn" appears green, and when we navigate back to Pricing even "Pricing" appears green which is not intended .
+That is because css remains in the browser and its applied to the microapps.
+
+Solution: Css Scoping : 
+//For custom/user-defined css
+option 1: CSS-In-JS
+option 2: style scoping in Vue/Angular 
+option 3: Namespace your css
+<div class="pricing"> All pricing related content </div>
+Now in css you can namespace by .pricing div{...}, .pricing ul{...}, .pricing h1{...} etc etc
+
+//For third-party CSS
+-> Use components with css-in-j like material-ui, bootstrap
+-> Manually build css library and Namespace scoping can be used, which is quite tedious
+
+Challenge 2: There could be naming collsions in production version of the project, webpack minimizes the css and renames the classes 
+Due to which the css can get distorted
+Fix for name-collosions: We can give instructions to generate unique class names for.eg in materialUI we can give 
+const generateClassName = createGenerateClassname({productionPrefix:'ma')}
+>StyleProvider>
+
+Step3: <StyleProvider generateClassName={generateClassName}/> // StyleProvider is a materialUI Import 
+
+
+#endregion CSS in Microfrontends

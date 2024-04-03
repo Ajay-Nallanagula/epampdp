@@ -1,25 +1,51 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter } from "react-router-dom"
+import AuthProvider from "./Authentication/auth/AuthProvider"
+import SimpleContainer from "./Authentication/components/SimpleContainer"
+import AuthRoutes from "./Authentication/AuthRoutes"
+import ErrorBoundaryApp from "./ErrorBoundaryDemo"
+import React, { useDebugValue, useState } from "react"
+import useUpdateEffect from "./useUpdateEffect"
+import UseStateDemo from "./Hooks@18/USESTATE/UseStateDemo"
+import UseDebugValueDemo from "./Hooks@18/useDebugValueDemo"
+import ParentUseImperativeHandle from "./Hooks@18/UseImperativeHandleDemo"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = () => {
+    const [state, setState] = useState()
+    useDebugValue(true ? "Online" : "Offline");
+    const test = () => {
+        console.log('testFunction')
+    }
+    useUpdateEffect(test)
+
+    const handleClick = () => {
+        setState(10)
+    }
+
+    return (
+        <>
+            <ParentUseImperativeHandle />
+            {/* <UseStateDemo /> */}
+            {/* <UseDebugValueDemo /> */}
+
+
+            {/*  <BrowserRouter>
+             <AuthProvider>
+                 <SimpleContainer>
+                     {<AuthRoutes />}
+            
+            <ErrorBoundaryApp />
+        </SimpleContainer >
+             </AuthProvider >
+    </BrowserRouter > */}
+            {/* < div > {state}
+                < button onClick={handleClick} > Click Me</button >
+            </div > */}
+            {/* <ErrorBoundaryApp /> */}
+
+        </>
+    )
 }
 
-export default App;
+export default App
+
+

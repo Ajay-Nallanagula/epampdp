@@ -21,7 +21,7 @@ function balancedParanthesis(str) {
 
     for (let i = 0; i < str.length; i++) {
         if ([...Object.keys(obj)].includes(str[i])) {
-            arr.push(str[i])
+            arr.push(str[i]) //}}
         } else {
             const last = arr.pop()
             if (obj[last] !== str[i]) {

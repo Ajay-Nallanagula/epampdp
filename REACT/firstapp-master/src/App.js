@@ -1,28 +1,28 @@
 import React, { useState } from "react";
 import "./App.css";
-import CtorComponent from "./lifecyclehooks/CtorComponent";
-import ComponentDidMountDemo from "./lifecyclehooks/ComponentDidMountDemo";
-import ComponentDidMountMultipleParent from "./lifecyclehooks/ComponentDidMountMultipleParent";
-import ComponentDidMountAPI from "./lifecyclehooks/ComponentDidMountAPI";
-import PortalParent from "./lifecyclehooks/PortalParent";
-import ComponentGetDerivedStateFromPropsParent from "./lifecyclehooks/ComponentGetDerivedStateFromPropsParent";
+import CtorComponent from "./lifecyclemethodsandhooks/CtorComponent";
+import ComponentDidMountDemo from "./lifecyclemethodsandhooks/ComponentDidMountDemo";
+import ComponentDidMountMultipleParent from "./lifecyclemethodsandhooks/ComponentDidMountMultipleParent";
+import ComponentDidMountAPI from "./lifecyclemethodsandhooks/ComponentDidMountAPI";
+import PortalParent from "./lifecyclemethodsandhooks/PortalParent";
+import ComponentGetDerivedStateFromPropsParent from "./lifecyclemethodsandhooks/ComponentGetDerivedStateFromPropsParent";
 import {
   Car,
   Bike,
   TruckWay1,
   TruckWay2,
-} from "./lifecyclehooks/ComponentInheritance";
-import { Car1, Bike1, TruckWay11 } from "./lifecyclehooks/ComponentComposition";
-import RenderEg from "./lifecyclehooks/RenderEg";
+} from "./lifecyclemethodsandhooks/ComponentInheritance";
+import { Car1, Bike1, TruckWay11 } from "./lifecyclemethodsandhooks/ComponentComposition";
+import RenderEg from "./lifecyclemethodsandhooks/RenderEg";
 import ParentClass from "./HOOKS/ParentClass";
-import ComponentDidUpdateParent from "./lifecyclehooks/ComponentDidUpdateParent";
-import ComponentShouldComponentUpdateParent from "./lifecyclehooks/ComponentShouldComponentUpdateParent";
-import ComponentShouldComponentUpdate from "./lifecyclehooks/ComponentShouldComponentUpdate";
-import ComponentDidUpdateDemoParent from "./lifecyclehooks/ComponentDidUpdateDemoParent";
-import ComponentWillUnMountDemo from "./lifecyclehooks/ComponentWillUnMountDemo";
+import ComponentDidUpdateParent from "./lifecyclemethodsandhooks/ComponentDidUpdateParent";
+import ComponentShouldComponentUpdateParent from "./lifecyclemethodsandhooks/ComponentShouldComponentUpdateParent";
+import ComponentShouldComponentUpdate from "./lifecyclemethodsandhooks/ComponentShouldComponentUpdate";
+import ComponentDidUpdateDemoParent from "./lifecyclemethodsandhooks/ComponentDidUpdateDemoParent";
+import ComponentWillUnMountDemo from "./lifecyclemethodsandhooks/ComponentWillUnMountDemo";
 import ParentForContext from "./CONTEXT/ParentForContext";
-import SimplifyShouldComponentUpdate from "./lifecyclehooks/SimplifyShouldComponentUpdate";
-import ComponentDidUpdateDOM from "./lifecyclehooks/ComponentDidUpdateDOM";
+import SimplifyShouldComponentUpdate from "./lifecyclemethodsandhooks/SimplifyShouldComponentUpdate";
+import ComponentDidUpdateDOM from "./lifecyclemethodsandhooks/ComponentDidUpdateDOM";
 import ParentMemo from "./MEMO/ParentMemo";
 import ParentRef from "./REF/ParentRef";
 // import FreelanceTrial from './FreelanceTrial'

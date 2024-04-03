@@ -1,0 +1,226 @@
+References: 
+https://medium.com/@ittamiloffl/top-10-webpack-interview-questions-and-answers-af57313010db
+https://github.com/styopdev/webpack-interview-questions/blob/master/answers.md
+
+
+Webpack:
+What are loaders
+What are plugins
+How to minify code
+How to bundle the code
+What is tree-shaking 
+What is Hot Module replacement
+What is Module Federation
+How do you implement SCSS/SASS/LESS
+
+What is Webpack?
+=================
+--> Webpack is a powerful module bundler for JavaScript applications.
+--> It takes modules with dependencies and generates static assets that can be served to a browser. 
+--> It simplifies the process of managing and bundling various assets like JavaScript, CSS, and images, enabling efficient resource utilization and enhancing application performance.
+
+What is the main difference between webpack and other build tools like gulp or grunt?
+Webpack is a module bundler, though it is quite often used instead of Gulp or Grunt task runners. This advanced tool provides developers with control of spliting the modules, allowing them to adjust builds to particular situations and workaround solutions that don’t function properly out of the box.
+
+What are Key Features of Webpack?
+==================================
+Module bundling: 
+================
+Webpack allows you to bundle all the dependencies, including JavaScript, CSS, and other assets, into a single file or a few optimized files.
+
+Code splitting: 
+===============
+Code splitting is a technique used in Webpack to split the code into smaller chunks that can be loaded on-demand. It helps reduce the initial loading time of an application by loading only the essential code required for the initial view and loading additional code as needed. Webpack achieves code splitting through dynamic imports or by configuring entry points for specific chunks.
+
+Loaders:
+========
+Loaders in Webpack are transformations applied to source files as they are added to the dependency graph. They allow you to preprocess files before they are bundled. For example, you can use loaders to transpile TypeScript to JavaScript, convert SCSS to CSS, or optimize and compress images. Loaders are configured in the Webpack configuration file and specified using rules.
+https://webpack.js.org/loaders/
+Examples: 
+Transpiling: 
+------------
+babel-loader: Loads ES2015+ code and transpiles to ES5 using Babel
+ts-loader Loads TypeScript 2.0+ like JavaScript
+Styling:
+css-loader Loads CSS file with resolved imports and returns CSS code
+less-loader Loads and compiles a LESS file
+sass-loader Loads and compiles a SASS/SCSS file
+
+Plugins: 
+=========
+Plugins enhance the functionality of Webpack by providing additional optimization, code generation, and asset management capabilities.
+HtmlWebpackPlugin
+EslintPlugin : https://webpack.js.org/plugins/eslint-webpack-plugin/
+ModuleFederationPlugin: Microfrontends , introduced in Webpack5.
+UglifyJSPlugin: Minify the bundles,Js
+TerserPlugin: Minify the bundles,Js
+mini-css-extract-plugin: Extract css into separate files.
+
+CommonChunksPlugin:
+Answer: The CommonsChunkPlugin is built-in feature that creates a separate file (known as a chunk), consisting of common modules shared between multiple entry points. By separating common modules from bundles, the resulting chunked file can be loaded once initially, and stored in cache for later use. This results in pagespeed optimizations as the browser can quickly serve the shared code from cache, rather than being forced to load a larger bundle whenever a new page is visited.
+
+Explain this code
+   new webpack.optimize.CommonsChunkPlugin({
+     name: 'common',
+     filename: 'common.js',
+     chunks: ['home', 'dashboard']
+   })
+Answer: This code creates separate file: common.js which contains common modules from home and dashboard chunks.
+
+Question: How to remove unused selectors from css using webpack?
+Answer: Using purifycss-webpack plugin
+
+How does webpack handle dependencies?
+=======================================
+Step 1: Build Dependency Graph 
+Step 2: Tree-Shaking  [Webpack 4 uses ModuleConcatenation Plugin]
+Step 3: Seal the graph and create a bundle 
+Webpack uses a dependency graph to manage dependencies. It starts with an entry point and recursively follows the dependencies of the modules to build a complete graph. Each module is treated as a separate entity and can have its own dependencies. Webpack analyzes the graph and bundles all the dependencies into one or more output files.
+module.exports = {
+  entry: './src/index.js', //dependency building starts from this entry point .
+  // the rest of your webpack config is here
+}
+Good Explaination: https://blog.jakoblind.no/how-webpack-decides-what-to-bundle/
+
+How can you optimize the size of Webpack bundles?
+==================================================
+To optimize the size of Webpack bundles, you can employ several strategies:
+
+Minification: Webpack offers plugins like UglifyJSPlugin or TerserPlugin to minify and compress the bundled code, reducing its size.
+Tree shaking: Tree shaking is a process in which Webpack eliminates dead code that is not used in the application, resulting in smaller bundle sizes.
+Code splitting: By splitting code into smaller chunks and loading them on-demand, you can reduce the initial bundle size and improve performance.
+Using dynamic imports: Utilizing dynamic imports allows you to load modules asynchronously when needed, reducing the initial loading time.
+ 
+7. What is the purpose of the Webpack Dev Server?
+===================================================
+The Webpack Dev Server is a development server that provides an easy way to test and debug applications during development. 
+It offers features like hot module replacement (HMR), which allows you to see changes instantly without refreshing the entire page.
+The dev server also provides an optimized build process for faster development iterations.
+
+8. How can you configure Webpack?
+==================================
+Webpack can be configured using a JavaScript configuration file (webpack.config.js). In this file, you define various settings such as entry points, output paths, loaders, plugins, and optimization options. Webpack provides a flexible configuration system that allows you to customize the bundling process according to your project's specific requirements.
+
+9) How can you handle CSS in Webpack?
+======================================
+Webpack offers multiple ways to handle CSS, including:
+
+CSS loaders: You can use CSS loaders like style-loader and css-loader to import CSS files and apply styles to your application.
+CSS preprocessors: Webpack supports loaders for CSS preprocessors such as Sass, Less, and PostCSS, enabling you to write CSS with advanced features and compile them into regular CSS.
+Extracting CSS: Webpack allows you to extract CSS into separate files using plugins like mini-css-extract-plugin, which is useful for production builds.
+
+
+What is the difference between loader and plugin?
+====================================================
+https://stackoverflow.com/a/38281240/3283209
+
+Loaders do the pre-processing transformation of virtually any file format when you use sth like require("my-loader!./my-awesome-module") in your code. Compared to plugins, they are quite simple as they (a) expose only one single function to webpack and (b) are not able to influence the actual build process.
+
+Plugins on the other hand can deeply integrate into webpack because they can register hooks within webpacks build system and access (and modify) the compiler, and how it works, as well as the compilation. Therefore, they are more powerful, but also harder to maintain.
+
+Name some plugins you think are very important and helpful?
+===========================================================
+Answer: CommonsChunkPlugin, DefinePlugin, HtmlWebpackPlugin, ExtractTextWebpackPlugin, CompressionWebpackPlugin
+
+What is Hot-Modules-Replacement?
+================================
+Answer: Hot-Modules-Replacement(HMR) is webpack feature which allows to update modules in application without page reload. HMR can be used as an advanced replacement for livereload.
+
+How to enable source maps in webpack bundles?
+==============================================
+Answer: Using devtool: 'source-map' (there are various other configurations for source maps, view full list here)
+
+How to automatically build and update bundles in the browser after a change in source code?
+============================================================================================
+Answer: Using watch: true and devServer: { hot: true } options together.
+
+What is parallel-webpack and how does it affect webpack's build process?
+=========================================================================
+Answer: parallel-webpack useful for webpack configurations with multiple entry points. It allows to run multiple webpack builds in parallel, spreading the work across your processors and thus helping to significantly speed up build.
+
+Question: Describe the webpack runtime and manifest?
+Answer: https://webpack.js.org/concepts/manifest/
+
+Question: Is it possible to use other languages (except javascript) for the webpack config file?
+Answer: Yes, webpack accepts configuration files written in multiple programming and data languages, such as typescript, coffeescript, babel and jsx. The list of supported file extensions can be found here.
+
+Question: Is it possible to have different configuration files for different environments?
+Answer: Yes, read more https://aishwaryavaishno.wordpress.com/2017/04/17/webpack-configuration-for-multiple-environments/
+//How to give the config file to execute
+2.a) webpack –config=<filepath/filename>
+2.b) webpack –env= <env>
+
+Question: Describe tree shaking mechanism.
+Answer: https://webpack.js.org/guides/tree-shaking/
+
+Question: What is difference between tree shaking and dead code elimination.
+Answer: https://medium.com/@Rich_Harris/tree-shaking-versus-dead-code-elimination-d3765df85c80
+Dead code elimination consists of — taking the finished product, and imperfectly removing bits you don’t want, analogy: remove egg-shells from finished code.
+Tree-shaking: before bundling, remove the un-used code and then bundle ... that is tree-shaking
+
+Question: Briefly describe long-term caching and how to achieve it using webpack?
+===================================================================================
+Answer: Browsers should cache static assets to save traffic and users time. But after each change or bugfix, browser have to download newer version of files. The most easy way to achieve this is changing file name. It could be buildId or unique hash in the end of file's name like.
+    app.js?build=1
+    app.js?build=2
+or
+
+  app.js.2a6c1fee4b5b0d2c9285.js
+  app.js.70b594fe8b07bcedaa98.js
+To achieve this using webpack simple configuration should be done
+  module.exports = {
+    ...
+    output: {
+     filename: "[name].[hash].js"
+    }
+    ...
+   }
+
+How are vendors and main bundles separated?
+===========================================
+***https://blog.jakoblind.no/code-split-vendors-with-webpack-for-faster-load-speed/
+output: {
+  filename: 'bundle.js',
+  path: path.resolve(__dirname, 'dist'),
+},
+When we do the above configuration 
+Sourcecode is your business logics
+dependencies here is :loadash,react, react-router-dom,ramada, helmet etc 
+sourcecode + dependencies = main.[hash_1].js is generated
+Now end this to browser caches this for long time after the first load.
+
+Next you have changed your your sourcecode, you have to build again ,
+sourcecode + dependencies = main.[hash_2].js is generated.
+In this case browser have to invalidate all the bundle and do reloading/caching again.
+
+Hence , webpack does the code-split of the chunks into main.js and vendor.js 
+Where vendor.js have all the dependencies and main.js have the source code. 
+
+Webpack achieves this via SplitsChunkPlugin , 
+This plugin is built into webpack and smart enough to diffrentiate between vendor vs main javascript bundles.
+using this we can optimize and do cache grouping.
+
+output: {
+  filename: '[name].bundle.js',
+  path: path.resolve(__dirname, 'dist'),
+},
+
+optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all'
+        }
+      }
+    }
+  },
+
+   
+Question: What is difference between hash and chunkhash
+========================================================
+Answer: [hash] will generate unique hash for each build and use it for all chunks. Replace [hash] with [chunkhash] to generate unique hashes for each chunk. This is useful when you dont want to re-download vendors (dependencies) file but you have changes in your application code and want to update it.
+
+What are vendors in webpack?
+https://blog.jakoblind.no/code-split-vendors-with-webpack-for-faster-load-speed/

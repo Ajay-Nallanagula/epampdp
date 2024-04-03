@@ -1,0 +1,148 @@
+.tweet{
+    /* border:10px solid gold; */
+    padding:10px;
+}
+
+.avatar{
+    height:100px;
+    width:100px;
+    background: yellow;
+    margin:5px;
+    float:left;
+}
+
+
+
+a:visited,
+a:link{
+    color:green
+}
+
+a:hover, a:focus{
+    color:red
+}
+
+.square{ width:100px ; height:100px; border-radius:100%}
+
+.container{
+    display:flex;
+    flex-direction: row;
+    justify-items: center;
+}
+
+.item{
+    height:100px;
+    width:100px;
+    margin: 5px;
+    background-color: aqua;
+    align-content: center;
+    justify-content: center;
+    padding:5px;
+}
+
+#product > p{
+    background-color: yellow;
+}
+
+/*css with position to show div side-by-side*/
+.container-pos{
+    height:500px;
+    Width:500px;
+    border:10px solid gold;
+    position:relative;
+}
+
+.item-pos1{
+    height:100px;
+    width:100px;
+    margin:5px;
+    border:10px solid red;
+}
+
+.item-pos2{
+    height:100px;
+    width:100px;
+    margin:5px;
+    border:10px solid blue;
+    position:absolute;
+    top:0;
+    left:150px
+}
+
+/*css with float to show div side-by-side*/
+.floatContainerDiv{
+    height:300px;
+    width:300px;
+    border: 10px solid blue;
+}
+
+.floatItem1{
+    float:left ;
+    margin:5px;
+    height:100px;
+    width:100px;
+    border: 10px solid gold;
+}
+
+.floatItem2{
+    float:right ;
+    margin:5px;
+    height:100px;
+    width:100px;
+    border: 10px solid gold;
+}
+
+/*Css-to centre div*/
+.centerContainerDiv{
+    border: 5px solid;
+    position: absolute;
+    top: 50%;
+    padding: 10px;
+    left: 50%;
+}
+
+/*Flexbox*/
+.container{
+    display:flex;
+    flex-direction: column;
+
+    height:600px;
+    width:600px;
+    border: 5px solid grey;
+}
+
+.box{
+    height:100px;
+    width:100px;
+    background-color: orange;
+    margin:5px
+}
+
+.gridContainer{
+    display:grid;
+    border: 5px solid grey;
+    /*Three rows with each 100px*/
+    grid-template-rows: 100px 100px 100px;
+    /* repeat(times,value) is a utility method 
+      grid-template-rows: repeat(3,100px);
+    */
+    /*two columns with each 100px*/
+    grid-template-columns: 200px 200px;
+    /* grid-template = grid-template-rows + grid-template-columns*/
+    /*grid-template: repeat(3,100px)/repeat(2,200px)*/
+
+    justify-items: center; /* HORIZONTAL_AXIS start, end, default is stretch*/
+    align-items: center; /* VERTICAL_AXIS start, end*/
+    justify-content: center; /*HORIZONTAL All Items in  Grid can be centered horizontally*/
+    align-content: center; /*VERTICAL All Items in Grid can be centered vertically*/
+}
+
+.gridCenterContainer{
+    display:grid;
+    justify-content: center;
+    align-content: center;
+
+    width: 100vw;
+    height: 100vh;
+   /* border: 5px solid grey;*/
+}

@@ -107,6 +107,7 @@ export const TodoList = ({ todos, dispatch }) => {
 };
 
 const TodoItem = ({ dispatch, todo }) => {
+  
   const styleObj = {
     width: "30%",
     height: "70px",
@@ -115,6 +116,7 @@ const TodoItem = ({ dispatch, todo }) => {
     padding: "20px",
     borderRadius: "25px",
   };
+
   const { canDelete } = todo;
   const onDeleteHandler = ()=>{
     //Pass an action object to dispatch, dispatch is an alias for action
