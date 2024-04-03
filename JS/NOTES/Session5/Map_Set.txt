@@ -1,0 +1,239 @@
+#region Map (similar to object)
+
+1) Map is a collection of keyed data items, just like an Object
+2) But the main difference is that Map allows keys of any type, where as object accepts "primitive types"  converts all the keys to strings, Map retain the data type of key
+ eg:
+ const obj = {
+    1:'Any value',
+    true:'bool value',
+    null:'null value'
+    }
+    
+    for(let key in obj){
+    console.log(typeof key) // string string string
+    }
+
+let map = new Map() //creates a map
+//Set key-value pair to a map
+map.set(1,'Number') 
+map.set(true,'Boolean')
+map.set(null,'object')
+
+map.set always returns the map itself hence we can chain multiple sets 
+like in the above eg:
+map.set(1,'Number').set(true,'Boolean').set(null,'object')
+
+//get values from map
+console.log(map.get(1)) //Number
+console.log(map.get(true)) //Boolean
+console.log(map.get(null)) //object
+
+//check if map has a key value
+console.log(map.has(1))//true
+console.log(map.has(true))//true
+console.log(map.has(undefined)) //false
+
+//Delete a key from map
+map.set('deletedemo','Deleted')
+console.log(map.has('deletedemo'))
+//map.delete return a boolean value indicating if item is deleted or not
+console.log(map.delete('deletedemo'))
+console.log(map.has('deletedemo'))
+
+//find length of the map using map.size property
+console.log(map.size)
+
+//you can clear the map using map.clear()
+console.log(map.clear())
+console.log(map.size)//0
+console.log(map.has(1))//false
+console.log(map.has(true))//false
+console.log(map.has(undefined)) //false
+
+Can we set object as key to map ?
+yes , we can 
+eg: let obj={
+    test:'test'
+}
+map.set(obj,'hiThere')
+console.log(map.get(obj))
+
+Note: 
+Although map[key] also works, e.g. we can set map[key] = 2, this is treating map as a plain JavaScript object, so it implies all corresponding limitations (no object keys and so on).
+So we should use map methods: set, get and so on.
+
+What is datatype of map/array/set is Object Itself ?
+console.log(typeof map) //object
+
+can map accept duplicate keys?
+Yes map accepts duplicate keys , but only latest key value is considered always
+
+Iteration over map
+map.keys() – returns an iterable for keys,
+map.values() – returns an iterable for values,
+map.entries() – returns an iterable for entries [key, value], it’s used by default in for..of.
+
+map.set(1,'Number').set(true,'Boolean').set(null,'object')
+console.log(map.keys())//returns an iterator , which is used by for..of
+for (const key of map.keys()) {
+    console.log(typeof key)
+    console.log(map.get(key))
+}
+
+
+console.log(map.values())//returns an iterator , which is used by for..of
+for (const value of map.values()) {
+    console.log(value)
+}
+
+console.log(map.entries())//returns an iterator , which is used by for..of
+for (const [key,value] of map.entries()) {
+    console.log(key,value)
+}
+
+how to intialize a map ? double array.
+let map = new Map([
+    ['cucumber', 500],
+    ['tomatoes', 350],
+    ['onion',    50]
+]) //creates a map
+
+for (const keys of map.keys()) {
+    console.log(keys)
+}
+
+****Note : regular object sorts the keys, where as map preserves the order of insertion of keys 
+
+How to convert a regular object to map ?
+the Object.entries(obj) method returns an array of key value pairs as shown below
+let obj = {
+    name: "John",
+    age: 30
+  };
+
+  console.log(Object.entries(obj))//[ ["name","John"], ["age", 30] ]
+  
+  //conversion of object to map
+  let map = new Map(Object.entries(obj))
+
+
+How to convert map to regular object ?
+const entries = new Map([
+  ['foo', 'bar'],
+  ['baz', 42]
+]);
+const obj = Object.fromEntries(entries);
+
+console.log(obj);//{ foo: "bar", baz: 42 }
+
+
+What are differences between Map Vs Object
+1) Object converts all the keys to strings, where as map retains the data types of keys.
+2) Object by default sorts the keys, where as map retains the order of key insertion.
+3) Object cannot accept another object as key, where as Map can accept another object/array as keys
+4) objects can be easily converted to Json, but Map doesn't have support for json yet, this can cause a problem during serialization and deserialization 
+
+NOTE****: MAP CANNOT BE SERIALIZED OR DESERIALIZED , BECAUSE MAPS ARE NOT COMPATIBLE WITH JSON
+
+#endregion
+
+#region Set (similar to arrays)
+A Set is a special type collection – “set of values” (without keys), where each value may occur only once.
+
+//ALL THE METHODS ARE SIMILAR TO Map
+new Set(iterable) – creates the set, and if an iterable object is provided (usually an array), copies values from it into the set.
+set.add(value) – adds a value, returns the set itself.
+set.delete(value) – removes the value, returns true if value existed at the moment of the call, otherwise false.
+set.has(value) – returns true if the value exists in the set, otherwise false.
+set.clear() – removes everything from the set.
+set.size – is the elements count.
+
+const arr =['gauva','tomato','grapes','gauva','tomato','grapes']
+const set = new Set([...arr])
+console.log(set.size) //3, removes the duplicates 
+console.log(set.entries())
+for (const entry of set.entries()) {
+    console.log(entry)
+}
+Convert Set to Array : console.log(Array.from(set))
+
+Read Weakmaps and Weak sets  completely from https://javascript.info/weakmap-weakset
+
+#endregion
+
+#region Map Vs Weakmaps
+
+What is WeakMap?
+
+Difference 1: 
+const map = new Map()
+map.set(1,'Ajay') // Can set primitive values as keys 
+console.log(map.get(1)) //O/p: Ajay
+
+//In weakmap we cannot set primitive type as keys, We get an error
+const weakMap = new WeakMap()
+weakMap.set(1,'Ajay') // Error:  TypeError: Invalid value used as weak map key
+
+//Correct Usage
+const obj = {name:'Ajay'}
+const weakMapObjKeys = new WeakMap()
+weakMapObjKeys.set(obj,'AjayNallanagula') 
+console.log(weakMapObjKeys.get(obj))
+
+
+Garbage Collection
+------------------
+let obj = {name:Ajay}
+const map = new Map()
+map.set(obj,'AjayNallanagula') // Can set primitive values as keys 
+obj = null
+//Obj will not be garbage collected , why because its still have a reference in  "map"
+
+let obj = {name:Ajay}
+const weakmap = new Weakmap()
+weakmap.set(obj,'AjayNallanagula') // Can set primitive values as keys 
+obj = null
+//Obj will be garbage collected and the reference inside weakmap will also be deleted.
+
+****Due to this limitation, Weakmap does't support all the the methods that are supported by Map
+Weakmap supports only 
+WeakMap has only the following methods:
+
+weakMap.set(key, value)
+weakMap.get(key)
+weakMap.delete(key)
+weakMap.has(key)
+
+It doesn't support keys,values, entries like Map does.
+
+WeakSet
+-------
+WeakSet behaves similarly:
+It is analogous to Set, but we may only add objects to WeakSet (not primitives).
+An object exists in the set while it is reachable from somewhere else.
+Like Set, it supports add, has and delete, but not size, keys() and no iterations.
+
+let visitedSet = new WeakSet();
+
+let john = { name: "John" };
+let pete = { name: "Pete" };
+let mary = { name: "Mary" };
+
+visitedSet.add(john); // John visited us
+visitedSet.add(pete); // Then Pete
+visitedSet.add(john); // John again
+
+// visitedSet has 2 users now
+
+// check if John visited?
+alert(visitedSet.has(john)); // true
+
+// check if Mary visited?
+alert(visitedSet.has(mary)); // false
+
+john = null;
+
+// visitedSet will be cleaned automatically
+
+
+#endregion Map Vs Weakmaps

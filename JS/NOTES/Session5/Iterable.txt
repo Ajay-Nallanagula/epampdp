@@ -1,0 +1,149 @@
+//Iterable objects is a generalization of arrays. That’s a concept that allows us to make any object useable in a for..of loop.
+let object = {
+  from: 1,
+  to: 5,
+};
+//Failed to instrument iterables.js
+// for(let item of object){
+//     console.log(object[item]) //Failed to instrument iterables.js
+// }
+
+//If we have requirement of making the object iterable and printing numbers 1 to 5
+//We need to make the object iterable(such that for..of works), iterable works in following way
+
+//step 1: we need to add a method to the object named Symbol.iterator (a special built-in symbol just for that).
+//step 2: When for..of starts, it calls that method once (or errors if not found). The method must return an iterator – an object with the method next.
+//step 3: Onward, for..of works only with that returned object.
+//step 4: When for..of wants the next value, it calls next() on that object.
+//step 5: The result of next() must have the form {done: Boolean, value: any}, where done=true means that the iteration is finished, otherwise value is the next value.
+
+let range = {
+  from: 1,
+  to: 5,
+};
+
+// 1. call to for..of initially calls this
+range[Symbol.iterator] = function () {
+  // ...it returns the iterator object:
+  // 2. Onward, for..of works only with this iterator, asking it for next values
+  return {
+    current: this.from,
+    last: this.to,
+
+    // 3. next() is called on each iteration by the for..of loop
+    next() {
+      // 4. it should return the value as an object {done:.., value :...}
+      if (this.current <= this.last) {
+        return { done: false, value: this.current++ };
+      } else {
+        return { done: true };
+      }
+    },
+  };
+};
+
+// now it works!
+for (let num of range) {
+  console.log(num); // 1, then 2, 3, 4, 5
+}
+
+//the next() can also be written inside the object range
+//The disadvantage is , you will have to stick to only one next function
+
+
+Another example for making array like objects as iterables is 
+js have a key word called "arguments" inside a function , arguments is array like object, but not an array 
+
+
+function sample(a,b){
+arguments[Symbol.iterator] = function(){
+
+return {
+current:this[0],
+last:this[1],
+next(){
+if(this.current <= this.last){
+return {done:false,value:this.current++}
+}
+return {done:true}
+}
+}
+}
+
+for(const item of arguments){
+console.log(item)
+}
+
+return a+b
+}
+
+sample(10,20)
+
+
+#region Generator Function
+https://medium.com/@mahmud886/10-javascript-interview-questions-ee31a3c1a742
+https://www.scaler.com/topics/javascript-generator/
+
+async/await in Generator functions:
+https://medium.com/free-code-camp/how-to-implement-async-and-await-with-generators-11ab0859010f
+
+Generator functions are a new feature in ES6 that allow a function to generate many values over time by returning an object which can be iterated over to pull values from the function one value at a time.
+
+A generator function returns an iterable object when it’s called. It is written using the new * syntax as well as the new yield keyword introduced in ES6.
+
+Example 
+
+function* infiniteNumbers(){
+let n = 1
+while(true){
+yeild n+1
+}
+}
+
+const numbers=  infiniteNumbers()
+numbers.next() //1
+numbers.next() //2
+numbers.next() //3
+
+Scenarios to use Generator Functions:
+1) Lazy Evaluation - Run only when you need
+Say there is an Infinite Stream of data, we cannot spend our whole life evaluating that data. Hence we can use Generator function to evaluate as and when required.
+
+2. Memory Efficient
+As the Lazy Evaluation method is used, only those data and those computations that are necessary, are used.
+
+3). Generating Unique Identifiers
+https://dev.to/rfornal/use-cases-for-javascript-generators-1npc
+function * idCreator() {
+  let i = 0;
+  while (true) yield i++;
+}
+
+const ids = idCreator();
+console.log(ids.next().value); // 0
+console.log(ids.next().value); // 1
+console.log(ids.next().value); // 2
+
+4) Managing asynchronous flow
+As we mentioned earlier, generators can be handy for handling asynchronous operations. With generators, we can write asynchronous code that looks synchronous, thus improving code readability and maintainability.
+
+Consider a case where multiple API calls must be made in a specific order. Using promises or callbacks can lead to deeply nested code (callback hell), but we can simplify this with generators.
+
+function* fetchSequentialData() {
+  const users = yield fetch("/api/users").then(res => res.json());
+  const posts = yield fetch(`/api/users/${users[0].id}/posts`).then(res =>
+    res.json()
+  );
+  return posts;
+}
+
+const generator = fetchSequentialData();
+
+generator
+  .next()
+  .value.then(data => generator.next(data).value)
+  .then(data => generator.next(data));
+In this example, fetchSequentialData fetches user data, waits for it to resolve, and then fetches post data for the first user. This process occurs sequentially without deeply nesting the code.
+
+#endregion Generator Function
+
