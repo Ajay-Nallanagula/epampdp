@@ -66,7 +66,7 @@ What is datatype of map/array/set is Object Itself ?
 console.log(typeof map) //object
 
 can map accept duplicate keys?
-Yes map accepts duplicate keys , but only latest key value is considered always
+Yes map accepts duplicate keys , but only latest key value is considered always. simply, It overrides.
 
 Iteration over map
 map.keys() – returns an iterable for keys,
@@ -191,7 +191,7 @@ obj = null
 
 let obj = {name:Ajay}
 const weakmap = new Weakmap()
-weakmap.set(obj,'AjayNallanagula') // Can set primitive values as keys 
+weakmap.set(obj,'AjayNallanagula') // Cannot set primitive values as keys 
 obj = null
 //Obj will be garbage collected and the reference inside weakmap will also be deleted.
 

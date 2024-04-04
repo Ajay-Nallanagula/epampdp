@@ -18,7 +18,7 @@ Eg:
 var pokemon = {
     firstname: 'Pika',    lastname: 'Chu ',
     getPokeName: function() {
-        var fullname = this.firstname + ' ' + this.lastname;
+        var fullname = this.firstname + ' ' + this.lastname; 
         return fullname;
     },
 };
@@ -54,6 +54,7 @@ class DemoClassComp extends Component { constructor() { super(); this.state = { 
  handleClick() { //WHat is this here ?? console.log(this); alert(this.state.name); } //this undefined
 
 //IN BUTTON CLICK , 'this' looses its context , hence this is undefined if we don't comment line (**)
+//Once this gets rendered to the browser and gets exxecuted this will be ambigious 
  render() { return ( <div> <button onClick={this.handleClick} > Click Here </button> </div> ); } } 
  
 How does this change in arrow function?
@@ -87,7 +88,7 @@ const fullName= {
 }
 
 function details(roll,std){
-	const name = this.getFullName()
+  const name = this.getFullName()
   return `${name} ${roll} ${std}`
 }
 

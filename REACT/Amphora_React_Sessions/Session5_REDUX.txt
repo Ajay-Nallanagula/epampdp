@@ -11,7 +11,7 @@ Redux fix this problem by centralizing data in store.
 Where store is JS object. The single source of truth.
 
 Redux:
-1) Centralizes applications's state
+1) Centralizes applications's state, 
 2) Makes data flow transparent and predictable
 3) We can track why/where/what/when/how of data changes.
 4) All the different components pulls the data from store and display
@@ -20,7 +20,7 @@ Redux:
 
 
 Redux dev tools chrome extension.
-Time Travel debugging
+Time Travel debugging.
 Log Rocket redux dev tools in production.
 
 Redux allows to cache the page.
@@ -45,14 +45,22 @@ Immer.js/ Immutable.js
 1) Redux 5 normal middleware like logger.
 2) Caching/Reselect in Redux
 3) Redux-NextJs 
-4) RTK Query
+4) RTK Query: https://medium.com/@r.sipchenko/rtk-query-for-beginners-a82ab7188324
 
 #endregion Investigate Questions On
 
 
 #region Mosh tutorials
-Redux is build on top of funtional programming.
-We cannot mutate the object.
+
+#region Flux Architecture
+Principles of Flux 
+
+Flux Vs Redux:
+
+
+#endregion Flux Architecture 
+
+Redux is build on top of funtional programming. We cannot mutate the object.
 
 all redux related packages:
 npm install redux react-redux @reduxjs/toolkit  @redux-devtools/extension react-router-dom react-bootstrap --save
@@ -922,11 +930,10 @@ const characters = useSelector(state => state.defaultCharacters)
 
 #endregion Connect Component to Redux 
 
-#endregion
 
-#region Mosh Tutorials Turn2
 
 https://medium.com/@ayabellazreg/make-a-simple-shopping-cart-app-using-react-redux-1-3-fefde93e80c7
 https://medium.com/@ayabellazreg/make-a-simple-shopping-cart-app-using-react-redux-part-3-32b182e02cc9
 
-#endregion Mosh Tutorials Turn2
+
+#endregion

@@ -414,7 +414,8 @@ Promise.race([
 
 The first promise here was fastest, so it became the result. After the first settled promise “wins the race”, all further results/errors are ignored.
 
-Promise.any
+Promise.any : will wait for one sucessfull promise
+============
 Similar to Promise.race, but waits only for the first fulfilled promise and gets its result. If all of the given promises are rejected, then the returned promise is rejected with AggregateError – a special error object that stores all promise errors in its errors property.
 
 Promise.any([

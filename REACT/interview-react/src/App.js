@@ -8,6 +8,8 @@ import useUpdateEffect from "./useUpdateEffect"
 import UseStateDemo from "./Hooks@18/USESTATE/UseStateDemo"
 import UseDebugValueDemo from "./Hooks@18/useDebugValueDemo"
 import ParentUseImperativeHandle from "./Hooks@18/UseImperativeHandleDemo"
+import testService from "./TestService"
+
 
 const App = () => {
     const [state, setState] = useState()
@@ -21,9 +23,10 @@ const App = () => {
         setState(10)
     }
 
+
     return (
         <>
-            <ParentUseImperativeHandle />
+            <ParentUseImperativeHandle someService={testService} />
             {/* <UseStateDemo /> */}
             {/* <UseDebugValueDemo /> */}
 

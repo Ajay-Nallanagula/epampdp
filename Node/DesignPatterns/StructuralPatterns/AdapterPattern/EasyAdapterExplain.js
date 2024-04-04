@@ -1,7 +1,8 @@
 // Adaptee
 /*
 The Adapter Pattern is a design pattern that allows objects with incompatible interfaces to work together. In JavaScript, the Adapter 
-Pattern can be used to provide a common interface to objects with different interfaces or to modify an existing interface to meet the 
+Pattern can be used to provide a common interface to objects with different 
+interfaces or to modify an existing interface to meet the 
 needs of a specific client.
 
 Example:

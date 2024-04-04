@@ -15,6 +15,7 @@ class Observable {
     }
 }
 
+//UserList here is the Subject
 class UserList extends Observable {
     constructor() {
         super()
@@ -26,8 +27,7 @@ class UserList extends Observable {
     }
 }
 
-//All observers, external sorces intrested in new user
-
+//All observers, external sources intrested in new user
 const sendEmailToUser = (user) => {
     console.log(`Email is sent to ${user.name}!!`)
 }

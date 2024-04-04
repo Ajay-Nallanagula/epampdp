@@ -1,5 +1,9 @@
 import { forwardRef, useImperativeHandle, useRef, useState } from "react"
-const ParentUseImperativeHandle = () => {
+//import testService from "../TestService"
+const ParentUseImperativeHandle = ({ someService }) => {
+    //console.log(someService === testService)
+    //console.log(someService == testService)
+
     const inputRef = useRef('')
     const [txt, setTxt] = useState('')
     console.log(inputRef.current)
