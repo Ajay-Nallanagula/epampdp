@@ -25,7 +25,7 @@ const UseMemoSolution = () => {
   const handleSearch = () => setSearch(text);
   
   const filteredUsers = useMemo(() => {
-    returnusers.filter((user) => {
+    return users.filter((user) => {
       console.log('useMemo Solution filtered users running...')
       return user.name.toLowerCase().includes(search.toLowerCase());
     })

@@ -428,7 +428,7 @@ This will create source-maps for css.
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports ={
 	module: {
-	rule:[
+	rules:[
 	{
              test: /\.(css)$/,
              use: [MiniCssExtractPlugin.loader,'css-loader']

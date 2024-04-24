@@ -21,12 +21,9 @@ class DecoratedUser1 {
     }
 }
 
-
 function run() {
-
     var user = new User1("Kelly");
     user.say();
-
     var decorated = new DecoratedUser1(user, "Broadway", "New York");
     decorated.say();
 }

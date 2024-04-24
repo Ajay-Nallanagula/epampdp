@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="resultAdd"></div>
+    <div id="resultSub"></div>
+
+    <button onclick="return add()">Add</button>
+    <button onclick="return sub()">Sub</button>
+    <button id="btnAddMod">Add Modular</button>
+    <button id="btnSubMod">Sub Modular</button>
+
+    <script src="./globular.js"></script>
+    <script type="module" src="./modular.js"></script>
+    <script>
+      import { addModular, subModular } from "./modular.js";
+
+      const addModBtn = document.getElementById("btnAddMod");
+      const subModBtn = document.getElementById("btnSubMod");
+
+      addModBtn.addEventListener("click", addModular);
+      subModBtn.addEventListener("click", subModular);
+    </script>
+  </body>
+</html>

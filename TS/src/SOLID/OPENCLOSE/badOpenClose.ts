@@ -4,7 +4,7 @@
  * We used a third class called AreaCalculator to calculate the area of
  * the Rectangle and Circle classes. Imagine we would add another shape
  * later, which means we need to create a new class. In that case,
- *  we would also need to modify the AreaCalculator class to calculate
+ * we would also need to modify the AreaCalculator class to calculate
  * the area of the new class. That’s against the Open-Close Principle.
  */
 

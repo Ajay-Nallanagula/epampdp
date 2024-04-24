@@ -1,1 +1,117 @@
 
+Custom Hooks Examples:  https://www.reacthooklab.com/use-toggle
+
+#region use Toggle Custom hook
+import { useState, useCallback } from 'react'
+
+function useToggle(initialState = false) {
+  const [state, setState] = useState(initialState)
+
+  const toggleHandler = useCallback(() => {
+    setState((prevState) => !prevState)
+  }, [])
+
+  return [state, toggleHandler]
+}
+
+function MyComponent() {
+  const [isOn, toggleIsOn] = useToggle(false)
+
+  return (
+    <div>
+      <p>Is the light on? {isOn ? 'Yes' : 'No'}</p>
+      <button onClick={toggleIsOn}>Toggle</button>
+    </div>
+  )
+}
+
+#endregion use Toggle Custom hook
+
+#region useAsync custom hook
+
+import { useState, useEffect } from 'react'
+
+function useAsync(asyncFunction) {
+  const [data, setData] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+    async function fetchData() {
+      setLoading(true)
+      try {
+        const response = await asyncFunction()
+        setData(response)
+      } catch (e) {
+        setError(e)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [asyncFunction])
+
+  return { data, loading, error }
+}
+
+
+#endregion useAsync custom hook
+
+#region Custom Hook useDebounce
+Ref: https://betterprogramming.pub/react-custom-hooks-with-real-life-examples-c259139c3d71
+
+Debouncing is a strategy used to improve the performance of a feature by controlling the time at which a function should be executed. 
+
+--> You have SearchInput like below 
+const SearchComponent = () => {
+const [result,setResult] = useState([])
+const [txt,setTxt] =  useState()
+const debouncedValue = useDebounce(txt,100)
+
+useEffect(() => {
+const results = someAPiCall(debouncedValue) 
+setText(result)
+},[debouncedValue]) //if txt is given as dependency array 
+//This API will be called for every key press which is not needed, hence we can debounce or introduce some delay
+
+
+return(
+<>
+<input type="text" onChange={() => setText(txt)}/>
+{JSON.stringify(result)}
+</>
+)
+}
+
+
+function useDebounce(value, delay) {
+  // State and setters for debounced value
+  const [debouncedValue, setDebouncedValue] = useState(value);
+  useEffect(
+    () => {
+      // Update debounced value after delay
+      const handler = setTimeout(() => {
+        setDebouncedValue(value);
+      }, delay);
+      // Cancel the timeout if value changes (also on delay change or unmount)
+      // This is how we prevent debounced value from updating if value is changed ...
+      // .. within the delay period. Timeout gets cleared and restarted.
+      return () => {
+        clearTimeout(handler);
+      };
+    },
+    [value, delay] // Only re-call effect if value or delay changes
+  );
+  return debouncedValue;
+}
+
+#endregion useDebounce
+
+#region useThrottle
+https://dev.to/loonywizard/react-usethrottle-hook-87h
+Throttling is a technique, where a given function runs only once at a specified period of time
+
+
+
+#endregion useThrottle

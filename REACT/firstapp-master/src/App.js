@@ -48,7 +48,7 @@ function App() {
     <Router>
       <div className="App">
         <ErrorBoundaryApp />
-        <Interview />
+        {/* <Interview /> */}
         {/* <HookUseStateTimer /> */}
         {/* <CountInputChanges /> */}
         {/* <ThemeProvider>
@@ -62,7 +62,7 @@ function App() {
         {/*<NestedRoutes/>*/}
         {/* <ParentReducerHook/> */}
         {/* <ParentRef/> */}
-        {/* { <ParentMemo/> } */}
+        {<ParentMemo />}
         {/*<ParentForContext/>*/}
         {/* <ComponentWillUnMountDemo/>*/}
         {/* { <ComponentDidUpdateParent/> } */}
@@ -89,7 +89,7 @@ function App() {
     <Car1>This is a CAR</Car1>
     <Bike1>This is a BIKE</Bike1>
     <TruckWay11>This is a TRUCK<span>This is Heavy Vehicle</span></TruckWay11>*/}
-        </div>
+      </div>
       <div id="portal"></div>
     </Router>
   );

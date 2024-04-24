@@ -32,10 +32,10 @@ unmount:compnentWillUmount
 #region MOUNT PHASE
 Mounting Phase  Life cycle hooks
 1) constructor() //pure
-2) static getDerivedStateFromProps()
+2) static getDerivedStateFromProps(nextprops, prevState)
 3) render() //pure
 4) componentWillMount()]//Deprecated react 16.4 version unsafe to use
-5) componentDidMount() //side-effect
+5) componentDidMount() //side-effect, It has no Arguments 
 
 #region CTOR
 constructor should always be a pure function, no side-effects i.e no ajax calls with in ctors, should not modify state ,  they have to be made in componentDidMount(), pure functions are idempotent call once or 10 times has to return the same output.
@@ -74,7 +74,7 @@ super(); //NO PROPS ARE PASSED
 console.log(this.props) //Undefined
 }
 render() { 
-console.log(this.props); //defined {name:'Ajay'}
+console.log(this.props); //defined {name:'Ajay'}, this is for demo only, side-effects should not be there in render
 return <h1>Ajay</h1>
 }
 }
@@ -190,10 +190,6 @@ https://itnext.io/how-to-updating-state-on-prop-changes-2296a03ef08c
 
 #endregion
 
-
-
-
-
 #region render
 The render() method is the only required method in a class component.render should be a PURE function like CTOR
 render() will not be invoked if shouldComponentUpdate() returns false.
@@ -260,8 +256,6 @@ render() {
     </div>
   );
 }
-
-
 
 #endregion
 
@@ -374,9 +368,9 @@ https://engineering.musefind.com/react-lifecycle-methods-how-and-when-to-use-the
 
 #region UPDATE PHASE
 Update Phase LifeCycle Hooks:
-1) static getDerivedStateFromProps(also called in MOUNT Phase)
-2) shouldComponentUpdate
-3) render
+1) static getDerivedStateFromProps(nextProps,prevState) //also called in MOUNT Phase)
+2) shouldComponentUpdate(nextProps,nextState)
+3) render() //Pure
 4) componentDidUpdate
 
 #region static getDerivedStateFromProps(nextProps,prevState) is replacement for componentWillRecieveProps(nextProps)
@@ -428,7 +422,8 @@ The default behaviour is, whenever the state changes(i.e setState) occurs re-ren
 Example of forceUpdate:
 =======================
 class App extends React.Component { 
-	reRender = () => {  /* Calling the forceUpdate() method*/ this.forceUpdate(); 
+	reRender = () => { 
+	/* Calling the forceUpdate() method*/ this.forceUpdate(); 
 	}; 
 	render() { 
 		console.log('Component is re-rendered'); 
@@ -593,6 +588,27 @@ export default ComponentDidUpdateDemo2Child;
 1) componentWillUnmount() is invoked immediately before a component is unmounted and destroyed
 2) Perform any necessary cleanup in this method, such as invalidating timers, canceling network requests, or cleaning up any subscriptions that were created in componentDidMount
 3) You should not call setState() in componentWillUnmount() because the component will never be re-rendered. Once a component instance is unmounted, it will never be mounted again.
+
+class MyComponent extends React.Component {
+  componentDidMount() {
+    this.timerID = setInterval(() => this.tick(), 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerID);
+  }
+
+  tick() {
+    console.log('Ticked');
+  }
+
+  render() {
+    return (
+      <div>Hello, world!</div>
+    );
+  }
+}
+
 
 #endregion componentWillUnmount()
 #endregion UNMOUNT PHASE

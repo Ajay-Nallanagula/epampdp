@@ -3,7 +3,7 @@ composition Vs Inheritance:
 https://kriss.io/composition-vs-inheritance-in-react-comparison-and-contrast/
 https://www.codementor.io/@imbhargav5/extending-react-components-inheritance-composition-qo59dqili
 
-In general programming ,always favour compostion over inheritence because inheritence tries to predict the future composition accomodates the future.
+In general programming ,always favour compostion over inheritence because inheritance tries to predict the future composition accomodates the future.
 
 "is-a-relationship" vs "has-a-relationship"
 class Parent {}

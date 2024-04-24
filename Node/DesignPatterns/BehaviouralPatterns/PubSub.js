@@ -1,3 +1,10 @@
+//https://medium.com/@adityakashyap_36551/the-pub-sub-pattern-event-management-in-javascript-17196444ca2f
+
+/*
+The Publish-Subscribe (PubSub) pattern is a messaging pattern where senders (publishers) send messages without targeting them to specific receivers (subscribers), and receivers subscribe to event types
+ and receive only messages of interest, all without direct coupling between the publishers and subscribers
+*/
+
 class PubSub {
     constructor() {
         this.events = {}
@@ -9,14 +16,36 @@ class PubSub {
         }
 
         this.events[event].push(listener)
+
         //console.log(this.events[event])
-        return () => { this.events[event] = this.events[event].filter(fn => fn.toString() != listener.toString()) }
+        //Below LOC Code to Unsubscribe
+        const unsubscribe = () => {
+            if (this.events[event]) {
+                const index = this.events[event].findIndex(item => item === listener)
+                this.events[event].splice(index, 1);
+                //console.log('unsubscribe', this.events)
+            }
+        }
+
+        return unsubscribe
     }
 
     publish(event, ...args) {
         this.events[event].forEach(evt => {
             evt(...args)
         });
+    }
+
+    //This method is not required
+    displaySubscriptions(action) {
+        const eveArr = this.events[action]
+        if (eveArr?.length) {
+            this.events[action].forEach(eve => {
+                console.log(`Subscribed to ${eve.name}`)
+            })
+        } else {
+            console.log('No events are subscribed!!!')
+        }
     }
 }
 

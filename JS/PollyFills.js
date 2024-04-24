@@ -62,4 +62,34 @@ const result = arr.myReduce((acc, item, index) => {
 
 console.log(result)
 
-myFlat
+//Flatten array:
+if (!Array.prototype.flat) {
+    Array.prototype.flat = function (depth) {
+        var flattened = [];
+
+        function flatten(arr, currentDepth) {
+            for (var i = 0; i < arr.length; i++) {
+                if (Array.isArray(arr[i]) && currentDepth < depth) {
+                    flatten(arr[i], currentDepth + 1);
+                } else {
+                    flattened.push(arr[i]);
+                }
+            }
+        }
+
+        flatten(this, 0);
+
+        return flattened;
+    };
+}
+
+    //Usage 
+    var nestedArray = [
+        [1, 2, 3],
+        [4, 5, [6, 7, [8, 9, [10]]]],
+        [7, 8, 9],
+    ];
+
+    nestedArray.customFlat(2)
+
+// [ 1, 2, 3, 4, 5, 6, 7, [ 8, 9, [ 10 ] ], 7, 8, 9 ]

@@ -80,6 +80,12 @@ describe('MyComponent', () => {
 Why do we use act-async in Jest?
 
 RTL render Vs Screen?
+screen is provided by @testing-library/dom, which is what @testing-library/react is built upon. When using the screen methods, they will query within the html <body> element, as described in the docs:
+
+Because querying the entire document.body is very common, DOM Testing Library also exports a screen object which has every query that is pre-bound to document.body
+
+render() is only in @testing-library/react. It returns an object similar to screen and the default is to also bind the queries to the <body>. By default, there is little difference, but you can customize its behavior by passing in options.
+
 
 Packages of react-testing-library : @testing-library/jest-dom(5v), @testing-library/react(11v), @testing-library/user-event(12v)
 import {render,screen, waitFor, fireEvent} from testing-library/react

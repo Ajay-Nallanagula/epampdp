@@ -23,6 +23,7 @@ const ReactMemoProblem = () => {
   const handleChange = (e) => setText(e.target.value);
   const handleAddUser = () =>
     setUsers(users.concat({ id: users[users.length - 1].id + 1, name: text }));
+    
   return (
     <div>
       <input type="text" onChange={handleChange} />

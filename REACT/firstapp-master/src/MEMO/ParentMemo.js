@@ -13,13 +13,13 @@ const ParentMemo = () => {
       <h3>Solution</h3>
       <ReactMemoSolution /> */}
 
-      {/* <UseMemoProblem/>
+      <UseMemoProblem />
       <h3>Solution</h3>
-      <UseMemoSolution/> */}
+      <UseMemoSolution />
 
-      <UseCallBackProblem/>
+      {/* <UseCallBackProblem/>
       <h3>Solution</h3>
-      <UseCallBackSolution/>
+      <UseCallBackSolution/> */}
     </>
   );
 };

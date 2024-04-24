@@ -1,0 +1,352 @@
+Front End development using React and MFE architecture.
+Strong ReactJS knowledge
+Strong TypeScript knowledge
+Strong CSS and LESS skills
+MFE
+Enterprise level integrations using Kafka, REST, OKTA, etc. 
+Database development on PostgreSQL, Oracle, and integrations with application services 
+Application containerization, and deployments through CI/CD pipelines, and AWS services like S3, EKS, EC2 etc. 
+Observability, Monitoring, and Troubleshooting using Splunk, ELK, Jaeger etc.  (added by me : Grafna, Promesthus)
+
+Key terms: 
+APM : Application Performance Monitoring
+RUM: Real-user Monitoring 
+
+DataDog Tutorials : https://www.youtube.com/watch?v=VawALrmtWuA&list=PL0xeHY_ImQVVXHAExfdxLdfufEtZs2Ye2
+
+//Interview Questions
+https://www.remoterocketship.com/advice/guide/site-reliability-engineer/monitoring-and-observability-interview-questions-and-answers
+
+https://logz.io/blog/10-essential-performance-monitoring-interview-questions/
+
+How to remove consoles from Production?
+https://stackoverflow.com/questions/56276325/how-can-remove-console-log-in-the-production-build-of-a-react-application-create
+
+What is Google Analytics?
+https://dineshsem.medium.com/10-good-reasons-why-you-should-use-google-analytics-699f10194834
+
+#region Micro service patterns
+
+Micro service patterns:
+
+1. API Gateway pattern
+
+2. BFF (Backend for frontends) pattern
+
+3. Layered architecture (Traditional)
+
+4. Head less architecture:
+
+a. Experience layer : Customer touch points where the interaction happens with business ( Web , Mobile, Native ,PWA interfaces, IOT)
+
+b. Application layer : which delivers Content , Data, functionality through API (microservices , events, web hooks).
+
+c. Communication layer : Connects Experience and Application layer . Optimization & translate , API orchestration , Graph QL, EDA, Storefront , ADN, BFF
+
+5. Integration Patterns:
+
+a. Event Driven : Pub/Sub
+
+b. Request Driven : API
+
+6. API Architecture Patterns:
+
+a. SOAP, REST, Graph QL, Webhooks, Web Sockets
+
+7. Service Discovery Pattern
+
+8. Circuit Breaker Pattern
+
+9. Saga Pattern
+
+#endregion Micro service patterns
+
+#region What is Logging?
+
+#region Logging In React/Frontend
+https://stackoverflow.com/questions/56276325/how-can-remove-console-log-in-the-production-build-of-a-react-application-create
+
+Logging is the process of recording discrete actions or events that occur within a system, application or software. Logs often contain details like timestamps, event types, and supplemental data for the events. They serve as a recording of what has happened and are vital for catching errors, debugging issues, conducting audits, and more. For example, a log entry might record the failure of a database query, with information about which query failed, the associated error message, and the time it occurred.
+
+#region Different Levels of Logging
+Different levels of logging help to categorize and filter log messages based on their importance or severity. The most common ones are:
+
+Debug: Used for detailed information when diagnosing a problem. Usually used only during development and testing, not in production.
+#region Example for Debug
+function addNumbers(a, b) {
+    console.log('Value of a: ', a); 
+    console.log('Value of b: ', b); 
+    const sum = a + b;
+    console.log('Sum:', sum);
+    return sum;
+}
+addNumbers(5, '10');
+
+#endregion Example for Debug
+Info: Routine information about the application's operation, such as startup/shutdown/restart and significant user actions.
+Warn (Warning): Events that might indicate a potential problem, but allow the application to continue running. 
+For example, 
+a configuration file that is expected to be present is missing, but default settings can be used.
+#region React Warnings 
+
+Key Warning: This warning pops up when you create list elements in React but do not assign them unique keys.
+
+Prop types warning: PropTypes exports a range of validators that can be used to make sure the data you receive is valid. If you pass a wrong prop type, you’ll see an error.
+
+Legacy Lifecycle Warning: This warning will appear when using lifecycle methods (like componentWillReceiveProps, componentWillMount and componentWillUpdate) which are deprecated since React 16.3.
+
+Invalid DOM property: This warning appears when you use class instead of className, or for= instead of htmlfor.
+
+State Update Warning: This warning typically occurs when you're trying to update state on an unmounted component, which leads to memory leaks.
+
+Unknown Prop Warning: This warning pops out when you pass props to native HTML elements that do not recognize those props.
+
+Invalid Child Warning: This warning shows up when a child element is not a valid react component.
+
+uncontrolled input warning: This warning appears when the value property of an input component is not being controlled by react state.
+
+Missing Require Cycle Warning: This warning will appear when there are circular import references.
+
+
+
+Hook warning: This warning usually appears when the rules of hooks are violated. For example: Hooks can only be called inside the body of a function component.
+
+Failed prop type: Indicates invalid prop type, the datatype might be incorrect.
+
+Stateless function warning: This warning appears when your function doesn’t extend the React component class and hence, cannot utilize React’s lifecycle methods.
+
+#endregion 
+Error: Reports a problem that prevents a particular operation from completing, but doesn't stop the entire application.
+#region Error , when you try/catch will execute the other LOC 
+let arr = [1, 2, 3, 4];
+try {
+    console.log(arr[5].toString()); // This will throw an error because arr[5] is undefined.
+} catch (error) {
+    console.error("An error occurred: ", error);
+}
+console.log(arr[0].toString()); // This will still execute.
+
+#endregion  Error , when you try/catch will execute the other LOC 
+Fatal (Critical): Used for serious, unrecoverable errors affecting the application flow, often leading to the application shutting down.
+Trace/Verbose: Tracks the general flow of the application. These logs should appear very frequently, rhythmically, or voluminously.
+#region Explaination on Trace
+
+function firstFunction() {     secondFunction();}
+function secondFunction() {    thirdFunction();}
+function thirdFunction() {    console.trace();}
+firstFunction();
+
+//Output in console
+thirdFunction    @ (index):12
+secondFunction   @ (index):8
+firstFunction    @ (index):4
+(anonymous)      @ (index):15
+
+You can give an example of stack-trace 
+Uncaught TypeError: Cannot read properties of null (reading 'property')
+    at thirdFunction (<anonymous>:4:28)
+    at secondFunction (<anonymous>:2:5)
+    at firstFunction (<anonymous>:2:5)
+    at <anonymous>:2:13
+
+#endregion Explaination on Trace
+
+#endregion Different Levels of Logging
+
+#region Different approaches for Logging
+Logging within a React application in a production environment can be achieved using several strategies and tools. Here are some commonly used methods:
+Console Logging: It is the simplest form of logging, and while it's not advised to use in production, sometimes developers may choose to keep them for certain purposes, such as debugging.
+
+Remote Logging: This involves sending your logs to a remote server to be processed. This can be beneficial since it allows developers to view and analyze logs from a centralized location. Libraries like LogRocket, Sentry, or trackJs help achieve this.
+
+Server-Side Logging: If your React app is server-side rendered (like Next.js) you might be able to do logging on the server-side. Libraries like Winston, Bunyan, or Morgan are used commonly.
+
+Custom logging services: Some applications might utilize custom logging services, such as Loggly, Splunk, or Datadog. These provide powerful analytics tools to understand application behavior, usage, and errors.
+
+Error Boundaries: In React, error boundaries are a simple yet effective way to log errors. In production, instead of rendering a fallback UI, developers can log these errors to an external logging service.
+
+Redux Logger: If using Redux for state management, Redux Logger is a middleware that logs every action that took place.
+
+Ensure that you maintain user privacy and comply with the applicable laws when implementing logging in your applications. For example, avoid logging sensitive user information.
+
+Also, different environments should have different logging levels. For example, in development, you might want to log everything (info, error, debug), while in production, you might only want to log errors.
+
+#endregion Different approaches for Logging
+
+#region Logging In React
+
+In browser-based JavaScript applications, like those built using React, file-based logging in the traditional sense isn't typically done due to various constraints and security policies that browsers have in place. 
+Instead, logging tends to occur via the console (console.log, console.error, etc.), which allows you to output information into your browser's JavaScript console for debugging purposes.
+
+However, if you're looking to persist logs beyond the lifecycle of a page or to centralize logging, other approaches typically used include:
+
+Sending Log Data to a Server: You can send your log data to a server-side script which then writes the data to a file.
+
+Using a Logging Library or Service: There are numerous third-party logging libraries and services, like LogRocket, Sentry, etc., which can capture logs (along with additional context information), and then send these logs to a centralized place where you can view them.
+
+For React Native (used for mobile app development), you have more freedom and can write logs to files using native capabilities or libraries such as 'react-native-logs' or 'react-native-file-log'.
+
+Always be careful with what information you log, though. Logging sensitive user data can lead to security issues and violate data protection regulations.
+
+Note: While file-based logging is possible in a node.js (server side) react application using various libraries (like winston, bunyan), you usually don't directly write logs to files from a client-side React application that runs in the browser.
+#endregion Logging In React
+
+How to Write a Custom Logger?
+
+
+
+#endregion Logging In React/Frontend
+
+#endregion What is Logging
+
+#region Monitoring Vs Observability
+https://www.youtube.com/watch?v=vY61h6cSkVA
+
+Assume you have a buggy code 
+--> Customer POV: if the customer catches the bug in the application , that will leave us in bad tatste , Customer might suspect on code quality, robustness of your tests , ripple effects of the bug that is been traced and not to mention more calls 
+--> Dev Team POV :  If you are detecting the bug even before customer does, and fix the bug proactiveness will yeild benefits , none of the code metrics will be suspected 
+
+Question but how would Dev Team/Customer solve these bugs?What could be the Approach 
+--> Answer here is Observability and Monitoring 
+--> What are other benefits of Observability and Monitoring 
+1) Predictability: Both measures can help predict potential system failures before they happen, allowing for quick response and action.
+2) Enhanced Performance: Comprehensively monitoring and improving the observable aspects of a system can improve overall performance and user experience.
+3) Real-time Analysis: While monitoring aids in system upkeep by observing factors like performance over time, observability helps diagnose problems in the present, providing a live look into the system's operations and behaviours.
+4) User Satisfaction: Both monitoring and observability play a critical role in determining the impression and experience of the users. Quick fault detection and repair can increase customer satisfaction.
+5) Cost-saving: Predicting and preventing failures can significantly save costs associated with system downtime and repair.
+6) Maintenance and Support: Monitoring and observability helps identify areas that need work or improvement, making the product or process reliable and user-friendly.
+Logs-->Monitor-->Observability
+
+What is Logging?
+Logging is the process of recording discrete actions or events that occur within a system, application or software. Logs often contain details like timestamps, event types, and supplemental data for the events. They serve as a recording of what has happened and are vital for catching errors, debugging issues, conducting audits, and more. For example, a log entry might record the failure of a database query, with information about which query failed, the associated error message, and the time it occurred.
+
+What is Monitoring? Answers : which service is faulty, slow performing and alerts the subscribers 
+Monitoring, on the other hand, is the process of checking and analyzing a system's performance over time. It involves the collection of data from various system resources and reporting of this data often in an interface/dashboard. 
+--> Monitoring collects the useful metrics, alerts, and can be used to build dashboards
+--> 4 Golden Signals for Monitoring
+a) Latentcy: client --> server--> client, time taken to do this round trip is Latentcy , lesser latentcy the better
+b) Traffic: No of requests a system recieves over a specific period, ecomm sites when there is a discount sale 
+c) errors: % of requests resulting in HTTP404,Http401(unauthorized) , HTTP500 , higer rate of errors indicate the stability of the application 
+d) Saturation : monitoring resource utilization cpu, memomry and disc-space , if cpu usage hits 90% then its called saturation which might delay the processing of user-requests 
+--> Other metrics could be 
+Availability/Uptime: This represents the percentage of time the system is operational and available.
+Throughput: The number of transactions or requests the system can process in a given amount of time.
+Login Attempts: Unusual login activity can indicate a security issue.
+
+
+What is Observability(o11y)? How/why did it go wrong, in-detail analysis etc
+Observability: is the measure of how well internal states of a system can be inferred from knowledge of its external outputs. In other words, it's how easily one can answer questions about what's happening inside a system without having to alter its state. Observability involves understanding the issues that can arise within a system, look at the state of different services and components, and zero in on root cause analyses in real-time.
+
+Three Pillars of Observability:
+===============================
+Logs: Logs are discrete events detailing actions that take place within a system. They can be anything from server access logs, error messages, transaction logs, etc. Analyzing logs helps identify specific events or sequences of events leading up to an issue or an outage.
+
+Metrics: These are numerical values that can be measured and plotted over time to give insights about the system's performance. Metrics typically represent data like CPU usage, memory usage, number of requests per minute, latency, error rates, etc. They can help detect trends, spikes, or dips in system performance.
+
+Traces: Tracing tracks the entire journey of a request through the system. It captures all the actions and services a request goes through from the moment it enters a system till it exits, helping you understand the path and impact of a particular action or event. This is especially important in distributed systems where a single user task might touch several independent services.
+
+Each of these pillars provides a unique perspective and utilizing all three together allows for a comprehensive view of a system's internal behavior.
+
+#region Logging Vs Tracing
+Logging is the process of recording discrete actions or events that occur within a system, application or software. Logs often contain details like timestamps, event types, and supplemental data for the events. They serve as a recording of what has happened and are vital for catching errors, debugging issues, conducting audits, and more. For example, a log entry might record the failure of a database query, with information about which query failed, the associated error message, and the time it occurred.
+
+Tracing, on the other hand, is more about following the execution path of a specific operation or transaction across various components or microservices in a system. Tracing helps to record the lifecycle of a single user request as it moves through the different parts of a distributed system. This becomes important in large, complex systems where understanding where time is spent during the execution of a specific request is crucial for performance tuning or debugging. A trace would include information about time taken at each step, which services were involved, the order in which they were invoked, and any errors that were encountered along the way.
+
+So, logging is like saying “These individual events happened within the system” while tracing is more about saying “Here's what happened to this specific request as it journeyed through the system.” Each provides critical, but different, aspects of observability into a system.
+
+
+
+
+
+Regenerate response
+
+
+
+#endregion Logging Vs Tracing
+
+
+
+
+
+#region Analogy-1 Monitoring and Observability
+Monitoring Example: Think of your car's dashboard. It's filled with various gauges and indicators monitoring different aspects of your car's state: the speedometer monitors your speed, the fuel gauge monitors your fuel level, the temperature gauge monitors the engine's temperature etc. These can give you an indication if something is wrong (if the fuel gauge is on E, you're getting low on gas), but they cannot tell you why a problem might occur.
+
+Observability Example: Now, let's say your check engine light comes on. Monitoring noticed the problem (the light), but it cannot tell you what caused it. For that, you would take it into a mechanic, who would plug a diagnostic tool into your car's on-board computer. This tool is accessing a certain level of "observability." It gives a more in-depth look at what's happening inside the car's system, showing error codes that can tell the mechanic exactly what led to the check engine light turning on - such as an oxygen sensor failure or a spark plug issue.
+
+In the technical system analogy, monitoring can give you an indication that something might be wrong, but observability is what allows you to diagnose and understand issues at a deeper level.
+#endregion  Analogy Monitoring and Observability 1
+
+#region Analogy-2 Monitoring and Observability
+
+Monitoring Example: Consider routine health check-ups. You go to a doctor who measures your blood pressure, heart rate, temperature, weight, and checks general health indicators. This routine check-up can be considered analogous to system monitoring. The doctor is keeping an eye on common indicators that speak to your overall well-being, but these check-ups usually don't provide in-depth insights about why a certain issue might be occurring. When your Vitals are down Doctor will immediately Alert you.
+
+Observability Example: Now, imagine you start experiencing sudden abdominal pain. This pain is an immediate alert that something is wrong, similar to an alert in a monitored system. Observability comes into play when you go to the hospital, and the medical team conducts blood tests, ultrasounds, or a CT scan. These diagnostic measures provide in-depth insights into your body's inner workings, helping to diagnose the root cause of the pain. They could discover, for instance, that you have appendicitis, and need immediate surgery. Without this level of observability, the medical team would only know that you are in pain (alert), but would not be able to identify the exact problem or source causing it.
+
+In both these examples, monitoring is the first layer of insight, alerting of potential issues. Observability goes deeper, helping to understand and diagnose the cause of those issues. Together, they create a full picture and allow for effective problem-solving.
+
+#endregion Analogy Monitoring and Observability 2
+
+#endregion Monitoring Vs Observability
+
+What is Kafka? Why do we use this?
+
+
+Elastic For React.
+https://www.elastic.co/guide/en/apm/agent/rum-js/current/react-integration.html
+
+Application Containerization and Deployment using CI/CD Pipelines 
+AWS Services like 
+
+CI/CD With react app: https://youtu.be/ySFRmoa0rsk?feature=shared
+--------------------
+Frontend Observability : https://www.youtube.com/results?search_query=frontend+observability
+ELK Stack : https://www.youtube.com/watch?v=n2HHAvpn6Jo
+Frontend Performance Optimizations: https://www.youtube.com/watch?v=Cmzq0rOtK6I
+Sentry Frontend Monitoring Tool
+Datadog is Full Stack Monitoring and Observability tool 
+Akshay Saini Podcast: https://youtu.be/zG19cXtrPTU?feature=shared
+Centralized Logging : https://www.youtube.com/watch?v=5s9pR9UUtAU
+**React application with Sentry.io : https://www.youtube.com/watch?v=yjTI32nW7ck
+Sentry Tutorials: https://www.youtube.com/watch?v=NuFEsUGK93g&list=PLOwEowqdeNMr7wwxSeUChfvxkcvOD4PhW
+
+What is your approach to troubleshooting complex issues in a distributed system?
+My approach to troubleshooting complex issues in a distributed system involves a few key steps:
+
+Identify the problem: The first step is to gather as much information as possible about the issue, such as error messages, logs, and metrics. This helps me to understand what's happening and where to look next.
+Isolate the cause: Once I have a solid understanding of the problem, I start to investigate potential causes. This may involve looking at the infrastructure, the application code, or any third-party services that are involved in the system.
+Narrow down the solution: Once I have identified a potential cause, I start to test and debug the solution. This may involve running tests or experiments, analyzing log files, or using diagnostic tools to pinpoint the issue.
+Implement a fix: Finally, I work to implement a solution that addresses the underlying cause of the issue. Depending on the complexity of the problem, this may involve making changes to the infrastructure, modifying the code, or updating third-party services.
+
+How do you Implement Observability in Distributed Systems?
+
+In a Microservices architecture, each Microservice can have its own individual monitoring but it is recommended and common to have a centralized approach for Monitoring and Observability. This is mainly because it makes the process simpler and more efficient.
+
+In a centralized approach, all the data from different microservices is collected in a central place where it can be observed and analyzed as a whole. This would give a more holistic view of the entire system's functioning and performance. This approach also makes it easier to detect and diagnose problems.
+
+Tools like Prometheus, Jaeger, Grafana, and ELK (Elasticsearch, Logstash, Kibana) Stack are often used for centralized logging and monitoring in a Microservices architecture. These tools can collect metrics and logs from each microservice and display it in an easy-to-understand format.
+
+However, it's important to note that even though the observability is centralized, it shouldn't affect the independence and isolation of each microservice. Each microservice should still be decoupled from others and be able to be developed, deployed, and scaled independently.
+
+
+In Microfrontend architecture , does each microapp have individual logging,monitoring,observality approach or is it centralized?
+
+Microfrontends aim to extend the concepts of microservices to the front-end world. Each microfrontend (or microapp) can technically have its own local logging and monitoring setup; however, similar to microservices, best practice typically leans towards a centralized approach.
+
+A decentralized approach can potentially lead to inconsistent logging and monitoring practices across different microapps. This can make it difficult to track and monitor user journeys across various parts of the system.
+
+By using a centralized logging, monitoring and observability approach, you can effectively monitor the entire user journey across all microapps. This gives a holistic view of the system, simplifies anomaly detection, and enables effective debugging of issues, as all logs and metrics can be correlated in a unified platform.
+
+Whether you decide to go with a centralized or decentralized approach, it is vital to ensure uniformity in how things are logged and monitored across all microapps. This will facilitate easier analysis and problem detection. Examples of centralized monitoring tools include ELK (Elasticsearch, Logstash, Kibana) Stack, or others like New Relic, DataDog, etc.
+
+Just like with microservices, the independence of each microfrontend should be maintained - each can be developed, deployed, and scaled independently regardless of the centralized observability.
+
+
+
+
+
+Regenerate response
+
+
+
+
+

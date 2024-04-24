@@ -1,3 +1,6 @@
+//The javascript sort method is a implementation of strategy pattern 
+
+
 //#Strategy1
 class BankAccountTransfer {
     doAction() {
@@ -19,9 +22,10 @@ class CardTransfer {
     }
 }
 
-//All the strategies are 
+//This can be a different client 
 class StrategyManager {
     constructor(strategy) {
+        //Set the strategy Here 
         this.strategy = strategy
     }
 
@@ -43,6 +47,9 @@ class AmazonStore {
 (function main() {
      //Here the userselection can be created in Factory Pattern
     const mobileStrategy = new MobileTransfer()
+    // const strategyManger = new StrategyManager(mobileStrategy)
+    
+
     const store = new AmazonStore(mobileStrategy)
     const result = store.payPrice()
     console.log(result)

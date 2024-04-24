@@ -15,7 +15,7 @@ areaCalc.calculateArea(rectangle);
 areaCalc.calculateArea(triangle);
 
 
-//LISKOV PRINCIPLE
+//LISKOV PRINCIPLE: This principle states that, if S is a subtype of T, then objects of type T should be replaced with the objects of type S.
 const shapesArray: Shape[] = [circle, rectangle, triangle];
 for (let index = 0; index < shapesArray.length; index++) {
   areaCalc.calculateArea(shapesArray[index]);

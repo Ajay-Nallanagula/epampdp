@@ -1,13 +1,14 @@
 /**
- * The Dependency Inversion Principle (DIP) states that high-level modules/classes should not depend on low-level modules/classes. Both should depend upon abstractions. Secondly,
- * abstractions should not depend upon details. Details should depend upon
- * abstractions.
+ * The Dependency Inversion Principle (DIP) states that high-level modules/classes should not depend on low-level modules/classes. 
+ * Both should depend upon abstractions. Secondly,
+ * abstractions should not depend upon details. Details should depend upon abstractions.
  *
  * DIP: https://www.youtube.com/watch?v=9oHY5TllWaU&list=PLZlA0Gpn_vH9kocFX7R7BAe_CvvOCO_p9&index=5
  *
  * HigherModule(store) should not depend on lower module(stripe)
  *  STORE ---store depends on stripe--> STRIPE_PAYMENT
  *
+ * Simple Another example : https://dev.to/ruben_alapont/solid-principles-series-the-dependency-inversion-principle-dip-in-typescript-3ojc 
  */
 
 class StripePayment {

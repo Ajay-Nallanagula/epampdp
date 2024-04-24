@@ -16,6 +16,9 @@ SOLID: https://blog.bitsrc.io/solid-principles-in-typescript-153e6923ffdb
         https://samueleresca.net/solid-principles-using-typescript/ 
 #endregion Previous
 
+Typescript support four types of access modifiers: public, private, protected and read-only.
+
+
 TypeScript is a free and open-source programming language developed and maintained by Microsoft. 
 It is a strict syntactical superset of JavaScript, and adds optional static typing and class-based object-oriented programming to the language.
 
@@ -33,7 +36,7 @@ let age:any = 30;
 name2 =1000 //Dynamically assigned a number
 
 Default access specifier in Typescript is public 
-Type is Typescript : number,boolean,string, null,undefined,object,array, enum,tuple, any, unknown, never
+Type is Typescript : number,boolean,string, null,undefined,object,array, enum,tuple, any, unknown, never, function
 
 Tuple Vs Array :
 ===============
@@ -45,11 +48,57 @@ const primaryColors: [string, string, string] = ['red', 'blue']; //Error, missed
 Array :  No fixed size .
 const primaryColors: string[] = ['#ff0000', '#00ff00', '#0000ff'];
 
---> Tuple and Arrays both can store differnt data types , but in Tuples order have to preserved
+--> Tuple and Arrays both can store differnt data types , but in Tuples order have to preserved and is enforced 
 let tup: [string,boolean]  = ['apple',true] //Error if [false,'Orange']
 let arr:(string|number)[] = ['Apple',10] or [10,'Apple]
 
-Union Type : let val: (number|string|boolean|tupele) = /* Can be given any defined types here*/ etc "|" is a symbol of union type
+--> Type inteference
+====================
+TypeScript infers the type of an array literal based on the elements you provide when initializing the array. If all the elements in the array literal are of the same type, TypeScript infers that the array is of that specific type. If the elements in the array literal have different types, TypeScript infers the type as a union of those types. If you initialize an empty array, TypeScript generally infers it as an array of the any type.
+const arr = [1,2,3]
+//TS type inference will show number[]
+console.log(arr)
+
+let tuple = ['Ajay',100]
+//Type inference will still show  (string | number)[] an array
+console.log(tuple) 
+tuple = [100,'Ajay']
+console.log(tuple) //Valid statement becaus TS treats this as an array 
+
+let tuple2:[string,number] = ['Vijay',100]
+console.log(tuple2) //Type Inference [string,number]
+tuple2 = [100,'A'] //Error , The order of types should be preserved
+
+const arr2 = []
+console.log(arr2) //Any array
+
+--> Gotcha of tuple 
+let myTuple: [string, number] = ["Alice", 30];
+// You can push elements to the tuple even though it's not a recommended practice.
+myTuple.push("Bob", 25); // This is allowed, but not type-safe.
+console.log(myTuple); // Output: ["Alice", 30, "Bob", 25]
+
+
+UseCases of Tuples:
+===================
+Tuples are useful when you want to store data that has a fixed and known structure, such as coordinates, key-value pairs, function parameters and return types, etc.
+
+// Declare a tuple type that represents a point on a 2D plane
+type Point = [number, number];
+let point: Point = [3, 4];
+
+// Declare a tuple type that represents a key-value pair
+type KeyValuePair = [string, any];
+
+let nameAge: KeyValuePair = ["Alice", 25];
+let colorCode: KeyValuePair = ["red", "#FF0000"];
+
+// Function return type
+function getPersonInfo(): [string, number] {
+  return ["Alice", 30];
+}
+
+Union Type : let val: (number|string|boolean|tuple) = /* Can be given any defined types here*/ etc "|" is a symbol of union type
 Type aliases: type MixedTypes = number|string|boolean , this is a utility like from typescript , where you can your code more readable
 let val: MixedTypes .
 Type aliase can also be used with objects like 
@@ -98,8 +147,75 @@ let username: string;
 name2 ='Ajay';
 username = name2; // Any has no restrictions , VALID , NO-ERROR
 
-Never :
-//such functions are Common to construct error messages 
+#region Examples of Any Vs unknown
+/*
+any and unknown are the two escape ways that we use when we aren’t sure about
+ what will be the type of value, whereas never is used when we are 
+ out of all data types, we are left with no values.
+*/
+
+let anyThing; //here anything would be of type 'any'
+anyThing = 100 //
+if(anyThing > 100){//Valid}
+anyThing = ()=>'function' //Valid
+if(typeof anyThing === 'function'){}//valid
+anyThing = null //Valid
+anyThing.getSomeSoda()// Valid calling a function on null, Ideally Error
+anyThing = undefined
+anyThing.thisIsvalid()//Valid calling a function on undefined, Ideally Error
+
+/**
+ * Unknown is type-safed any,
+ when you make any variable of type unknwon , 
+ you can assign anything to it just like any , but when you try to access 
+ something from it, typescript will give you an error. 
+ Stating that whatever you are trying to access 
+ for a unkwnown variable type might not exists.
+ */
+
+ let putUnknown:unknown
+ putUnknown = 100
+ 
+ if(putUnknown >100) { //INVALID , operator cannot be applied between unKnown and number}
+//BELOW IS VALID CODE
+ if(typeof putUnknown === 'number'){
+        if(putUnknown >100){
+            //unknwon enforces you to add a check, before using anything from a variable of unknown type.
+        }
+ }
+ putUnknown = null //Valid
+ putUnknown.getSomeSoda()//Invalid 
+
+//BELOW IS VALID CODE
+if(putUnknown!=null && 
+typeof putUnknown === 'object' &&
+'getSomeSoda' in putUnknown &&
+typeof putUnknown['getSomeSoda'] === 'function'
+){
+    putUnknown.getSomeSoda()
+}
+
+
+#endregion Examples of Any Vs Unknown
+
+#region use-case for unknown or any 
+1) Handling External Data: When you are dealing with external data that can be of unknown structure, unknown can be useful.
+function processData(data: unknown) {
+  if (typeof data === 'string') {     console.log(data.toUpperCase());   }
+}
+
+2) As Function Return Type: When a function can return a variety of unrelated types, you can use unknown.
+function createMystery(): unknown {   return Math.random() > 0.5 ? 'hello' : { farewell: 'goodbye' } }
+
+3) Third-party Libraries: When interacting with third party libraries that do not have proper TypeScript support, their return types can be represented as unknown.
+let value: unknown = thirdPartyLibrary.getValue();
+
+#endregion use-case for unknown
+
+Never:
+=======
+//such functions are Common to construct error messages ,
+//When your code is unreachable you tend to get "never".
 function giveError(): never{
 //The function never returns in this case hence never
 	throw new Error('This is an error') 
@@ -107,29 +223,44 @@ function giveError(): never{
 
 function giveError(some_params): never{
 //The function never return in this case hence never
-infiniteLoop....
+//infiniteLoop....
 while(true){}
 }
-
-
+}
 #endregion unknown,never,any
 
 #region Type Guards
+https://claritydev.net/blog/understanding-implementing-type-guards-typescript
 Type Guards: checking if a property exists in object, a method in the function 
-if("isProp" in exampleObj){console.log(exampleObj.isProp)}
-if("isFunc" in exampleObj){console.log(exampleObj.isFunc()} 
-if(obj instanceOf exampleObj) {console.log(Obj.isFunc()}
+if(typeof weekdays === 'string') //Primitive type-guard
+if("isProp" in exampleObj){console.log(exampleObj.isProp)} // object type=guard
+if("isFunc" in exampleObj){console.log(exampleObj.isFunc()} // object type=guard
+if(obj instanceOf exampleObj) {console.log(Obj.isFunc()} // object type=guard
 
+//UserDefined type-guard
+interface Fish {   swim: Function; }
+interface Bird {   fly: Function; }
+function isFish(pet: Fish | Bird): pet is Fish {
+  return (pet as Fish).swim !== undefined;
+}
+
+//Usage 
+let pet: Fish | Bird;
+if (isFish(pet)) {   pet.swim();}
+ else { pet.fly(); }
 #endregion Type Guards
 
 #region Interfaces
 
 interface Animal {
-readonly prop:string
+    readonly prop:string;
     petName: number | string;
     noOfLegs: number;
 	greet:(name:string) =>void;
 }
+
+How to make an object immutable ?
+You can do that using read-only
 
 Interface properties are public by default, you cannot add access-modifiers in interface.EXCEPT readonly
 Readonly property can be assigned inside a constructor or at intialization
@@ -141,12 +272,12 @@ class Pashu extends Animal{
 }
 
 const p = new Pashu()
-p.prop //Error its a readonly property from Interface 
+p.prop = 'ting' //Error its a readonly property from Interface 
 
 --> Interface can extends other Interface
 InterfaceA extends InterfaceB
 
-Optional Interfaces 
+Optional Interfaces : The members inside intrefaces can be optional as well
 interface Animal {
 readonly prop:string
     petName: number | string;
@@ -159,17 +290,27 @@ How are Interfaces represented in Javascript when compiled?
 When TS code is compiled to JS , Interfaces will not be there in JS files. Javascript has no concept of Interfaces
 Interfaces are only during developmemnt to write correct code, JS files there will not be any construct for Interfaces.
 
-
 #endregion Interfaces 
 
 #region Type Vs Interface:
 In Detail: https://blog.logrocket.com/types-vs-interfaces-typescript/
---> Interfaces are used for Object definitions , They cannot be used for Unions and Intersection of types, for such cases we will have to use Type
+
+--> Interfaces are used for Object definitions , They cannot be used for Unions of types, for such cases we will have to use Type
+type UnionTypeEg =  TodoItem | AddTodoProps
+//A class can only implement an object type or intersection of object types with statically known members.
+class A implements UnionTypeEg{ //Error 
+    name: string | number | boolean;
+    id: number;
+    addTodoItem(value: string): void {
+        throw new Error("Method not implemented.");
+    }
+}
+
 --> Interface can be implemented by a class, Its like a contract. Where as type has no such restrictions.
 --> Interfaces with the same name in the same scope merge their declarations, leading to unexpected bugs.
 			Eg: //Inside interface demo.js
-			interface User {   name: string; }
-			interface User {   id: string; }
+			interface User { name: string; }
+			interface User { id: string;  }
 			const user: User = {
 			//ERROR: Property 'name' is missing in type '{ id: string; }' but required in type 'User'.
 			  id: "123",
@@ -204,19 +345,45 @@ interface RDB {
 
 type AnimalRDB = Animal | RDB;
 
-class InterfaceDemo implements AnimalRDB { Error : A class can only implement an object type or intersection of object types with statically known members.
+
+Union type can only be defined using type. There is no equivalent to a union type in an interface
+//Error 
+class InterfaceDemo implements AnimalRDB { 
+//Error : A class can only implement an object type or intersection of object types with statically known members.
     petName: string | number;
 
 Types also can be extended:
 type PersonNameType = { name: string }
 interface Person2 extends PersonNameType { age: number }
 
-Use interfaces when:
+Difference:
+===========
+interface Person {
+    getPermission: () => string; 
+}
+//Error Interface 'Staff' incorrectly extends interface 'Person'.
+//The types returned by 'getPermission()' are incompatible between these types.
+//Type 'string[]' is not assignable to type 'string'.
+interface Staff extends Person {
+     getPermission: () => string[];
+}
 
+type PersonT = {
+    getPermission: () => string;
+}
+
+//VALID CODE
+type PersonT2 = PersonT & {
+    getPermission: () => string[]
+}
+
+Use interfaces when:
+===================
 A new object or an object method needs to be defined.
 You wish to benefit from declaration merging.
-Use types when:
 
+Use types when:
+===============
 You need to define a primitive-type alias
 Defining tuple types
 Defining a union
@@ -228,6 +395,9 @@ Requiring the use of mapped types
 #region Generics
 
 Generics are code templates that you can define and reuse throughout your codebase. They provide a way to tell functions, classes, or interfaces what type you want to use when you call it.
+
+Generics in Typescript are a templates that allows you to create reusable code components that work with different types. 
+They provide a way to create functions, classes, and interfaces that can work with a variety of data types, while still maintaining type safety.
 
 Array in TS is generic type 
 let arr:Array<string> = ['a','b']
@@ -244,6 +414,7 @@ Consider the below scenario :
 function merge(objA: object, objB: object) {
     return Object.assign({},objA, objB);
 }
+
 const mergedObj = merge({name:'Ajay'},{id:100});
 //intellisense will not work here, strong typing is non-existent
 mergedObj.name
@@ -258,6 +429,20 @@ const mergedObj = merge({ name: 'Ajay' }, { id: 100 });
 mergedObj.name; //This works now.
  /*Below statement  is valid statement, output will be nothing because they are not objects , object. assign will not complain, will fail silently*/
  const m2 = merge<string,number>('Ajay',10)
+ 
+ Example of API Call in Typescript:
+ ==================================
+ function getUsers(): Promise<User[]> {
+  // For now, consider the data is stored on a static `users.json` file
+  return fetch('/users.json')
+    // the JSON body is taken from the response
+    .then(res => res.json())
+    .then(res => {
+      // The response has an `any` type, so we need to cast
+      // it to the `User` type, and return it from the promise
+      return res as User[]
+    })
+}
 
 Generic Constraints
 ====================
@@ -282,6 +467,20 @@ Generic Utility Functions
 ==========================
 Partial: Make the properties of an object optional
 ---------------------------------------------------
+https://www.geeksforgeeks.org/how-to-specify-optional-properties-in-typescript/
+How to give Optional Parameters in Interface ?
+interface User { 
+    name: string; 
+    age?: number; //Optional
+    occupation?: string;  //Optional
+} 
+  
+let user: User = { 
+    name: 'John Doe'
+}; 
+  
+console.log(user);
+
 Example :
 type CourseGoal = {
     name: string; description: string; courseFee: number;
@@ -289,7 +488,7 @@ type CourseGoal = {
 
 const fillGoal = (name: string, desc: string, fee: number): CourseGoal => {
     
-    //Below line will emit error because ,
+    //Below line will give error because ,
     //the object is empty and its type is CourseGoal which cannot have empty values nor is optional
     //let coursegoal: CourseGoal = {};
 
@@ -303,12 +502,12 @@ const fillGoal = (name: string, desc: string, fee: number): CourseGoal => {
 };
 
 
-NonNullable<Type>
-=================
+NonNullable<Type> Constructs a type by excluding null and undefined from Type.
+=====================================================
 type T0 = NonNullable<string | number | undefined>;
-type T0 = string | number
+//type T0 = string | number  //exculeds null and undefined
 type T1 = NonNullable<string[] | null | undefined>;
-type T1 = string[]
+//type T1 = string[] //result after appling NonNullable //exculeds null and undefined
 
 Required<Type>
 ===============
@@ -381,7 +580,7 @@ const todoInfo: TodoInfo = {
 
 Generic Vs UnionType
 =====================
-//With Union  Consider below scenario 
+//With Union Consider below scenario 
 class Storage {
     data: string[] | number[] | boolean[] = [];
 
@@ -408,13 +607,36 @@ class Storage <T extends string | number | boolean> {
     }
 
     removeItem(item: T) {
-        this.data.slice(this.data.findIndex(item), 1); //Error 
+        this.data.slice(this.data.findIndex(item), 1); 
     }
 }
 
 #endregion Generics
 
 #region Decorators
+
+@classDecorator
+class User {
+
+@propertyDecorator
+email:string
+
+@methodDecorator
+sendEmail(){}
+
+@accessorDecorator
+get Logs{}
+
+}
+
+//Inside tsConfig.js
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "experimentalDecorators": true
+  }
+}
+
 You can apply this on class, methods , propertires 
   https://medium.com/@InspireTech/what-are-decorators-in-typescript-and-how-to-use-decorators-d82d15c5851f 
 
@@ -439,3 +661,8 @@ class User {
 }
 
 #endregion Decorators
+
+When do we use npm install @types/react-router-dom --save ?
+react-router-dom is such a package where there are no types defined in Typescript, Its not there yet .
+In such cases we can add types , typescript will infer types based on the library @types/react-router-dom --save.
+

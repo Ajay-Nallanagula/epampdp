@@ -1,3 +1,8 @@
+/*
+The Observer pattern is a behavioral design pattern that allows objects to notify other
+ objects about changes in their state, without creating direct dependencies. 
+ It facilitates one-to-many communication dynamically.
+*/
 class Observable {
     constructor() {
         this.observers = []

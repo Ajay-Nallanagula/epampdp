@@ -61,9 +61,9 @@ https://bitsofco.de/understanding-the-virtual-dom/#:~:text=Because%20React%20use
 
 How Virtual DOM works?
 1) First we need to know how browser parses HTML & Css, so briefly, Browser first parses HTML create DOM object(simple JS object), similarly it also creates CSSOM(css object model , yet another JS Object)
-2) CSSOM is applied to DOM, this is phase is called "ATTACHMENT" .
-3) After ATTACHMENT is done , LAYOUT phase starts, which means where each of the html element should be placed on the browser screen, its calculated based on cordinates 
-4) Once Layout is done , RENDERTREE is prepared and the HTML elements are PAINTED and DISPLAYED 
+2) The browser now combines the DOM and CSSOM trees into something called a RENDER TREEE..(ATTACHEMENT PHASE) 
+3) After RENDER TREE is done , LAYOUT phase starts, which means where each of the html element should be placed on the browser screen, its calculated based on cordinates 
+4) Once Layout is done ,  PAINTED and DISPLAYED are performed
 
 consider following eg :
 document.getElementById("root").innerHTML = 'New Value'
@@ -83,6 +83,18 @@ Advantages of Virtual DOM.
 2) Virtual DOM carries out Bulk updates ,
 3) Virtual DOM uses efficent diffing algorithms
 4) Efficient update of subtree only Breadth First Apporach(learn a bit about BFS)
+
+#region Breadth First Search
+Breadth-First Search (BFS) is an algorithm for traversing or searching tree or graph data structures. It starts at a node (often known as the 'root'), and explores all of the neighbor nodes at the present depth prior to moving on to nodes at the next depth level. It does this by using a queue data structure.
+
+In terms of its efficiency, BFS has the ability to find the shortest path in terms of the number of edges from the starting node to all other reachable nodes in an unweighted graph. It can also be used to check if a graph is connected, to determine the level of each node, among many other uses.
+
+Compared to depth-first search (DFS), BFS can be more efficient in certain scenarios because it doesn't unnecessarily dive deep into paths that have no solutions (like DFS may do) - it checks all possibilities level by level. Also, as mentioned, BFS is capable of finding the shortest path in terms of the number of edges which is not possible using DFS.
+
+However, the choice between DFS and BFS really depends on the nature and structure of the tree or graph you are working with, and what type of information you are looking to extract. Each has their own strengths and weaknesses.
+
+
+#endregion Breadth First Search
 
  dirty check Vs Observables ? https://stackoverflow.com/questions/21109361/why-is-reacts-concept-of-virtual-dom-said-to-be-more-performant-than-dirty-mode#:~:text=Dirty%20checking%20is%20slower%20than,in%20the%20data%20structure%20recursively.&text=This%20isn't%20really%20related,with%20or%20without%20dirty%20checking.
  SHORT ANSWER :  In React, each of your components have a state. This state is like an observable you might find in knockout or other MVVM style libraries. Essentially, React knows when to re-render the scene because it is able to observe when this data changes. Dirty checking is slower than observables because you must poll the data at a regular interval and check all of the values in the data structure recursively. By comparison, setting a value on the state will signal to a listener that some state has changed, so React can simply listen for change events on the state and queue up re-rendering.
@@ -136,9 +148,7 @@ VideoRecording-link : https://web.microsoftstream.com/video/98eed31a-63af-4bf5-a
 JSX is special syntax of react, It is look-a-like of HTML but its actually Javascript .
 JSX is compiled into browser understandable JS by tool called Babel.
 JSX supports nesting of components, since class is a reserved word in JS , we have className in JSX to give stylised classes.
-
 You can also create the elements using pure javascript, without JSX , using React.createElement('CustomComponentName',{attributes...})
-
 
 Eg without JSX :
 class IngredientsList extends React.Component {
@@ -207,6 +217,7 @@ react-source-explorer package
 What are props? 
 Short for properties, props can best be defined as a way of passing data from component to component, basically from parent to child component
 Props can be set manually or props can be set using PropTypes.DefaultProps. Props must be immutable.
+Props are readonly for child .
 
 What is state ? state is private to class.
 React components has a built-in state object. The state object is where you store property values that belongs to the component.Though state is built-in you can choose NOT to use the state in the components, in that case only using props and not state makes the component Pure Component.

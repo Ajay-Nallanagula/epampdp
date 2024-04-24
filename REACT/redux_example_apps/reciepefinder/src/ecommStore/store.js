@@ -30,6 +30,6 @@ const preloadedState = {
 export default configureStore({
     reducer: cartReducer,
     /*preloadedState*/
-    middlewares: (getDefa)
+   // middlewares: (getDefa)
 })
 //(preloadedState) => configureStore({ reducer: cartReducer, preloadedState })

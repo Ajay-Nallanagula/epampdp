@@ -3,6 +3,32 @@ Udemy: https://www.udemy.com/course/microfrontend-course/learn/lecture/24615508#
 
 npm install webpack@5.68.0 webpack-cli@4.10.0 webpack-dev-server@4.7.4 faker@5.1.0 html-webpack-plugin@5.5.0
 
+#region Pre-requisites for Microfrontends
+
+HTML, CSS, and JavaScript: As Microfrontends build on the core web development languages, having a solid understanding of HTML, CSS, and JavaScript is a fundamental prerequisite.
+
+Understanding of SPA (Single Page Application): In addition to the basic web development languages, Microfrontends also require the understanding of how a single page application works.
+
+Familiarity with JavaScript Frameworks: Familiarity with at least one JavaScript framework such as React, Angular, Vue.js can help as it is commonly used in Microfrontend architecture.
+
+Back-End Programming: A strong understanding of back-end programming is beneficial because it helps to understand the big picture of web development.
+
+Web Components: Knowledge of web components which are a set of web platform APIs that allow you to create new custom, reusable, encapsulated HTML tags to use in web pages and web apps.
+
+Understanding of Microservices: Having a basic understanding of the microservices architectural style can provide a good foundation for learning Microfrontends.
+
+Basic Knowledge of Containers: Container technologies, such as Docker, help developers package up an application with all of the parts it needs, such as libraries and other dependencies, and ship it all out as one package.
+
+Familiarity with CI/CD: Continuous Integration/Continuous Deployment is pivotal in the application's development life cycle, having knowledge about it helps a lot.
+
+Basic knowledge of Server-side rendering (SSR) and Client-side rendering (CSR): The understanding of how SSR and CSR works is beneficial in leveraging the advantages of Microfrontends to its fullest.
+
+Familiarity with Version control systems: Such as GIT or SVN.
+
+Rem
+
+#endregion Pre-requisites for Microfrontends
+
 #region MISC/Questions
 
 How does Module Federation handle CORS, multiple different ports how is it handling?
@@ -35,7 +61,7 @@ Advantages of microfrontends:
 - **Simplicity**: Small, dedicated codebases are usually easier to maintain.
 - **Parallelism**: Multiple teams can work on different features at the same time.
 - **Scalability**: Teams and features can scale horizontally.
-- **Diversity**: Each microfrontend can be written using the technologies best suited for its feature set.
+- **Diversity**:  Each microfrontend can be written using the technologies best suited for its feature set.
 - **Resilience**: A problem in one microfrontend does not affect the others.
 
 Disadvantages of Microfrontend:
@@ -52,10 +78,11 @@ An example of microfrontend architecture would be an e-commerce site:
 Each of these would be a separate application, developed by a separate team, possibly using different web technologies, but they all work together to create a seamless user interface.
 
 
-#region Microfrontened vs Monolith Vs Monorepo
+#region Microfrontened vs Monolith Vs Monorepo Vs Modular Monolith
 https://levelup.gitconnected.com/microfrontends-vs-monolithic-frontend-which-is-right-for-your-project-2980c6939a36
 
---> Monolithic Frontend is a frontend architecture in which all the UI components and features of an application are handled by a single, large codebase. In this architecture, the frontend is tightly coupled with the backend and cannot be easily separated. This means that the entire application runs on a single server and any updates or changes to the frontend require redeploying the entire application.
+--> Monolithic Frontend is a frontend architecture in which all the UI components and features of an application are handled by a single, large codebase. In this architecture, the frontend is tightly coupled with the backend and cannot be easily separated. 
+This means that the entire application runs on a single server and any updates or changes to the frontend require redeploying the entire application.
 
 --> Monolith is know for simplicity, low cost maintenance and ease of development 
 However Monlith is difficult to scale and one part of the codebase can have unintended consequences in other parts .
@@ -69,8 +96,6 @@ However Monlith is difficult to scale and one part of the codebase can have unin
 
 
 #endregion Microfrontened vs Monolith Vs Monorepo
-
-
 
 #endregion What is a microfrontend.
 
@@ -106,7 +131,7 @@ In simple terms using runtime composition we just render other site components i
 
 app1.js and app2.js will be loaded at runtime from a different site from the same domain (sub-domains) and the host application will manage to render the required components from it.
 
- We can achieve this using Module Federation or Next.Js
+We can achieve this using Module Federation or Next.Js
  
  Advantages:
  1) Development is faster: The whole development becomes faster and easier because of separate teams and we are getting all package sin hand from different modules.
@@ -147,10 +172,10 @@ https://webpack.js.org/concepts/module-federation/
 
 Steps to configure Module Federation
 =====================================
-Step 1: designate one application as a host(container) and one as a remote(products).
-	Assume you have a ecommApp where in you have different modules like cart, productlist, billing etc 
-	Host application is "container"
-	remoteapps are cart, productlist etc 
+Step 1: designate one application as a host(container or shell) and one as a remote(products).
+	Assume you have a ecommApp where in you have different modules like cart, productlist, billing etc.
+	Host application is "container".
+	remoteapps are cart, productlist etc.
 Step 2:  In remote decide which modules(files) you want to make available to other projects eg: product/index.js
 Step 3:  Set up webpack Module Federation plugin to expose those files
 	//inside billing webpack.config.js , similar to other modules 
@@ -181,7 +206,9 @@ export function mount(selector) {
     selector.innerHTML = products //this selector will come from container/host app
 }
 
-	
+//Inside index.js
+import('./bootstrap');
+
 Step 4: In HOST, decide which file you want to get from remote, and set up module federation plugin to fetch those files
 i.e in container which file should we get, in this example its bootstrap.js 
 
@@ -206,7 +233,7 @@ module.exports = {
     ]
 }
 
-STEP6: In HOST refactor the entry poinnt to load asynchronously.  In the host, import whatever files you need from remote.
+STEP6: In HOST refactor the entry point to load asynchronously. In the host, import whatever files you need from remote.
 //Inside index.js/bootstrap.js ,index.html of container application:
 import { mount as billingMount } from 'billing/BillingIndex';
 billingMount(document.querySelector('#dev-billing'))
@@ -242,7 +269,7 @@ module-federation will over-ride STEP-3_MANDATORY** thingy with tht of html-docu
 =======================
 Webpack--> ModuleFederation-->plugins-->ModuleFederation --> shared:['faker'] //this can also be an object.
 
-NOTE: shared can be used only with modules of same version, if there are different versions of the module its understood and correct way to loda two seperate modules , example faker@4.00, faker@5.0.0. two versions are to be loaded .. by default that is the behaviour of moduleFederation which is dexirable and expected.
+NOTE: shared can be used only with modules of same version, if there are different versions of the module its understood and correct way to load two seperate modules , example faker@4.00, faker@5.0.0. two versions are to be loaded .. by default that is the behaviour of moduleFederation which is dexirable and expected.
 NOTE: The shared modules take into consideration all the major.min.patch versions ^,~ symbols etc. 
 
 When you mark some module as shared , it means that module will be loaded asynchronously.
@@ -390,14 +417,14 @@ That is because css remains in the browser and its applied to the microapps.
 
 Solution: Css Scoping : 
 //For custom/user-defined css
-option 1: CSS-In-JS
+option 1: CSS-In-JS //this is granular level
 option 2: style scoping in Vue/Angular 
 option 3: Namespace your css
 <div class="pricing"> All pricing related content </div>
 Now in css you can namespace by .pricing div{...}, .pricing ul{...}, .pricing h1{...} etc etc
 
 //For third-party CSS
--> Use components with css-in-j like material-ui, bootstrap
+-> Use components with css-in-js like material-ui, bootstrap
 -> Manually build css library and Namespace scoping can be used, which is quite tedious
 
 Challenge 2: There could be naming collsions in production version of the project, webpack minimizes the css and renames the classes 
@@ -410,3 +437,302 @@ Step3: <StyleProvider generateClassName={generateClassName}/> // StyleProvider i
 
 
 #endregion CSS in Microfrontends
+
+#region Routing in Microfrontends in Remotes 
+
+https://youtu.be/uRKUxZQ74os?feature=shared
+Routing between microapps.
+
+In Microfrontend architecture, routing between remote microapps is typically accomplished using an Application Shell or Micro Frontend Container that orchestrates the loading, routing, and unloading of the different microapps.
+
+Here is a possible approach:
+============================
+Define routes and associate them with the respective microapp. When a user navigates to a route the associated microapp will get loaded.
+Create placeholders for microapps in the Application Shell. Each placeholder is associated with a unique route.
+Use the History API or a library like Reach Router or React-Router (in case of a React-based application) to enable navigation in the app.
+On route change, the Application Shell determines which microapp to load based on the new route. It then performs any necessary clean up (like unloading any currently running microapp), and subsequently load the new microapp into the associated placeholder.
+The Application Shell creates a mechanism for maintaining, loading, and unloading the microapp assets like JS and CSS files.
+Communication between microapps can be done using custom events.
+Remember, this approach requires a robust error handling mechanism to ensure that when one microapp fails, it doesn’t bring down the entire frontend.
+Also, consider using lazy loading to only load a microapp when its route is accessed, improving the performance and loading time of your application.
+In case of using frameworks like Angular or React, some libraries are specifically designed to handle microfrontend perspectives. For Angular, there is a library called single-spa-angular and for React, there is single-spa-react(https://single-spa.js.org/docs/getting-started-overview).
+
+#region Example in Core JS for Easy Understanding
+Let's assume we have an e-commerce platform, which is broken down into three micro frontends (or micro apps): Home, Products, and Checkout.
+Our Micro Frontend Container (Application Shell) is the main entry point of our application. When it starts, it registers these three apps with their corresponding routes:
+let routes = {
+  '/': 'home',
+  '/products': 'products',
+  '/checkout': 'checkout'
+}
+
+This Application Shell contains placeholders where each micro app runs:
+<div id="home-container"></div>
+<div id="products-container"></div>
+<div id="checkout-container"></div>
+
+When any route change is detected, say by clicking a link, the router's role within the Application Shell decides which micro app to load:
+function onRouteChange(newRoute) {
+  let currentApp = routes[newRoute]; // Get the micro app to be loaded, requested
+
+  // Unload the current app
+  unloadCurrentApp();
+
+  // Load the micro app into its placeholder
+  let container = document.getElementById(`${currentApp}-container`);
+  loadApp(currentApp, container);
+}
+
+The loadApp() function could be responsible for fetching the JavaScript and CSS assets of a micro app, and inserting them into the page. It may also be used to pass any necessary props into the app, which would be particularly useful if these micro apps are built as custom web components.
+
+function loadApp(appName, container) {
+  // dynamic import for JS file of micro app.
+  import(`./${appName}/index.js`).then(microApp => {
+    // loading the JS file of micro app.
+    microApp.load(container);
+    // Props could be passed to the micro app here if needed.
+  }).catch(error => {
+    // Error handling while loading JS file of the micro app.
+    console.log(`Failed to load micro app ${appName}: ${error}`);
+  });
+}
+NOTE: Libraries like single-spa can also simplify some of this work.
+https://single-spa.js.org/docs/getting-started-overview
+
+
+
+#endregion Example in Core JS
+
+#region Example in React
+In a React application, a way to implement routing in a micro frontend architecture could be using react-router and module federation from webpack 5.
+Let's simplify the case to two micro frontends - App1 and App2. We will use Module Federation to expose and use App1’s components inside of App2.
+First we expose a component from App1 using Module Federation Plugin in your webpack config:
+//Inside webpac.js 
+new ModuleFederationPlugin({
+  name: 'app1',
+  filename: 'remoteEntry.js',
+  exposes: {
+    './Button': './src/Button',
+  },
+  shared: require("./package.json").dependencies
+}),
+
+In App2, we can now use the exposed component from App1 directly:
+=================================================================
+const Button = React.lazy(() => import('app1/Button'));
+function App() {
+  return (
+    <Router> //BrowserRouter
+      <Suspense fallback="Loading...">
+        <Switch>
+          <Route exact path="/">
+            <div>Home Page</div>
+            <Button /> {/* This is the button component from App1 */}
+          </Route>
+          <Route exact path="/page2">
+            <div>Page 2</div>
+          </Route>
+        </Switch>
+      </Suspense>
+    </Router>
+  );
+}
+
+In such a way we can build an entire micro frontend architecture. Each micro frontend is basically a standalone React app that will expose some or all components. It preserves the autonomy, as each app can live its lifecycle independently, but they can interoperate as part of one coherent user interface.
+
+#endregion Example in React
+
+#region ****Microfrontend Routing using Single-Spa package
+https://single-spa.js.org/docs/getting-started-overview
+https://mrbytebuster.medium.com/single-spa-with-react-85491b437759
+
+Youtube Search: React microfrontend using single-spa package
+
+For usage of Single-spa, should microapps be single-page microapps?
+Answer NO, microapps can have their own routing mechanism .
+
+The libraries called by single-spa are referred to as "micro-frontends," "services," or "applications" interchangeably. While the library is called single-spa (Single Page Application), it does not mean that your microapps, or micro-frontends, need to be Single Page Applications in the traditional sense.
+
+What single-spa does is enable you to split your single page application into multiple smaller applications, each independently deployable and maintainable, and it stitches them together to create what appears to be one large single page application.
+
+Each microapp with single-spa can control its own routing (with libraries such as react-router-dom in the case of React), or you can control routing at the single-spa level.
+
+So, to answer your question more directly: using single-spa doesn't mean that each individual microapp has to be a complete Single Page Application on its own, but you certainly could structure your microapps that way if you wanted to. The key benefit of single-spa is the ability to independently develop, deploy, and maintain parts of a larger, composite SPA.
+
+#endregion Microfrontend Routing using single-spa package
+
+#endregion Routing in Microfrontends in Remotes
+
+#region Microfrontends sharing State
+https://youtu.be/yo4tcD6YJfk?feature=shared
+Communication between microapps
+
+Event Driven Approach: This method encourages communication via events. One microapp can trigger an event and others can listen and respond to it.
+// create a custom event
+let customEvent = new CustomEvent("CUSTOM_EVENT", {
+  detail: { // data to be passed with the event
+    message: "This is a custom event",
+    time: new Date(),
+  },
+  bubbles: false,
+  cancelable: true
+});
+
+// dispatch the event
+window.dispatchEvent(customEvent);
+
+//Inside other microApp
+// event listener function
+function handleCustomEvent(e) {
+  console.log(e.detail.message);
+  console.log(e.detail.time);
+}
+
+// attach the listener to the window object
+window.addEventListener("CUSTOM_EVENT", handleCustomEvent);
+
+// cleanup: remove the listener when it's not needed anymore
+window.removeEventListener("CUSTOM_EVENT", handleCustomEvent);
+
+
+Shared State Management: A common shared state can be used to allow communication between microapps. This can be achieved using libraries like Redux or MobX.
+
+Web Components: One popular approach to building microfrontends is to use web components. This means that different fragments of the user interface are built and deployed separately, but they can still communicate via attributes and events.
+
+Using APIs: Microapps can also communicate through backend APIs. In this case, microapps interact with each other by calling the other's exposed APIs.
+
+Shared Libraries: Some shared functions or utilities can be created as libraries and different microapps can use these libraries to communicate with each other.
+
+Iframe Communication: If different microfrontends are embedded via iframes, the HTML5 postMessage API can be used for communication.
+
+Server Side Communication: Server side includes (SSIs) or Edge side includes (ESIs) are techniques that can be used to assemble different microfrontends on server-side.
+
+Using a Publish/Subscribe Model: Microapps can publish certain updates, and others can subscribe to these updates to facilitate communication.
+EventEmitter3 is a high performance EventEmitter. It has been micro-optimized for various of code paths making this, one of, if not the fastest EventEmitter available for Node.js and browsers. It's a great package for managing event driven communications between apps
+
+Example for Pub/sub
+//Inside Microapp1
+const EventEmitter = require('eventemitter3'); 
+var emitter = new EventEmitter();
+
+// To emit event
+emitter.emit('event1', "This is a test event");
+
+// This would be in microapp2
+emitter.on('event1', function(str) { console.log("A new event occurred: ", str); });
+
+//Inside microapp2
+const EventEmitter = require('eventemitter3'); 
+var emitter = new EventEmitter();
+
+// To listen to the event in Microapp1
+emitter.on('event1', function(str) { console.log("A new event occurred: ", str); });
+
+Middleware: Middleware such as a backend-for-frontend (BFF) can be set up to handle communication between the microfrontends, and act as a proxy for their respective backends.
+
+Context Passing: For SSR (Server Side Rendering) microfrontends, a context prop can be used to pass server-side context to the microfrontend components.
+
+Remember, the amount of communication between microfrontends should be kept minimal to maintain good decoupling of applications.
+
+
+#endregion Microfrontends sharing State
+
+#region Books 
+
+Books :
+    Building Micro Frontends with React 18
+	Building Micro-frontends by Luca Mezzalira
+	Journey to Micro Frontends by Brendon Co
+	Practical Module Federation by Zack Jackson & Jack Herrington
+
+#endregion Books
+
+#region Sample Webpack.config for microfrontend
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { webpack } = require('webpack');
+const { ModuleFederationPlugin } = require('webpack').container;
+
+module.exports = async (_, { mode = 'development' }) => {
+  return {
+    entry: path.join(__dirname, 'src', 'index.jsx'),
+    target: 'web',
+    mode,
+    output: {
+      path: path.join(__dirname, 'build'),
+      publicPath: 'auto',
+      chunkFilename: 'js/[id].[contenthash].js',
+      filename: 'js/[name].[contenthash].js',
+      clean: true,
+    },
+    devServer: {
+      hot: true,
+      open: true,
+      historyApiFallback: true,
+      static: {
+        directory: path.join(__dirname, 'src', 'public'),
+      },
+      compress: true,
+      port: 8000,
+    },
+    resolve: {
+      modules: [
+        path.join(__dirname, 'src'), 'node_modules'
+      ],
+      extensions: ['.css', '.js', '.jsx', '.scss'],
+    },
+    module: {
+      rules: [
+        {
+          test: /\.(js|jsx)$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env', '@babel/preset-react'],
+            },
+          },
+        },
+        {
+          test: /\.css$/,
+          include: path.resolve(__dirname, 'src'),
+          use: ['style-loader', 'css-loader'],
+        },
+      ],
+    },
+    plugins: [
+      new HtmlWebpackPlugin({
+        template: path.join(__dirname, 'src', 'public', 'index.html'),
+      }),
+
+      new ModuleFederationPlugin({
+        name: 'HostApp',
+        filename: 'js/host-app-entry.js',
+        shared: [
+          {
+            react: {
+              requiredVersion: '^18.2.0',
+              singleton: true,
+              eager: true,
+            },
+            'react-dom': {
+              requiredVersion: '^18.2.0',
+              singleton: true,
+              eager: true,
+            },
+            'react-router-dom': {
+              requiredVersion: '^6.3.0',
+              singleton: true,
+              eager: true,
+            },
+          } 
+        ],
+        remotes: {
+          'remote': 'RemoteApp@http://localhost:9000/js/remote-app-entry.js'
+        }
+      })
+    ],
+  };
+};
+
+#endregion Sample Webpack.config for Microfrontend

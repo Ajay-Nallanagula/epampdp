@@ -30,7 +30,7 @@ What are Hooks in React?
 Why are Hooks been added to React? Disadvantages of Classes in React
 https://ui.dev/why-react-hooks/ 
 1) Hard to reuse stateful logic between components:(render props,HOC ar just alternates) Sharing the business logic is a challenge, D.R.Y implementation is inconvinient.
-2) Complex components beacome hard to understand.
+2) Class components are more verbose, Complex components beacome hard to understand.
 3) Understand "this" in JS to work with Classes ."this" works  differently from other languages in js-state-without-constructor-fixing-954dbb11fcf1
 4) classes don’t minify very well, and they make hot reloading flaky and unreliable
 
@@ -136,7 +136,8 @@ In subsequent renders (due to a change of state in the component or a parent com
 
 How to sync state updates ?
 https://stackoverflow.com/questions/54625831/how-to-sync-props-to-state-using-react-hooks-setstate
-useState hooks function argument is being used only once and not everytime the prop changes. You must make use of useEffect hooks to implement what you would call the
+useState hooks function argument is being used only once and not everytime the prop changes. 
+You must make use of useEffect hooks to implement what you would call the.
 
 But why does useState() return an array why not an object ?
 with array there is a chance of choosing the meaningful names directly

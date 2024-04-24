@@ -5,6 +5,8 @@
  * then, if we can successfully replace the object/instance of a parent class with an object/instance of the child class,
  *  without affecting the behavior of the base class instance, then it is said to be in Liskov Substitution Principle
  * https://dotnettutorials.net/lesson/liskov-substitution-principle/
+ * 
+ * "You should be able to give me your duck, and I should be able to replace it with my pet duck without any issue".
  *
  */
 

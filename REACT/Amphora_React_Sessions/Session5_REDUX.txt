@@ -53,7 +53,8 @@ Immer.js/ Immutable.js
 #region Mosh tutorials
 
 #region Flux Architecture
-Principles of Flux 
+Principles of Flux:
+
 
 Flux Vs Redux:
 
@@ -251,6 +252,7 @@ In Latest Versions of Redux create Reducer is used with "Builder Callback"
 ==========================================================================
 https://redux-toolkit.js.org/api/createReducer
 
+import { createAction,createReducer } from "@reduxjs/toolkit"
 export const addToCart = createAction('addToCart')
 const reducer = createReducer(preloadedState, builder => {
     //similar to switch-case
@@ -303,6 +305,7 @@ const slice = createSlice({
 		}
 	},
 //This extraReducers is only for demo purposes	
+//https://medium.com/@mindsurfingclub/redux-toolkit-extra-reducer-explained-createasyncthunk-1480c54e8b58
 extraReducers: (builder) => {
    builder.addCase(fetchTodos.pending, (state, action) => {
     state.isLoading = true;
@@ -418,7 +421,7 @@ consider store is
 categories:[], //Categories can have separate reducer.
 products:[], //products can have separate reducer.
 cart:[], // cart can have separate reducer .
-user:[], // user ca have separate reducer.
+user:[], // user can have separate reducer.
 }
 
 #region Selectors, Normalize data 
@@ -589,7 +592,7 @@ configureStore({
 reducers,
 middlewares:(getDefaultMiddleware)=> ([...getDefaultMiddleware(), loggerMiddleware])
 })
-
+An enhancer which logs the time taken for the reducers to process each action
 
 
 
@@ -693,7 +696,7 @@ export default store
 //INSIDE REDUCER.JS
 //Example Reference: https://dev.to/julfikarhaidar/redux-toolkit-crud-example-with-react-hooks-4d98
 
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+//import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { buildCreateSlice, asyncThunkCreator } from '@reduxjs/toolkit'
 
 /*
@@ -726,7 +729,7 @@ const slice = createProductsSlice({       //createSlice({
                 console.log({ obj1 }, { obj2 })
                 const productsPromise = await fetch('https://dummyjson.com/products')
                 const productsResponse = await productsPromise.json()
-                return productsResponse.products
+                return productsResponse.products //this will be saved as action.payload 
             },
             {
                 pending: (state) => {
@@ -935,5 +938,11 @@ const characters = useSelector(state => state.defaultCharacters)
 https://medium.com/@ayabellazreg/make-a-simple-shopping-cart-app-using-react-redux-1-3-fefde93e80c7
 https://medium.com/@ayabellazreg/make-a-simple-shopping-cart-app-using-react-redux-part-3-32b182e02cc9
 
+#region Redux Toolkit Query
+
+https://www.youtube.com/playlist?list=PL0Zuz27SZ-6M1J5I1w2-uZx36Qp6qhjKo
+
+
+#endregion Redux Toolkit Query
 
 #endregion

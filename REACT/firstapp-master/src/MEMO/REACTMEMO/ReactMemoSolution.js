@@ -22,8 +22,6 @@ We can memoize the LIstItem only to render for newly added user using React.memo
 
 How does React.memo know wether to re-render or not?
 Internally React's memo function has to compare the previous props with the new props to decide whether it should re-render the component.
-
-
 */
 
 const ReactMemoSolution = () => {

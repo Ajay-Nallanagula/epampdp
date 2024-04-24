@@ -1,6 +1,15 @@
 /** OPEN CLOSE PRINCIPLE
  * “Software entities … should be open for extension, but closed for modification.”
  */
+
+/*
+interface Shape {
+  calculateArea(): void;
+}
+
+export default Shape;
+*/
+
 import Shape from "./Shape.js";
 
 export class Rectangle implements Shape {

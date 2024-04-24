@@ -1,0 +1,279 @@
+
+What are different Programming Paradigms 
+1) Imperative
+2) Declarative
+3) Functional
+4) OOPS
+5) Procedure Programming
+6) Event Based Programming
+
+#region OOPS
+
+4 Pillars: Abstraction,encapsulation,Inheritance, Polymorphism
+
+OOPS: https://www.freecodecamp.org/news/object-oriented-javascript-for-beginners/#how-to-create-objects-classes
+
+
+Encapsulation : 
+--> Encapsulation is another key concept in OOP, and it stands for an object's capacity to "decide" which information it exposes to "the outside" and which it doesn't. Encapsulation is implemented through public and private properties and methods.
+--> In JavaScript, all objects' properties and methods are public by default.
+//Private methods and properties can be declared as 
+class Alien {
+    #birthYear // We first need to declare the private property, //always using the '#' symbol as the start of its name.
+
+    constructor (birthYear) {
+    this.#birthYear = birthYear // Then we assign its value within the constructor function
+    }
+ }
+ console.log(alien1.#birthYear) // This throws an error
+
+
+Abstraction: Hiding the internal/business logic of the actions that is operated in the functions is called as abstraction.
+This principle is closely related to encapsulation, as we can use public and private properties/methods to decide what gets exposed and what doesn't.
+
+Inheritance: 
+Inheritance is the ability to create classes based on other classes.
+A class can only have one parent class to inherit from. You can't extend multiple classes, though there're are hacks and ways around this.
+
+Note: When inheriting, all parent methods and properties will be inherited by the children. We can't decide what to inherit from a parent class (same as we can't choose what virtues and defects we inherit from our parents. 😅 We'll get back to this when we talk about composition).
+
+#region prototypal inheritance vs class based inheritance
+Use Case: Prototype inheritance is often more suitable for dynamic and flexible scenarios where objects have varying behavior and properties. Class inheritance is more suitable when you need a structured hierarchy with well-defined relationships and behavior.
+
+Prototype Inheritance: In prototype-based programming, objects inherit directly from other objects. Each object has an internal prototype (sometimes called "dunder proto" or __proto__) reference that points to its prototype object.
+Objects inherit directly from other objects.
+More flexible and dynamic.
+Prototype chain can be modified at runtime.
+JavaScript is a notable language using prototype-based inheritance.
+
+Class Inheritance: Class-based inheritance is a mechanism where classes (blueprints for objects) inherit from other classes. This is more explicit and structured compared to prototype inheritance.
+
+Classes inherit from other classes explicitly.
+More structured and rigid.
+Class hierarchy is determined at compile time.
+Languages like Java, C++, and Python support class-based inheritance.
+
+Language: The choice between prototype inheritance and class inheritance may be influenced by the programming language you are using. Some languages have a strong bias toward one approach.
+
+Ease of Understanding: Prototype inheritance can sometimes be less intuitive for developers who are more familiar with class-based inheritance, as it requires a different mental model.
+
+#endregion prototypal inheritance vs class based inheritance
+
+Polymorphism:
+ polymorphism refers to the ability of different objects to respond to the same message or method call in different ways. This allows objects of different types to be treated as objects of a common superclass, resulting in more flexible and generic code.
+
+It's the ability of one method to return different values according to certain conditions.
+Polymorphism is a fundamental concept in object-oriented programming (OOP) that allows objects of different classes to be treated as objects of a common superclass. It enables you to write code that can work with objects of various types in a unified and consistent way, without having to know the specific details of each individual class.
+
+Polymorphism allows you to write more generic and reusable code, as you can create functions or methods that operate on objects of a common superclass without needing to know the specific subclasses at compile-time. This makes your code more adaptable to changes and extensions in the future.
+
+Example:
+// Base class
+class Animal {
+  constructor(name) {     this.name = name;   }
+  // Method to make the animal sound
+  makeSound() {     console.log("Some generic sound");   }
+}
+
+// Subclass Dog
+class Dog extends Animal {
+  constructor(name) {     super(name);   } 
+  // Override makeSound method
+  makeSound() {     console.log("Woof!");   }
+}
+
+// Subclass Cat
+class Cat extends Animal {
+  constructor(name) {   super(name);   }
+
+  // Override makeSound method
+  makeSound() {     console.log("Meow!");   }
+}
+
+// Function that accepts an Animal object and calls its makeSound method
+function soundMaker(animal) {   animal.makeSound();}
+
+// Creating instances of Dog and Cat
+const dog = new Dog("Buddy");
+const cat = new Cat("Whiskers");
+
+// Calling soundMaker with different animal objects
+soundMaker(dog); // Output: Woof!
+soundMaker(cat); // Output: Meow!
+
+
+We can call Parent method , if in child the method is not overridden. If Overridden Child method will be called.
+
+Object Composition
+===================
+ by using composition we can assign properties and methods to objects in a more flexible way than inheritance allows, so objects only get what they need and nothing else.
+ 
+const bug1 = new Bug("Buggy", "Your debugger doesn't work with me!", 25, 100)
+const addFlyingAbility = obj => {
+    obj.fly = () => console.log(`Now ${obj.name} can fly!`)
+}
+
+addFlyingAbility(bug1)
+bug1.fly() // output: "Now Buggy can fly!"
+
+#region Inheritance Vs Composition.
+https://www.youtube.com/watch?v=wfMtDGfHWpA&t=3s
+https://www.tutorialspoint.com/composition-vs-inheritance-in-react-js
+
+Inheritance:
+===========
+Definition: Inheritance is a mechanism by which a new class (derived or child class) is created from an existing class (base or parent class), inheriting its properties and behaviors.
+Advantages:
+Code Reusability: Inheritance promotes code reuse by allowing derived classes to inherit common attributes and methods from a base class.
+Hierarchical Structure: It facilitates the creation of a hierarchical structure of classes, where classes can be organized based on their similarities.
+Disadvantages:
+Tight Coupling: Inheritance can lead to tight coupling between classes, making the code more brittle and harder to maintain.
+Inflexibility: Subclasses are tightly bound to the implementation details of their parent class, making it harder to change the base class without affecting its subclasses.
+
+Composition:
+===========
+Definition: Composition is a design technique where a class is composed of one or more objects of other classes as members. Rather than inheriting their behaviors, the class delegates certain responsibilities to its composed objects.
+Advantages:
+Flexibility: Composition promotes loose coupling between classes, allowing for greater flexibility in modifying and extending the behavior of objects.
+Encapsulation: It encourages encapsulation by hiding the implementation details of composed objects within the class, exposing only necessary interfaces.
+Disadvantages:
+Increased Complexity: Composition can lead to increased complexity, especially in cases where there are many composed objects and intricate interactions between them.
+Boilerplate Code: Implementing composition may require writing more boilerplate code to delegate responsibilities to composed objects.
+
+When to use Inheritance:
+-----------------------
+Use inheritance when there is a clear "is-a" relationship between the base class and the derived class.
+Use it for implementing polymorphic behavior.
+
+When to use Composition:
+------------------------
+Use composition when there is a "has-a" relationship between classes.
+Use it to achieve greater flexibility and loose coupling between components.
+
+See online for examples
+
+#endregion Inheritance Vs Composition
+
+
+Multiple Inheritance in Javascript:
+https://www.youtube.com/watch?v=4Z7Ym-abjcA
+--> Multiple Inheritance is not possible
+--> Object has only one prototype, we cannot add props of two objects into a single object
+--> There are hacks, like mixin, which is a may properties are added to Object without inheritance.
+Obj.prototype= Object.assign(Person.prototype,...Other meths)
+
+SOLID,KISS,DRY,YAGNI, 
+KISS, DRY, YAGNI: https://henriquesd.medium.com/dry-kiss-yagni-principles-1ce09d9c601f
+
+
+SOLID: 
+------
+SRP: “There should never be more than one reason for a class to change.”
+Open/Close: “Software entities … should be open for extension, but closed for modification.”
+Disadvantages of OCP:
+--> It's costly to follow the OCP because it requires considerable time and effort to develop abstractions.
+--> Abstractions make software design more complex.
+
+--> OCP: The strategic application of the OCP increases code flexibility, reusability, and maintainability.
+
+LSP: This principle states that, if S is a subtype of T, then objects of type T should be replaced with the objects of type S. In simple words we can say that, when we have a base class and child class relationships i.e. inheritance relationships,   then, if we can successfully replace the object/instance of a parent class with an object/instance of the child class,    without affecting the behavior of the base class instance, then it is said to be in Liskov Substitution Principle.
+Interface Segregation Principle : The Interface Segregation Principle states that “Clients should not be forced   to implement any methods they don’t use. Rather than one fat interface,  numerous little interfaces are preferred based on groups of methods with each interface serving one submodule“
+DIP: The Dependency Inversion Principle (DIP) states that high-level modules/classes should not depend on low-level modules/classes. Both should depend upon abstractions. Secondly,abstractions should not depend upon details. Details should depend upon abstractions.
+
+We should follow SOLID to have :
+-------------------------------
+1) Code reusability.
+2) Easy to make a code change in the feature.
+3) Keeps the code easy to maintain.
+4) Easy to write a test for the code.
+
+Dependency Injection:
+--------------------
+
+Examples of Solid can be followed here : https://elearn.epam.com/courses/course-v1:EPAM+ECDJ+1121A/courseware/e7765dbdccf54a9abd7c8d9e9745df1e/8d9f66e720f542658046441cb574b4c0/1?activate_block_id=block-v1%3AEPAM%2BECDJ%2B1121A%2Btype%40vertical%2Bblock%4065f075f79f784305b2f09ec47fbeb1ae
+
+**** How is SOLID in React?
+**** https://medium.com/javascript-in-plain-english/solid-principle-in-react-11272c41b529
+How is Dependency Injection achieved in React?
+https://medium.com/rezdy-engineering/dependency-injection-in-react-4c3fb11090d6
+Using Props
+Using Context API
+Both of them are used to outsource the complex work.
+
+React Composition Vs Inheritance?
+https://reactjs.org/docs/composition-vs-inheritance.html
+
+***https://www.codeguru.com/csharp/dependency-injection-vs-inversion-control/
+https://www.youtube.com/watch?v=9oHY5TllWaU&t=28s(video)
+https://www.freecodecamp.org/news/a-quick-intro-to-dependency-injection-what-it-is-and-when-to-use-it-7578c84fa88f/
+Store-->PaymentProcessor <-- Paypal or Stripe PaymentAPI
+[indirectly Adapter/Facade Pattern]
+
+Inheritance introduces dependency(tight-coupling) because child class can use base class methods. Hence composition is better than inheritance
+
+IOC Vs Dependency Injection Vs Depnedency Inversion Principle(SOLID):
+-------------------------------------------------------------------
+***https://medium.com/ssense-tech/dependency-injection-vs-dependency-inversion-vs-inversion-of-control-lets-set-the-record-straight-5dc818dc32d1
+https://www.codeguru.com/csharp/dependency-injection-vs-inversion-control/
+
+IOC: 
+---
+Assume Class A depends Class B, i.e 
+Class A{
+ctor(){
+this.b = new B() //* Tight Coupling
+}
+}
+
+NOTE: *Assume the instantiation of class B is provided to class A from an external source some sort of container , that container and this process together is called as IoC.
+
+Why is it called Inversion?
+============================
+Ans: Lets take an example A-->B-->C A depends on B, B depends on C.. 
+In general we create an Object of A, its responsible to create Object B(ctor, tigh coupled), Inside B you have code for C.
+Imagine, the instantion of dependencies is offloaded to some other container , and lets call it IoC container, this process is called Inversion of Control.. isolating the Dependency
+Inside ioc container, first Object for C is created, then Object for B is created and that is passed to Object A during RUNTIME.. hence the inversion. Now the objects for B and C are created, how do we pass them to A, at this point Dependency Injection Kicks in ctor/setter/method inject.
+creation and binding of dependent objects with Client(ins this case class A) is called as DI.
+This inversion of control is sometimes named the Hollywood principle, “Do not call us, we call You”.
+
+DI:
+--
+Now the dependencies provided by IoC is injected into Class A by ctor-Injection, setter-Injection, method-injection.
+This is called as Dependency Injection.
+
+DIP: Depnedency Inversion Principle(SOLID)
+------------------------------------------
+DIP is the that is used in Solid Principles 
+1) "High-level modules should not depend on low-level modules. Both should depend on abstractions.
+    Abstractions should not depend on details. Details should depend on abstractions."
+2) Consider Order Service--> Order Repo--> SQLConnection
+These three are tightly coupled
+class OrderService{
+	ctor(orderRepo){
+	this.orderRepo = new OrderRepo() // de
+	}
+}
+What happens if tomorrow Order Repo is making/changing underlying DB from SQL to MySQL
+There is a ripple effect OrderService is effected, OrderRepo....
+
+Instead 
+class OrderService{
+ctor(IOrderRepo repo){
+}
+}
+
+In this case, Orderservice is dependent on abstraction rather than on concrete implementations.
+
+NOTE: Every DI is an IoC, but viceversa is not true.
+NOTE: Inversion of Control is a design concept that enables the creation of dependent objects to be inverted. On the flipside, Dependency Injection, a software architectural pattern, is an implementation of the Inversion of control principle.
+
+Service Locator Pattern Vs DI 
+-----------------------------
+Inside Service Locator, all the services are registerd/instantiated , the service locator class itself is instantiaed in Client Class , lets say Class A{
+this.locator = new ServiceLocator()
+}
+If you see , the class A is drifinting to be dependent on service loactor again..
+This this doesn't happen in DI, because IoC container takes care of it.
+
+
+#endregion OOPS

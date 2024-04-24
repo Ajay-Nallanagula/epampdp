@@ -13,14 +13,246 @@ What is Hot Module replacement
 What is Module Federation
 How do you implement SCSS/SASS/LESS
 
+
+#region Module System 
+
+Story of Module System
+https://www.taniarascia.com/javascript-modules-import-export/#:~:text=Modules%20are%20different%20from%20regular,the%20global%20(%20window%20)%20scope.
+
+What is Module System and why do we need it?
+A module system is a way to organize code in larger applications. The main idea is to separate your code into logical units or modules, each with its own responsibilities. This makes code easier to develop, test, and maintain.
+
+A runtime module system then provides a method to break up a piece of software into different pieces or modules. Each module can be written separately and may contain other modules or dependencies with other modules. These modules can then be imported whenever they are needed.
+
+This leads to better, structured and manageable code. Instead of having all the code in one file, the code is split across multiple files or modules.
+In JavaScript, before ES6, there wasn't an in-built module system. Developers relied on patterns or libraries like CommonJS (used primarily in Node.js), and AMD (RequireJS for asynchronous loading of modules).
+
+With ES6, JavaScript introduced its own built-in module system, known as ES Modules. They have become a standard for modularizing JavaScript code.
+
+Can we use export or import directly in browser?
+No, you cannot use import and export directly in the browser. These are modules used in Node.js, which is a runtime environment used outside the browser to execute JavaScript.
+
+Traditionally when using Javascript in <script/> these were added to global-scope or window object 
+
+However, modern browsers support ES6 modules which allow you to use import and export keywords in JavaScript to load and share code across different files. You can do this by specifying the script type as module in the script tag like this:
+
+<script type="module" src="your_file.js"></script>
+
+//Usage Inside *.html file we can Use
+<script>
+import {add, sub} from 'your-file'
+</script>
+//Output 
+We will see an Error w.r.t CORS Policy
+Access to script at 'file:///C:/Ajay_EPAM/PDP_PRACTICSE/epampdp/Experiment/modular.js' from origin 'null' has been blocked by CORS policy: 
+Because of the CORS policy, Modules must be used in a server environment, which you can set up locally with http-server or on the internet with a hosting provider.
+
+Modules are different from regular scripts in a few ways:
+========================================================
+Modules do not add anything to the global (window) scope.
+Modules always are in strict mode.
+Loading the same module twice in the same file will have no effect, as modules are only executed once/
+Modules require a server environment.
+
+Notice that individual functions are imported by naming them in curly braces.
+In order to ensure this code gets loaded as a module and not a regular script, add type="module" to the script tags in index.html. 
+
+But please do remember, not all browsers have full support for ES6 modules, so it's a good idea to use a tool like Babel in your build process to be able to write modern JavaScript that works across all browsers.
+
+What are the various Module systems related to Javascript?
+==========================================================
+While JavaScript originally had no concept of modules, over time various solutions have emerged. Here are the main ones:
+CommonJS (CJS): This is the module system used in Node.js. Modules are loaded synchronously, which works well for server-side development but can cause performance issues in the browser.
+
+Example:
+// math.js
+module.exports = {
+  add: function(a, b) {
+    return a + b;
+  },
+  subtract: function(a, b) {
+    return a - b;
+  }
+};
+
+// app.js
+var math = require('./math');
+console.log(math.add(3, 4));   // outputs: 7
+
+--> AMD (Asynchronous Module Definition): This is a module system designed for the browser that loads modules asynchronously. 
+--> RequireJS is a popular implementation of AMD. AngularJs uses AMD
+Example: This was followed in old AngularJs.
+// math.js
+define(function() {
+  return {
+    add: function(a, b) {
+      return a + b;
+    },
+    subtract: function(a, b) {
+      return a - b;
+    }
+  };
+});
+
+// app.js
+require(['./math'], function(math) {
+  console.log(math.add(3, 4));   // outputs: 7
+});
+
+UMD (Universal Module Definition): This module system is a way of making a module work with both CommonJS and AMD. It's a sort of combination of both, designed to work in all scenarios.
+Example:
+// math.js
+(function (root, factory) {
+  if (typeof define === "function" && define.amd) {
+    // AMD. Register as an anonymous module.
+    define(["exports"], factory);
+  } else if (typeof exports === "object") {
+    // CommonJS
+    factory(exports);
+  } else {
+    // Browser globals
+    factory((root.math = {}));
+  }
+}(this, function (exports) {
+  exports.add = function(a, b) {
+    return a + b;
+  };
+  exports.subtract = function(a, b) {
+    return a - b;
+  };
+}));
+
+ES Modules (ESM): This is JavaScript's built-in module system, introduced in ES6. It supports asynchronous loading, static analysis, and treeshaking (i.e., code elimination). It's the future of JavaScript modules and is natively supported in modern browsers.
+// math.js
+export function add(a, b) {
+  return a + b;
+}
+export function subtract(a, b) {
+  return a - b;
+}
+
+// app.js
+import { add, subtract } from './math';
+console.log(add(3, 4));   // outputs: 7
+
+
+SystemJS: This is a universal module loader that can import modules at runtime in any format (AMD, CommonJS, UMD, or ESM) in any environment (browser or Node.js).
+Example: 
+// math.js
+export function add(a, b) {
+  return a + b;
+}
+export function subtract(a, b) {
+  return a - b;
+}
+
+// app.js
+SystemJS.import('./math.js')
+  .then(math => {
+    console.log(math.add(3, 4));   // Outputs: 7
+});
+  
+//Optional
+Browserify and Webpack: These are module bundlers that take modules with dependencies and emit static assets representing the modules and dependencies. They originally supported CommonJS-style modules but have added support for ES Modules.
+Example:
+// math.js
+module.exports = {
+  add: function(a, b) {
+    return a + b;
+  },
+  subtract: function(a, b) {
+    return a - b;
+  }
+};
+
+// app.js
+var math = require('./math');
+console.log(math.add(3, 4));   // Outputs: 7
+
+While there are many module systems, the trend is moving toward ES Modules, as they are part of the JavaScript standard and natively supported by modern browsers. However, tools like Webpack and SystemJS are still necessary for handling module loading in older browsers.
+
+
+Which Module system does Webpack support by default? How can we change the default module system in webpack?
+CommonJS module system by default.
+Webpack also supports ES Modules (ECMAScript Modules)
+
+If you want to change the default module system, you need to change your webpack configuration.
+
+Here's an example:
+javascript
+module.exports = {
+  //...
+  module: {
+    rules: [
+      {
+        test: /\.m?js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [['@babel/preset-env', { modules: false }]] //This will enable ES6 modules system
+          }
+        }
+      }
+    ]
+  }
+};
+In the configuration above, we are disabling the default module transformation done by babel by setting modules: false under the @babel/preset-env presets options. By doing so, we will enable the support for native ES Modules.
+
+But remember that, unfortunately, the current state of module support in the JavaScript ecosystem is such that you’re often better off using bundler-specific module syntax, at least until ES Modules see wider adoption.
+
+#endregion Module System
+
 What is Webpack?
 =================
---> Webpack is a powerful module bundler for JavaScript applications.
+--> Webpack is a powerful module bundler for Javascript applications.
 --> It takes modules with dependencies and generates static assets that can be served to a browser. 
 --> It simplifies the process of managing and bundling various assets like JavaScript, CSS, and images, enabling efficient resource utilization and enhancing application performance.
 
 What is the main difference between webpack and other build tools like gulp or grunt?
 Webpack is a module bundler, though it is quite often used instead of Gulp or Grunt task runners. This advanced tool provides developers with control of spliting the modules, allowing them to adjust builds to particular situations and workaround solutions that don’t function properly out of the box.
+
+#region Webpack Vs Grunt Vs Gulp
+Webpack: It is not just a task runner but a module bundler that creates a graph of all your application's dependencies and packages them up into one or more manageable bundles. It can accommodate a large variety of libraries and is very flexible. Webpack is mostly used in complex large-scale projects due to its dynamic loading feature and compatibility for various file types.
+
+Gulp: It uses a code-based approach and you have to write tasks in JavaScript. This means that you have a lot of flexibility and can really configure your tasks to do exactly what you need. Gulp is faster than Grunt because it uses nodes stream feature which allows files to be processed and moved around while still in memory (never being written to the disk).
+
+Grunt: It focuses on configuration rather than code, meaning it can be easier to use for developers less familiar with JavaScript. Grunt plugins are published to npm and tend to do less, making them easier to work with. Grunt's ecosystem is huge and it's been around longer than Gulp and Webpack, so many prefer it for its stability.
+
+In conclusion, each of these task runners has their own strengths. Your choice between Webpack, Gulp, and Grunt would depend on your project needs. If your project is larger, more complex and requires more features, Webpack may be a good choice. If your project requires speed and flexibility, Gulp is a better option. For simpler projects or if you're less familiar with JavaScript, Grunt may be more suitable.
+
+	Webpack	Gulp	Grunt
+Purpose	Module bundler	Stream-based build pipeline system	Task runner
+Approach	Configuration file	Code-based tasks	Configuration file
+Performance	Quite efficient	Very fast due to node stream feature	Medium - slower compared to Gulp & Webpack
+File watching	Built-in	Through plugins	Through plugins
+Live reloading/Hot Module replacement	Yes	Yes, through BrowserSync	Yes, through plugins
+Popularity	Very high (especially in modern, larger apps)	High	Slightly reduced popularity, but very stable
+Learning Curve	Steeper due to rich feature set	Moderate	Lower due to simpler configuration
+Flexibility and control	High	High	Medium
+Best For	Large and complex projects	Flexible and fast building projects	Simple, less complex projects
+
+#endregion Webpack Vs Grunt Vs Gulp
+
+Why do we use babel in webpack? What are various babel plugins?
+================================================================
+Browser Compatibility: Not all browsers support the latest JavaScript ES6/ES7/ES8 features. With Babel, you can write the latest JavaScript code without worrying about compatibility as it will "transpile" your advanced JavaScript code back down to ES5 code, which is more widely supported by most browsers.
+JSX Transformation: If you're working with React, the JSX syntax used in React is not understood by the browser. Babel helps to compile this JSX syntax to plain JavaScript.
+Use Next-Level JS Syntax: Babel gives you the ability to use future JavaScript syntax, like ES7, ES8 and so on which may not be currently supported by all browsers.
+Typescript and Flow: Babel can also be used to transpile TypeScript and Flow syntax to regular JavaScript, which all browsers can understand.
+
+Various babel plugins we use are:
+@babel/preset-env: This is the most common Babel preset and is often the only one you need. It automatically determines the Babel plugins you need to use based on your supported environments.
+@babel/preset-react: If you're working with React, this preset allows you to use JSX in your JavaScript code.
+@babel/preset-typescript: If you're working with TypeScript, this preset allows you to use TypeScript in your JavaScript code.
+@babel/plugin-transform-runtime: This helps prevent duplication in your compiled output.
+@babel/plugin-proposal-class-properties: This plugin transforms static class properties as well as properties declared with the property initializer syntax.
+@babel/plugin-proposal-decorators: This adds the syntax for decorators to JavaScript classes.
+@babel/plugin-transform-arrow-functions: This plugin specifically transforms ES2015 arrow functions to ES5.
+@babel/plugin-proposal-object-rest-spread: This allows Babel to transform rest properties for object destructuring assignment and spread properties for object literals.
+@babel/plugin-transform-async-to-generator: This plugin transforms async functions to Generator functions.
+
+These are only a small fraction of the available Babel plugins. The exact plugins you need will depend on the specific requirements of your project.
 
 What are Key Features of Webpack?
 ==================================
@@ -31,6 +263,106 @@ Webpack allows you to bundle all the dependencies, including JavaScript, CSS, an
 Code splitting: 
 ===============
 Code splitting is a technique used in Webpack to split the code into smaller chunks that can be loaded on-demand. It helps reduce the initial loading time of an application by loading only the essential code required for the initial view and loading additional code as needed. Webpack achieves code splitting through dynamic imports or by configuring entry points for specific chunks.
+https://webpack.js.org/guides/code-splitting/
+Three approaches for Code Splitting:
+Entry Points: Manually split code using entry configuration.
+				Key words : multiple entries entry{}, loadash included in both bundles,Hence  
+Prevent Duplication: Use Entry dependencies or SplitChunksPlugin to dedupe and split chunks.
+--> Key words: separate loadash using "shared-dependOn" entries and optimization:{runTime:single} manually 
+--> usage of splits-chunk-plugin: This will bundle all the common dependencies like loadash, ramadjs and cache them as part of optimization technique 
+--> mini-css-extract-plugin: Useful for splitting CSS out from the main application.
+Dynamic Imports: Split code via inline function calls within modules.
+Key words: using dynamic import(), prefetch/preload 
+
+#region Example separate css , js bundles
+
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+module.exports = {
+    entry: './src/index.js',
+    module: {
+        rules: [
+            {
+                test: /\.css$/,
+                use: [
+                    MiniCssExtractPlugin.loader, // Extract CSS to separate files
+                    'css-loader',  // Translates CSS into CommonJS
+                ],
+            },
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: "babel-loader"
+                }
+            }
+        ],
+    },
+    plugins: [
+        new CleanWebpackPlugin(),  // Clean up the dist folder
+        new HtmlWebpackPlugin({
+            template: "./src/index.html",
+        }),  // Generates new HTML file or use template with appropriate script tags for js files
+        new MiniCssExtractPlugin(),  // Exports CSS into its own file
+    ],
+    output: {
+        filename: '[name].bundle.js',
+        path: path.resolve(__dirname, 'dist'),
+    },
+};
+
+#endregion Example separate css , js bundles
+
+#region Separate Common libraries
+Webpack 4.0+ provides a built-in optimization feature for this exact scenario. If you want to separate common libraries like lodash, moment etc. into a separate bundle, you can use optimization.splitChunks settings within Webpack configuration:
+
+// webpack.config.js
+
+module.exports = {
+  //...
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all',
+        },
+      },
+    },
+  },
+  // ...
+};
+What it does is to create separate chunks for anything within node_modules directory and all chunks are combined into one 'vendors' bundle.
+
+You have the option to be more specific about which libraries to separate. For instance, for lodash and moment, you can do the following:
+
+module.exports = {
+  //...
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        lodash: {  
+          test: /[\\/]node_modules[\\/]lodash[\\/]/,
+          name: 'lodash',
+          chunks: 'all',
+        },
+        moment: {  
+          test: /[\\/]node_modules[\\/]moment[\\/]/,
+          name: 'moment',
+          chunks: 'all',
+        },
+      },
+    },
+  },
+};
+
+<script src="lodash.bundle.js"></script>
+<script src="moment.bundle.js"></script>
+
+#endregion Separate Common libraries
 
 Loaders:
 ========
@@ -40,23 +372,62 @@ Examples:
 Transpiling: 
 ------------
 babel-loader: Loads ES2015+ code and transpiles to ES5 using Babel
+Eg:
+module: {
+    rules: [
+      {
+        test: /\.m?js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-react', '@babel/preset-env'],
+            plugins: ['@babel/plugin-transform-runtime'], //This helps prevent duplication in your compiled output.
+          },
+        },
+      },
+    ],
+  },
+};
 ts-loader Loads TypeScript 2.0+ like JavaScript
 Styling:
 css-loader Loads CSS file with resolved imports and returns CSS code
 less-loader Loads and compiles a LESS file
 sass-loader Loads and compiles a SASS/SCSS file
+ImageMinimizerWebpackPlugin : minimizes the size of the images 
+
+Example: 
+
+module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          { loader: 'style-loader' },
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+            },
+          },
+          { loader: 'sass-loader' },
+        ],
+      },
+    ],
+  },
+};
 
 Plugins: 
 =========
 Plugins enhance the functionality of Webpack by providing additional optimization, code generation, and asset management capabilities.
-HtmlWebpackPlugin
+HtmlWebpackPlugin{template: index.html}
 EslintPlugin : https://webpack.js.org/plugins/eslint-webpack-plugin/
 ModuleFederationPlugin: Microfrontends , introduced in Webpack5.
 UglifyJSPlugin: Minify the bundles,Js
 TerserPlugin: Minify the bundles,Js
 mini-css-extract-plugin: Extract css into separate files.
 
-CommonChunksPlugin:
+CommonChunksPlugin: (SplitsChunkPlugin is latest)
 Answer: The CommonsChunkPlugin is built-in feature that creates a separate file (known as a chunk), consisting of common modules shared between multiple entry points. By separating common modules from bundles, the resulting chunked file can be loaded once initially, and stored in cache for later use. This results in pagespeed optimizations as the browser can quickly serve the shared code from cache, rather than being forced to load a larger bundle whenever a new page is visited.
 
 Explain this code
@@ -68,13 +439,38 @@ Explain this code
 Answer: This code creates separate file: common.js which contains common modules from home and dashboard chunks.
 
 Question: How to remove unused selectors from css using webpack?
-Answer: Using purifycss-webpack plugin
+Answer: Using purgecss-webpack plugin
+plugins: [
+    new MiniCssExtractPlugin({
+      filename: "[name].css",
+    }),
+    new PurgeCSSPlugin({
+      paths: glob.sync(`${PATHS.src}/**/*`, { nodir: true }),
+    }),
+  ],
+  
+Plugin Vs Loader:
+================
+The difference between a plugin and a loader is that a loader can only transform a single file just before it’s added to the dependency graph. Plugins are much more flexible. Plugins can work with multiple files, do bundle optimizations, code splitting and many other things.
+
+#region Plugin Vs Loader
+
+| Webpack Plugin  | Webpack Loader  |
+|----------|------------|
+| A plugin serves a wide range of purposes and can be used for optimizing bundles, asset management, resolving dependencies, and more. | Loaders focus on transforming a single file at a time before they are added to the dependency graph. They are used to transform file formats so that they can be understood by Webpack.|
+| Plugins make use of hooks in 'Compiler' and 'Compilation' which makes them work on the compilation process itself. | Loaders work with different modules, loaded directly from configuration file. |
+| Plugins are more powerfull and flexible. They are used to perform tasks such as bundle optimization, uglification, minification, chunking, etc. | Loaders are less powerfull but are quite handy for performing transformations on the source code of modules. For example, transforming typescript to javascript, or, less/sass to css. |
+| In the webpack.config.js configuration file, plugins are loaded in separate array object under key 'plugins'. | Loaders are loaded under the key 'module' into the 'rule' sub-array of webpack.config.js configuration file. |
+| They can be a simple JavaScript class with an 'apply' method so that they can be registered with a hook using the 'tap' method. Sample implementations include 'MiniCssExtractPlugin', 'HtmlWebpackPlugin', 'DefinePlugin', etc. | They are configuration objects that specify how webpack should process files. Sample implementations include 'style-loader', 'babel-loader', 'url-loader', etc. |
+| Registration of plugins can be done by importing them into webpack.config.js file and then adding inside 'plugins' array. | Loaders can be registered by defining it within 'rules' array where we specify that it should be used. |
+
+#endregion Plugin Vs Loader
 
 How does webpack handle dependencies?
 =======================================
-Step 1: Build Dependency Graph 
+Step 1: Build Dependency Graph , starting from entry point given in webpack configuration
 Step 2: Tree-Shaking  [Webpack 4 uses ModuleConcatenation Plugin]
-Step 3: Seal the graph and create a bundle 
+Step 3: Seal the graph, then it applies plugins and create a bundle 
 Webpack uses a dependency graph to manage dependencies. It starts with an entry point and recursively follows the dependencies of the modules to build a complete graph. Each module is treated as a separate entity and can have its own dependencies. Webpack analyzes the graph and bundles all the dependencies into one or more output files.
 module.exports = {
   entry: './src/index.js', //dependency building starts from this entry point .
@@ -108,6 +504,17 @@ Webpack offers multiple ways to handle CSS, including:
 CSS loaders: You can use CSS loaders like style-loader and css-loader to import CSS files and apply styles to your application.
 CSS preprocessors: Webpack supports loaders for CSS preprocessors such as Sass, Less, and PostCSS, enabling you to write CSS with advanced features and compile them into regular CSS.
 Extracting CSS: Webpack allows you to extract CSS into separate files using plugins like mini-css-extract-plugin, which is useful for production builds.
+module: {
+	rules:[
+	{
+             test: /\.(css)$/,
+             use: [/*style-loader*/,MiniCssExtractPlugin.loader,'css-loader']
+    }
+	]
+	}
+	plugins: [new MiniCssExtractPlugin()],
+}
+
 
 
 What is the difference between loader and plugin?
@@ -120,11 +527,12 @@ Plugins on the other hand can deeply integrate into webpack because they can reg
 
 Name some plugins you think are very important and helpful?
 ===========================================================
-Answer: CommonsChunkPlugin, DefinePlugin, HtmlWebpackPlugin, ExtractTextWebpackPlugin, CompressionWebpackPlugin
+Answer: CommonsChunkPlugin Or SplitsChunkPlugin, DefinePlugin, HtmlWebpackPlugin, ExtractTextWebpackPlugin, CompressionWebpackPlugin, MiniCssExtractPlugin
 
 What is Hot-Modules-Replacement?
 ================================
-Answer: Hot-Modules-Replacement(HMR) is webpack feature which allows to update modules in application without page reload. HMR can be used as an advanced replacement for livereload.
+Answer: Hot-Modules-Replacement(HMR) is webpack feature which allows to update modules in application without page reload. 
+        HMR can be used as an advanced replacement for live-reload.
 
 How to enable source maps in webpack bundles?
 ==============================================
@@ -133,18 +541,79 @@ Answer: Using devtool: 'source-map' (there are various other configurations for 
 How to automatically build and update bundles in the browser after a change in source code?
 ============================================================================================
 Answer: Using watch: true and devServer: { hot: true } options together.
+npm install --save-dev webpack-dev-server
+module.exports = {
+    entry: './src/index.js',
+    // .
+    // . Rest of your Webpack configs
+    // .
+	watch: true,
+    devServer: {
+        contentBase: './dist',
+        open: true,
+        hot: true,
+    },
+    // .
+};
+
+const webpack = require('webpack');
+module.exports = {
+    // entry, output, etc.
+    plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+    ],
+    // .
+};
+
+You can enable watch mode using 
+watch: true,
+watch: webpack --watch // inpackage.json
 
 What is parallel-webpack and how does it affect webpack's build process?
 =========================================================================
 Answer: parallel-webpack useful for webpack configurations with multiple entry points. It allows to run multiple webpack builds in parallel, spreading the work across your processors and thus helping to significantly speed up build.
+Install: npm install parallel-webpack --save-dev
+//Below is the code with multiple entry points , These build process will run in parallel 
+var path = require('path');
+module.exports = [{
+    entry: './pageA.js',
+    output: {
+        path: path.resolve(__dirname, './dist'),
+        filename: 'pageA.bundle.js'
+    }
+}, {
+    entry: './pageB.js',
+    output: {
+        path: path.resolve(__dirname, './dist'),
+        filename: 'pageB.bundle.js'
+    }
+}];
 
 Question: Describe the webpack runtime and manifest?
+=====================================================
 Answer: https://webpack.js.org/concepts/manifest/
+Once your application hits the browser in the form of index.html file, some bundles and a variety of other assets required by your application must be loaded and linked somehow. That /src directory you meticulously laid out is now bundled, minified and maybe even split into smaller chunks for lazy-loading by webpack's optimization. So how does webpack manage the interaction between all of your required modules? This is where the manifest data comes in...
+
+The runtime, along with the manifest data, is all the code webpack needs to connect your modularized application while it's running in the browser. It contains the loading and resolving logic needed to connect your modules as they interact. This includes connecting modules that have already been loaded into the browser as well as logic to lazy-load the ones that haven't.
 
 Question: Is it possible to use other languages (except javascript) for the webpack config file?
 Answer: Yes, webpack accepts configuration files written in multiple programming and data languages, such as typescript, coffeescript, babel and jsx. The list of supported file extensions can be found here.
 
+Webpack does not create a physical manifest file by default. It maintains the manifest internally. When webpack compiles your application, it creates a compilation object that includes many details, such as module details, dependencies, and the chunk that they exist in. The manifest is part of this compilation data.
+
+There are scenarios when you may want to extract this manifest to a separate JSON file, such as long-term caching. For that, we use webpack-manifest-plugin.
+npm install webpack-manifest-plugin --save-dev
+
+const ManifestPlugin = require('webpack-manifest-plugin');
+module.exports = {
+  // ... other configurations ...
+  plugins: [    new ManifestPlugin()  ],
+};
+
+With this configuration, the manifest plugin will generate a manifest.json file in your output directory. This JSON file will map the names of all require/import statements in your JavaScript files to their respective output files.
+
 Question: Is it possible to have different configuration files for different environments?
+===========================================================================================
 Answer: Yes, read more https://aishwaryavaishno.wordpress.com/2017/04/17/webpack-configuration-for-multiple-environments/
 //How to give the config file to execute
 2.a) webpack –config=<filepath/filename>
@@ -160,6 +629,8 @@ Tree-shaking: before bundling, remove the un-used code and then bundle ... that 
 
 Question: Briefly describe long-term caching and how to achieve it using webpack?
 ===================================================================================
+https://codeburst.io/long-term-caching-of-static-assets-with-webpack-1ecb139adb95#.vtwnssps4
+
 Answer: Browsers should cache static assets to save traffic and users time. But after each change or bugfix, browser have to download newer version of files. The most easy way to achieve this is changing file name. It could be buildId or unique hash in the end of file's name like.
     app.js?build=1
     app.js?build=2
@@ -167,6 +638,7 @@ or
 
   app.js.2a6c1fee4b5b0d2c9285.js
   app.js.70b594fe8b07bcedaa98.js
+  
 To achieve this using webpack simple configuration should be done
   module.exports = {
     ...
@@ -175,6 +647,17 @@ To achieve this using webpack simple configuration should be done
     }
     ...
    }
+   
+    {cacheGroup}. name can be used to move modules into a chunk that is a parent of the source chunk. For example, use name: "entry-name" to move modules into the entry-name chunk. 
+   splitChunks: {
+       cacheGroups: {
+         vendor: {
+           test: /[\\/]node_modules[\\/]/, //All the nodemodules will be bundled to vendors.js
+           name: 'vendors',
+           chunks: 'all',
+         },
+       },
+     },
 
 How are vendors and main bundles separated?
 ===========================================
@@ -187,7 +670,7 @@ When we do the above configuration
 Sourcecode is your business logics
 dependencies here is :loadash,react, react-router-dom,ramada, helmet etc 
 sourcecode + dependencies = main.[hash_1].js is generated
-Now end this to browser caches this for long time after the first load.
+Now send this to browser caches this for long time after the first load.
 
 Next you have changed your your sourcecode, you have to build again ,
 sourcecode + dependencies = main.[hash_2].js is generated.
@@ -224,3 +707,224 @@ Answer: [hash] will generate unique hash for each build and use it for all chunk
 
 What are vendors in webpack?
 https://blog.jakoblind.no/code-split-vendors-with-webpack-for-faster-load-speed/
+
+What changes you make to webpack for Dev Vs Prod?
+=================================================
+Step 1: Start from how you organise the Code
+	webpack.common.js
+	webpack.dev.js
+	webpack.prod.js
+	
+Step 2 :  // Inside webpack.dev.js 
+//This is also similar to webpack.prod.js
+const commonConfig = require('./webpack.common');
+const merge = require(webpack-merge)
+const devConfig = {
+//all configurations that related to dev environment
+}
+//Finally 
+module.exports = merge(common, devConfig)
+NOTE: We can override the the changes that are in common w.r.t respective config files 
+
+Step3 :
+What should we most often Include in webpack.common.js?
+=======================================================
+--> babel loaders and its presets , babel-react, babel-preset etc 
+--> Typescript loaders to transpile ts to JS .
+--> style-loaders ,css-loaders .
+--> HtmlWebpackPlugin 
+plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+    }),
+  ],
+
+Setup the outputs directory:
+output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+  },
+
+
+What should we most often Include in webpack.dev.js?
+====================================================
+set the entry --> mode: development.
+Inline source maps add the mapping data directly to the generated files. 
+Separate source maps emit the mapping data to separate source map files and link the source to them using a comment.
+Source-Maps: https://survivejs.com/webpack/building/source-maps/#:~:text=Inline%20source%20maps%20add%20the,to%20them%20using%20a%20comment.
+
+
+What should we most often Include in webpack.prod.js?
+======================================================
+https://webpack.js.org/guides/production/
+1) Minification : TerserWebpackPlugin, ClosureWebpackPlugin 
+2) Enable Source-Maps:
+We encourage you to have source maps enabled in production, as they are useful for debugging as well as running benchmark tests.
+Avoid inline-*** and eval-*** use in production as they can increase bundle size and reduce the overall performance.
+  module.exports = merge(common, {
+    mode: 'production',
+   devtool: 'source-map',
+  });
+3) Minimize CSS:
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+4) 
+Long Term Caching: 
+new MiniCssExtractPlugin({
+      filename: "[name].[contenthash].css",
+      chunkFilename: "[id].[contenthash].css",
+    }),
+For long term caching use filename: "[contenthash].css". Optionally add [name]
+
+set the entry --> mode: prod
+--> MiniExtractCssPlugin instead of style-loaders, this plugin will create separate css files and source-maps 
+--> webpack 5 comes with TerserPlugin
+const TerserPlugin = require("terser-webpack-plugin");
+TerserPlugin --> This plugin uses terser to minify/minimize your JavaScript.
+***NOTE:  uglify-es is no longer maintained and uglify-js does not support ES6+.
+Other alternative to Terser is ClosureWebpackPlugin
+
+module.exports = {
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin()],
+  },
+};
+
+const MiniCssExtractPlugin
+const CssMinimizerPlugin 
+
+by default, this plugin will remove all files inside webpack's output.path directory, as well as all unused webpack assets after every successful rebuild.
+We can also enable CleanWebpackPlugin
+ plugins: [
+    new CleanWebpackPlugin(),
+  ],
+//In Webpack-5
+https://stackoverflow.com/questions/64617228/cleanwebpackplugin-does-not-clean-in-webpack-5
+ output: {
+    filename: 'utils.min.js',
+    clean: true,
+ } 
+ 
+//Inside Package.json
+ "scripts": {
+     "start": "webpack serve --open --config webpack.dev.js",
+     "build": "webpack --config webpack.prod.js"
+    },
+ 
+ 
+Webpack v4+ will minify your code by default in production mode. 
+
+Environment Variables in Webpack:
+=================================
+const path = require('path');
+
+module.exports = (env) => {
+  // Use env.<YOUR VARIABLE> here:
+  console.log('Goal: ', env.goal); // 'local'
+  console.log('Production: ', env.production); // true
+
+  return {
+    entry: './src/index.js',
+    output: {
+      filename: 'bundle.js',
+      path: path.resolve(__dirname, 'dist'),
+    },
+  };
+};
+
+Content Security Policy
+=======================
+Here's an example of what a CSP header including a CDN white-listed URL might look like:
+Content-Security-Policy: default-src 'self'; script-src 'self'
+https://trusted.cdn.com; www.google.analystics etc 
+	
+Prefetch Preload :
+Step 1: Implement Code-Splitting at Route level using Lazy and suspense
+Step 2 : 
+//This below snippet reult in <link rel="prefetch" href="./about.bundle.js" />
+<link rel="preload" href="./search-flyout.bundle.js" />
+
+//This below snippet reult in <link rel="preload" href="./about.bundle.js" />
+const About = lazy(() => import(/* webpackPreload: true */ "./about"));
+
+Prefetch: when browser is idle, enough bandwidth then fetch
+Preload: after initialload immediately fetch these resource 
+https://javascriptpatterns.vercel.app/patterns/performance-patterns/browser-hints
+
+#region How do we serve Two different versions bundle i.e in ES5 and ES6 ? This is called as diffrential-serving
+https://johnstew.github.io/differential-serving/
+
+Differential serving means shipping down different bundles to different browsers based on their capabilities. Basically, the idea is to create separate bundles for modern browsers that support latest JavaScript features (ES6+) and legacy browsers (like IE11) which do not support those features. This benefits users because they download less code and gives developers full control over the transpilation process.
+
+//Install babel/preset-env - A smart preset that allows you to use the latest JavaScript.
+Step 1: npm install --save-dev @babel/preset-env
+
+Step 2:  Webpack.modern.js
+const path = require('path');
+
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    filename: 'bundle.modern.js',
+    path: path.resolve(__dirname, 'dist'),
+  },
+  module: {
+    rules: [
+      {
+        test: /\.m?js$/,
+        exclude: /(node_modules)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              ['@babel/preset-env', {
+                targets: "defaults"
+              }]
+            ]
+          }
+        }
+      }
+    ]
+  }
+};
+
+Step 3: Webpack.legacy.js
+const path = require('path');
+
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    filename: 'bundle.legacy.js',
+    path: path.resolve(__dirname, 'dist'),
+  },
+  module: {
+    rules: [
+      {
+        test: /\.m?js$/,
+        exclude: /(node_modules)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              ['@babel/preset-env', {
+                targets: "> 0.25%, not dead"
+              }]
+            ]
+          }
+        }
+      }
+    ]
+  }
+};
+
+Step 4: Then you can use the type attribute in the script tag to deliver the correct bundle:
+
+<script type="module" src="bundle.modern.js" ></script>
+<script nomodule src="bundle.legacy.js"></script>
+
+The nomodule attribute is a boolean attribute that prevents the script from being executed in modern browsers. And type="module" will only execute in modern browsers that support ES6 modules.
+
+Not all developers do this due to the added complexity, but differential serving can significantly improve load times for users on modern browsers. It's also a good complement to techniques like code splitting, where you break up your bundle into smaller chunks, improving initial page load times.
+
+#endregion 

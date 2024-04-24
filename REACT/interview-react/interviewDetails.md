@@ -49,4 +49,4 @@ function App() {
         <br />
         <span>
           Save this Salt, UPON sign up <br /> if you refresh it will generate a new SALT!!!
-        </span>
+    </span>

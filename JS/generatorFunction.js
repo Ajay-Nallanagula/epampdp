@@ -2,6 +2,7 @@
 /**
  Generator function is a function to generate many values over time by returning an object 
  which can be iterated over to pull values from the function one value at a time.
+ https://www.geeksforgeeks.org/javascript-function-generator/
  */
 
 function* infiniteNumbers() {

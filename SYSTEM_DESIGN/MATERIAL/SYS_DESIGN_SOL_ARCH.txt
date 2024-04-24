@@ -1,3 +1,5 @@
+System Design Roadmap: https://roadmap.sh/system-design
+
 <div>
 https://hackernoon.com/the-7-software-architecture-books-experienced-developers-need-to-read
 Mastering the System Design Interview by Frank Kane
@@ -14,9 +16,33 @@ https://github.com/mguludag/book-1/blob/master/%5BJAVASCRIPT%5D%5BAsync%20JavaSc
 <div>
 System Design:
 https://www.youtube.com/watch?v=sV_4pOGosnU&list=PL4CFloQ4GGWICE0Tz6iXKfN3XWkXRlboU
-
 <img src="C:\Ajay_EPAM\PDP_PRACTICSE\epampdp\SYSTEM_DESIGN\MATERIAL\Imppoints_Sys_Design.JPG" >
-
 <p>https://www.youtube.com/watch?v=44mOnnt5pic&list=PL4CFloQ4GGWICE0Tz6iXKfN3XWkXRlboU&index=3</p>
-
+<ul>
+<li> Collection of System Designs : https://www.youtube.com/watch?v=5vyKhm2NTfw&list=PLI9W87-Dqn7j_x6QtR6sUjycJR7nQLBqT <li>
+<li> See Videos in Channel: The Ultimate Guide to Load Balancers (System Design Fundamentals) </li>
+<ul>
 </div>
+
+<div>
+<h2>Microservices</h2>
+https://lumigo.io/microservices-monitoring/microservices-observability/#the_three_pillars_of_observability
+<div>
+
+<div>
+CI/CD using GitLab :  https://www.youtube.com/watch?v=iJ63nXg-LvQ
+CI/CD using Jenkins: 
+</div>
+
+9 Steps:
+1) General Requirements 
+2) Specific/Functional Requirements
+3) Component architecture
+	High-Level Design
+	Dependency Graph
+4) Data Entites (use type obje = {}) Or Property Design
+5) API Design (api methods) or Event Api Design
+6) Store/State Design (Database)
+7) Optimization (Network, Render Performance Optimization)
+8) Accessibility (aria-live related labels) 
+9) Extensibility - OPTIONAL

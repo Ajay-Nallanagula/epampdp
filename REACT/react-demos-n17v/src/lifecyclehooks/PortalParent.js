@@ -1,6 +1,39 @@
 import React from 'react'
 import PortalRender from './PortalRender'
 
+
+/**
+ * //EASIER EXAMPLE 
+ import { useState } from "react";
+import { createPortal } from "react-dom";
+
+function Modal({ onClose }) {
+  return (
+    <div className="modal">
+      <p>This is a modal.</p>
+      <button onClick={onClose}>Close</button>
+    </div>
+  );
+}
+
+function App() {
+  const [showModal, setShowModal] = useState(false);
+  //Syntax:createPortal(content,element)
+
+  return (
+    <div>
+      <button onClick={() => setShowModal(true)}>Open modal.</button>
+      {showModal &&
+        createPortal(
+          <Modal onClose={() => setShowModal(false)} />,
+          document.body,
+        )}
+    </div>
+  );
+}
+
+export default App;
+ */
 class PortalParent extends React.Component{
     state={
         on:false
