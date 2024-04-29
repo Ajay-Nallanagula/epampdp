@@ -3,6 +3,19 @@ Udemy: https://www.udemy.com/course/microfrontend-course/learn/lecture/24615508#
 
 npm install webpack@5.68.0 webpack-cli@4.10.0 webpack-dev-server@4.7.4 faker@5.1.0 html-webpack-plugin@5.5.0
 
+What are various ways of achieving Microfrontends ?
+https://sharvishi9118.medium.com/cross-micro-frontend-communication-techniques-a10fedc11c59
+https://medium.com/appfoster/a-comprehensive-guide-to-micro-frontend-architecture-cc0e31e0c053
+
+Read this: https://stackoverflow.com/questions/62853824/how-to-share-redux-store-in-micro-frontend-architecture
+
+What are your project bundle-sizes:
+Main bundle 315kb gzipped with main functionality and dependencies, and then several 10-20kb chunks.
+https://blog.jakoblind.no/3-ways-to-reduce-webpack-bundle-size/
+
+In a Continuous Integration/Continuous Deployment (CI/CD) pipeline, test coverage is usually checked automatically after the code is pushed to the repository and before it is deployed to production.
+
+
 #region Pre-requisites for Microfrontends
 
 HTML, CSS, and JavaScript: As Microfrontends build on the core web development languages, having a solid understanding of HTML, CSS, and JavaScript is a fundamental prerequisite.
@@ -36,7 +49,7 @@ How do you call different endpoints in Microfrontends , Module federation
 Communication between various microfrontends ?
 
 What is Piral ?
-Priral is a library to build Microfrontends easily.
+Piral is a library to build Microfrontends easily.
 https://docs.piral.io/guidelines/tutorials/02-getting-started
 
 #endregion MISC/Questions
@@ -46,7 +59,6 @@ Project Info
 1) There are three diffent apps cart,product, container
 2) Each of them can be run in isolation // i.e can be run locally 
 3) Container can be run, and execute both cart and product
-
 
 #region Basics of Microfrontend
 

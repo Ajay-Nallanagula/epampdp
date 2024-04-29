@@ -1,3 +1,24 @@
+https://excalidraw.com/
+
+#region Greenfeild Vs Brownfeild
+Greenfield Project:
+
+A Greenfield project refers to a project that starts entirely from scratch; that is, where there are no existing systems, buildings or infrastructure to begin with.
+
+This type of project represents total innovation, wide open for all possibilities and innovation.
+
+These projects may have higher risks due to lack of previous groundwork, but also provide an opportunity for customization.
+
+Brownfield Project:
+
+Brownfield projects are those that modify or upgrade existing facilities, systems, or infrastructure. The basic infrastructure or necessities for the project already exist, the project is meant to expand or grow from the existing platform.
+
+This is usually done to expand service, improve existing facilities, or adapt something existing to a new purpose, such as upgrading an old factory or building a software upgrade that works with existing technology.
+
+There can be challenges with a brownfield project, including dealing with existing site conditions and complications from the prior use. However, these projects may have a lower risk factor due to an established base.
+
+#endregion Greenfeild Vs Brownfeild
+
 System Design Roadmap: https://roadmap.sh/system-design
 
 <div>
@@ -46,3 +67,15 @@ CI/CD using Jenkins:
 7) Optimization (Network, Render Performance Optimization)
 8) Accessibility (aria-live related labels) 
 9) Extensibility - OPTIONAL
+
+
+Things you should know bare minimum
+Load Balancing
+Cache 
+Protocols
+DB Normalization, Sharding, Purging, Read Replicas
+Proxy 
+Security 
+Queues , Message Queues Kafka, RabbitMq
+
+

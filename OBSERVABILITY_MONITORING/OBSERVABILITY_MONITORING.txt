@@ -151,6 +151,53 @@ Uncaught TypeError: Cannot read properties of null (reading 'property')
 
 #endregion Explaination on Trace
 
+#region Custom Logger Implementation
+const fs = require('fs');
+
+const levels = {
+  error: 0,
+  warn: 1,
+  info: 2,
+  verbose: 3,
+  debug: 4,
+  silly: 5
+}
+
+class CustomLogger {
+  constructor(filePath, level = 'info') {
+    this.filePath = filePath;
+    this.level = level;
+  }
+
+  log(level, message) {
+    if (levels[level] <= levels[this.level]) {
+      const timestamp = new Date().toISOString();
+      const logMessage = `${timestamp} - ${level.toUpperCase()}: ${message}\n`;
+
+      fs.appendFileSync(this.filePath, logMessage);
+    }
+  }
+
+  error(message) { this.log('error', message); }
+  warn(message) { this.log('warn', message); }
+  info(message) { this.log('info', message); }
+  verbose(message) { this.log('verbose', message); }
+  debug(message) { this.log('debug', message); }
+  silly(message) { this.log('silly', message); }
+}
+
+// Usage
+const logger = new CustomLogger('./log.txt', 'warn');
+logger.info('This will not log because level is set to warn');
+logger.warn('This will log');
+logger.error('This will log');
+
+
+With the above setup, the CustomLogger is initialized with a given file path and a level. The log(..) function then only logs the message if the level of the message is less than or equal to the current level of the logger object.
+The methods error(..), warn(..), info(..), verbose(..), debug(..), and silly(..) are just shortcut functions for calling log(level, message) with the corresponding leve
+#endregion Custom Logger Implementation 
+
+
 #endregion Different Levels of Logging
 
 #region Different approaches for Logging
@@ -254,14 +301,6 @@ Tracing, on the other hand, is more about following the execution path of a spec
 
 So, logging is like saying “These individual events happened within the system” while tracing is more about saying “Here's what happened to this specific request as it journeyed through the system.” Each provides critical, but different, aspects of observability into a system.
 
-
-
-
-
-Regenerate response
-
-
-
 #endregion Logging Vs Tracing
 
 
@@ -339,14 +378,3 @@ By using a centralized logging, monitoring and observability approach, you can e
 Whether you decide to go with a centralized or decentralized approach, it is vital to ensure uniformity in how things are logged and monitored across all microapps. This will facilitate easier analysis and problem detection. Examples of centralized monitoring tools include ELK (Elasticsearch, Logstash, Kibana) Stack, or others like New Relic, DataDog, etc.
 
 Just like with microservices, the independence of each microfrontend should be maintained - each can be developed, deployed, and scaled independently regardless of the centralized observability.
-
-
-
-
-
-Regenerate response
-
-
-
-
-

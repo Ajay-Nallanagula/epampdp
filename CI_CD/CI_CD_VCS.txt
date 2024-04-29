@@ -1,0 +1,987 @@
+CI & CD & VCS 
+Cloud Course You have done
+https://learn.epam.com/detailsPage?id=b5187e92-bb82-42be-a4fc-9e6836e593ad
+
+https://learn.epam.com/study/path?moduleId=4949373&rootId=4949368
+
+L&D Course Specific course for JS:
+https://learn.epam.com/study/detailsPath?id=57aedc8e-48f0-4603-9b8e-9d725ed2a390
+
+CI CD BEST PRACTICES: https://www.jetbrains.com/teamcity/ci-cd-guide/ci-cd-best-practices/
+
+https://semaphoreci.com/blog/common-cicd-interview-questions
+
+Ideal CI/CD Pipeline: https://www.youtube.com/watch?v=OPwU3UWCxhw
+
+***How does Git Work : https://www.youtube.com/watch?v=e9lnsKot_SQ
+
+#region GIT BASICS
+
+What is version control system?
+Version control is a set of practices and tools for managing codebases. 
+Developers use version control to keep track of every line of code, and share, review, and synchronize changes among a team.
+
+Fork Vs Clone:
+===============
+**https://youtu.be/YoGli76EPkU?feature=shared
+
+Short summary 
+--> Both git clone and fork create a copy of the main branch.
+--> Clone creates a copy on the local-system, or your laptop.
+--> Fork creates a copy on the remote i.e (on bit-bucket or github)
+
+CLONE: TEAMS REPOSITORY --> When a Git repository is cloned, the target repository remains shared amongst all of the developers who had previously contributed to it. Other developers who had previously contributed to that codebase will continue to push their changes and pull updates from the cloned repository. Any developer who clones a repository can synchronize their copy of the codebase with any updates made by fellow developers.
+
+FORK: ISOLATED INDIVIDUAL REPOSITORY --> Git fork operation will create a completely new copy of the target repository. The developer who performs the fork will have complete control over the newly copied codebase. Developers who contributed to the Git repository that was forked will have no knowledge of the newly forked repo. Previous contributors will have no means with which they can contribute to or synchronize with the Git fork unless the developer who performed the fork operation provides access to them.
+
+To merge the code changes made on for to the original repository, you need to raise PR .
+
+#region how to keep your forked branch uptodate with the master or main branch
+
+create a fork , and clone the branch
+
+Helpful link:
+ https://medium.com/@snsavithrik1/how-to-keep-a-downstream-git-repository-current-with-upstream-repository-changes-98fd6351d6ac
+
+1) remote origin //cmd: git remote show origin
+Fork branch : Clone the fork Branch, Fork Branch is created on the remote.
+  Fetch URL: https://wfrbitbucket.int.kronos.com/scm/~ajay.nallanagulla_ukg.com/zeyt.git
+  Push  URL: https://wfrbitbucket.int.kronos.com/scm/~ajay.nallanagulla_ukg.com/zeyt.git
+  HEAD branch: master
+  Remote branch:
+    master tracked
+  Local branch configured for 'git pull':
+    master merges with remote master
+  Local ref configured for 'git push':
+    master pushes to master (local out of date)
+
+// Add anoither repository to your remotes(), this branch is master-original from where we have forked its upstream
+2) git remote add upstream https://wfrbitbucket.int.kronos.com/scm/wfr/zeyt.git
+
+At this point, you have two remotes for your local Git repo:
+origin which points to your forked repository.
+upstream which points to the main repository.
+
+
+3) cmd: git remote -v  //You can check all the branches in git.
+origin  https://wfrbitbucket.int.kronos.com/scm/~ajay.nallanagulla/zeyt.git (fetch)
+origin  https://wfrbitbucket.int.kronos.com/scm/~ajay.nallanagulla/zeyt.git (push)
+upstream        https://wfrbitbucket.int.kronos.com/scm/wfr/zeyt.git (fetch)
+upstream        https://wfrbitbucket.int.kronos.com/scm/wfr/zeyt.git (push)
+
+4) git branch //To check the list of branch 
+   git branch --show-current // To check the current branch only.
+
+Make sure you are on the appropriate branch.
+
+ git checkout master // this is your forked branch
+
+ git fetch upstream //this is master original
+Merge upstream with the appropriate local branch
+
+ git merge upstream/master
+Get help on Resolve merge conflicts if these occur.
+
+If you also maintain a GitHub repository, push changes to GitHub’s (origin) master branch
+
+//Now all the changes from upstream are synced , we need to push our fork origin/master
+git push origin master
+
+Is there a automated way in Bitbucket to achieve this?
+No, we have to run scripts in Bit-Bucket server to achieve this . To automate the syncing process, you could create a script that periodically runs the git commands to pull the latest changes from the main branch and merges them into your fork.
+
+How to keep downstream updated with Upstream this is only applicable in BIt Bucket Server and not on Bit Bucket Cloud
+======================================================================================================================
+https://confluence.atlassian.com/bitbucketserver/keeping-forks-synchronized-776639961.html
+ In Bitbucket you an automated "keep fork sync" option .
+ 
+ Do we have an automated option in Github?
+ Yes we have .
+ Here are the steps to sync your forked repository with the main repository:
+
+Navigate to your forked repository on GitHub.
+Click on Fetch upstream located at the top of the list of files and directores.
+Click Fetch and merge.
+However, this feature only merges the changes from the upstream repository's default branch, typically main or master, into the main branch of your fork. If you are working on a different branch, you would still need to update that branch manually:
+
+#endregion how to keep your forked branch uptodate with the main branch
+
+#region Fetch Vs Pull
+=====================
+**https://www.youtube.com/watch?v=GOrhB6eYASU
+
+Actors here: Working Directory, Local-repo, remote-repo
+When you PULL  the changes from remote all the changes will be applied to your Local-repository and also to your working repository.
+When you FETCH the changes  from remote all the changes will be applied to your Local-Repository only. Then you need to MERGE the changes to your working directory.
+
+Working Directory: This is essentially your sandbox where you make changes to your files. It's the directory on your local machine where you're actively working on your project. The working directory contains the files of your project in their current state. When you modify files in your working directory, Git tracks these changes.
+
+Local Repository: This is where Git stores all the information about the history of changes to your project files on your local machine. It's typically stored in a hidden directory named .git within your project's root directory. The local repository holds all the commits, branches, tags, and other Git-related metadata. When you make changes in your working directory and then commit those changes, they are recorded in the local repository.
+
+Remote Repository: This is a repository hosted on a remote server, such as GitHub, GitLab, or Bitbucket. It's essentially a centralized location where you can share your code with others and collaborate on projects. Remote repositories serve as a common ground for team members to push their changes to and pull changes from. You can clone a remote repository to create a local copy on your machine, and you can also push changes from your local repository to the remote repository to share your work with others.
+
+git fetch command in Git is used to download commits, files, and references from a remote repository into your local repository.
+
+When you have a 'master' branch in both your origin (your forked repository) and upstream (the original repository you forked from), running git fetch performs different actions based on which remote you are fetching.
+
+If you run the git fetch origin command:
+
+Git fetches updates from your forked repository (origin). This update includes all the branches in your forked repository, but won’t modify your local working directory.
+If you run the git fetch upstream command:
+
+Git fetches updates from the main repository (upstream). It gets updates of all the branches in the main repository and stores the commit for the upstream's master branch into a local branch called upstream/master or upstream/main. But it won't affect your current local working directory.
+To update your local 'master' branch with the latest changes from the main repository's 'master' branch, you would need to merge the changes into your local 'master' branch with a command like git merge upstream/master.
+
+Keep in mind that any changes that have been fetched are not in your local branches yet. You will still need to merge these changes into your local branches to apply the changes, or checkout (switch to) the branches you've fetched.
+
+
+
+
+if its cloned and not forked ?
+
+
+When you clone a repository, you're making a copy of the complete history of the git repository. This includes all branches, commits, and tags. You're not linking it to the original repository in any way - it's simply a standalone copy.
+
+In this scenario, if you have cloned a repository, running git fetch origin will fetch any updates from the remote repository that was cloned.
+
+Suppose there's 'master' (or 'main') branch in the cloned repository and in the original repository, When you run git fetch origin, Git fetches updates from the original repository, including updates to the 'master' or 'main' branch.
+
+After you've run git fetch origin, to update your cloned local 'master' branch, you'd then need to use git merge origin/master (or git merge origin/main or git pull origin master if you want to fetch and merge in a single command).
+
+Just remember, 'origin' is just an alias for the URL of the remote repository. By default, 'origin' is the alias that Git gives to the remote repository from which you've cloned.
+
+#endregion Fetch Vs Pull
+
+ #region Merge Vs Rebase
+=========================
+https://www.youtube.com/watch?v=CRlGDDprdOQ
+
+Scenario : 
+MASTER --> Commit_M1, Commit_M2
+//At Commit_M2 you branched out to create feature branch 
+FEATURE--> Commit_M2, Commit_F1, Commit_F2
+//Now there happened some other commit in master
+MASTER --> Commit_M1, Commit_M2, Commit_M3
+
+Now how do we commit our FEATURE BRANCH CHANGES, to MASTER
+
+git merge feature 
+==================
+In this case , We will get a "merge commit message" , which means Commit_F1, Commit_F2 are combined, commit history of feature branch is merged into 
+"MERGE COMMIT MESSAGE" along with code changes of Commit_M3 of MASTER branch,Commit message will be = (Commit_M3+Merge Feature message)  Now the master "git log" will look as follows
+MASTER --> Commit_M1, Commit_M2,MERGE_FEATURE_MESSAGE  // MERGE_FEATURE_MESSAGE = Commit_M3+Merge Feature message
+
+But what we do to get MASTER --> Commit_M1, Commit_M2, Commit_M3, Merge_Feature_message?
+========================================================================================
+Retain all commits of master , and then add merge message.
+If we do "git merge --squash feature"
+Then the logs of master will look like MASTER --> Commit_M2, Commit_M3, Commit_M3, Merge_Feature_message
+
+REBASE:
+======
+
+How should i get the latest commit Commit_M3 of MASTER to FEATURE Branch ?
+--> CHECK OUT to FEATURE branch 
+--> git rebase master //run this command 
+--> FEATURE--> Commit_M2,Commit_M3, Commit_F1, Commit_F2
+
+What will REBASE DO?
+====================
+Rebase will check the master and feature branch , it will fetch all the commits, commits message which are latest and leave the common commits as is
+In the above case FEATURE--> Commit_M2,Commit_M3, Commit_F1, Commit_F2
+
+Now if we checkout to master and run "git rebase feature", all the commit history of the feature branch is also logged to master
+MASTER --> Commit_M1, Commit_M2, Commit_M3, Commit_F1,Commit_F2
+
+
+#region Rebase Vs Merge Theory
+
+Git rebase and git merge are two different ways of integrating changes from one branch into another. Both serve similar purposes, but they have distinct workflows and implications.
+
+Git Merge:
+Merge is a straightforward way to integrate changes from one branch into another.
+When you perform a merge, Git creates a new commit that combines the changes of the source branch into the target branch.
+Merge commits retain the commit history of both branches, which can sometimes lead to a more cluttered history, especially in cases where multiple merges are done.
+Merging is non-destructive and preserves the history of all branches involved.
+It is a good option for merging feature branches back into the main branch, or when you want to maintain a clear separation of changes between branches.
+
+When to use Git Merge:
+When you want to preserve the original commit history of both branches.
+When merging long-running feature branches or complex changes.
+When you want to maintain a clear separation of changes between branches.
+
+Git Rebase:
+===========
+Rebase re-writes the commit history of the source branch on top of the target branch.
+It takes the changes made in the source branch, finds a common ancestor with the target branch, and replays the changes on top of the target branch's latest commit.
+The result is a linear history with a cleaner commit timeline, as if all the changes were made sequentially in one branch.
+Rebase can make the commit history more readable and easier to follow, but it discards the original branch's commit history.
+It is suitable for small, local branches or when you want to update your feature branch with the latest changes from the main branch before merging.
+
+When to use Git Rebase:
+When you want a cleaner, linear commit history.
+When you're working on a short-lived feature branch and want to update it with the latest changes from the main branch.
+
+#endregion Rebase Vs Merge Theory
+
+#endregion Merge Vs Rebase
+
+#endregion GitBasics
+
+#region CI_CD_NOTES
+
+CI_CD Tools: Jenkins, Gitlab , AWS CodePipelines,  CircleCI, Bamboo, Jenkins, AWS CodePipelines, BitBucket Pipelines, Azure Pipelines, GitLab
+
+Read the PDF document "CONTINIOUS INTEGRATION, DELIVERY AND DEPLOYMENT CONCEPTS OVERVIEW" in the same folder.
+
+CI stands for continuous integration, a fundamental DevOps best practice where developers frequently merge code changes into a central repository where automated builds and tests run.
+
+CD can either mean continuous delivery or continuous deployment
+
+Difference between C.Delivery Vs C.Deployment
+----------------------------------
+--> C.Delv  is involved with presence of manual approval to update the code changes in prod
+--> C.Dep the deployment is seamless, NO manual approval, to update the code changes in prod
+
+#region Environments Local Vs Testing Vs Staging Vs UAT Vs Prod 
+
+
+Testing, UAT (User Acceptance Testing), and Staging are different environments used in the software development lifecycle to ensure the quality and stability of software systems. The order of these environments can vary depending on the development process followed by an organization, but typically, the order is as follows:
+
+Development Environment: This is the initial environment where developers write and test code. It is typically set up on their local machines or dedicated development servers.
+
+Testing/QA Environment: Once the development phase is complete, the software is deployed to the testing environment. In this environment, dedicated testers run various tests to identify bugs, defects, or other issues. Testing can include unit testing, integration testing, system testing, and regression testing, among others. The primary goal is to catch any issues before the software is released to users.
+
+Staging Environment: After testing, the software is deployed to the staging environment. This environment closely mimics the production environment, including the same hardware, software configurations, and network setups. The staging environment allows for a final round of testing in an environment that closely resembles the production environment. It helps ensure that the software will work as expected in the live environment and allows for additional user acceptance testing.
+
+UAT (User Acceptance Testing) Environment: Once the software passes testing in the staging environment, it is deployed to the UAT environment. UAT is typically performed by end-users or stakeholders who simulate real-world usage scenarios and validate the software's functionality and usability. The primary goal of UAT is to gain confidence in the software's readiness for production release and ensure it meets the users' requirements and expectations.
+
+Production Environment: After successful UAT, the software is finally deployed to the production environment. This is the live environment where end-users access and utilize the software. The production environment requires strict monitoring and maintenance to ensure high availability, performance, and security.
+
+#endregion Local Vs Testing Vs Staging Vs UAT Vs Prod Environments
+
+CI/CD Pipeline :
+---------------
+A pipeline is a set of ordered automated processes that allow developers and DevOps
+professionals to reliably and efficiently
+Build Steps :
+Clone the code:
+Code Quality Step: Linting , Unit Testing, security checks 
+Compile Step: code compilation
+Build step 
+
+
+--> Pull/Clone the code 
+--> lint
+--> Unit Test 
+--> compile
+--> build
+--> test : Unit tests, functional tests , integration tests, e2e tests
+--> Quality Gates : Code quality, Security scans, performance 
+
+#region Typical Steps in Continous Integration 
+
+Pull/Clone the Code: In this step, code is pulled or cloned from a code repository on platforms like GitLab. Jenkins Git plugin allows Jenkins to fetch the latest code from the GitLab repository for the building process.
+
+Lint: Linting involves checking the source code for programmatic and stylistic errors. This is essential for maintaining the overall code quality and preventing certain classes of bugs. Tools like ESLint, JSHint or Pylint can be used. These can be integrated into Jenkins pipeline via plugins, to analyse the cloned code.
+
+Unit Test: Unit testing is a type of testing to check if the small pieces of code are behaving as they should. Tools like JUnit and PyTest can be used, and their results can be easily incorporated into Jenkins build using plugins.
+
+Compile: If the programming languages used are compiled languages (like Java, C++, etc.), this is the step where Jenkins compiles those codes into bytecode or machine code.
+
+Build: It involves converting source code files into standalone software artefact(s) that can be run on a computer, typically making the code into a runnable state. //dist folder is created , 
+
+Test: Various types of testing are performed as per requirement:
+
+Unit Tests: As explained above.
+Functional Tests: These are tests that evaluate the functionality of the system by feeding it input data and verifying the output.
+Integration Tests: These tests check whether different software modules interact well with each other.
+End-to-End Tests (E2E tests): These tests checks how the flow of the application works from start to end covering all significant interactions with the system.
+Quality Gates: Code Quality, Security Scans, and Performance
+
+Code Quality: Static code analysis tools like SonarQube can be used to check the quality of the code as per defined set of rules or coding standards.
+Security Scans: Jenkins can be integrated with tools like "OWASP Zap" to perform automated security scans.
+Performance: Performance tests, load testing, and stress testing can be carried out using tools like Apache JMeter or Gatling. These tests are performed to ensure the functionality and responsiveness of the application under different load conditions.
+
+All these steps are organised and automated into a pipeline using Jenkinsfile that defines each stage in Jenkins Pipeline plugin. The whole point is to catch the bugs, vulnerabilities, code smells as early as possible, so they can be rectified before they reach production.
+
+
+Optional Other Steps :
+======================
+Code Review: Before merging changes to the main branch, team members often review each other's code. This helps ensure code quality, share knowledge among the team, and catch potential issues early. GitLab, GitHub, and many other code hosting platforms have built-in code review tools.
+
+Performance Testing: Similar to load testing, this type of testing is designed to challenge the software's robustness under heavy loads and see how the system performs.
+
+Security Testing: This can involve penetration testing, where one deliberately attempts to exploit system vulnerabilities, as well as running automated tools to scan for common security vulnerabilities.
+
+Deployment: After testing, the application is deployed to a staging environment that mimics production. This is the final step before pushing changes to production.
+
+Manual/Acceptance Testing: Although we aim for full test automation, in some cases manual testing can be beneficial, particularly for features that are difficult to test automatically.
+
+Monitoring and Logging: After deployment, the application should be closely monitored. This can help in identifying any issues that come up unexpectedly after the new changes are published.
+
+Notification: Notify your team members about the build status and test results through email, slack or any other communication tools.
+
+Rollback: Have a plan for quickly rolling back the changes in case something goes wrong in the production environment.
+
+Documentation: Updated documents such as readMe files, wikis, or user manuals, after each increment in the product.
+
+#region Example of Jenkins , Config file is called as JenkinsFile
+here's an example Jenkinsfile for a JavaScript project that uses Node.js for runtime and npm for dependency management:
+The Jenkinsfile does not have a specific file extension, like .txt or .java. Its name is simply Jenkinsfile, and it is a text file that contains the definition of a Jenkins Pipeline. It's typically placed in the root directory of a project and checked into source control.
+
+pipeline {
+//On what should this be executed , agent:{label:master}, The agent section specifies where the entire Pipeline, or a specific stage, will execute in the Jenkins // environment depending on where the agent section is placed
+    agent any 
+
+    stages {
+        stage('Install') {
+            steps {
+                echo 'Installing dependencies...'
+                sh 'npm install'
+            }
+        }
+        stage('Lint') {
+            steps {
+                echo 'Linting the code...'
+                sh 'npm run lint'
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Building the project...'
+                sh 'npm run build'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Running unit tests...'
+                sh 'npm test'
+            }
+            post {
+                always {
+                    junit 'test-results.xml'  //Assuming your test script outputs an XML file in JUnit format
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying application...'
+                //Add your deployment steps here
+            }
+        }
+    }
+}
+
+#endregion Example of Jenkins , config File is called as JenkinsFile
+
+
+
+#endregion Typical Steps in Continous Integration 
+
+Here are the pros/ benefits of CI/CD Pipeline:
+---------------------------------------------
+Builds and testing can be easily performed manually.
+It can improve the consistency and quality of code.
+Improves flexibility and has the ability to ship new functionalities.
+CI/CD pipeline can streamline communication.
+It can automate the process of software delivery.
+Helps you to achieve faster customer feedback.
+CI/CD pipeline helps you to increase your product visibility.
+It enables you to remove manual errors.
+Reduces costs and labour.
+CI/CD pipelines can make the software development lifecycle faster.
+It has automated pipeline deployment.
+A CD pipeline gives a rapid feedback loop starting from developer to client.
+Improves communications between organization employees.
+It enables developers to know which changes in the build can turn to the brokerage and to avoid them in the future.
+The automated tests, along with few manual test runs, help to fix any issues that may arise.
+
+Key Performance Indicators:
+---------------------------
+Why Does the CI/CD Pipeline Matter for IT Leaders?
+Ci/CD Pipeline KPI ?
+https://www.guru99.com/ci-cd-pipeline.html
+
+
+Jenkins will have plugings to trigger build on Code Merge. 
+When you configure your pipeline you will have to choose how, Jenkins will be notified for requested merge, there are two ways
+Enable "Poll SCM" or "Webhook" trigger: There are two approaches you can use to trigger a build on a Git merge:
+
+a. Poll SCM: 
+--------------
+In the job configuration, under the "Build Triggers" section, select "Poll SCM" and specify a polling schedule. Jenkins will periodically check the specified branch for new changes, and if a merge occurs, it will trigger the build.
+
+b. Webhook:
+------------
+ Alternatively, you can set up a webhook in your Git repository to notify Jenkins whenever a merge occurs. In the job configuration, under the "Build Triggers" section, select the option related to webhooks (e.g., "GitHub hook trigger for GITScm polling"). Jenkins will listen for webhook notifications and trigger the build when it receives a merge event.
+ 
+ What are webhooks in github?
+ https://docs.github.com/en/webhooks/about-webhooks
+ 
+Webhooks are used in a wide range of scenarios, including: (This is another example of Observable Pattern)
+===========================================================================================================
+Triggering CI (continuous integration) pipelines on an external CI server. For example, to trigger CI in Jenkins or CircleCI when code is pushed to a branch.
+Sending notifications about events on GitHub to collaboration platforms. For example, sending a notification to Discord or Slack when there's a review on a pull request.
+Updating an external issue tracker like Jira.
+
+Deploying to a production server.
+Logging events as they happen on GitHub, for audit purposes.
+
+Example of Webhooks : Push Event Webhook, Pull Event Web Hook Merge Webhook, Fork Event Webhook, Issue Comment Hook, Repository Hook
+  
+#endregion CI_CD_NOTES
+
+#region RELEASE AND VERSIONING AUTOMATION TOOLS
+
+NOTE: Check the pdf document in same folder 
+
+Release is delivering ready product to the final user.
+
+Release version updation depend on the product and who is using that product
+
+If Product is given to other developers : like npm libraries, packages semver is important
+If Product is for end users : semver imp is medium , like mobile games .
+
+SEMVER: Semantic Versioning 2.0.0
+Summary
+Given a version number MAJOR.MINOR.PATCH, increment the:
+MAJOR version when you make incompatible API changes from Angular 2, Angular 4.....
+MINOR version when you add functionality in a backward compatible manner React-router-dom 5.2,5.3
+PATCH version when you make backward compatible bug fixes . Windows Patches 
+Additional labels for pre-release and build metadata are available as extensions to the MAJOR.MINOR.PATCH format.
+
+What is Backward Compatibility?
+When we talk about backward compatibility in the context of NPM (Node Package Manager), it refers to the ability of a newer version of a package or library to work seamlessly with applications or projects that were developed using an older version of that package.
+
+Backward compatibility ensures that applications or projects that depend on a specific version of a package can still function correctly when the package is updated to a newer version. It means that the newer version of the package does not introduce any breaking changes or modifications that would cause the existing applications or projects to fail.
+
+In the context of NPM, packages often follow semantic versioning (SemVer), which consists of a version number in the format MAJOR.MINOR.PATCH. Backward compatibility is typically maintained when updating the MINOR or PATCH version of a package while keeping the MAJOR version intact.
+
+For example, if a package is currently at version 1.2.3, a backward-compatible update could be released as 1.2.4 or 1.3.0. In these cases, applications that rely on version 1.2.3 should continue to function correctly when using the updated package. However, if a breaking change is introduced and the MAJOR version is incremented (e.g., to 2.0.0), it signifies that backward compatibility is not guaranteed, and applications may require modifications or updates to work with the new version.
+
+Maintaining backward compatibility is important in software development to avoid disruptions and minimize the effort required to upgrade dependencies while ensuring that existing projects continue to function as expected.
+
+AUTOMATION TOOLS FOR RELEASE
+==============================
+Preparation of release among other things usually requires following steps:
+- Bump version in package.json / other version tracking source
+- Update changelog with release notes
+- Commit changelog and package*.json files changes to git
+- Create git tag
+
+If you choose semver as a versioning convention, there is an eco-system build around it already:
+- Conventional commit – convention for commits format (e.g. “feat: [User Profile] Add
+ability to store password”)
+- Standard version – library for release automation
+- Semantic release – library for release automation, alternative to Standard version lib if
+you are aiming completely automating your release process as an output from CI/CD
+
+#endregion RELEASE AND VERSIONING AUTOMATION TOOLS
+
+#region CONTINUOUS INTEGRATION TOOLS FOR JS ENGINEERS
+
+Pls check the PDF attached , in the folder
+
+Git hooks: these lie in the individual developer .git folder, cannot be shared
+Husky: will work with all the git hooks and also custom hooks , husky will trigger pre or post .. push,recieve and commit
+commitlint: check if the commit message is as per conventional commit "feat, fix and Break through changes , chore, test"
+commitzen: w.r.t commitlint, husky post-commit hook have to run to reject the commit , where as commitzen will identify the missing fragments in the commit message even before commiting 
+
+
+What is chore?
+==============
+Changes to build processess, auxillary tools and libraries such as documentation 
+
+Why Use Conventional Commits?
+==============================
+• Automatically generating CHANGELOGs.
+https://www.freecodecamp.org/news/a-beginners-guide-to-git-what-is-a-changelog-and-how-to-generate-it/#:~:text=All%20you%20need%20is%20to,all%20your%20commits%20is%20displayed.&text=This%20command%20can%20take%20a,one%20to%20generate%20our%20changelog.
+To generate change log, simple git command "git log" or use onlie tools like generate-changelog .
+• Automatically determining a semantic version bump (based on the types of commits
+landed).
+• Communicating the nature of changes to teammates, the public, and other stakeholders.
+• Triggering build and publish processes.
+• Making it easier for people to contribute to your projects, by allowing them to
+explore a more structured commit history.
+
+ESLINT and TSLINT
+==================
+When it comes to linting TypeScript code, there are two major linting options to choose
+from: TSLint and ESLint. TSLint is a linter that can only be used for TypeScript, while ESLint
+supports both JavaScript and TypeScript.
+In the TypeScript 2019 Roadmap, the TypeScript core team explains that ESLint has a more
+performant architecture than TSLint and that they will only be focusing on ESLint when
+providing editor linting integration for TypeScript. For that reason, I would recommend using
+ESLint for linting TypeScript projects.
+
+
+There are few Eslint and typescript lint bas configs available, that can give you a start point:
+There are many configuration packages in the ecosystem - these packages that exist solely
+to provide a comprehensive base config for you, with the intention that you add the config and
+it gives you an opinionated setup. A few popular all-in-one-configs are:
+• Airbnb's ESLint config - eslint-config-airbnb-typescript.
+• Standard - eslint-config-standard-with-typescript.
+
+Other ES-Lint plugins
+Jest testing: eslint-plugin-jest
+• ESLint comment restrictions: eslint-plugin-eslint-comments
+• Import/export conventions : eslint-plugin-import
+• React best practices: eslint-plugin-react and eslint-plugin-react-hooks
+• NodeJS best practices: eslint-plugin-nodeeslint for security
+
+Prettier is an opinionated code formatter. It enforces a consistent style by parsing your code
+and re-printing it with its own rules that take the maximum line length into account, wrapping
+code when necessary.
+If you use prettier, there is also a helpful config to help ensure ESLint doesn't report on
+formatting issues that prettier will fix: eslint-config-prettier
+
+
+#endregion CONTINUOUS INTEGRATION TOOLS FOR JS ENGINEERS
+
+#region GIT BRANCHING STRATEGY
+GIT branching, Release strategies
+Able to introduce branching, release strategy at the current project (blue/green, canary, etc.)
+Intermediate knowledge of several branching strategies and workflows:
+
+Centralized workflow
+Feature branch workflow
+Gitflow workflow
+Forking workflow
+Trunk-based workflow
+
+
+#region Branching Strategy:
+https://www.atlassian.com/agile/software-development/branching
+https://www.youtube.com/watch?v=U_IFGpJDbeU
+
+A branching strategy aims to:
+==============================
+1) Enhance productivity by ensuring proper coordination among developers
+2) Enable parallel development.
+3) Help organize a series of planned, structured releases
+4) Map a clear path when making changes to software through to production
+5) Maintain a bug-free code where developers can quickly fix issues and get these changes back to production without disrupting the development workflow
+
+Centralized Workflow , Feature Branch Workflow, Gitflow Workflow:
+=================================================================
+https://medium.com/jamalsoliva/git-workflows-centralized-featured-branch-and-git-flow-52ebb4efd3db
+
+#region Centralized Workflow
+Centralized Workflow : All Team members make changes locally and commit directly to remote/master branch
+=====================
+1) The default development branch is called master and all changes are committed into this branch, No other branch is required other than master
+2) The client starts by cloning the central repository and in their own local copies of the project, they edit files and commit changes , all these edits remain in their LOCAL only
+3) The developers will merge their changes with master at their convenient point in time
+
+PROBLEM WITH Centralized Workflow
+Another team member TM1 of yours have merged his changes to MASTER,
+Now Your team lead asked to merge your changes and deploy to prod , but TM1 changes should not got to PROD as of now. But your changes should go...
+Now the mess starts, you need to rollback the changes of TM1, merge your changes and deploy to prod
+
+To solve this problem Feature branch workflow comes to your rescue
+
+Factors, Reasons Business Types to choose Centralized Workflow 
+---------------------------------------------------------------
+Factors: Simple project structure, small team size, fast-paced development, quick feedback loops, minimal collaboration complexity.
+Reasons: It provides a straightforward approach for small, co-located teams working on a project with a linear history and frequent commits.
+Business Types: Small startups, individual developers, rapid prototyping projects.
+
+#endregion Centralized Workflow
+
+#region Trunk based Workflow : All Team Members , make a SHORT-LIVED branch(need to update your SHORT-LIVED branch with remote/master) , make changes locally and then commit to master branch.
+Trunk based Workflow
+=====================
+In a trunk based workflow, each developer works on their own local copy of the entire codebase. Whenever they need to make a change, they create a new branch from the trunk (the base version of the code), make their changes on this branch, and then merge it back to the trunk as soon as their work is complete and has passed all the necessary checks. This model keeps the trunk stable and ensures that all developers are always working with the most current version of the code. It's best suited for larger projects with multiple developers working on various features simultaneously.
+--> Trunk-based workflow is a software development approach that emphasizes frequent integration of code changes into a central code repository's main branch, often referred to as the "trunk" or "master" 
+--> It encourages developers to work on small, incremental changes and merge them into the main branch as soon as they are ready.
+-->  the main branch represents the most up-to-date, production-ready version of the codebase. Instead of maintaining long-lived feature branches or multiple development branches, developers commit their changes directly to the main branch.
+-->  This approach promotes continuous integration and enables teams to rapidly deliver new features, bug fixes, and improvements.
+
+Key principals :
+Small, Incremental Changes
+Continuous Integration, CI step: Code changes are frequently integrated into the main branch, often multiple times a day. This ensures that the codebase remains in a stable and functional state, as integration issues are caught and resolved early.
+Code Reviews: To maintain code quality, code reviews play a crucial role in the trunk-based workflow. 
+Automated Testing: A robust suite of automated tests is essential in trunk-based workflow. Continuous Deployment: Trunk-based workflow often goes hand-in-hand with continuous deployment practices. Once changes are merged into the main branch, they can be automatically deployed to production, enabling faster release cycles and delivering value to users more frequently.
+
+Factors Reasons Business types Trunk-based Workflow:
+----------------------------------------------------
+Factors: Agile development, continuous integration, frequent deployments, rapid feedback loops, small code changes, emphasis on collaboration and code review.
+Reasons: It promotes continuous integration, faster feedback cycles, and collaboration among developers, enabling rapid delivery of features and bug fixes while maintaining a stable main branch.
+Business Types: Agile development teams, projects with a focus on continuous delivery and rapid iteration, startups emphasizing speed-to-market.
+
+#endregion Trunk based Workflow
+
+#region Centralized Vs Trunk
+Centralized Workflow: Imagine an office document shared between three colleagues: Alice, Bob, and Charlie. In a centralized workflow, this document would be like the ‘master document’. Alice makes changes directly on the document, then Bob goes in and makes changes, and then Charlie does the same. This might work perfectly fine if Alice, Bob, and Charlie were working on different sections or if they were taking turns. However, if Alice, Bob, and Charlie all wanted to edit the document simultaneously, things would get messy. Changes could get overwritten or conflicts could arise.
+
+Trunk Based Workflow: In contrast, trunk-based development would be as if Alice, Bob, and Charlie each took a copy of the office document. They each make edits on their individual copies and when they are finished and confident in their changes, they bring their updated copy back to the office and compare it with the master version. If their changes didn't conflict with anyone else's, they could then merge their updates into the master document. If there were conflicts, those would have to be resolved before merging. That way, the master document is always in good shape and up-to-date.
+
+In software development context:
+
+Centralized Workflow: Let's say you are developing a simple website for a small project. Here, all the developers clone the primary repository and make changes directly on the master branch. For example, a developer requires to fix a bug, adds a feature, or makes a change, they do it directly on the master branch.
+
+Trunk(master) Based Workflow: Say, you are part of a large software development project; multiple teams are working on different features simultaneously. In this case, each developer creates a separate branch off of the trunk branch (this can be master or main branch), works on their feature, and once they're done with coding and testing, they merge their changes back to trunk. This allows to keep the trunk stable, which is beneficial for continuous integration.
+
+#endregion Centralized Vs Trunk
+
+#region Feature Branch workflow
+Feature Branch workflow:
+========================
+1) Feature Branch workflow still uses master branch as central repository
+2) All the team members , create a seperate feature branch from the master , the make changes, edit etc in their feature branch itself
+3) All Team members can commit them to their respective local branches , which remains local,
+4) Now its the time to sync with master or merge with master, for that to happen , you will have to raise Pull Request.
+5) The Pull Request is or code reviewed by the people who are admins of central repo or others
+
+Factors, Reasons Business Types to choose Feature Branch Workflow:
+------------------------------------------------------------------
+Factors: Complex projects, multiple developers, parallel feature development, isolated feature testing, risk mitigation.
+Reasons: It allows for independent feature development and testing without interfering with the main codebase, facilitating better code isolation and reducing the risk of breaking the main branch.
+Business Types: Medium to large-sized teams, projects with multiple features in progress simultaneously, projects with a stringent testing and quality assurance process
+
+#endregion  Feature Branch workflow
+
+#region TRUNK VS FEATURE workflow
+Feature Branch Workflow: This workflow is centered around the concept of creating a branch specifically for developing a certain feature or for fixing a bug. Each task, enhancement, or bug fix is developed in isolation on its own dedicated branch.
+
+Let's take a real world example. Imagine a software design team working on a new application. They need to add various features like user login, chat functionality, profile management, etc. With feature branching, the developer working on user login will create a new branch named 'feature-user-login' and all changes related to this feature will be made there. Another developer working on the chat functionality will do the same on a different branch. One key advantage of this approach is that it allows different features to be developed in parallel without affecting each other.
+
+When a feature is complete, tested and reviewed, its corresponding branch is merged back to the main branch (commonly called master or trunk).
+
+Trunk Based Workflow: In a trunk-based workflow, developers do not spend long periods of time on separate branches. Instead, short-lived branches are created from master, and once code changes are complete and have passed all tests, they are merged back into master almost immediately.
+
+#endregion TRUNK VS FEATURE workflow
+
+#region GitFlow Workflow 
+GitFlow Workflow:  https://www.youtube.com/watch?v=6LhTe8Mz6jM
+=================
+https://www.youtube.com/watch?v=WQuxeEvaCxs
+The GitFlow workflow implements a structure on the project repository, allowing the team to focus on the work itself rather than repository management. Here's a step-by-step process:
+
+Step 1: Initially, a repository will have a master branch and a develop branch. The master branch stores the official release history, and the develop branch serves as a integration branch for features.
+git bash command:  git flow init
+At this stage we will have two brances master and develop 
+
+For each new feature, a feature branch is created off of the develop branch. This is where the new feature is built and tested. 
+Example: git checkout -b feature-branch develop.
+Once the feature is complete, the new feature branch is merged back into the develop branch. 
+Example: git checkout develop followed by git merge feature-branch.
+git bash command: git flow feature start [FeatureName] //O/p: feature/user-auth
+git bash command : git flow feature finish [FeatureName]
+git flow feature publish [FeatureName]
+git flow feature pull [RemoteName] [FeatureName]
+
+When enough features have been added to develop for a release, or a predetermined release date arrives, you fork a release branch off of develop. 
+This new branch will be used to prepare for the next production release. It allows one team to polish the current release while another team continues working on features for the next release. Example: git checkout -b release-1.2 develop.
+git flow release start [Release]
+git flow release finish [Release]
+
+Once the release is ready to ship, it is merged into master and tagged with a version number. In addition, it should be merged back into develop, which may have progressed since the release was initiated. Example: git checkout master followed by git merge release-1.2 and then git tag -a 1.2.
+
+Maintenance or "hotfix" branches are used to quickly patch production releases. Hotfix branches are a lot like release branches and feature branches, except they're based on master instead of develop. Example: git checkout -b hotfix-1.2.1 master.
+git flow hotfix start [Hotfix]
+git flow hotfix finish [Hotfix]
+
+Once the fix is complete, the hotfix branch is merged to both master and develop (or the current release branch), and master is tagged with the updated hotfix version. Example: git checkout master followed by git merge hotfix-1.2.1 and then git tag -a 1.2.1.
+
+This branching strategy consists of the following branches:
+
+1) Master : Stable branch
+2) Develop : unstable branch
+3) Feature- to develop new features that branches off the develop branch.
+4) bug 
+5) hotfix
+4) Release- help prepare a new production release; usually forked/branched from the develop branch and must be merged back to both develop and master, will contain limited features
+This will be deployed to staging server, QA teams will test the features 
+This should be merged back to develop and master( add version number, add release number)
+5) Hotfix- these are minor fixes, Fork/branch of master also helps prepare for a release but unlike release branches, hotfix branches arise from a bug that has been discovered and must be resolved; Once the hotfix is given it must be merged to both develop and master
+
+The main and develop branches are considered to be the main branches, with an infinite lifetime, While the rest are supporting branches that are meant to aid parallel development among developers, usually short-lived.
+
+Factors, Reasons Business Types to choose Feature GitFlow Workflow:
+------------------------------------------------------------------
+
+Factors: Clear release management, well-defined roles (such as release managers, developers, and testers), controlled feature deployments, versioning, hotfixes, long-term support branches.
+Reasons: It provides a structured approach to managing releases, facilitates collaboration among teams with different roles, and ensures stability by isolating feature development from the main branch.
+Business Types: Projects with scheduled releases, long-term support requirements, separate development and production environments, larger organizations with dedicated release management teams.
+
+#endregion GitFlow Workflow
+
+#region Forking workflow
+Forking workflow:
+================
+Clone Branch : It will be created on local machine
+Fork Branch: The branch will created on remote (github or bitbucket)
+
+Forking: A developer creates a personal copy (fork) of the main repository. The forked repository is separate from the main repository and resides under the developer's control.
+Development: The developer makes changes and improvements to their forked repository, working on features, bug fixes, or other tasks independently.
+Pull Requests: When the developer completes their work and wants to merge their changes back into the main repository, they submit a pull request. A pull request is a request to merge the changes made in the forked repository into the main repository.
+Code Review: Other developers or team members review the pull request, examining the changes made and providing feedback, suggestions, and comments. Code reviews help ensure code quality, maintain coding standards, and identify potential issues.
+Merge: Once the pull request is approved, the changes from the forked repository are merged into the main repository. The merged changes become part of the main codebase, incorporating the contributions made by the developer.
+
+Forking Workflow:
+
+Factors: Open-source projects, community contributions, collaborative development across multiple organizations, maintainers reviewing and merging contributions.
+Reasons: It allows contributors to work independently on their own forks, enabling parallel development, maintaining a clean main repository, and enabling maintainers to review and merge changes via pull requests.
+Business Types: Open-source projects, community-driven initiatives, collaborative development across organizations.
+
+#endregion Forking workflow
+
+#region OPTIONAL TOPICS BELOW
+======================
+Release branching : 
+==================
+Release branching refers to the idea that a release is contained entirely within a branch. This means that late in the development cycle, the release manager will create a branch from the main (e.g., “1.1 development branch”). All changes for the 1.1 release need to be applied twice: once to the 1.1 branch and then to the main code line. Working with two branches is extra work for the team and it's easy to forget to merge to both branches. Release branches can be unwieldy and hard to manage as many people are working on the same branch. We’ve all felt the pain of having to merge many different changes on one single branch. If you must do a release branch, create the branch as close to the actual release as possible. 
+
+Feature branching: 
+==================
+Feature branches are often coupled with feature flags–"toggles" that enable or disable a feature within the product. That makes it easy to deploy code into main and control when the feature is activated, making it easy to initially deploy the code well before the feature is exposed to end-users. 
+
+Task branching : 
+===============
+Every organization has a natural way to break down work in individual tasks inside of an issue tracker, like Jira Software. Issues then becomes the team's central point of contact for that piece of work. Task branching, also known as issue branching, directly connects those issues with the source code. Each issue is implemented on its own branch with the issue key included in the branch name. It’s easy to see which code implements which issue: just look for the issue key in the branch name. With that level of transparency, it's easier to apply specific changes to main or any longer running legacy release branch.
+
+Since agile centers around user stories, task branches pair well with agile development. Each user story (or bug fix) lives within its own branch, making it easy to see which issues are in progress and which are ready for release. 
+
+#endregion OPTIONAL TOPICS BELOW
+
+#endregion Branching Strategy
+
+#region Deployment Startegies:
+
+***https://www.youtube.com/watch?v=AWVTKBUnoIg&t=7s
+There will be a Load Balancer
+
+Big-Bang DEPLOYMENT
+Rollup DEPLOYMENT
+Blue-Green DEPLOYMENT
+Canary DEPLOYMENT
+
+Big Bang deployment:
+====================
+Key Phrases : The suitable branching strategy would largely be dependent on the size of the TEAM-SIZE
+Branching Strategy that are preferable : Centralized Workflow, Trunk-Based workflow, Feature branch workflow
+All the changes are pushed at once
+Users --> Load balancer --> V1.0
+Now V1.0 is replaced by V2.0. In this case there is a downtime, which might effect the end users , rolling back is bit difficult unless backup is not maintained.
+Here preperation and testing are key.If things go wrong we will have to rollback to previous version solid roll back plan.
+In few cases like DB deployment etc , Bingbang will be the only choice.
+Disadvantages:
+Down-time is expected
+Rolling back is not possible unless backup is maintained.
+
+For DB deployment :
+Bigbang will be the only choice.
+
+
+Blue-Green Deployment (Popular)
+===============================
+Preferable Branching Strategy: Feature Branch , Gitflow workflow.
+
+Users --> LoadBalancer --> V1 deployed in BLUE SERVER(live) and GREEN SERVER(idle or stale)
+	// deploy, V2 to Green Server, test the application then 
+Users --> LoadBalancer --> V2 deployed in GREEN SEREVER(live) and BLUE SEREVER(idle or stale , contains V1)
+	// Load Balancer will redirect the traffic to Green server now
+
+If there is any error encountered, Blue will go live and , green will be subject to test,fixing
+Easy rollbacks, easy transition, but we cannot direct new release to specific users 
+
+Cons:
+Maintain two identical prod environments 
+Similar DB sync is also a tough call
+
+Rollup Deployment
+==================
+Preferable Branching Strategy: Feature Branch , Gitflow workflow
+Assume you application is running on 10 servers , 
+In Rollup deployment we gradually deploy the new version to one server each 
+Users --> LoadBalancer --> V1 deployed in S1,S2,S3
+Rollup deployment style
+Users --> LoadBalancer --> V2 deployed to S3, V1 is still running in S1,S2
+Users --> LoadBalancer --> V2 deployed to S3,S2, V1 is still running in S1
+Users --> LoadBalancer --> V2 deployed to S3,S2,S1
+
+We can test updated version with subset of users, using Weighted Load Balancing technique.
+Spot and mitigate any issues early ,prevents down time
+
+Con:
+If we miss to spot the issues early, there will be cascading effect
+Its slower process, deployment is slow
+
+Can we instruct Load balancer to direct certain percentage to a specific server?
+Load balancers can be configured to distribute loads based on different strategies, and one such strategy is the "Weighted Round Robin" or "Weighted Load Balancing".
+We can assign weights to certain servers manually or based on CPU/RAM usage 
+For example, if you had two servers and you wanted to send 75% of your traffic to Server A and 25% to Server B, you might give a weight of 3 to Server A and a weight of 1 to Server B. This means that for every 4 connections, 3 would go to Server A and 1 would go to Server B.
+
+Canary Deployment
+==================
+In canary the Servers are clusters , which means each Cluster have multiple servers. S1 custer can have S1.1,S1.2,S1.3
+Users --> LoadBalancer --> V1 deployed in S1.1,S1.2,S1.3,S2.1,S2.2,S2.3,S3.1,S3.2,S3.3
+Users --> LoadBalancer --> V2 deployed to S3.1,S3.2,S3.3 V1 is still running in S1.1,S1.2,S2.1,S2.3
+// NOTE Here S3 can be cluster of servers serving to specific users based on demography,  geographical location , A/B testing is conducted
+If something goes wrong, halt deployment, no downtime as other clusters are active\
+Careful Monitoring, QA, Complicated deployment steps 
+
+These startegies can be mixed and used
+The ideal been Canary + Rollup
+
+Canary Vs Rollup 
+Rolling Deployment is like Canary Deployment. But the difference is, in the rolling deployment, we update the newer version into a single/defended number of instances.
+
+Feature Toggle
+===============
+Canary + feature toogle 
+Introduces toggle , based on some conditions 
+Feature Toggle can be used with any deployment strategies 
+
+#endregion Deployment Startegies
+
+#endregion GIT BRANCHING STRATEGY
+
+#region System Test Vs E2E Test
+
+System testing and end-to-end testing are both essential phases of software testing that serve distinct purposes in ensuring the quality and functionality of a software application. Let's delve into each of these types of testing:
+
+System Testing:
+System testing is a comprehensive testing phase that focuses on evaluating the entire system or software application as a whole. The goal of system testing is to verify whether all the components of the software work together seamlessly and meet the specified requirements. This testing phase helps identify any defects or issues that might arise when different components interact with each other within the system. System testing is typically conducted before the software is released to users or clients.
+Key characteristics of system testing include:
+
+Scope: It covers the entire software system, including all integrated components and interactions.
+Focus: The emphasis is on validating the system's compliance with functional and non-functional requirements.
+Testing Depth: It may involve testing at various levels, such as integration testing and component testing, but it primarily aims to validate the system's overall behavior.
+Environment: Testing is often carried out in a controlled environment that closely resembles the production environment.
+Testing Types: System testing may involve various testing types, such as functional testing, performance testing, security testing, and usability testing.
+End-to-End Testing:
+End-to-end testing, as the name suggests, focuses on testing the entire flow of a user scenario or a specific use case from start to finish. It aims to ensure that the entire application, including all its components, systems, and external dependencies, work together seamlessly to fulfill user requirements. End-to-end testing is particularly concerned with testing the interactions between different systems, services, and components to validate the overall functionality and user experience.
+Key characteristics of end-to-end testing include:
+
+Scope: It covers a specific user scenario or use case that involves multiple components and systems.
+Focus: The emphasis is on verifying the end-to-end flow, data integrity, and system integration for a particular user interaction.
+Testing Depth: It involves testing across various layers and components to ensure the entire process works smoothly.
+Environment: End-to-end testing often takes place in an environment that closely resembles the production setup, including realistic data and configurations.
+Testing Types: While end-to-end testing may encompass different types of testing (e.g., functional, security, performance), the primary focus is on the complete user journey.
+In summary, system testing assesses the overall functionality and compliance of the software system, while end-to-end testing validates the seamless integration and functioning of various components within a specific user scenario. Both testing phases are essential for ensuring the reliability, quality, and user satisfaction of a software application.
+
+#endregion System Test Vs E2E Test
+
+#region UKG Architecture 
+POD: cluster of nodes, physical servers, multiple servers based on demographic's geographical location.
+
+Load balancer, reverse proxy GCP-load balancer.
+
+Each Server in POD is installed with Tomcat , whereapplication resides.
+
+Terraform is used to configure each server in pod with application instance.
+https://www.varonis.com/blog/what-is-terraform
+
+Container, docker is not used
+
+Shared services, smtp,anaylytics,hazelcast 
+Cache we use Hazel-cast.
+
+PER POD one DB is installed.
+
+What is the Release strategy 
+Canary or Blue-Green 
+
+No auto-fix,auto-scale manually fix the server in POD.
+
+Load Balancer , Single Point of failure , failover, recovery,backup 
+Primary-Secondary server they will ping to each other for health monitoring.
+
+Mostly DevOps team take care of such things , site-reliability engineers.
+DevOps+Site-reliability
+
+ELK ,
+Logstash will scan through dump of your logs in the file system .
+logstash is for logging regex filtering querying , will apply regex on numerous fields , this will feed to Elastic Search 
+Elastic Search will create the JSON document and load Elastic Search will act like a NoSql DB.
+Kibana : Role of Kibana is to display Dashboards , Maps, graphs. Count of bugs , 
+
+
+NewRelics 
+Authentication 
+CI/CD 
+Queuing service: Pub/Sub Hazel cast will act as same.
+Cache to servers on node-clusters in Pub-Sub way.
+
+Authentication and Authorization:
+OAuth1.0 to OAuth2.0
+Client is company, company has to register the company generate the companyId ,
+Auth and take token 
+
+For Authentication : LoginApi Endpoint Saml Authentication
+
+GCP Service used
+=================
+Load Balancer
+MSSQL, BigQuery-Analytics 
+Google Storage  Service 
+
+Docker and Kubernettes in future 
+Windows to Linux 
+All are windows servers 
+
+Drawback, No auto-scaling
+should be stateless , state information is maintained stick session
+
+In the Observer pattern, the data provider knows the observer. In the Pub-Sub pattern, the publisher does not know about its subscribers, and these two groups can exist and operate without each other. The data exchange in Pub-Sub happens through the bridging component, the broker.
+
+Pub-Sub patterns promote a decoupled architecture, unlike the Observer pattern.
+
+Use Cases for Observer Patterns
+Developers can use Observer patterns in a GUI application as an event listener. For example, in a front-end application — be it a Java, JavaScript, or any UI application — the button and the corresponding action listener on that button follow an Observer pattern. Here, the button is the subject, and the event listener defined on the button (such as an on-click event) is an observer.
+
+Developers can also use Observer patterns for RSS feeds, as explored earlier.
+
+Use Cases for Pub-Sub Patterns
+Pub-Sub design patterns are suitable for refreshing application caches. For example, assume an application reads from a remote database and holds field values in a cache. Whenever a user requests the data relevant to that field, the application can render it from the cache instead of asking for it from a remote database. However, when the field’s value changes in the database, the updates must reach the cache to serve the user with the latest data. How can we achieve this?
+
+A Pub-Sub pattern can push the updates to a topic, and the application can subscribe to the topic to receive the updates and refresh its cache. When reading sensor feeds, we can use a Pub-Sub pattern for the Internet of things (IoT). This might look be a program that pushes temperature readings from temperature sensors to a temperature topic that a consumer can render in a report or dashboard.
+
+Nithin session
+===============
+UKG, master itself is develop UKG-Teams directly have TRUNK-Based
+Deployment is two weeks cycle, 3 days 3-4 pods, next other pods.
+Fork, 
+Security Analysis team, security vulnerabilites are checked , OWASP , Logs Monitoring, PIA data, SQL Injection this will come as Emergency,P1 Ticket.
+
+Performance: Load Testing, concurrent requests , Performance testing Separate Team is there , J Meter , they use tools
+New Relics: Performance Monitoring tools, Kibana is used for logs
+New Endpoint montitor actual production performance , set a threshold 3mins is max threshold , average is 30s--> average 45seconds
+Tech-debts
+ELK...Anil have said 
+
+DB docker DB is created, docker image R88 docker is created , new release changes are added on top of it
+Monolith--> all the codewill zipped--> *.war file is created and deployed to all the servers
+JFrog 
+HotFixReload, similar to Hot-Module-Reload.
+Factory Pattern... Reloadadble factory 
+
+Hotfix cycle , every week schedule on tuesday will take from all teams and dump to production
+P1,Hotfix,emergency, critical Sushant-Approval, Manager for HR-Core 
+
+Emergency-Hotfix, impact on payroll, anything related to payroll...ASAP hotfix.
+Blocking related to payroll,Compliance, Client-HeartBroken.
+We need lot of aprovals, Line-Mgr, VP approval, Engineering Head
+
+
+
+#endregion UKG Architecture 
+
+#region GitLab Tutorials 
+https://www.youtube.com/watch?v=iJ63nXg-LvQ
+
+Why do we use artifact repository like JFrog etc?
+--> When you configure you pipeline with steps like 
+Code Quality : lint, test
+Code Build : build 
+During build the dist folder or build folder for deployment is created, but there has to be some machine where this runs , 
+Hence in Gitlab you create a docker-image w.r.t node and run this build, as soon as the build is done, this docker image will be destroyed. 
+In such case what will you deploy to your prod servers ? 
+
+
+. gitlab-ci. yml
+
+#endregion GitLab Tutorials

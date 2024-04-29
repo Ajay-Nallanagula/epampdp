@@ -1,6 +1,44 @@
+
+Streams in NodeJs: https://www.youtube.com/watch?app=desktop&v=edB964-YYpE
+
+System Design :
+Ecomm-App:  https://www.youtube.com/watch?v=E-KW1O3hLSg&list=PLWp3jRAb6-XWmlu9R96p3xp0G_F3kdq3x&index=2
+Insta/FB/Tiktok: https://www.youtube.com/watch?v=yk6tkOhzVyA&list=PLWp3jRAb6-XWmlu9R96p3xp0G_F3kdq3x&index=1
+Youtube/Netflix/Prime : https://youtu.be/KjM1kWCGef8?feature=shared
+Check for URL Shortner: https://www.youtube.com/watch?v=Cg3XIqs_-4c
+
+Basics of distributed system
+https://www.youtube.com/watch?v=tjiAV4pG9CM&list=PLtZafdfRI4M5blB0jpYtlg70l-W4xVQnO
+
+
+Things you should know bare minimum
+=====================================
+Load Balancing
+Cache 
+Elastic Search 
+Protocols
+DB Normalization, Sharding, Purging, Read Replicas
+Proxy 
+Security 
+Queues , Message Queues Kafka, RabbitMq
+CI/CD 
+Optimizations 
+CDN 
+Event-Driven Architecture
+Event Sourcing
+CQRS(Command Query Responsibility Seggregation)
+Eventual Consistency
+
+SQL ,NoSQL(DynamoDB,MongoDB), GraphDB(Neo4J,Azure Cosmos, AWS Neptune,  )
+
+
 Kafka Tutorials : https://www.youtube.com/watch?v=R873BlNVUB4
 
-Micro service patterns:
+AWS Most used services Overview : https://mindmajix.com/top-aws-services
+
+System Design Concepts :https://www.youtube.com/watch?v=i53Gi_K3o7I
+
+#region Micro service patterns:
 
 1. API Gateway pattern
 
@@ -31,4 +69,122 @@ a. SOAP, REST, Graph QL, Webhooks, Web Sockets
 8. Circuit Breaker Pattern
 
 9. Saga Pattern
-    
+
+#endregion Microservices Patterns
+
+Event-Driven Architecture
+Event Sourcing
+CQRS(Command Query Responsibility Seggregation)
+
+Features Of Elastic Search:
+Full-Text Search: Elasticsearch allows quick and flexible search operations, especially on large volumes of data. It ranks the data on the basis of relevance giving users the best match to their search query.
+
+Distributed and Scalable: Elasticsearch is highly scalable and can be distributed across multiple nodes to increase capacity. It seamlessly manages operations like distributing indices and querying across multiple nodes.
+
+Real-Time Analytics: Elasticsearch can perform complex data analysis in near real-time. It could be used to search, analyze, and visualize big data in a variety of formats.
+
+Advanced Query Language: Elasticsearch uses an API and a query Domain-Specific Language (DSL) based on JSON to define and execute queries.
+
+Integration: Elasticsearch can integrate well with other tools in the Elastic Stack, such as Logstash for centralized logging and Kibana for data visualization.
+
+Autocompletion & Fuzzy matching: Elasticsearch supports autocompletion and fuzzy matching, which means searches can return relevant results even if the search keywords contain typos or partially completed words.
+
+How does elastic search fetch data from Database
+-------------------------------------------------
+
+Elasticsearch itself is essentially a NoSQL database. It doesn't typically fetch data from other databases in real-time, but rather stores and indexes data for quick searching.
+
+However, to get data into Elasticsearch from an external database (like a SQL database or other data source), you typically use some form of ETL (Extract, Transform, Load) process. There are various methods and tools to do this:
+
+Logstash: One common tool is Logstash, which is part of the Elastic Stack. It's designed to ingest data from many sources, transform it, and then load it into an Elasticsearch database.
+
+Elasticsearch Bulk API: If you want to import data in bulk, the Elasticsearch Bulk API allows you to index and create multiple documents.
+
+Custom Scripts: You can write custom scripts to pull data from your database and insert it into Elasticsearch. These scripts can be written in multiple languages like Python, Java, etc.
+
+Data Import Handler: For some databases, you can directly wire with Elasticsearch to import data.
+
+You will want to structure (or transform) your data into a JSON-formatted document that Elasticsearch can store.
+
+Keep in mind that the data in Elasticsearch is not always synchronized with your primary database, and you might need to implement processes to keep them in sync if you're constantly updating the data in your primary database.
+
+
+Fan-out: In the context of software architecture, fan-out refers to the number of system components (services, objects, methods etc.) that are called or invoked by a given component. A high degree of fan-out implies a high degree of coupling, which may reduce the modularity and increase the complexity of the system. In a messaging system like a message broker or event manager, fan-out is the process of broadcasting a message to all subscribers or followers.
+
+Fan-in: Fan-in, in a software context, refers to the number of system components that call or invoke a given component. In other words, it's a measure of how many different parts of a system use a specific feature or module. A high degree of fan-in can be a testament to the re-usability or generality of a component. In the context of a messaging system, fan-in means receiving and processing multiple messages from multiple producers.
+
+#region Cache
+https://www.youtube.com/watch?v=bP4BeUjNkXc
+https://www.geeksforgeeks.org/what-is-the-caching-mechanism/
+
+How caching mechanism works?
+A partition is reserved in RAM for cache memory. Whenever a software requests data from storage, cache memory checks if the required data is already present in it. if it does exist in the cache the application, will read this data from the cache. If the required data does not exist in the cache memory, then, the application(software)will request the source(Hard Drives). After reading the data, the same data is stored in cache memory for future references.
+
+Cache
+Cache Mechanisms : Client-Cache(HTTP),CDN, Web Cache, Application Cache 
+
+Cache Eviction Policy:
+Least recently used
+Randomly used
+Last In firstout
+Last Frequently used 
+
+Cache Invalidation Techniques:
+What will happen If your cache is down, and request are directly going to DB?
+In that case cache is stale , to overcome
+--> Set TTL(time-to-live)
+--> Lazy read Repair, i.e even if the item exists in the cache , still randomly fetch that item from DB and update your cache 
+--> Redis Scan Background Job, CRON Job
+
+
+
+#endregion Cache 
+
+#region Load Balancer
+
+What are the types of Load Balancers 
+--> Application Load Balancer
+--> Network Load Balancer
+--> Gateway LoadBalancer
+
+Network Load Balancer (NLB) works at the transport layer (Layer 4) of the OSI model. The primary function of a Network Load Balancer is to distribute traffic based on IP protocol data, such as IP address and TCP port. NLBs are most suitable for dealing with traffic patterns with high transmission rates, especially for TCP, UDP and TLS-based traffic. For example, suppose you have a website that experiences heavy traffic, especially with a media server that streams video content. A Network Load Balancer would be ideal for this situation as it operates well with large amounts of data traffic and can handle millions of requests per second.
+
+On the other hand, Application Load Balancer (ALB), operates at the application layer (Layer 7) of the OSI model. At this layer, the ALB can make routing decisions based on the content of the message. This includes things like the HTTP header and the payload of the message. ALBs are particularly well suited for HTTP and HTTPS traffic, including WebSocket traffic. They can be involved in more sophisticated load-balancing strategies, including host- or path-based routing. For example, suppose you have an e-commerce website with various categories like electronics, apparel, and books, each handled by a different microservice. When a user's request comes, ALB checks the content of the request (the URL path), and it forwards the request to the respective microservice.
+
+To sum it up, while Network Load Balancers are the best fit for performance sensitive TCP, UDP, and TLS-based workloads, Application Load Balancers are best suited for advanced HTTP and HTTPS routing, microservices, and container-based applications.
+
+Gateway Load Balancer:
+Gateway Load Balancer (GWLB) is a service provided by cloud providers like AWS. It helps you to deploy, scale, and manage third-party virtual network appliances. These appliances usually provide network security, deep packet inspection, and customized routing logic.
+Let’s consider a real-time example to understand the functioning of a Gateway Load Balancer better.
+Imagine you are maintaining a network with hundreds of Amazon EC2 instances. These instances are grouped into various Virtual Private Clouds (VPCs) based on the functionalities that they provide.
+Now assume there are specific security/inspection protocols or application-specific routing logic your network traffic needs to go through. Implementing and managing these for a large number of VPCs individually can be a time-consuming task.
+With the help of AWS Gateway Load Balancer, you can implement your third-party virtual appliances and manage them centrally, creating a fleet of appliances if needed. Network traffic coming from different VPCs or on-premises networks can be redirected to these appliances through the GWLB.
+So, GWLB serves as a single point of contact that distributes the traffic amongst your virtual appliances and then forwards the traffic to respective VPCs.
+In essence, Gateway Load Balancer makes it easy to manage and scale your network architecture efficiently while maintaining security and custom routing instructions.
+
+
+
+
+
+Regenerate response
+
+
+#endregion Load Balancer
+
+
+#region Hashing algorithm manually,
+function hashCode(str) {
+    let hash = 0;
+    if (str.length === 0) return hash;
+    for (let i = 0; i < str.length; i++) {
+        let charCode = str.charCodeAt(i);
+        hash = ((hash << 5) - hash) + charCode;
+        // Convert to 32bit integer
+        hash = hash & hash;
+    }
+    return hash;
+}
+
+console.log(hashCode("Hello, World!")); // output: -832992210
+
+#endregion
