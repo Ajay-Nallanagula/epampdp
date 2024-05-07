@@ -1,0 +1,635 @@
+Date: Thu, 2 May 2024 04:17:21 +0000 (GMT)
+Message-ID: <1296576034.59663.1714623441085@kb.epam.com>
+Subject: Exported From Confluence
+MIME-Version: 1.0
+Content-Type: multipart/related; 
+	boundary="----=_Part_59662_323069826.1714623441085"
+
+------=_Part_59662_323069826.1714623441085
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-Location: file:///C:/exported.html
+
+<html xmlns:o=3D'urn:schemas-microsoft-com:office:office'
+      xmlns:w=3D'urn:schemas-microsoft-com:office:word'
+      xmlns:v=3D'urn:schemas-microsoft-com:vml'
+      xmlns=3D'urn:w3-org-ns:HTML'>
+<head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8=
+">
+    <title>DS-ALGO-INCUBATION-Topics</title>
+    <!--[if gte mso 9]>
+    <xml>
+        <o:OfficeDocumentSettings>
+            <o:TargetScreenSize>1024x640</o:TargetScreenSize>
+            <o:PixelsPerInch>72</o:PixelsPerInch>
+            <o:AllowPNG/>
+        </o:OfficeDocumentSettings>
+        <w:WordDocument>
+            <w:View>Print</w:View>
+            <w:Zoom>90</w:Zoom>
+            <w:DoNotOptimizeForBrowser/>
+        </w:WordDocument>
+    </xml>
+    <![endif]-->
+    <style>
+                <!--
+        @page Section1 {
+            size: 8.5in 11.0in;
+            margin: 1.0in;
+            mso-header-margin: .5in;
+            mso-footer-margin: .5in;
+            mso-paper-source: 0;
+        }
+
+        table {
+            border: solid 1px;
+            border-collapse: collapse;
+        }
+
+        table td, table th {
+            border: solid 1px;
+            padding: 5px;
+        }
+
+        td {
+            page-break-inside: avoid;
+        }
+
+        tr {
+            page-break-after: avoid;
+        }
+
+        div.Section1 {
+            page: Section1;
+        }
+
+        /* Confluence print stylesheet. Common to all themes for print medi=
+a */
+/* Full of !important until we improve batching for print CSS */
+
+@media print {
+    #main {
+        padding-bottom: 1em !important; /* The default padding of 6em is to=
+o much for printouts */
+    }
+
+    body {
+        font-family: Arial, Helvetica, FreeSans, sans-serif;
+        font-size: 10pt;
+        line-height: 1.2;
+    }
+
+    body, #full-height-container, #main, #page, #content, .has-personal-sid=
+ebar #content {
+        background: #fff !important;
+        color: #000 !important;
+        border: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: block !important;
+    }
+
+    a, a:link, a:visited, a:focus, a:hover, a:active {
+        color: #000;
+    }
+
+    #content h1,
+    #content h2,
+    #content h3,
+    #content h4,
+    #content h5,
+    #content h6 {
+        font-family: Arial, Helvetica, FreeSans, sans-serif;
+        page-break-after: avoid;
+    }
+
+    pre {
+        font-family: Monaco, "Courier New", monospace;
+    }
+
+    #header,
+    .aui-header-inner,
+    #navigation,
+    #sidebar,
+    .sidebar,
+    #personal-info-sidebar,
+    .ia-fixed-sidebar,
+    .page-actions,
+    .navmenu,
+    .ajs-menu-bar,
+    .noprint,
+    .inline-control-link,
+    .inline-control-link a,
+    a.show-labels-editor,
+    .global-comment-actions,
+    .comment-actions,
+    .quick-comment-container,
+    #addcomment {
+        display: none !important;
+    }
+
+    /* CONF-28544 cannot print multiple pages in IE */
+    #splitter-content {
+        position: relative !important;
+    }
+
+    .comment .date::before {
+        content: none !important; /* remove middot for print view */
+    }
+
+    h1.pagetitle img {
+        height: auto;
+        width: auto;
+    }
+
+    .print-only {
+        display: block;
+    }
+
+    #footer {
+        position: relative !important; /* CONF-17506 Place the footer at en=
+d of the content */
+        margin: 0;
+        padding: 0;
+        background: none;
+        clear: both;
+    }
+
+    #poweredby {
+        border-top: none;
+        background: none;
+    }
+
+    #poweredby li.print-only {
+        display: list-item;
+        font-style: italic;
+    }
+
+    #poweredby li.noprint {
+        display: none;
+    }
+
+    /* no width controls in print */
+    .wiki-content .table-wrap,
+    .wiki-content p,
+    .panel .codeContent,
+    .panel .codeContent pre,
+    .image-wrap {
+        overflow: visible !important;
+    }
+
+    /* TODO - should this work? */
+    #children-section,
+    #comments-section .comment,
+    #comments-section .comment .comment-body,
+    #comments-section .comment .comment-content,
+    #comments-section .comment p {
+        page-break-inside: avoid;
+    }
+
+    #page-children a {
+        text-decoration: none;
+    }
+
+    /**
+     hide twixies
+
+     the specificity here is a hack because print styles
+     are getting loaded before the base styles. */
+    #comments-section.pageSection .section-header,
+    #comments-section.pageSection .section-title,
+    #children-section.pageSection .section-header,
+    #children-section.pageSection .section-title,
+    .children-show-hide {
+        padding-left: 0;
+        margin-left: 0;
+    }
+
+    .children-show-hide.icon {
+        display: none;
+    }
+
+    /* personal sidebar */
+    .has-personal-sidebar #content {
+        margin-right: 0px;
+    }
+
+    .has-personal-sidebar #content .pageSection {
+        margin-right: 0px;
+    }
+
+    .no-print, .no-print * {
+        display: none !important;
+    }
+}
+-->
+    </style>
+</head>
+<body>
+    <h1>DS-ALGO-INCUBATION-Topics</h1>
+    <div class=3D"Section1">
+        <div class=3D"table-wrap">
+<table class=3D"wrapped relative-table confluenceTable" style=3D"width: 45.=
+544%;">
+<colgroup>
+<col style=3D"width: 10.3053%;">
+<col style=3D"width: 1.27226%;">
+<col style=3D"width: 28.3715%;">
+<col style=3D"width: 60.0509%;">
+</colgroup>
+<tbody>
+<tr>
+<td class=3D"highlight-#79e2f2 confluenceTd" style=3D"text-align: left;" co=
+lspan=3D"2" data-highlight-colour=3D"#79e2f2"><h2 title=3D"" id=3D"DSALGOIN=
+CUBATIONTopics-#">#</h2></td>
+<td class=3D"highlight-#79e2f2 confluenceTd" style=3D"text-align: left;" da=
+ta-highlight-colour=3D"#79e2f2"><h2 title=3D"" id=3D"DSALGOINCUBATIONTopics=
+-TOPIC">TOPIC</h2></td>
+<td class=3D"highlight-#79e2f2 confluenceTd" style=3D"text-align: left;" da=
+ta-highlight-colour=3D"#79e2f2"><h2 title=3D"" id=3D"DSALGOINCUBATIONTopics=
+-DETAILS">DETAILS</h2></td>
+</tr>
+<tr>
+<td class=3D"highlight-#b3f5ff confluenceTd" style=3D"text-align: left;" co=
+lspan=3D"2" data-highlight-colour=3D"#b3f5ff"><h3 title=3D"" id=3D"DSALGOIN=
+CUBATIONTopics-PARTI">PART I</h3></td>
+<td class=3D"highlight-#b3f5ff confluenceTd" style=3D"text-align: left;" da=
+ta-highlight-colour=3D"#b3f5ff"><h3 title=3D"" id=3D"DSALGOINCUBATIONTopics=
+-IntroductiontoAlgorithms">Introduction to Algorithms</h3></td>
+<td class=3D"highlight-#b3f5ff confluenceTd" style=3D"text-align: left;" da=
+ta-highlight-colour=3D"#b3f5ff"><br></td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">1</td>
+<td style=3D"text-align: left;" class=3D"confluenceTd">Problem Solving Skil=
+l Techniques</td>
+<td style=3D"text-align: left;" rowspan=3D"4" class=3D"confluenceTd">
+<div class=3D"content-wrapper">
+<p><strong>Objective: </strong>Learn Basic Problem-Solving Skills</p>
+<p><strong>Title: </strong>BYTES - Problem-Solving Skills Self Learning - P=
+art 1 [Java]</p>
+<p><strong>Program Link: </strong><a class=3D"external-link" href=3D"https:=
+//programstudio.epam.com/programEditor/4450" rel=3D"nofollow">https://progr=
+amstudio.epam.com/programEditor/4450</a></p>
+</div></td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">2</td>
+<td style=3D"text-align: left;" class=3D"confluenceTd">Unit Testing</td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">3</td>
+<td style=3D"text-align: left;" class=3D"confluenceTd">Types of Analysis</t=
+d>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">4</td>
+<td style=3D"text-align: left;" class=3D"confluenceTd">Algorithm Metrics</t=
+d>
+</tr>
+<tr>
+<td class=3D"highlight-#b3f5ff confluenceTd" style=3D"text-align: left;" co=
+lspan=3D"2" data-highlight-colour=3D"#b3f5ff"><h3 title=3D"" id=3D"DSALGOIN=
+CUBATIONTopics-PARTII">PART II</h3></td>
+<td class=3D"highlight-#b3f5ff confluenceTd" style=3D"text-align: left;" da=
+ta-highlight-colour=3D"#b3f5ff"><h3 title=3D"" id=3D"DSALGOINCUBATIONTopics=
+-AlgorithmTechniques">Algorithm Techniques</h3></td>
+<td class=3D"highlight-#b3f5ff confluenceTd" style=3D"text-align: left;" da=
+ta-highlight-colour=3D"#b3f5ff"><br></td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">5</td>
+<td style=3D"text-align: left;" class=3D"confluenceTd">Recursion</td>
+<td style=3D"text-align: left;" rowspan=3D"5" class=3D"confluenceTd"><stron=
+g>Objective: </strong>Learn Algorithm Techniques<p><strong>Title: </strong>=
+BYTES - PROBLEM-SOLVING SKILLS SELF LEARNING - Part 2 [Java]</p><p><strong>=
+Program Link: </strong><a class=3D"external-link" href=3D"https://programst=
+udio.epam.com/programEditor/4468" rel=3D"nofollow">https://programstudio.ep=
+am.com/programEditor/4468</a></p></td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">6</td>
+<td style=3D"text-align: left;" class=3D"confluenceTd">Divide and Conquer</=
+td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">7</td>
+<td style=3D"text-align: left;" class=3D"confluenceTd">Dynamic Programming<=
+/td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">8</td>
+<td style=3D"text-align: left;" class=3D"confluenceTd">Backtracking</td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">9</td>
+<td style=3D"text-align: left;" class=3D"confluenceTd">Greedy Method</td>
+</tr>
+<tr>
+<td class=3D"highlight-#b3f5ff confluenceTd" style=3D"text-align: left;" co=
+lspan=3D"2" data-highlight-colour=3D"#b3f5ff"><h3 title=3D"" id=3D"DSALGOIN=
+CUBATIONTopics-PARTIII">PART III</h3></td>
+<td class=3D"highlight-#b3f5ff confluenceTd" style=3D"text-align: left;" da=
+ta-highlight-colour=3D"#b3f5ff"><h3 title=3D"" id=3D"DSALGOINCUBATIONTopics=
+-DataStructures">Data Structures</h3></td>
+<td class=3D"highlight-#b3f5ff confluenceTd" style=3D"text-align: left;" da=
+ta-highlight-colour=3D"#b3f5ff"><br></td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">10</td=
+>
+<td style=3D"text-align: left;" class=3D"confluenceTd">Linked Lists</td>
+<td style=3D"text-align: left;" rowspan=3D"6" class=3D"confluenceTd"><stron=
+g>Objective: </strong>Learn Data Structures<p><strong>Title: </strong>BYTES=
+ - PROBLEM-SOLVING SKILLS - SELF LEARNING - PART 3 [Java]</p><p><strong>Pro=
+gram Link: </strong><a class=3D"external-link" href=3D"https://programstudi=
+o.epam.com/programEditor/4469" rel=3D"nofollow">https://programstudio.epam.=
+com/programEditor/4469</a></p></td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">11</td=
+>
+<td style=3D"text-align: left;" class=3D"confluenceTd">Stacks</td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">12</td=
+>
+<td style=3D"text-align: left;" class=3D"confluenceTd">Queues</td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">13</td=
+>
+<td style=3D"text-align: left;" class=3D"confluenceTd">Heap</td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">14</td=
+>
+<td style=3D"text-align: left;" class=3D"confluenceTd">Trees</td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">15</td=
+>
+<td style=3D"text-align: left;" class=3D"confluenceTd">Binary Trees</td>
+</tr>
+<tr>
+<td class=3D"highlight-#b3f5ff confluenceTd" style=3D"text-align: left;" co=
+lspan=3D"2" data-highlight-colour=3D"#b3f5ff"><h3 title=3D"" id=3D"DSALGOIN=
+CUBATIONTopics-PARTIV">PART IV</h3></td>
+<td class=3D"highlight-#b3f5ff confluenceTd" style=3D"text-align: left;" da=
+ta-highlight-colour=3D"#b3f5ff"><h3 title=3D"" id=3D"DSALGOINCUBATIONTopics=
+-SortingAlgorithms">Sorting Algorithms</h3></td>
+<td class=3D"highlight-#b3f5ff confluenceTd" style=3D"text-align: left;" da=
+ta-highlight-colour=3D"#b3f5ff"><br></td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">16</td=
+>
+<td style=3D"text-align: left;" class=3D"confluenceTd">Merge Sort</td>
+<td style=3D"text-align: left;" rowspan=3D"4" class=3D"confluenceTd"><stron=
+g>Objective: </strong>Learn Sorting Algorithms<p><strong>Title: </strong>BY=
+TES - PROBLEM-SOLVING SELF LEARNING PART 4 [Java]</p><p><strong>Program Lin=
+k: </strong><a href=3D"https://programstudio.epam.com/programEditor/4473" c=
+lass=3D"external-link" rel=3D"nofollow">https://programstudio.epam.com/prog=
+ramEditor/4473</a></p></td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">17</td=
+>
+<td style=3D"text-align: left;" class=3D"confluenceTd">Quick Sort</td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">18</td=
+>
+<td style=3D"text-align: left;" class=3D"confluenceTd">Selection Sort</td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">19</td=
+>
+<td style=3D"text-align: left;" class=3D"confluenceTd">Heap Sort</td>
+</tr>
+<tr>
+<td class=3D"highlight-#b3f5ff confluenceTd" style=3D"text-align: left;" ti=
+tle=3D"Background color : Light teal 100%" colspan=3D"2" data-highlight-col=
+our=3D"#b3f5ff"><strong>PART V</strong></td>
+<td class=3D"highlight-#b3f5ff confluenceTd" style=3D"text-align: left;" ti=
+tle=3D"Background color : Light teal 100%" data-highlight-colour=3D"#b3f5ff=
+"><strong>String Algorithms</strong></td>
+<td class=3D"highlight-#b3f5ff confluenceTd" style=3D"text-align: left;" ti=
+tle=3D"Background color : Light teal 100%" data-highlight-colour=3D"#b3f5ff=
+"><br></td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">20</td=
+>
+<td style=3D"text-align: left;" class=3D"confluenceTd">String Matching Algo=
+rithms</td>
+<td style=3D"text-align: left;" rowspan=3D"3" class=3D"confluenceTd"><stron=
+g><strong>Objective: </strong></strong>Learn String Algorithms<p><strong>Ti=
+tle: </strong>BYTES - PROBLEM-SOLVING SELF LEARNING PART 5 [Java]</p><p><st=
+rong>Program Link: </strong><a class=3D"external-link" href=3D"https://prog=
+ramstudio.epam.com/programEditor/4549" rel=3D"nofollow">https://programstud=
+io.epam.com/programEditor/4549</a></p></td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">21</td=
+>
+<td style=3D"text-align: left;" class=3D"confluenceTd">String Compression A=
+lgorithms</td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">22</td=
+>
+<td style=3D"text-align: left;" class=3D"confluenceTd">String Transformatio=
+n Algorithms</td>
+</tr>
+<tr>
+<td class=3D"highlight-#b3f5ff confluenceTd" style=3D"text-align: left;" ti=
+tle=3D"Background color : Light teal 100%" colspan=3D"2" data-highlight-col=
+our=3D"#b3f5ff"><strong title=3D"">PART VI</strong></td>
+<td class=3D"highlight-#b3f5ff confluenceTd" style=3D"text-align: left;" ti=
+tle=3D"Background color : Light teal 100%" data-highlight-colour=3D"#b3f5ff=
+"><strong title=3D"">Searching Algorithms</strong></td>
+<td class=3D"highlight-#b3f5ff confluenceTd" style=3D"text-align: left;" ti=
+tle=3D"Background color : Light teal 100%" data-highlight-colour=3D"#b3f5ff=
+"><br></td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">23</td=
+>
+<td style=3D"text-align: left;" class=3D"confluenceTd">Binary Search Tree</=
+td>
+<td style=3D"text-align: left;" rowspan=3D"4" class=3D"confluenceTd"><stron=
+g><strong>Objective: </strong></strong>Learn Searching Algorithms<p><strong=
+>Title: </strong>BYTES - PROBLEM-SOLVING SELF LEARNING PART 6 [Java]</p><p>=
+<strong>Program Link: </strong><a class=3D"external-link" href=3D"https://p=
+rogramstudio.epam.com/programEditor/4555" rel=3D"nofollow">https://programs=
+tudio.epam.com/programEditor/4555</a></p></td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">24</td=
+>
+<td style=3D"text-align: left;" class=3D"confluenceTd">BFS</td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">25</td=
+>
+<td style=3D"text-align: left;" class=3D"confluenceTd">DFS</td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">26</td=
+>
+<td style=3D"text-align: left;" class=3D"confluenceTd">Index Binary Search =
+Tree</td>
+</tr>
+<tr>
+<td class=3D"highlight-#b3f5ff confluenceTd" style=3D"text-align: left;" ti=
+tle=3D"Background color : Light teal 100%" colspan=3D"2" data-highlight-col=
+our=3D"#b3f5ff"><strong>PART VII</strong></td>
+<td class=3D"highlight-#b3f5ff confluenceTd" style=3D"text-align: left;" ti=
+tle=3D"Background color : Light teal 100%" data-highlight-colour=3D"#b3f5ff=
+"><strong>Graphs</strong></td>
+<td class=3D"highlight-#b3f5ff confluenceTd" style=3D"text-align: left;" ti=
+tle=3D"Background color : Light teal 100%" data-highlight-colour=3D"#b3f5ff=
+"><br></td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">27</td=
+>
+<td style=3D"text-align: left;" class=3D"confluenceTd"><span style=3D"color=
+: rgb(68,68,68);">Introduction To Graph Theory</span></td>
+<td style=3D"text-align: left;" rowspan=3D"10" class=3D"confluenceTd"><stro=
+ng><strong><strong>Objective: </strong></strong></strong>Learn Graphs and r=
+elated Algorithms.<p><strong>Title: </strong>BYTES - PROBLEM-SOLVING SELF L=
+EARNING PART 7 [Java]</p><p><strong>Program Link: </strong><a class=3D"exte=
+rnal-link" href=3D"https://programstudio.epam.com/programEditor/4567" rel=
+=3D"nofollow">https://programstudio.epam.com/programEditor/4567</a></p><str=
+ong><strong><br></strong></strong><strong><strong><br></strong></strong><st=
+rong><strong><br></strong></strong><strong><strong><br></strong></strong><s=
+trong><strong><br></strong></strong><strong><strong><br></strong></strong><=
+/td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">28</td=
+>
+<td style=3D"text-align: left;" class=3D"confluenceTd"><span style=3D"color=
+: rgb(68,68,68);">Basic Terminology and Definitions</span></td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">29</td=
+>
+<td style=3D"text-align: left;" class=3D"confluenceTd"><span style=3D"color=
+: rgb(68,68,68);">Types of Graphs and their properties</span></td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">30</td=
+>
+<td style=3D"text-align: left;" class=3D"confluenceTd"><span style=3D"color=
+: rgb(68,68,68);">Applications of Graphs</span></td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">31</td=
+>
+<td style=3D"text-align: left;" class=3D"confluenceTd"><span style=3D"color=
+: rgb(68,68,68);">Graph Data Structures</span></td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">32</td=
+>
+<td style=3D"text-align: left;" class=3D"confluenceTd"><span style=3D"color=
+: rgb(68,68,68);">Graph Traversal Algorithms</span></td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">33</td=
+>
+<td style=3D"text-align: left;" class=3D"confluenceTd"><span style=3D"color=
+: rgb(68,68,68);">Shortest Path Algorithms</span></td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">34</td=
+>
+<td style=3D"text-align: left;" class=3D"confluenceTd"><span style=3D"color=
+: rgb(68,68,68);">Minimum Spanning Tree Algorithms</span></td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">35</td=
+>
+<td style=3D"text-align: left;" class=3D"confluenceTd"><span style=3D"color=
+: rgb(68,68,68);">Topological Sorting</span></td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">36</td=
+>
+<td style=3D"text-align: left;" class=3D"confluenceTd"><span style=3D"color=
+: rgb(68,68,68);">Connected Components</span></td>
+</tr>
+<tr>
+<td class=3D"highlight-#b3f5ff confluenceTd" style=3D"text-align: left;" ti=
+tle=3D"Background color : Light teal 100%" colspan=3D"2" data-highlight-col=
+our=3D"#b3f5ff"><strong>PART VIII</strong></td>
+<td class=3D"highlight-#b3f5ff confluenceTd" style=3D"text-align: left;" ti=
+tle=3D"Background color : Light teal 100%" data-highlight-colour=3D"#b3f5ff=
+"><strong><span style=3D"color: rgb(68,68,68);" title=3D"">Tree Traversal A=
+lgorithms</span></strong></td>
+<td class=3D"highlight-#b3f5ff confluenceTd" style=3D"text-align: left;" ti=
+tle=3D"Background color : Light teal 100%" data-highlight-colour=3D"#b3f5ff=
+"><br></td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">37</td=
+>
+<td style=3D"text-align: left;" class=3D"confluenceTd"><span style=3D"color=
+: rgb(68,68,68);" title=3D""><span style=3D"color: rgb(68,68,68);">INTRODUC=
+TIONS TO TREE TRAVERSAL ALGORITHMS</span></span></td>
+<td style=3D"text-align: left;" rowspan=3D"7" class=3D"confluenceTd">&nbsp;=
+<strong>Objective: </strong>Learn Tree Traversal Algorithms<p><strong>Title=
+: </strong>BYTES - PROBLEM-SOLVING SELF LEARNING PART 8 [Java]</p><p><stron=
+g>Program Link: </strong><a class=3D"external-link" href=3D"https://program=
+studio.epam.com/programEditor/4580" rel=3D"nofollow">https://programstudio.=
+epam.com/programEditor/4580</a></p></td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">38</td=
+>
+<td class=3D"confluenceTd"><p>DEPTH-FIRST TRAVERSAL ALGORITHMS</p></td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">39</td=
+>
+<td class=3D"confluenceTd"><p><span style=3D"color: rgb(68,68,68);">BREADTH=
+-FIRST TRAVERSAL ALGORITHMS</span></p></td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">40</td=
+>
+<td class=3D"confluenceTd"><p><span style=3D"color: rgb(68,68,68);">ADVANCE=
+D TREE TRAVERSAL ALGORITHMS</span></p></td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">41</td=
+>
+<td class=3D"confluenceTd"><p><span style=3D"color: rgb(68,68,68);">STRENGT=
+HS AND WEAKNESSES OF EACH TREE TRAVERSAL ALGORITHM</span></p></td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">42</td=
+>
+<td class=3D"confluenceTd"><p><span style=3D"color: rgb(68,68,68);">BEST PR=
+ACTICES AND COMMON PITFALLS</span></p></td>
+</tr>
+<tr>
+<td style=3D"text-align: left;" colspan=3D"2" class=3D"confluenceTd">43</td=
+>
+<td class=3D"confluenceTd"><p><span style=3D"color: rgb(68,68,68);">APPLICA=
+TIONS OF TREE TRAVERSAL ALGORITHMS</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+    </div>
+</body>
+</html>
+------=_Part_59662_323069826.1714623441085--
