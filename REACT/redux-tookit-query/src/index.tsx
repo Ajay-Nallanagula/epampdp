@@ -30,7 +30,7 @@ export default configureStore({
     posts: postsReducer,
     users: usersReducer,
     notifications: notificationsReducer,
-    [apiSlice.reducerPath]: apiSlice.reducer
+    [todosApi.reducerPath]: todosApi.reducer
   },
 
 Step 3: 

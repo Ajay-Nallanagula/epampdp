@@ -21,6 +21,9 @@ There can be challenges with a brownfield project, including dealing with existi
 
 System Design Roadmap: https://roadmap.sh/system-design
 
+***Low-Level-System-Design: https://www.youtube.com/watch?v=aJxx-Y42rF0
+***High-Level-System-Design: 
+
 <div>
 https://hackernoon.com/the-7-software-architecture-books-experienced-developers-need-to-read
 Mastering the System Design Interview by Frank Kane
@@ -77,5 +80,7 @@ DB Normalization, Sharding, Purging, Read Replicas
 Proxy 
 Security 
 Queues , Message Queues Kafka, RabbitMq
+
+
 
 

@@ -20,7 +20,7 @@ Story of Module System
 https://www.taniarascia.com/javascript-modules-import-export/#:~:text=Modules%20are%20different%20from%20regular,the%20global%20(%20window%20)%20scope.
 
 What is Module System and why do we need it?
-A module system is a way to organize code in larger applications. The main idea is to separate your code into logical units or modules, each with its own responsibilities. This makes code easier to develop, test, and maintain.
+A module system is a way to organize code in larger applications. The main idea is to separate your code into logical units or modules, each with its own responsibilities deal with cohesion (high cohesion is good). This makes code easier to develop, test, and maintain.
 
 A runtime module system then provides a method to break up a piece of software into different pieces or modules. Each module can be written separately and may contain other modules or dependencies with other modules. These modules can then be imported whenever they are needed.
 
@@ -31,7 +31,6 @@ With ES6, JavaScript introduced its own built-in module system, known as ES Modu
 
 Can we use export or import directly in browser?
 No, you cannot use import and export directly in the browser. These are modules used in Node.js, which is a runtime environment used outside the browser to execute JavaScript.
-
 Traditionally when using Javascript in <script/> these were added to global-scope or window object 
 
 However, modern browsers support ES6 modules which allow you to use import and export keywords in JavaScript to load and share code across different files. You can do this by specifying the script type as module in the script tag like this:
@@ -43,6 +42,7 @@ However, modern browsers support ES6 modules which allow you to use import and e
 import {add, sub} from 'your-file'
 </script>
 //Output 
+
 We will see an Error w.r.t CORS Policy
 Access to script at 'file:///C:/Ajay_EPAM/PDP_PRACTICSE/epampdp/Experiment/modular.js' from origin 'null' has been blocked by CORS policy: 
 Because of the CORS policy, Modules must be used in a server environment, which you can set up locally with http-server or on the internet with a hosting provider.
@@ -62,7 +62,10 @@ But please do remember, not all browsers have full support for ES6 modules, so i
 What are the various Module systems related to Javascript?
 ==========================================================
 While JavaScript originally had no concept of modules, over time various solutions have emerged. Here are the main ones:
-CommonJS (CJS): This is the module system used in Node.js. Modules are loaded synchronously, which works well for server-side development but can cause performance issues in the browser.
+
+CommoNJS (CJS): This is the module system used in Node.js. Modules are loaded synchronously, which works well for server-side development but can cause performance issues in the browser.
+
+Even webpack uses CommoNJs style only.
 
 Example:
 // math.js
@@ -265,7 +268,7 @@ Code splitting:
 Code splitting is a technique used in Webpack to split the code into smaller chunks that can be loaded on-demand. It helps reduce the initial loading time of an application by loading only the essential code required for the initial view and loading additional code as needed. Webpack achieves code splitting through dynamic imports or by configuring entry points for specific chunks.
 https://webpack.js.org/guides/code-splitting/
 Three approaches for Code Splitting:
-Entry Points: Manually split code using entry configuration.
+Entry Points: Manually split code using "entry" configuration.
 				Key words : multiple entries entry{}, loadash included in both bundles,Hence  
 Prevent Duplication: Use Entry dependencies or SplitChunksPlugin to dedupe and split chunks.
 --> Key words: separate loadash using "shared-dependOn" entries and optimization:{runTime:single} manually 
@@ -928,3 +931,7 @@ The nomodule attribute is a boolean attribute that prevents the script from bein
 Not all developers do this due to the added complexity, but differential serving can significantly improve load times for users on modern browsers. It's also a good complement to techniques like code splitting, where you break up your bundle into smaller chunks, improving initial page load times.
 
 #endregion 
+
+What does resolution in package.json do?
+For instance, if you have two dependencies A and B, where A depends on lodash version 1.0.0 and B depends on lodash version 2.0.0, you can use the resolutions field to force both A and B to use lodash version 2.0.0.
+Please note that this feature is originally a Yarn-specific feature and does not have built-in support in npm. However, npm users can use a tool such as npm-force-resolutions to utilize this functionality.

@@ -53,10 +53,28 @@ Immer.js/ Immutable.js
 #region Mosh tutorials
 
 #region Flux Architecture
-Principles of Flux:
+Principles of Flux: https://www.dhiwise.com/post/how-to-manage-complex-javascript-data-flows-with-flux-in-react
+At the heart of Flux architecture lie three fundamental principles that distinguish it from traditional data flow patterns:
+1. Unidirectional Data Flow: Unlike bidirectional data binding, Flux enforces a unidirectional flow of data. Actions trigger updates, which then propagate through the system, ensuring a clear and predictable path for data changes.
 
+2. Single Source of Truth: The application state is managed by stores, ensuring a single source of truth. This simplifies debugging and makes it easier to reason about the application's state at any given point.
+
+3. State Mutation via Actions: Changes to the application state occur only through actions. These actions, in turn, are dispatched by components, creating a controlled and traceable mechanism for state updates.
+
+Key Components of Flux
+Flux architecture comprises four key components:
+
+1. Actions: Represent user interactions or events that trigger state changes.
+
+2. Dispatcher: Central hub that manages the flow of data and ensures that stores are updated in a consistent order.
+
+3. Stores: Contain the application state and the logic to respond to actions. Multiple stores can exist in an application, each responsible for a specific domain of the state.
+
+4. Views (React Components): Subscribe to changes in the stores and update accordingly. They also dispatch actions in response to user interactions.
 
 Flux Vs Redux:
+=============
+1. ***Data Flow: Flux employs a unidirectional data flow, where data flows from actions to stores to views, making it easier to track and reason about changes. Redux also uses unidirectional data flow, but its actions are dispatched to a central store, whereas Flux broadcasts actions to multiple stores. MobX, on the other hand, utilizes a reactive data flow, where state changes automatically trigger updates in the dependent components.
 
 
 #endregion Flux Architecture 
@@ -64,7 +82,7 @@ Flux Vs Redux:
 Redux is build on top of funtional programming. We cannot mutate the object.
 
 all redux related packages:
-npm install redux react-redux @reduxjs/toolkit  @redux-devtools/extension react-router-dom react-bootstrap --save
+npm install redux react-redux @reduxjs/toolkit  @redux-devtools/extension --save
 
 Install Redux: and redux toolkit redux-devtools
 https://redux.js.org/introduction/installation
@@ -83,12 +101,12 @@ Organize Redux Code
 --> For every change , we will have to touch three files , to reduce that complexity we can follow "DUX PATTERN"
  where all actions,actionTypes,reducer stay in one file like store/auth.js, store/products.js, store/billing.js 
  --> Finally one store/index.js file where we 
-		-->combine reduducers
-		--> confingure/create store , with preloaded state 
+		--> combine reducers
+		--> confingure/createStore , with preloaded state 
 
 NOTE: redux-dev-tools is different from @redux/toolkit
 @redux/toolkit provides bunch of utility functions 
---> configureStore(), createAction()/* used for actionCreators*/
+--> configureStore(), createAction() createReducer()/* used for actionCreators*/
 --> Will allow you to dispatch async actions like api calls, if toolkit wasn't there we will have to make use of middlewares to achieve the same .
 
 
@@ -253,7 +271,7 @@ In Latest Versions of Redux create Reducer is used with "Builder Callback"
 https://redux-toolkit.js.org/api/createReducer
 
 import { createAction,createReducer } from "@reduxjs/toolkit"
-export const addToCart = createAction('addToCart')
+export const addToCart = createAction('addToCart')//usage of action : addToCart({itemId:'',itemDesc:''}) 
 const reducer = createReducer(preloadedState, builder => {
     //similar to switch-case
     builder.addCase(addToCart.type, (state, action) => {
@@ -362,8 +380,6 @@ export default store
 
 Way 2: 
 ======
-
-
 import { configureStore } from "@reduxjs/toolkit";
 import rootReducer from "./rootReducer";
 /*
@@ -448,7 +464,7 @@ TO AVOID THIS WE HAVE TO USE "MEMOIZATION", there is a library called as reselec
 npm i reselect
 
 import {createSelector} from 'reselect'
-ecport const getUnresolvedBugs = createSelector(
+export const getUnresolvedBugs = createSelector(
 state=> state.entites.bugs,
 state=>state.entites.projects
 (bugs,projects)=> bugs.filter(bug=>!bug.resolved)
@@ -941,7 +957,7 @@ https://medium.com/@ayabellazreg/make-a-simple-shopping-cart-app-using-react-red
 #region Redux Toolkit Query
 
 https://www.youtube.com/playlist?list=PL0Zuz27SZ-6M1J5I1w2-uZx36Qp6qhjKo
-
+See Example : C:\Ajay_EPAM\PDP_PRACTICSE\epampdp\REACT\redux-tookit-query\src\api\todoApiSlice.ts
 
 #endregion Redux Toolkit Query
 

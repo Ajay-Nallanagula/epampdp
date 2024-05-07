@@ -1,0 +1,3 @@
+https://kb.epam.com/pages/viewpage.action?spaceKey=GDOKB&title=Data+Structures+and+Algorithms+Interviewer+Guidelines
+
+https://kb.epam.com/display/GDOKB/DS-ALGO-INCUBATION-Topics

@@ -1,4 +1,4 @@
-import { BrowserRouter } from "react-router-dom"
+import { BrowserRouter, Route, Router, Routes } from "react-router-dom"
 import AuthProvider from "./Authentication/auth/AuthProvider"
 import SimpleContainer from "./Authentication/components/SimpleContainer"
 import AuthRoutes from "./Authentication/AuthRoutes"
@@ -12,6 +12,15 @@ import testService from "./TestService"
 import ProfileApp from "./Profiler/ProfileApp"
 import { ThemeProvider } from "@emotion/react"
 import ContextDemoComponent from "./ContextDemo/ContextDemoComponent"
+import Accordion from "./Accordion/AccordionBuilder/Accordion"
+import TestRouter from "./routerQuestion/testRouter"
+import Home from "./routerQuestion/components/Home"
+import ComponentA from "./routerQuestion/components/ComponentA"
+import ComponentB from "./routerQuestion/components/ComponentB"
+import ChildComponentA from "./routerQuestion/components/ChildComponentA"
+import BasicForm from "./Formik/BasicForm"
+import ServiceUsage from "./ServiceUsage"
+//import configRoutes from "./routerQuestion/testRouter"
 
 
 
@@ -31,12 +40,26 @@ const App = () => {
         console.log({ id }, { phase }, { actualDuration: actualDuration + ' milliSeconds' }, { baseDuration: baseDuration + ' milliSeconds' }, { startTime: startTime + ' milliSeconds' }, { commitTime: commitTime + ' milliSeconds' })
     }
 
-    
+    //const Router2 = TestRouter()
+
     return (
         <>
-            <ThemeProvider>
+            <BrowserRouter>
+                <ServiceUsage />
+                {/* <BasicForm /> */}
+                {/* <Router2 /> */}
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/ComponentA" element={<ComponentA />}>
+                        <Route path="ChildComponentA/:namer?" element={<ChildComponentA />} />
+                    </Route>
+                    <Route path="/ComponentB" element={<ComponentB />} />
+                </Routes>
+            </BrowserRouter>
+            {/* <Accordion /> */}
+            {/* <ThemeProvider>
                 <ContextDemoComponent />
-            </ThemeProvider>
+            </ThemeProvider> */}
             {/* <Profiler id="ProfileApp" onRender={onRender}>
                 <ProfileApp />
             </Profiler> */}

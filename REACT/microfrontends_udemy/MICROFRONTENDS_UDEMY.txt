@@ -161,6 +161,7 @@ We can achieve this using Module Federation or Next.Js
  
 #region Server Integration 
 --> Server Integration (SSR): while sending JS for container, server decides wether to send product list or not. This Server-Side-Rendering 
+Or using Next.Js 
 
 #endregion Server Integration
 
@@ -192,7 +193,7 @@ Step 2:  In remote decide which modules(files) you want to make available to oth
 Step 3:  Set up webpack Module Federation plugin to expose those files
 	//inside billing webpack.config.js , similar to other modules 
 	const HtmlWebpackPlugin = require("html-webpack-plugin");
-   const { ModuleFederationPlugin } = require('webpack').container
+    const { ModuleFederationPlugin } = require('webpack').container
 	module.exports = {
     mode: 'development',
     devServer: { port: 8083 },
@@ -302,6 +303,8 @@ NOTE: In Singleton cases the major.minor.patch versionion DOES NOT APPLY, irresp
 In this case you will get a conflicting warning message, the common modules must be in sync.
 
 Eg: Webpack--> ModuleFederation-->plugins--> ModuleFederation -->  shared:{ faker: { singleton: true }}
+Findout where exactly in host or in microapp?
+
 
 Incompatible Versions + Singleton rule:  Webpack will follow singleton rule, and load only one copy, but with a warning message in console with incompatible versions.
 
@@ -407,7 +410,7 @@ Step2: Git Monorepo Or Git independent repos
 	container, marketing, dashboard, auth
 	
 Step 3:
-container--> did container change?--> Build Prod version of container with webpack--> Upload to AWS S3 <--> AWS CDN--> Browser/Client.
+container--> did container change?--> Build Prod version of container with webpack--> Upload to AWS S3 <--> AWS CDN[CloudFront] --> Browser/Client.
 marketing--> did marketing change?--> Build Prod version of marketing with webpack--> Upload to AWS S3 <--> AWS CDN--> Browser/Client.
 dashboard--> did dashboard change?--> Build Prod version of dashboard with webpack--> Upload to AWS S3 <--> AWS CDN--> Browser/Client.
 auth--> did auth change?--> Build Prod version of auth with webpack--> Upload to AWS S3 <--> AWS CDN--> Browser/Client.
@@ -487,7 +490,7 @@ When any route change is detected, say by clicking a link, the router's role wit
 function onRouteChange(newRoute) {
   let currentApp = routes[newRoute]; // Get the micro app to be loaded, requested
 
-  // Unload the current app
+  // Unload the current app, make the innerHtML of corresponding div for microapp as blank
   unloadCurrentApp();
 
   // Load the micro app into its placeholder

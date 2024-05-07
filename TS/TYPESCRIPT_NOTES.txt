@@ -36,7 +36,7 @@ let age:any = 30;
 name2 =1000 //Dynamically assigned a number
 
 Default access specifier in Typescript is public 
-Type is Typescript : number,boolean,string, null,undefined,object,array, enum,tuple, any, unknown, never, function
+Type in Typescript : number,boolean,string, null,undefined,object,array, enum,tuple, any, unknown, never, function
 
 Tuple Vs Array :
 ===============
@@ -52,7 +52,7 @@ const primaryColors: string[] = ['#ff0000', '#00ff00', '#0000ff'];
 let tup: [string,boolean]  = ['apple',true] //Error if [false,'Orange']
 let arr:(string|number)[] = ['Apple',10] or [10,'Apple]
 
---> Type inteference
+--> Type inference
 ====================
 TypeScript infers the type of an array literal based on the elements you provide when initializing the array. If all the elements in the array literal are of the same type, TypeScript infers that the array is of that specific type. If the elements in the array literal have different types, TypeScript infers the type as a union of those types. If you initialize an empty array, TypeScript generally infers it as an array of the any type.
 const arr = [1,2,3]
@@ -233,8 +233,8 @@ while(true){}
 https://claritydev.net/blog/understanding-implementing-type-guards-typescript
 Type Guards: checking if a property exists in object, a method in the function 
 if(typeof weekdays === 'string') //Primitive type-guard
-if("isProp" in exampleObj){console.log(exampleObj.isProp)} // object type=guard
-if("isFunc" in exampleObj){console.log(exampleObj.isFunc()} // object type=guard
+if("isProp" in exampleObj){console.log(exampleObj.isProp)} // object-property type=guard
+if("isFunc" in exampleObj){console.log(exampleObj.isFunc()} // object-property type=guard
 if(obj instanceOf exampleObj) {console.log(Obj.isFunc()} // object type=guard
 
 //UserDefined type-guard
@@ -416,7 +416,7 @@ function merge(objA: object, objB: object) {
 }
 
 const mergedObj = merge({name:'Ajay'},{id:100});
-//intellisense will not work here, strong typing is non-existent
+//intellisense will not work below loc, strong typing is non-existent
 mergedObj.name
  intersection of two unkonwn objects is another unknown object
 

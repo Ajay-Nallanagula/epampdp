@@ -1,0 +1,1562 @@
+Date: Fri, 26 Apr 2024 10:46:11 +0000 (GMT)
+Message-ID: <2051994405.10787.1714128371350@kb.epam.com>
+Subject: Exported From Confluence
+MIME-Version: 1.0
+Content-Type: multipart/related; 
+	boundary="----=_Part_10786_346201182.1714128371349"
+
+------=_Part_10786_346201182.1714128371349
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-Location: file:///C:/exported.html
+
+<html xmlns:o=3D'urn:schemas-microsoft-com:office:office'
+      xmlns:w=3D'urn:schemas-microsoft-com:office:word'
+      xmlns:v=3D'urn:schemas-microsoft-com:vml'
+      xmlns=3D'urn:w3-org-ns:HTML'>
+<head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8=
+">
+    <title>Data Structures and Algorithms Interviewer Guidelines</title>
+    <!--[if gte mso 9]>
+    <xml>
+        <o:OfficeDocumentSettings>
+            <o:TargetScreenSize>1024x640</o:TargetScreenSize>
+            <o:PixelsPerInch>72</o:PixelsPerInch>
+            <o:AllowPNG/>
+        </o:OfficeDocumentSettings>
+        <w:WordDocument>
+            <w:View>Print</w:View>
+            <w:Zoom>90</w:Zoom>
+            <w:DoNotOptimizeForBrowser/>
+        </w:WordDocument>
+    </xml>
+    <![endif]-->
+    <style>
+                <!--
+        @page Section1 {
+            size: 8.5in 11.0in;
+            margin: 1.0in;
+            mso-header-margin: .5in;
+            mso-footer-margin: .5in;
+            mso-paper-source: 0;
+        }
+
+        table {
+            border: solid 1px;
+            border-collapse: collapse;
+        }
+
+        table td, table th {
+            border: solid 1px;
+            padding: 5px;
+        }
+
+        td {
+            page-break-inside: avoid;
+        }
+
+        tr {
+            page-break-after: avoid;
+        }
+
+        div.Section1 {
+            page: Section1;
+        }
+
+        /* Confluence print stylesheet. Common to all themes for print medi=
+a */
+/* Full of !important until we improve batching for print CSS */
+
+@media print {
+    #main {
+        padding-bottom: 1em !important; /* The default padding of 6em is to=
+o much for printouts */
+    }
+
+    body {
+        font-family: Arial, Helvetica, FreeSans, sans-serif;
+        font-size: 10pt;
+        line-height: 1.2;
+    }
+
+    body, #full-height-container, #main, #page, #content, .has-personal-sid=
+ebar #content {
+        background: #fff !important;
+        color: #000 !important;
+        border: 0 !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: block !important;
+    }
+
+    a, a:link, a:visited, a:focus, a:hover, a:active {
+        color: #000;
+    }
+
+    #content h1,
+    #content h2,
+    #content h3,
+    #content h4,
+    #content h5,
+    #content h6 {
+        font-family: Arial, Helvetica, FreeSans, sans-serif;
+        page-break-after: avoid;
+    }
+
+    pre {
+        font-family: Monaco, "Courier New", monospace;
+    }
+
+    #header,
+    .aui-header-inner,
+    #navigation,
+    #sidebar,
+    .sidebar,
+    #personal-info-sidebar,
+    .ia-fixed-sidebar,
+    .page-actions,
+    .navmenu,
+    .ajs-menu-bar,
+    .noprint,
+    .inline-control-link,
+    .inline-control-link a,
+    a.show-labels-editor,
+    .global-comment-actions,
+    .comment-actions,
+    .quick-comment-container,
+    #addcomment {
+        display: none !important;
+    }
+
+    /* CONF-28544 cannot print multiple pages in IE */
+    #splitter-content {
+        position: relative !important;
+    }
+
+    .comment .date::before {
+        content: none !important; /* remove middot for print view */
+    }
+
+    h1.pagetitle img {
+        height: auto;
+        width: auto;
+    }
+
+    .print-only {
+        display: block;
+    }
+
+    #footer {
+        position: relative !important; /* CONF-17506 Place the footer at en=
+d of the content */
+        margin: 0;
+        padding: 0;
+        background: none;
+        clear: both;
+    }
+
+    #poweredby {
+        border-top: none;
+        background: none;
+    }
+
+    #poweredby li.print-only {
+        display: list-item;
+        font-style: italic;
+    }
+
+    #poweredby li.noprint {
+        display: none;
+    }
+
+    /* no width controls in print */
+    .wiki-content .table-wrap,
+    .wiki-content p,
+    .panel .codeContent,
+    .panel .codeContent pre,
+    .image-wrap {
+        overflow: visible !important;
+    }
+
+    /* TODO - should this work? */
+    #children-section,
+    #comments-section .comment,
+    #comments-section .comment .comment-body,
+    #comments-section .comment .comment-content,
+    #comments-section .comment p {
+        page-break-inside: avoid;
+    }
+
+    #page-children a {
+        text-decoration: none;
+    }
+
+    /**
+     hide twixies
+
+     the specificity here is a hack because print styles
+     are getting loaded before the base styles. */
+    #comments-section.pageSection .section-header,
+    #comments-section.pageSection .section-title,
+    #children-section.pageSection .section-header,
+    #children-section.pageSection .section-title,
+    .children-show-hide {
+        padding-left: 0;
+        margin-left: 0;
+    }
+
+    .children-show-hide.icon {
+        display: none;
+    }
+
+    /* personal sidebar */
+    .has-personal-sidebar #content {
+        margin-right: 0px;
+    }
+
+    .has-personal-sidebar #content .pageSection {
+        margin-right: 0px;
+    }
+
+    .no-print, .no-print * {
+        display: none !important;
+    }
+}
+-->
+    </style>
+</head>
+<body>
+    <h1>Data Structures and Algorithms Interviewer Guidelines</h1>
+    <div class=3D"Section1">
+        <div class=3D"contentf aui-tabs horizontal-tabs">
+<ul class=3D"tabs-menu">
+</ul>
+<div id=3D"TI1:ExampleProblemQuestionSet" data-pane-title=3D"TI1: Example P=
+roblem Question Set" class=3D"cfm tabs-pane ">
+<p>A lot of questions can be sourced from</p>
+<ul style=3D"list-style-type: square;">
+<li>GeeksforGeeks: <a href=3D"https://practice.geeksforgeeks.org/explore?pa=
+ge=3D1&amp;difficulty[]=3D2&amp;sortBy=3Dsubmissions&amp;itm_source=3Dgeeks=
+forgeeks&amp;itm_medium=3Dmain_header&amp;itm_campaign=3Dpractice_header" c=
+lass=3D"external-link" rel=3D"nofollow">https://practice.geeksforgeeks.org/=
+explore?page=3D1&amp;difficulty[]=3D2&amp;sortBy=3Dsubmissions&amp;itm_sour=
+ce=3Dgeeksforgeeks&amp;itm_medium=3Dmain_header&amp;itm_campaign=3Dpractice=
+_header</a></li>
+</ul>
+<ul style=3D"list-style-type: square;">
+<li>Leetcode: <a href=3D"https://leetcode.com/problemset/all/?page=3D1&amp;=
+difficulty=3DHARD" class=3D"external-link" rel=3D"nofollow">https://leetcod=
+e.com/problemset/all/?page=3D1&amp;difficulty=3DHARD</a></li>
+</ul>
+<p>Generic examples for problem solving.</p>
+<ol>
+<li><a href=3D"https://leetcode.com/problems/median-of-two-sorted-arrays/" =
+class=3D"external-link" rel=3D"nofollow">The median of Two Sorted Arrays</a=
+></li>
+<li><a href=3D"https://leetcode.com/problems/container-with-most-water/" cl=
+ass=3D"external-link" rel=3D"nofollow">Container With Most Water</a></li>
+<li><a href=3D"https://leetcode.com/problems/longest-palindromic-substring/=
+" class=3D"external-link" rel=3D"nofollow">Longest Palindromic Substring</a=
+></li>
+<li><a href=3D"https://leetcode.com/problems/letter-combinations-of-a-phone=
+-number" class=3D"external-link" rel=3D"nofollow">Letter Combinations of a =
+Phone Number</a></li>
+<li><a href=3D"https://leetcode.com/problems/substring-with-concatenation-o=
+f-all-words" class=3D"external-link" rel=3D"nofollow">Substring with Concat=
+enation of All Words</a></li>
+<li><a href=3D"https://leetcode.com/problems/edit-distance" class=3D"extern=
+al-link" rel=3D"nofollow">Edit Distance</a></li>
+<li><a href=3D"https://leetcode.com/problems/shortest-palindrome" class=3D"=
+external-link" rel=3D"nofollow">Shortest Palindrome</a></li>
+<li><a href=3D"https://leetcode.com/problems/linked-list-cycle-ii" class=3D=
+"external-link" rel=3D"nofollow">Linked List Cycle</a></li>
+<li><a href=3D"https://leetcode.com/problems/reverse-linked-list-ii" class=
+=3D"external-link" rel=3D"nofollow">Reverse Linked List</a></li>
+<li><a href=3D"https://leetcode.com/problems/lru-cache" class=3D"external-l=
+ink" rel=3D"nofollow">LRU Cache</a></li>
+<li><a href=3D"https://leetcode.com/problems/rotate-list" class=3D"external=
+-link" rel=3D"nofollow">Rotate List</a></li>
+<li><a href=3D"https://leetcode.com/problems/merge-k-sorted-lists" class=3D=
+"external-link" rel=3D"nofollow">Merge k Sorted Lists</a></li>
+<li><a href=3D"https://leetcode.com/problems/lfu-cache" class=3D"external-l=
+ink" rel=3D"nofollow">LFU Cache</a></li>
+<li><a href=3D"https://leetcode.com/problems/design-circular-queue" class=
+=3D"external-link" rel=3D"nofollow">Design Circular Queue</a></li>
+<li><a href=3D"https://www.geeksforgeeks.org/find-the-largest-three-element=
+s-in-an-array/" class=3D"external-link" rel=3D"nofollow">Find the largest t=
+hree elements in an array</a></li>
+<li><a href=3D"https://www.geeksforgeeks.org/find-second-largest-element-ar=
+ray/" class=3D"external-link" rel=3D"nofollow">Find Second largest element =
+in an array</a></li>
+<li><a href=3D"https://www.geeksforgeeks.org/move-zeroes-end-array/" class=
+=3D"external-link" rel=3D"nofollow">Move all zeroes to end of array</a></li=
+>
+<li><a href=3D"https://www.geeksforgeeks.org/rearrange-array-such-that-even=
+-positioned-are-greater-than-odd/" class=3D"external-link" rel=3D"nofollow"=
+>Rearrange array such that even positioned are greater than odd</a></li>
+<li><a href=3D"https://www.geeksforgeeks.org/rearrange-array-maximum-minimu=
+m-form/" class=3D"external-link" rel=3D"nofollow">Rearrange an array in max=
+imum minimum form using Two Pointer Technique</a></li>
+<li><a href=3D"https://www.geeksforgeeks.org/segregate-even-odd-numbers-set=
+-3/" class=3D"external-link" rel=3D"nofollow">Segregate even and odd number=
+s</a></li>
+<li><a href=3D"https://www.geeksforgeeks.org/rearrange-array-arri/" class=
+=3D"external-link" rel=3D"nofollow">Rearrange an array such that arr[i] =3D=
+ i</a></li>
+<li><a href=3D"https://www.geeksforgeeks.org/rearrange-positive-and-negativ=
+e-numbers-publish/" class=3D"external-link" rel=3D"nofollow">Rearrange posi=
+tive and negative numbers in O(n) time and O(1) extra space</a></li>
+<li><a href=3D"https://www.geeksforgeeks.org/reorder-a-array-according-to-g=
+iven-indexes/" class=3D"external-link" rel=3D"nofollow">Reorder an array ac=
+cording to given indexes</a></li>
+<li><a href=3D"https://www.geeksforgeeks.org/search-an-element-in-a-sorted-=
+and-pivoted-array/" class=3D"external-link" rel=3D"nofollow">Search an elem=
+ent in a sorted and rotated Array</a></li>
+<li><a href=3D"https://www.geeksforgeeks.org/find-rotation-count-rotated-so=
+rted-array/" class=3D"external-link" rel=3D"nofollow">Find the Rotation Cou=
+nt in Rotated Sorted array</a></li>
+<li><a href=3D"https://www.geeksforgeeks.org/k-th-largest-sum-contiguous-su=
+barray/" class=3D"external-link" rel=3D"nofollow">K-th Largest Sum Contiguo=
+us Subarray</a></li>
+<li><a href=3D"https://www.geeksforgeeks.org/find-the-first-missing-number/=
+" class=3D"external-link" rel=3D"nofollow">Find the smallest missing number=
+</a></li>
+<li><a href=3D"https://www.geeksforgeeks.org/difference-array-range-update-=
+query-o1/" class=3D"external-link" rel=3D"nofollow">Difference Array | Rang=
+e update query in O(1)</a></li>
+<li><a href=3D"https://www.geeksforgeeks.org/maximum-profit-by-buying-and-s=
+elling-a-share-at-most-twice/" class=3D"external-link" rel=3D"nofollow">Max=
+imum profit by buying and selling a share at most twice</a></li>
+<li><a href=3D"https://www.geeksforgeeks.org/minimum-length-subarray-sum-gr=
+eater-given-value/" class=3D"external-link" rel=3D"nofollow">Smallest subar=
+ray with sum greater than a given value</a></li>
+<li><a href=3D"https://www.geeksforgeeks.org/inversion-count-in-array-using=
+-merge-sort/" class=3D"external-link" rel=3D"nofollow">Inversion count in A=
+rray using Merge Sort</a></li>
+<li><a href=3D"https://www.geeksforgeeks.org/sort-an-array-of-0s-1s-and-2s/=
+" class=3D"external-link" rel=3D"nofollow">Sort an array of 0s, 1s and 2s</=
+a></li>
+<li><a href=3D"https://www.geeksforgeeks.org/merge-two-sorted-arrays-o1-ext=
+ra-space/" class=3D"external-link" rel=3D"nofollow">Merge two sorted arrays=
+ with O(1) extra space</a></li>
+<li><a href=3D"https://www.geeksforgeeks.org/majority-element/" class=3D"ex=
+ternal-link" rel=3D"nofollow">Majority Element</a></li>
+<li><a href=3D"https://www.geeksforgeeks.org/two-pointers-technique/" class=
+=3D"external-link" rel=3D"nofollow">Two Pointers Technique</a></li>
+<li><a href=3D"https://www.geeksforgeeks.org/find-a-peak-in-a-given-array/"=
+ class=3D"external-link" rel=3D"nofollow">Find a peak element</a></li>
+<li><a href=3D"https://www.geeksforgeeks.org/find-a-triplet-that-sum-to-a-g=
+iven-value/" class=3D"external-link" rel=3D"nofollow">Find a triplet that s=
+um to a given value</a></li>
+<li><a href=3D"https://www.geeksforgeeks.org/minimum-increment-k-operations=
+-make-elements-equal/" class=3D"external-link" rel=3D"nofollow">Minimum inc=
+rement by k operations to make all elements equal</a></li>
+<li><a href=3D"https://www.geeksforgeeks.org/equilibrium-index-of-an-array/=
+" class=3D"external-link" rel=3D"nofollow">Minimum increment by k operation=
+s to make all elements equal</a></li>
+<li><a href=3D"https://www.geeksforgeeks.org/find-k-numbers-occurrences-giv=
+en-array/" class=3D"external-link" rel=3D"nofollow">Find k numbers with mos=
+t occurrences in the given array</a></li>
+</ol>
+<p><br></p>
+</div>
+<div id=3D"TI2:ExampleProblemQuestionSet" data-pane-title=3D"TI2: Example P=
+roblem Question Set" class=3D"cfm tabs-pane ">
+<p><strong>TI2 Question Set</strong></p>
+<div class=3D"table-wrap">
+<table class=3D"confluenceTable">
+<tbody class=3D"">
+<tr class=3D"">
+<td class=3D"confluenceTd">S.No</td>
+<td class=3D"confluenceTd">Coding Exercise</td>
+<td class=3D"confluenceTd">Complexity(Hard/Medium)</td>
+<td class=3D"confluenceTd">Average time to <br>
+complete( in minutes)</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">1</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/text-ju=
+stification/description/?envType=3Dstudy-plan-v2&amp;envId=3Dtop-interview-=
+150" class=3D"external-link" rel=3D"nofollow">https://leetcode.com/problems=
+/text-justification/description/?envType=3Dstudy-plan-v2&amp;envId=3Dtop-in=
+terview-150</a></td>
+<td class=3D"confluenceTd">Hard</td>
+<td class=3D"confluenceTd">50</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">2</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/clone-g=
+raph/" class=3D"external-link" rel=3D"nofollow">https://leetcode.com/proble=
+ms/clone-graph/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">15</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">3</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/minimum=
+-height-trees/description/" class=3D"external-link" rel=3D"nofollow">https:=
+//leetcode.com/problems/minimum-height-trees/description/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">30</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">4</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/course-=
+schedule/description/" class=3D"external-link" rel=3D"nofollow">https://lee=
+tcode.com/problems/course-schedule/description/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">20</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">5</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/course-=
+schedule-ii/description/" class=3D"external-link" rel=3D"nofollow">https://=
+leetcode.com/problems/course-schedule-ii/description/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">20</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">6</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/trappin=
+g-rain-water/description/?envType=3Dstudy-plan-v2&amp;envId=3Dtop-interview=
+-150" class=3D"external-link" rel=3D"nofollow">https://leetcode.com/problem=
+s/trapping-rain-water/description/?envType=3Dstudy-plan-v2&amp;envId=3Dtop-=
+interview-150</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">20</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">7</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/product=
+-of-array-except-self/description/?envType=3Dstudy-plan-v2&amp;envId=3Dtop-=
+interview-150" class=3D"external-link" rel=3D"nofollow">https://leetcode.co=
+m/problems/product-of-array-except-self/description/?envType=3Dstudy-plan-v=
+2&amp;envId=3Dtop-interview-150</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">15</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">8</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/largest=
+-rectangle-in-histogram/description/" class=3D"external-link" rel=3D"nofoll=
+ow">https://leetcode.com/problems/largest-rectangle-in-histogram/descriptio=
+n/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">30</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">9</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/longest=
+-increasing-path-in-a-matrix/description/" class=3D"external-link" rel=3D"n=
+ofollow">https://leetcode.com/problems/longest-increasing-path-in-a-matrix/=
+description/</a></td>
+<td class=3D"confluenceTd">Hard</td>
+<td class=3D"confluenceTd">30</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">10</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/ipo/des=
+cription/" class=3D"external-link" rel=3D"nofollow">https://leetcode.com/pr=
+oblems/ipo/description/</a></td>
+<td class=3D"confluenceTd">Hard</td>
+<td class=3D"confluenceTd">30</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">11</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/number-=
+of-islands/description/" class=3D"external-link" rel=3D"nofollow">https://l=
+eetcode.com/problems/number-of-islands/description/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">30</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">12</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/unique-=
+paths/description/" class=3D"external-link" rel=3D"nofollow">https://leetco=
+de.com/problems/unique-paths/description/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">20</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">13</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/word-se=
+arch/" class=3D"external-link" rel=3D"nofollow">https://leetcode.com/proble=
+ms/word-search/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">25</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">14</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/jump-ga=
+me-ii/" class=3D"external-link" rel=3D"nofollow">https://leetcode.com/probl=
+ems/jump-game-ii/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">20</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">15</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/contain=
+er-with-most-water/description/" class=3D"external-link" rel=3D"nofollow">h=
+ttps://leetcode.com/problems/container-with-most-water/description/</a></td=
+>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">20</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">16</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/search-=
+in-rotated-sorted-array-ii/" class=3D"external-link" rel=3D"nofollow">https=
+://leetcode.com/problems/search-in-rotated-sorted-array-ii/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">20</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">17</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/3sum/" =
+class=3D"external-link" rel=3D"nofollow">https://leetcode.com/problems/3sum=
+/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">20</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">18</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/merge-i=
+ntervals/" class=3D"external-link" rel=3D"nofollow">https://leetcode.com/pr=
+oblems/merge-intervals/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">20</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">19</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/multipl=
+y-strings/description/" class=3D"external-link" rel=3D"nofollow">https://le=
+etcode.com/problems/multiply-strings/description/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">15</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">20</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/merge-k=
+-sorted-lists/" class=3D"external-link" rel=3D"nofollow">https://leetcode.c=
+om/problems/merge-k-sorted-lists/</a></td>
+<td class=3D"confluenceTd">Hard</td>
+<td class=3D"confluenceTd">30</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">21</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/trappin=
+g-rain-water/" class=3D"external-link" rel=3D"nofollow">https://leetcode.co=
+m/problems/trapping-rain-water/</a></td>
+<td class=3D"confluenceTd">Hard</td>
+<td class=3D"confluenceTd">25</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">22</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/remove-=
+duplicates-from-sorted-array-ii/description/" class=3D"external-link" rel=
+=3D"nofollow">https://leetcode.com/problems/remove-duplicates-from-sorted-a=
+rray-ii/description/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">20</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">23</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/rotate-=
+list/description/" class=3D"external-link" rel=3D"nofollow">https://leetcod=
+e.com/problems/rotate-list/description/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">15</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">24</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/search-=
+in-rotated-sorted-array-ii/description/" class=3D"external-link" rel=3D"nof=
+ollow">https://leetcode.com/problems/search-in-rotated-sorted-array-ii/desc=
+ription/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">20</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">25</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/add-two=
+-numbers/" class=3D"external-link" rel=3D"nofollow">https://leetcode.com/pr=
+oblems/add-two-numbers/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">20</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">26</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/minimum=
+-falling-path-sum/" class=3D"external-link" rel=3D"nofollow">https://leetco=
+de.com/problems/minimum-falling-path-sum/&nbsp;</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">20</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">27</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/next-pe=
+rmutation/description/" class=3D"external-link" rel=3D"nofollow">https://le=
+etcode.com/problems/next-permutation/description/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">40</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">28</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/ones-an=
+d-zeroes/description/" class=3D"external-link" rel=3D"nofollow">https://lee=
+tcode.com/problems/ones-and-zeroes/description/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">20</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">29</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/count-n=
+umber-of-nice-subarrays/" class=3D"external-link" rel=3D"nofollow">https://=
+leetcode.com/problems/count-number-of-nice-subarrays/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">30</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">30</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/max-con=
+secutive-ones-iii/" class=3D"external-link" rel=3D"nofollow">https://leetco=
+de.com/problems/max-consecutive-ones-iii/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">15</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">31</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/daily-t=
+emperatures/" class=3D"external-link" rel=3D"nofollow">https://leetcode.com=
+/problems/daily-temperatures/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">15</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">32</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/decode-=
+string/" class=3D"external-link" rel=3D"nofollow">https://leetcode.com/prob=
+lems/decode-string/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">30</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">33</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/design-=
+circular-queue/description/" class=3D"external-link" rel=3D"nofollow">https=
+://leetcode.com/problems/design-circular-queue/description/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">20</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">34</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/candy/d=
+escription/?envType=3Dstudy-plan-v2&amp;envId=3Dtop-interview-150" class=3D=
+"external-link" rel=3D"nofollow">Candy - LeetCode</a></td>
+<td class=3D"confluenceTd">Hard</td>
+<td class=3D"confluenceTd"><br></td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">35</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/n-queen=
+s-ii/description/?envType=3Dstudy-plan-v2&amp;envId=3Dtop-interview-150" cl=
+ass=3D"external-link" rel=3D"nofollow">N-Queens II - LeetCode</a></td>
+<td class=3D"confluenceTd">Hard</td>
+<td class=3D"confluenceTd"><br></td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">36</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/house-r=
+obber/description" class=3D"external-link" rel=3D"nofollow">https://leetcod=
+e.com/problems/house-robber/description</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd"><br></td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">37</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/number-=
+of-ways-to-arrive-at-destination/" class=3D"external-link" rel=3D"nofollow"=
+>https://leetcode.com/problems/number-of-ways-to-arrive-at-destination/</a>=
+</td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">30</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">38</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/number-=
+of-increasing-paths-in-a-grid/description/" class=3D"external-link" rel=3D"=
+nofollow">https://leetcode.com/problems/number-of-increasing-paths-in-a-gri=
+d/description/</a></td>
+<td class=3D"confluenceTd">Hard</td>
+<td class=3D"confluenceTd"><br></td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">39</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/contain=
+er-with-most-water/description" class=3D"external-link" rel=3D"nofollow">ht=
+tps://leetcode.com/problems/container-with-most-water/description</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd"><br></td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">40</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/find-th=
+e-winner-of-the-circular-game/" class=3D"external-link" rel=3D"nofollow">ht=
+tps://leetcode.com/problems/find-the-winner-of-the-circular-game/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">10</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">41</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/3sum/" =
+class=3D"external-link" rel=3D"nofollow">https://leetcode.com/problems/3sum=
+/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">20</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">42</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/target-=
+sum/" class=3D"external-link" rel=3D"nofollow">https://leetcode.com/problem=
+s/target-sum/</a></td>
+<td class=3D"confluenceTd">medium</td>
+<td class=3D"confluenceTd">25</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">43</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/binary-=
+tree-maximum-path-sum/" class=3D"external-link" rel=3D"nofollow">https://le=
+etcode.com/problems/binary-tree-maximum-path-sum/</a></td>
+<td class=3D"confluenceTd">Hard</td>
+<td class=3D"confluenceTd">30</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">44</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/alien-d=
+ictionary/" class=3D"external-link" rel=3D"nofollow">https://leetcode.com/p=
+roblems/alien-dictionary/</a></td>
+<td class=3D"confluenceTd">Hard</td>
+<td class=3D"confluenceTd">45</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">45</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/number-=
+of-distinct-islands-ii/" class=3D"external-link" rel=3D"nofollow">https://l=
+eetcode.com/problems/number-of-distinct-islands-ii/</a></td>
+<td class=3D"confluenceTd">Hard</td>
+<td class=3D"confluenceTd">40</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">46</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/similar=
+-string-groups/" class=3D"external-link" rel=3D"nofollow">https://leetcode.=
+com/problems/similar-string-groups/</a></td>
+<td class=3D"confluenceTd">Hard</td>
+<td class=3D"confluenceTd">45</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">47</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/cut-off=
+-trees-for-golf-event/" class=3D"external-link" rel=3D"nofollow">https://le=
+etcode.com/problems/cut-off-trees-for-golf-event/</a></td>
+<td class=3D"confluenceTd">Hard</td>
+<td class=3D"confluenceTd">45</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">48</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/lru-cac=
+he/description/" class=3D"external-link" rel=3D"nofollow">https://leetcode.=
+com/problems/lru-cache/description/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">30</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">49</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/merge-k=
+-sorted-lists/description/" class=3D"external-link" rel=3D"nofollow">https:=
+//leetcode.com/problems/merge-k-sorted-lists/description/</a></td>
+<td class=3D"confluenceTd">Hard</td>
+<td class=3D"confluenceTd">30</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">50</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/minimum=
+-window-substring/" class=3D"external-link" rel=3D"nofollow">https://leetco=
+de.com/problems/minimum-window-substring/</a></td>
+<td class=3D"confluenceTd">Hard</td>
+<td class=3D"confluenceTd">50</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">51</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/car-poo=
+ling/description/" class=3D"external-link" rel=3D"nofollow">https://leetcod=
+e.com/problems/car-pooling/description/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">30</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">52</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/regular=
+-expression-matching/" class=3D"external-link" rel=3D"nofollow">https://lee=
+tcode.com/problems/regular-expression-matching/</a></td>
+<td class=3D"confluenceTd">Hard</td>
+<td class=3D"confluenceTd">40</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">53</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/best-ti=
+me-to-buy-and-sell-stock-ii/description/" class=3D"external-link" rel=3D"no=
+follow">https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/de=
+scription/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">30</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">54</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/jump-ga=
+me/description/q" class=3D"external-link" rel=3D"nofollow">https://leetcode=
+.com/problems/jump-game/description/q</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">30</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">55</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/largest=
+-rectangle-in-histogram/submissions/" class=3D"external-link" rel=3D"nofoll=
+ow">https://leetcode.com/problems/largest-rectangle-in-histogram/submission=
+s/</a></td>
+<td class=3D"confluenceTd">Hard</td>
+<td class=3D"confluenceTd">50</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">56</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/stampin=
+g-the-sequence/" class=3D"external-link" rel=3D"nofollow">https://leetcode.=
+com/problems/stamping-the-sequence/</a></td>
+<td class=3D"confluenceTd">Hard</td>
+<td class=3D"confluenceTd">50</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">57</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/product=
+-of-array-except-self/" class=3D"external-link" rel=3D"nofollow">https://le=
+etcode.com/problems/product-of-array-except-self/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">40</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">58</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/reverse=
+-words-in-a-string/" class=3D"external-link" rel=3D"nofollow">https://leetc=
+ode.com/problems/reverse-words-in-a-string/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">40</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">59</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/increas=
+ing-triplet-subsequence/" class=3D"external-link" rel=3D"nofollow">https://=
+leetcode.com/problems/increasing-triplet-subsequence/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">25</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">60</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/candy/"=
+ class=3D"external-link" rel=3D"nofollow">https://leetcode.com/problems/can=
+dy/</a></td>
+<td class=3D"confluenceTd">Hard</td>
+<td class=3D"confluenceTd">35</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">61</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/simplif=
+y-path/" class=3D"external-link" rel=3D"nofollow">https://leetcode.com/prob=
+lems/simplify-path/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">30</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">62</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/longest=
+-valid-parentheses/" class=3D"external-link" rel=3D"nofollow">https://leetc=
+ode.com/problems/longest-valid-parentheses/</a></td>
+<td class=3D"confluenceTd">Hard</td>
+<td class=3D"confluenceTd">50</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">63</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/reorder=
+-list/" class=3D"external-link" rel=3D"nofollow">https://leetcode.com/probl=
+ems/reorder-list/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">40</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">64</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/add-two=
+-numbers/description/" class=3D"external-link" rel=3D"nofollow">https://lee=
+tcode.com/problems/add-two-numbers/description/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">40</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">65</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/insert-=
+interval/" class=3D"external-link" rel=3D"nofollow">https://leetcode.com/pr=
+oblems/insert-interval/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">30</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">66</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/the-sky=
+line-problem/description/" class=3D"external-link" rel=3D"nofollow">The Sky=
+line Problem - LeetCode</a></td>
+<td class=3D"confluenceTd">Hard</td>
+<td class=3D"confluenceTd">55</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">67</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/trappin=
+g-rain-water-ii/description/" class=3D"external-link" rel=3D"nofollow">Trap=
+ping Rain Water II - LeetCode</a></td>
+<td class=3D"confluenceTd">Hard</td>
+<td class=3D"confluenceTd">60</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">68</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/trappin=
+g-rain-water/description/" class=3D"external-link" rel=3D"nofollow">Trappin=
+g Rain Water - LeetCode</a></td>
+<td class=3D"confluenceTd">Hard</td>
+<td class=3D"confluenceTd">45</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">69</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/contain=
+er-with-most-water/" class=3D"external-link" rel=3D"nofollow">https://leetc=
+ode.com/problems/container-with-most-water/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">25</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">70</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/minimiz=
+e-maximum-of-array/description/" class=3D"external-link" rel=3D"nofollow">M=
+inimize Maximum of Array - LeetCode</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">30</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">71</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/find-fi=
+rst-and-last-position-of-element-in-sorted-array/description/" class=3D"ext=
+ernal-link" rel=3D"nofollow">https://leetcode.com/problems/find-first-and-l=
+ast-position-of-element-in-sorted-array/description/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">30</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">72</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/jump-ga=
+me-ii/" class=3D"external-link" rel=3D"nofollow">https://leetcode.com/probl=
+ems/jump-game-ii/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">25</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">73</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/spiral-=
+matrix/" class=3D"external-link" rel=3D"nofollow">https://leetcode.com/prob=
+lems/spiral-matrix/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">35</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">74</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/distinc=
+t-subsequences/" class=3D"external-link" rel=3D"nofollow">https://leetcode.=
+com/problems/distinct-subsequences/</a></td>
+<td class=3D"confluenceTd">Hard</td>
+<td class=3D"confluenceTd">45</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">75</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/optimal=
+-partition-of-string/description/" class=3D"external-link" rel=3D"nofollow"=
+>https://leetcode.com/problems/optimal-partition-of-string/description/</a>=
+</td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">15</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">76</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/binary-=
+tree-maximum-path-sum/" class=3D"external-link" rel=3D"nofollow">https://le=
+etcode.com/problems/binary-tree-maximum-path-sum/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">45</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">77</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/number-=
+of-zero-filled-subarrays/description/" class=3D"external-link" rel=3D"nofol=
+low">Number of Zero-Filled Subarrays - LeetCode</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">15</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">78</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/success=
+ful-pairs-of-spells-and-potions/description/" class=3D"external-link" rel=
+=3D"nofollow">Successful Pairs of Spells and Potions - LeetCode</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">25</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">79</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/find-pe=
+ak-element/description/" class=3D"external-link" rel=3D"nofollow">Find Peak=
+ Element - LeetCode</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">30</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">80</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/removin=
+g-stars-from-a-string/description/" class=3D"external-link" rel=3D"nofollow=
+">https://leetcode.com/problems/removing-stars-from-a-string/description/</=
+a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">20</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">81</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/4sum/de=
+scription/" class=3D"external-link" rel=3D"nofollow">4Sum - LeetCode</a></t=
+d>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">20</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">82</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/reduce-=
+array-size-to-the-half/description/" class=3D"external-link" rel=3D"nofollo=
+w">https://leetcode.com/problems/reduce-array-size-to-the-half/description/=
+</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">20</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">83</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/surroun=
+ded-regions/description/" class=3D"external-link" rel=3D"nofollow">https://=
+leetcode.com/problems/surrounded-regions/description/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">30</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">84</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/min-cos=
+t-to-connect-all-points/" class=3D"external-link" rel=3D"nofollow">https://=
+leetcode.com/problems/min-cost-to-connect-all-points/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">30</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">85</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/combina=
+tion-sum-iv/description/" class=3D"external-link" rel=3D"nofollow">https://=
+leetcode.com/problems/combination-sum-iv/description/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">20</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">86</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/network=
+-delay-time/description/" class=3D"external-link" rel=3D"nofollow">https://=
+leetcode.com/problems/network-delay-time/description/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">30</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">87</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/number-=
+of-provinces/description/" class=3D"external-link" rel=3D"nofollow">https:/=
+/leetcode.com/problems/number-of-provinces/description/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">30</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">88</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/account=
+s-merge/description/" class=3D"external-link" rel=3D"nofollow">https://leet=
+code.com/problems/accounts-merge/description/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">30</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">89</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/subsets=
+/description/" class=3D"external-link" rel=3D"nofollow">https://leetcode.co=
+m/problems/subsets/description/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">40</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">90</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/subsets=
+-ii/" class=3D"external-link" rel=3D"nofollow">https://leetcode.com/problem=
+s/subsets-ii/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">40</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">91</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/search-=
+a-2d-matrix/description/" class=3D"external-link" rel=3D"nofollow">https://=
+leetcode.com/problems/search-a-2d-matrix/description/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">15</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">92</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/edit-di=
+stance/" class=3D"external-link" rel=3D"nofollow">https://leetcode.com/prob=
+lems/edit-distance/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">40</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">93</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/rotate-=
+list/" class=3D"external-link" rel=3D"nofollow">https://leetcode.com/proble=
+ms/rotate-list/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">30</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">94</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/wildcar=
+d-matching/description/" class=3D"external-link" rel=3D"nofollow">https://l=
+eetcode.com/problems/wildcard-matching/description/</a></td>
+<td class=3D"confluenceTd">Hard</td>
+<td class=3D"confluenceTd"><br></td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">95</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/valid-s=
+udoku/" class=3D"external-link" rel=3D"nofollow">https://leetcode.com/probl=
+ems/valid-sudoku/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">25</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">96</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/longest=
+-consecutive-sequence/" class=3D"external-link" rel=3D"nofollow">https://le=
+etcode.com/problems/longest-consecutive-sequence/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">25</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">97</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/house-r=
+obber/description/" class=3D"external-link" rel=3D"nofollow">https://leetco=
+de.com/problems/house-robber/description/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">15</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">98</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/validat=
+e-binary-search-tree/description/" class=3D"external-link" rel=3D"nofollow"=
+>https://leetcode.com/problems/validate-binary-search-tree/description/</a>=
+</td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">15</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">99</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/best-ti=
+me-to-buy-and-sell-stock-iii/description/" class=3D"external-link" rel=3D"n=
+ofollow">https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/=
+description/</a></td>
+<td class=3D"confluenceTd">Hard</td>
+<td class=3D"confluenceTd">30</td>
+</tr>
+<tr class=3D"">
+<td class=3D"confluenceTd">100</td>
+<td class=3D"confluenceTd"><a href=3D"https://leetcode.com/problems/minimum=
+-number-of-arrows-to-burst-balloons/" class=3D"external-link" rel=3D"nofoll=
+ow">https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloon=
+s/</a></td>
+<td class=3D"confluenceTd">Medium</td>
+<td class=3D"confluenceTd">25</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><br></p>
+</div>
+<div id=3D"Guidelines" data-pane-title=3D"Guidelines" class=3D"cfm tabs-pan=
+e ">
+<p>These TI1 guidelines are in addition to <a href=3D"https://kb.epam.com/d=
+isplay/GDOKB/OSTD+India+-+Technical+Interviewer+Guidelines" rel=3D"nofollow=
+">OSTD India - Technical Interviewer Guidelines</a></p>
+<p>Sample TI1 Interview Link: <a href=3D"https://epam-my.sharepoint.com/per=
+sonal/vishal_jha_epam_com/_layouts/15/stream.aspx?id=3D%2Fpersonal%2Fvishal=
+%5Fjha%5Fepam%5Fcom%2FDocuments%2FRecordings%2FTechnical%20Interview%5F%20A=
+shish%20Tiwari%2C%20Java%2D20230926%5F130833%2DMeeting%20Recording%2Emp4&am=
+p;nav=3DeyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZ=
+lcnJhbFZpZXciOiJTaGFyZURpYWxvZyIsInJlZmVycmFsQXBwUGxhdGZvcm0iOiJXZWIiLCJyZW=
+ZlcnJhbE1vZGUiOiJ2aWV3In19&amp;referrer=3DTeams%2ETEAMS%2DELECTRON&amp;refe=
+rrerScenario=3Dp2p%5Fns%2Dbim" class=3D"external-link" rel=3D"nofollow">htt=
+ps://epam-my.sharepoint.com/personal/vishal_jha_epam_com/_layouts/15/stream=
+.aspx?id=3D%2Fpersonal%2Fvishal%5Fjha%5Fepam%5Fcom%2FDocuments%2FRecordings=
+%2FTechnical%20Interview%5F%20Ashish%20Tiwari%2C%20Java%2D20230926%5F130833=
+%2DMeeting%20Recording%2Emp4&amp;nav=3DeyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxB=
+cHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZyIsInJlZmVycmF=
+sQXBwUGxhdGZvcm0iOiJXZWIiLCJyZWZlcnJhbE1vZGUiOiJ2aWV3In19&amp;referrer=3DTe=
+ams%2ETEAMS%2DELECTRON&amp;referrerScenario=3Dp2p%5Fns%2Dbim</a></p>
+<p>Sample TI1 Interview Link: <a href=3D"https://epam-my.sharepoint.com/per=
+sonal/krishnakanth_chukkambotla_epam_com/_layouts/15/stream.aspx?id=3D%2Fpe=
+rsonal%2Fkrishnakanth%5Fchukkambotla%5Fepam%5Fcom%2FDocuments%2FRecordings%=
+2FTechnical%20Shubham%20Shrivastava%20Java%2D20230708%5F085607%2DMeeting%20=
+Recording%2Emp4&amp;nav=3DeyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlY=
+W1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZyIsInJlZmVycmFsQXBwUGxhdGZv=
+cm0iOiJXZWIiLCJyZWZlcnJhbE1vZGUiOiJ2aWV3In19" class=3D"external-link" rel=
+=3D"nofollow">https://epam-my.sharepoint.com/personal/krishnakanth_chukkamb=
+otla_epam_com/_layouts/15/stream.aspx?id=3D%2Fpersonal%2Fkrishnakanth%5Fchu=
+kkambotla%5Fepam%5Fcom%2FDocuments%2FRecordings%2FTechnical%20Shubham%20Shr=
+ivastava%20Java%2D20230708%5F085607%2DMeeting%20Recording%2Emp4&amp;nav=3De=
+yJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZp=
+ZXciOiJTaGFyZURpYWxvZyIsInJlZmVycmFsQXBwUGxhdGZvcm0iOiJXZWIiLCJyZWZlcnJhbE1=
+vZGUiOiJ2aWV3In19</a></p>
+<p><br></p>
+<p>Mandatory Technical/Soft skills to check:</p>
+<ol>
+<li><strong>Problem-Solving Skills using Data Structures and Algorithms</st=
+rong> (Examples given in previous tab)
+<ol>
+<li>Gather four to five algorithm questions that especially test backtracki=
+ng, dynamic programming, Graphs, and Trees</li>
+<li>Refresh the algorithms for every month.</li>
+<li>Do not ask to solve the same problems for consecutive interviews.</li>
+<li>The algorithm difficulty should be medium to high.</li>
+<li>Do not ask for simple or easy algorithms.</li>
+<li>Provide 10 to 20 minutes of time to solve the problem.</li>
+</ol></li>
+<li><strong>Java 8</strong>
+<ol>
+<li>Lambda</li>
+<li>Streams</li>
+<li>Hashing</li>
+<li>Try with resources.</li>
+<li>OOPS</li>
+<li>Object-Oriented Design Principles</li>
+<li>Multithreading</li>
+<li>Object class methods</li>
+<li>Map, TreeMap - in-depth</li>
+</ol></li>
+<li><strong>JUnit - Unit Testing</strong>
+<ol>
+<li>It could be any unit testing framework, need to see if the candidate ha=
+s any working knowledge and how much depth he knows about testing.</li>
+<li>Check if the candidate has knowledge of Code Coverage, Test Pyramid</li=
+>
+<li>Check how he could write unit test cases. is he/she writing only to get=
+ the best coverage, or did he/she understand the importance of testing the =
+functionality or code coverage?</li>
+<li>Check if the candidate has Mocking skill experience or knowledge.&nbsp;=
+</li>
+</ol></li>
+</ol>
+</div>
+<div id=3D"TI1andTI2Structure" data-pane-title=3D"TI1 and TI2 Structure" cl=
+ass=3D"cfm tabs-pane ">
+<p><strong>NOTE: Currently only TI1 is conducted by Practice and TI2 by Spe=
+cial Panels.</strong></p>
+<p></p>
+<div class=3D"vf-slide-viewer-macro" data-width=3D"60%" data-height=3D"60%"=
+ data-attachment=3D"DS+Algo+Interview+Structure.pptx" data-attachment-id=3D=
+"1957989155" data-attachment-ver=3D"5" data-page-id=3D"1691262884" data-dow=
+nload-path=3D"/download/attachments/1691262884/DS%20Algo%20Interview%20Stru=
+cture.pptx?api=3Dv2" data-use-path-auth=3D"true" data-edit-url=3D"%2Fplugin=
+s%2Fservlet%2Fconfluence%2Feditinword%2F1691262884%2Fattachments%2FDS+Algo+=
+Interview+Structure.pptx" data-allow-edit=3D"true">
+<div class=3D"vf-slide-viewer">
+<div class=3D"vf-slide-wrapper">
+<div class=3D"vf-error"></div>
+<div class=3D"vf-slide-loading"></div>
+<div class=3D"vf-slide-outer" style=3D"width: 60%; height: 60%;"></div>
+<div class=3D"vf-preview-placeholder"></div>
+<div class=3D"vf-progress-placeholder"></div>
+</div>
+<div class=3D"vf-toolbar">
+<div class=3D"vf-controls-placeholder"></div>
+</div>
+</div>
+</div>
+<p></p>
+</div>
+<div id=3D"CandidateGuideDuringInterview" data-pane-title=3D"Candidate Guid=
+e During Interview" class=3D"cfm tabs-pane ">
+<div class=3D"office-container"><a href=3D"/plugins/servlet/confluence/edit=
+inword/1691262884/attachments/Candidate-Guide.docx" class=3D"confluence-but=
+ton office-editable" data-use-path-auth=3D"true">Edit Document</a>
+<div class=3D"office-document">
+<div style=3D"line-height:130%; font-family:Arial; font-size:14pt; color:#2=
+62626">
+<div>
+<p style=3D"margin-top:12pt; margin-bottom:12pt; line-height:200%; font-siz=
+e:38pt"><span style=3D"font-family:'Arial Black'; text-transform:uppercase;=
+ letter-spacing:2pt; color:#000000">Candidate GUIDE</span></p>
+<p style=3D"margin-top:0pt; margin-bottom:8pt"><br style=3D"page-break-befo=
+re:always; clear:both"></p>
+<h1 style=3D"margin-top:6pt; margin-bottom:6pt; line-height:200%; border-le=
+ft:1.5pt solid #629dd1; padding-left:12pt; font-size:22pt"><span style=3D"f=
+ont-family:'Arial Black'; font-weight:normal; text-transform:uppercase; let=
+ter-spacing:0.5pt; color:#000000">INSTRUCTIONS TO THE CANDIDATE</span></h1>
+<ol type=3D"1" style=3D"margin:0pt; padding-left:0pt">
+<li style=3D"margin-left:23.78pt; padding-left:1.32pt; font-weight:bold; co=
+lor:#bb640d"><span>CANDIDATE MUST ALWAYS SHARE THEIR SCREEN.</span></li>
+<li style=3D"margin-left:23.78pt; padding-left:1.32pt; font-weight:bold; co=
+lor:#bb640d"><span>THE CANDIDATE=E2=80=99S SYSTEM MUST NOT EXTEND THEIR SCR=
+EEN, MUST NOT USE MULTIPLE DISPLAY SYSTEMS</span></li>
+<li style=3D"margin-left:23.78pt; padding-left:1.32pt; font-weight:bold; co=
+lor:#bb640d"><span>CANDIDATE MUST ALWAYS BE IN VIDEO MODE.</span></li>
+<li style=3D"margin-left:23.78pt; padding-left:1.32pt; font-weight:bold; co=
+lor:#bb640d"><span>THERE MUST NOT BE ANY BACKGROUND EFFECTS ON THE VIDEO.</=
+span></li>
+<li style=3D"margin-left:23.78pt; padding-left:1.32pt; font-weight:bold; co=
+lor:#bb640d"><span>CANDIDATE MUST TALK BY LOOKING CAMERA.</span></li>
+<li style=3D"margin-left:23.78pt; padding-left:1.32pt; font-weight:bold; co=
+lor:#bb640d"><span>THERE MUST NOT BE ANY OTHER APPLICATIONS RUNNING IN THE =
+CANDIDATE SYSTEM, OTHER THAN THE BROWSER FOR THE INTERVIEW PLATFORM.</span>=
+</li>
+<li style=3D"margin-left:23.78pt; padding-left:1.32pt; font-weight:bold"><s=
+pan>THE CANDIDATE SHOULD BE READY WITH IDE, SET UP PROPER PROJECT SETUP WIT=
+H A BUILD TOOL AND SHOULD BE ABLE TO WRITE UNIT TESTS FOR GIVEN SCENARIOS U=
+SING UNIT TEST FRAMEWORK DEPENDENCIES.</span></li>
+<li style=3D"margin-left:23.78pt; margin-bottom:8pt; padding-left:1.32pt"><=
+span style=3D"font-weight:bold">CANDIDATE CAN WRITE CODE IN IDE BY INFORMIN=
+G THE INTERVIEWER AND SENDING THE CODE TO THE INTERVIEWER FOR RECORDING PUR=
+POSES.</span></li>
+</ol>
+<p style=3D"margin-top:0pt; margin-bottom:8pt"><span>&nbsp;</span></p>
+<p style=3D"margin-top:0pt; margin-bottom:8pt; text-align:justify"><span st=
+yle=3D"font-weight:bold; color:#000000">Things to keep in mind during Codin=
+g rounds: </span></p>
+<p style=3D"margin-top:0pt; margin-left:36pt; margin-bottom:0pt; text-inden=
+t:-18pt; line-height:130%; font-size:10.5pt"><span style=3D"font-family:'Se=
+goe UI'">-</span> <span style=3D"font:7pt 'Times New Roman'">&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style=3D"font-family=
+:'Segoe UI'">Ask all the questions/doubts in the beginning so that you are =
+clear about the problem.</span></p>
+<p style=3D"margin-top:0pt; margin-left:36pt; margin-bottom:0pt; text-inden=
+t:-18pt; line-height:130%; font-size:10.5pt"><span style=3D"font-family:'Se=
+goe UI'">-</span> <span style=3D"font:7pt 'Times New Roman'">&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style=3D"font-family=
+:'Segoe UI'">Think aloud your solution; be confident.</span></p>
+<p style=3D"margin-top:0pt; margin-left:36pt; margin-bottom:0pt; text-inden=
+t:-18pt; line-height:130%; font-size:10.5pt"><span style=3D"font-family:'Se=
+goe UI'">-</span> <span style=3D"font:7pt 'Times New Roman'">&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style=3D"font-family=
+:'Segoe UI'">All test cases should be covered and add your own if required.=
+</span></p>
+<p style=3D"margin-top:0pt; margin-left:36pt; margin-bottom:0pt; text-inden=
+t:-18pt; line-height:130%; font-size:10.5pt"><span style=3D"font-family:'Se=
+goe UI'">-</span> <span style=3D"font:7pt 'Times New Roman'">&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style=3D"font-family=
+:'Segoe UI'">Use Clean Code practices =E2=80=93 don=E2=80=99t over complica=
+te your solution.</span></p>
+<p style=3D"margin-top:0pt; margin-left:36pt; margin-bottom:0pt; text-inden=
+t:-18pt; line-height:130%; font-size:10.5pt"><span style=3D"font-family:'Se=
+goe UI'">-</span> <span style=3D"font:7pt 'Times New Roman'">&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style=3D"font-family=
+:'Segoe UI'">Be aware of time and space complexity of the solution. Underst=
+and cyclomatic complexity and estimate the complexity in O notation of the =
+solutions you provide.</span></p>
+<p style=3D"margin-top:0pt; margin-left:36pt; margin-bottom:8pt; text-inden=
+t:-18pt; line-height:130%; font-size:10.5pt"><span style=3D"font-family:'Se=
+goe UI'">-</span> <span style=3D"font:7pt 'Times New Roman'">&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span> <span style=3D"font-family=
+:'Segoe UI'">Be prepared to discuss how to further optimize your solution.<=
+/span></p>
+<p style=3D"margin-top:0pt; margin-bottom:8pt"><span>&nbsp;</span></p>
+<h2 style=3D"margin-top:8pt; margin-bottom:6pt; line-height:200%; font-size=
+:20pt"><span style=3D"font-family:'Arial Black'; font-weight:normal; color:=
+#0d0d0d">INTERVIEW FORMATS</span></h2>
+<h3 style=3D"margin-top:4pt; margin-bottom:6pt; page-break-inside:avoid; pa=
+ge-break-after:avoid; line-height:150%; font-size:14pt"><span style=3D"font=
+-family:'Arial Black'; font-weight:normal; text-transform:uppercase">Techni=
+cal Interview =E2=80=93 I</span></h3>
+<ol type=3D"1" style=3D"margin:0pt; padding-left:0pt">
+<li style=3D"margin-left:34.68pt; padding-left:1.32pt"><span>ID Verificatio=
+n: With clear visibility, the candidate should start the video and present =
+government-approved ID Proof to HR or Interviewer.</span></li>
+<li style=3D"margin-left:34.68pt; padding-left:1.32pt"><span>The Interview =
+Duration would be 90 Minutes after verification of ID Proof.</span></li>
+<li style=3D"margin-left:34.68pt; padding-left:1.32pt"><span>During the 90 =
+Minutes:</span>
+<ol type=3D"a" style=3D"margin-right:0pt; margin-left:0pt; padding-left:0pt=
+">
+<li style=3D"margin-left:34.68pt; padding-left:1.32pt"><span>first two minu=
+tes, the interviewer introduces himself to the candidate.</span></li>
+<li style=3D"margin-left:34.68pt; padding-left:1.32pt"><span>next five minu=
+tes the candidate introduces his achievement and talks about his career.</s=
+pan></li>
+<li style=3D"margin-left:33.89pt; padding-left:2.11pt"><span>After introduc=
+tions, the next 60 to 70 minutes of technical discussion.</span></li>
+<li style=3D"margin-left:34.68pt; padding-left:1.32pt"><span>The last 10 mi=
+nutes of the interview duration will be dedicated to the questions from the=
+ candidate.</span></li>
+</ol></li>
+<li style=3D"margin-left:34.68pt; padding-left:1.32pt"><span>Discussion and=
+ Coding:</span>
+<ol type=3D"a" style=3D"margin-right:0pt; margin-left:0pt; padding-left:0pt=
+">
+<li style=3D"margin-left:34.68pt; padding-left:1.32pt"><span>Mostly on Data=
+ Structures and Algorithms using Core Java</span></li>
+<li style=3D"margin-left:34.68pt; padding-left:1.32pt"><span>The candidate =
+should be able to write unit test cases for verifying the solution.</span><=
+/li>
+<li style=3D"margin-left:33.89pt; padding-left:2.11pt"><span>Candidate shou=
+ld be able to use Java 8+ versions.</span></li>
+<li style=3D"margin-left:34.68pt; padding-left:1.32pt"><span>Candidate shou=
+ld be able to write Java 8+ code for given scenarios.</span></li>
+<li style=3D"margin-left:34.68pt; padding-left:1.32pt"><span>Candidate shou=
+ld know the concepts of selecting proper Data Structures and Algorithm Tech=
+niques for Given Problems.</span></li>
+<li style=3D"margin-left:30.78pt; padding-left:5.22pt"><span>Candidate shou=
+ld be able to complete each problem within 20 to 25 minutes.</span></li>
+<li style=3D"margin-left:34.68pt; margin-bottom:8pt; padding-left:1.32pt"><=
+span>There would be three problems, the candidate should solve.</span></li>
+</ol></li>
+</ol>
+<h3 style=3D"margin-top:4pt; margin-bottom:6pt; page-break-inside:avoid; pa=
+ge-break-after:avoid; line-height:150%; font-size:14pt"><span style=3D"font=
+-family:'Arial Black'; font-weight:normal; text-transform:uppercase">Techni=
+cal Interview =E2=80=93 II</span></h3>
+<ol type=3D"1" style=3D"margin:0pt; padding-left:0pt">
+<li style=3D"margin-left:34.68pt; padding-left:1.32pt"><span>ID Verificatio=
+n: With clear visibility, the candidate should start the video and present =
+government-approved ID Proof to HR or Interviewer.</span></li>
+<li style=3D"margin-left:34.68pt; padding-left:1.32pt"><span>The Interview =
+Duration would be 90 Minutes after verification of ID Proof.</span></li>
+<li style=3D"margin-left:34.68pt; padding-left:1.32pt"><span>During the 90 =
+Minutes:</span>
+<ol type=3D"a" style=3D"margin-right:0pt; margin-left:0pt; padding-left:0pt=
+">
+<li style=3D"margin-left:34.68pt; padding-left:1.32pt"><span>first two minu=
+tes, the interviewer introduces himself to the candidate.</span></li>
+<li style=3D"margin-left:34.68pt; padding-left:1.32pt"><span>next five minu=
+tes the candidate introduces his achievement and talks about his career.</s=
+pan></li>
+<li style=3D"margin-left:33.89pt; padding-left:2.11pt"><span>After introduc=
+tions, the next 60 to 70 minutes of technical discussion.</span></li>
+<li style=3D"margin-left:34.68pt; padding-left:1.32pt"><span>The last 10 mi=
+nutes of the interview duration will be dedicated to the questions from the=
+ candidate.</span></li>
+</ol></li>
+<li style=3D"margin-left:34.68pt; padding-left:1.32pt"><span>Discussion and=
+ Coding:</span>
+<ol type=3D"a" style=3D"margin-right:0pt; margin-left:0pt; padding-left:0pt=
+">
+<li style=3D"margin-left:34.68pt; padding-left:1.32pt"><span>Discussion on =
+the current project, roles, and Responsibilities</span></li>
+<li style=3D"margin-left:34.68pt; padding-left:1.32pt"><span>Java Version 8=
++ Questions</span>
+<ol type=3D"i" style=3D"margin-right:0pt; margin-left:0pt; padding-left:0pt=
+">
+<li style=3D"margin-left:32pt; padding-left:4pt"><span>JVM</span></li>
+<li style=3D"margin-left:32pt; padding-left:4pt"><span>Multi-Threading</spa=
+n></li>
+<li style=3D"margin-left:32pt; padding-left:4pt"><span>Stream</span></li>
+<li style=3D"margin-left:32pt; padding-left:4pt"><span>Lambda</span></li>
+<li style=3D"margin-left:32pt; padding-left:4pt"><span>Functional Interface=
+s</span></li>
+<li style=3D"margin-left:32pt; padding-left:4pt"><span>Collections</span></=
+li>
+<li style=3D"margin-left:32pt; padding-left:4pt"><span>Date time APIs</span=
+></li>
+<li style=3D"margin-left:32pt; padding-left:4pt"><span>JVM memory model and=
+ architecture</span></li>
+</ol></li>
+<li style=3D"margin-left:33.89pt; padding-left:2.11pt"><span>Coding questio=
+ns one or two</span></li>
+<li style=3D"margin-left:34.68pt; padding-left:1.32pt"><span>Should write U=
+nit test cases.</span>
+<ol type=3D"i" style=3D"margin-right:0pt; margin-left:0pt; padding-left:0pt=
+">
+<li style=3D"margin-left:32pt; padding-left:4pt"><span>Questions on various=
+ testing methods</span></li>
+</ol></li>
+<li style=3D"margin-left:34.68pt; padding-left:1.32pt"><span>Framework-rela=
+ted questions</span>
+<ol type=3D"i" style=3D"margin-right:0pt; margin-left:0pt; padding-left:0pt=
+">
+<li style=3D"margin-left:32pt; padding-left:4pt"><span>Spring Framework</sp=
+an></li>
+<li style=3D"margin-left:32pt; padding-left:4pt"><span>REST API and So on.<=
+/span></li>
+</ol></li>
+<li style=3D"margin-left:30.78pt; padding-left:5.22pt"><span>SDLC =E2=80=93=
+ AGILE Related Questions</span></li>
+<li style=3D"margin-left:34.68pt; padding-left:1.32pt"><span>Estimation tec=
+hniques</span></li>
+<li style=3D"margin-left:34.68pt; padding-left:1.32pt"><span>Design related=
+ Questions.</span></li>
+<li style=3D"margin-left:30pt; padding-left:6pt"><span>Architecture and Arc=
+hitecture Patterns</span></li>
+<li style=3D"margin-left:30pt; margin-bottom:8pt; padding-left:6pt"><span>M=
+entoring, Learning and Lead related questions.</span></li>
+</ol></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id=3D"TI2:LiveCodingPilotProgram" data-pane-title=3D"TI2: Live Coding =
+Pilot Program" class=3D"cfm tabs-pane ">
+<p><strong>Program Description:&nbsp;</strong></p>
+<p><strong>Scope:</strong></p>
+<p><strong>Evaluation Criteria:&nbsp;</strong></p>
+<p><br></p>
+</div>
+</div><!-- style macro -->
+<style type=3D"text/css" rel=3D"preload">
+.active-tab { background-color: #00F6FF; border: 2px solid #B896FF;  border=
+-radius: 5px; padding: 10px 5px 10px 5px; font-family: Verdana, Arial, Helv=
+etica, sans-serif; font-size: 18px;}.menu-item { box-shadow: 0 4px 8px 0 rg=
+ba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);border: 1px solid #7BA8F=
+F;  border-radius: 5px;padding: 5px 5px 5px 5px;}.tabs-pane { box-shadow: 0=
+ 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);font-family=
+: Verdana, Arial, Helvetica, sans-serif;font-size: 18px; border: 1px solid =
+#B896FF;  border-radius: 5px;padding: 50px 25px 50px 25px;} input[type][val=
+ue] { background-image: none !important; background: none !important; }
+</style>
+<script>
+const header =3D $("#header");
+const fixedHeader =3D "fixed-header";
+$(window).on("scroll", () =3D> {=20
+     if(window.pageYOffset > header.outerHeight()){
+          if(!header.hasClass(fixedHeader)){
+               header.addClass(fixedHeader);=20
+          }
+     } else {=20
+          header.removeClass(fixedHeader);=20
+     }
+});
+</script><!-- style macro -->
+    </div>
+</body>
+</html>
+------=_Part_10786_346201182.1714128371349--

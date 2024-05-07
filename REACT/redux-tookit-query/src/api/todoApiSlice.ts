@@ -1,6 +1,7 @@
 //Documentation: https://redux-toolkit.js.org/rtk-query/overview
 
-//We have @reduxjs/toolkit/query specific for 'react',
+//We have @reduxjs/toolkit/query is generic for RTK
+// @reduxjs/toolkit/query/react specific for 'react',
 //if we are not using this we might see TS types error while exposing hooks
 // export {useGetTodosQuery} = todosApi , TS will not find the type
 //import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query"
