@@ -1,51 +1,80 @@
-Problem Statement:
-Part - 1
-1. product listing page(Name, price, image, add to cart button)
-2. product view page
-3. select product variant
-4. add to cart(icon on home page)
-------------------
-Part - 2
-5. cart view
-(Expected: Using ReactJs, Typescript, unit tests)
+Some Notes 
 
-@Ramesh Allu
-Task#1:
-Catalog / Product Listing -> PDP -> Cart Page
-DoD:
-Functional user journey
-~100% Test coverage
-Scope:
- Styling is optional
-For products data, use a mock json file with real products from say Atta, Sunflower oil categories
+Scenario: redux createslice initialData is to be fetched as part of async data 
+================================================================================
+When using Redux, it's common to fetch some initial data asynchronously when the app starts. However, you can't make the initialState in createSlice async directly, because Redux needs to have an initial state synchronously to setup.
+
+Typically, what you do is set an initial state as some sort of loading state, and then dispatch an async thunk action after the store has been created to load the data.
+
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { fetchProducts } from "../api";
+
+// Async thunk
+export const fetchProducts = createAsyncThunk("products/fetch", async () => {
+  const response = await fetchProducts();
+  return response;
+});
+
+// Slice
+const productsSlice = createSlice({
+  name: "products",
+  initialState: { products: [], status: "idle", error: null },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchProducts.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchProducts.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.products = action.payload;
+      })
+      .addCase(fetchProducts.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      });
+  },
+});
+
+export default productsSlice.reducer;
 
 
- <article id="productItem">
-      <figure>
-        <img src="pic_trulli.jpg" alt="Trulli"></img>
-        <figcaption>Fig1. - Trulli, Puglia, Italy.</figcaption>
-      </figure>
-      <section>
-        <div>{brandName}</div>
-        <div>{desc}</div>
-      </section>
-      <section>
-        <select>
-          <option value="1" key="1">
-            Test 1
-          </option>
-          <option value="2" key="2">
-            Test 2
-          </option>
-          <option value="3" key="3">
-            Test 3
-          </option>
-        </select>
-      </section>
-      <section>
-        <div>Rs1000.00</div>
-      </section>
-      <section>
-        <input type="number" id="quantity" name="quantity" min="1" max="100" />
-      </section>
-    </article>
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { fetchProducts } from "./productsSlice";
+
+const ProductsComponent = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
+
+  // ... render your component
+};
+
+
+
+// export const getSelectedVariant = createSelector(
+//   [allProductsSelector], //allProductsSelector
+//   (products: IProduct[], filterCriteria:{category:string,brandId:string,selectedVariantId:string}) =>
+//     products
+//       .find((product) => product.category === filterCriteria.category)
+//       ?.brands.find((brand: IBrand) => brand.brandId === filterCriteria.brandId)
+//       ?.variants.find((variant: IVariant) => variant.id === filterCriteria.selectedVariantId)
+// );
+
+//const fetchDefaultVariant = (brand:IBrand) => brand.variants.find(variant => variant.isDefault)
+
+/*
+// create a basic selector
+const getAllItems = (state) => state.items
+
+// create a selector that accepts parameters
+export const selectItemById = createSelector(
+  getAllItems, //allProductsSelector
+  (state, itemId) => itemId,
+  (items, itemId) => items.find(item => item.id === itemId)
+)
+
+*/

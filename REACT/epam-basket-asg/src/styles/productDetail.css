@@ -1,0 +1,33 @@
+
+div {
+    box-sizing: border-box;
+    margin: 0;
+  }
+  
+  .main-container {
+    height: 80vh;
+    display: flex;
+    margin:5px;
+  }
+  
+  .left-container {
+    flex: 1 1 0;
+    border:1px solid gray;
+    max-width:600px
+  }
+
+  .right-container {
+    flex: 1 1 0;
+  }
+/*   
+  .right-container {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .half-containers {
+    flex: 1;
+    overflow: auto;
+  } */
+  

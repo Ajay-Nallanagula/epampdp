@@ -26,7 +26,7 @@ const Pagination = ({ postsPerPage, totalPosts, paginate }) => {
     const { data: posts, loading } = useFetch(
       'https://jsonplaceholder.typicode.com/posts'
     );
-  
+  //Consider Total Posts 101
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(10);
     let currentPosts = [];
@@ -34,9 +34,9 @@ const Pagination = ({ postsPerPage, totalPosts, paginate }) => {
     // Get current posts
     if (!loading && posts?.length > 0) {
       // currentPage starts from 1
-      const indexOfLastPost = currentPage * postsPerPage;
-      const indexOfFirstPost = indexOfLastPost - postsPerPage;
-      currentPosts = posts?.slice(indexOfFirstPost, indexOfLastPost);
+      const indexOfLastPost = currentPage * postsPerPage; //2*10
+      const indexOfFirstPost = indexOfLastPost - postsPerPage; //20-10
+      currentPosts = posts?.slice(indexOfFirstPost, indexOfLastPost); //10,20
     }
   
     // Change page

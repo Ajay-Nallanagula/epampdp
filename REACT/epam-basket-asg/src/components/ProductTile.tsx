@@ -1,44 +1,94 @@
+import { useState } from "react";
+import AddToCartButton from "./AddToCartButton";
+import Dropdown from "../common/Dropdown";
 import { IBrand, IProduct, IVariant } from "../models/Product";
 import "../styles/product.css";
+import {
+  getDefaultVariant,
+  getVaraints,
+  getVariant,
+} from "../utils/productUtil";
+import ImageButton from "../common/ImageButton";
+import { useNavigate } from "react-router-dom";
+import TitleTile from "./TitleTile";
+import { useDispatch, useSelector } from "react-redux";
+import { IReduxInitialState } from "../schema/schema";
+import { setSelectedVariant } from "../store/productReducer";
 
 interface ProductTileProps {
-  variant: IVariant;
   brand: IBrand;
+  isShowImage?: boolean;
 }
 
 const ProductTile: React.FC<ProductTileProps> = ({
-  variant,
   brand,
+  isShowImage = true,
 }): React.JSX.Element => {
-  const {brand:brandName, desc} =  brand
+  const dispatch = useDispatch();
+  const { brandName: brandName, desc, variants, brandId } = brand;
+  const formattedVariants = getVaraints(variants);
+  const defaultVariant = getDefaultVariant(variants);
+
+  const category = useSelector(
+    (state: IReduxInitialState) => state.selectedCategory.category
+  );
+
+  // let selectedVariant = useSelector(
+  //   (state: IReduxInitialState) => state.selectedVariant
+  // );
+
+  // if (!selectedVariant || !Object.keys(selectedVariant).length) {
+  //   selectedVariant = defaultVariant;
+  // }
+
+  const [selectedVariant, setSelectedVariantVal] =
+    useState<IVariant>(defaultVariant);
+
+  const [isShowAddCounter, setIsShowAddCounter] = useState(true);
+
+  const handleDropDownChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedSpecificVariant = getVariant(event.target.value, variants);
+    setIsShowAddCounter(true);
+    setSelectedVariantVal(selectedSpecificVariant);
+
+    dispatch(
+      setSelectedVariant({
+        brandId,
+        category: selectedSpecificVariant.category,
+        selectedVariantId: selectedSpecificVariant.id,
+      })
+    );
+  };
+
+  const handleProductImageClick = () => {
+    const queryString = `?category=${selectedVariant.category}&brandId=${brandId}`;
+    window.open(`/productDetail/${selectedVariant.id}${queryString}`, "_blank");
+  };
+
   return (
-    <article id="productItem">
-      <figure>
-        <img src="pic_trulli.jpg" alt="Trulli"></img>
-        <figcaption>Fig1. - Image TBD.</figcaption>
-      </figure>
+    <article id="productItem" style={{ margin: "5px" }}>
+      {isShowImage && (
+        <figure>
+          <ImageButton
+            imageUrl={selectedVariant.image}
+            onClick={handleProductImageClick}
+          />
+        </figure>
+      )}
+
+      <TitleTile
+        brandName={brandName}
+        desc={desc}
+        price={selectedVariant.price}
+        name={selectedVariant.name}
+      />
+      <Dropdown options={formattedVariants} onChange={handleDropDownChange} />
+
       <section>
-        <div>{brandName}</div>
-        <div>{desc}</div>
-      </section>
-      <section>
-        <select>
-          <option value="1" key="1">
-            Test 1
-          </option>
-          <option value="2" key="2">
-            Test 2
-          </option>
-          <option value="3" key="3">
-            Test 3
-          </option>
-        </select>
-      </section>
-      <section>
-        <div>Rs1000.00</div>
-      </section>
-      <section>
-        <input type="number" id="quantity" name="quantity" min="1" max="100" />
+        <AddToCartButton
+          isShowAddCounter={isShowAddCounter}
+          resetShowAddCounter={setIsShowAddCounter}
+        />
       </section>
     </article>
   );

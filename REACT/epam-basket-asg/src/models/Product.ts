@@ -6,18 +6,25 @@ export interface IVariant {
   weightedIn: string;
   isDefault?: boolean;
   image: string;
-};
+  category: string;
+}
 
 export interface IBrand {
-  brand: string;
-  brandId:string;
+  brandName: string;
+  brandId: string;
   desc: string;
   variants: IVariant[];
+  category: string;
 }
 
 export interface IProduct {
+  group: string;
   category: string;
-  name: string;
-  productId:string;
+  productId: string;
   brands: IBrand[];
+}
+
+export interface ICart {
+  totalCartItems: number;
+  cartItems?: IProduct[];
 }

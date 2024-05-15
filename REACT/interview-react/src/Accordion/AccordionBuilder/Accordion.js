@@ -5,13 +5,14 @@ import data from './data'
 const ThemeContext = React.createContext()
 
 export default function Accordion() {
+    let flush = true
     return (
         <Accordion.Title>
             Accordion Title
             {
                 data.map(item => {
                     return (
-                        <Accordion.Item key={item.id}>
+                        <Accordion.Item key={item.id} flush={flush}>
                             <Accordion.ItemHeader>
                                 {item.header}
                             </Accordion.ItemHeader>
@@ -37,7 +38,7 @@ Accordion.Item = function AccordionItem({ children, ...restProps }) {
     const [show, setShow] = useState(false)
     const toggleShow = (show) => setShow(!show)
     return (
-        <ThemeContext.Provider value={{ show, toggleShow }}>
+        <ThemeContext.Provider value={{ show, toggleShow, flush:restProps.flush }}>
             <Item {...restProps}>{children}</Item>
         </ThemeContext.Provider >
     )

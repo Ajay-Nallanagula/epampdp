@@ -1,10 +1,13 @@
-import ProductsProvider from "./context/ProductsProvider";
-import routes from "./routeConfig/Routes";
-import { useRoutes } from "react-router-dom";
+import { Suspense } from "react";
+//import ProductsProvider from "./context/ProductsProvider";
+import Router from "./routes/Routers";
 
 const App = () => {
-  const configuredRoutes = useRoutes(routes);
-  return <ProductsProvider>{configuredRoutes}</ProductsProvider>;
+  return (
+    <Suspense fallback="Loading...">
+      <Router />
+    </Suspense>
+  );
 };
 
 export default App;

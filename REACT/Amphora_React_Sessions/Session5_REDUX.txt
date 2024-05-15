@@ -90,6 +90,9 @@ https://redux.js.org/introduction/installation
 npm install redux react-redux @reduxjs/toolkit @redux-devtools/extension --save 
 HOOKS in REDUX: https://www.almabetter.com/bytes/tutorials/reactjs/hooks-in-redux
 
+For Typescript :
+npm install redux react-redux @reduxjs/toolkit @redux-devtools/extension --save
+npm install @types/redux @types/redux-devtools-extension --save-dev
 
 Organize Redux Code
 ====================

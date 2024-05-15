@@ -1,5 +1,4 @@
 import { IBrand } from "../models/Product";
-import { getDefaultVariant } from "../utils/productUtil";
 import ProductTile from "./ProductTile";
 
 interface IBrandTileProps {
@@ -7,14 +6,9 @@ interface IBrandTileProps {
 }
 
 const BrandTile: React.FC<IBrandTileProps> = ({ brand }) => {
-  const defaultVariant = getDefaultVariant(brand.variants);
   return (
     <>
-      <ProductTile
-        variant={defaultVariant}
-        key={defaultVariant.id}
-        brand={brand}
-      />
+      <ProductTile brand={brand} key={brand.brandId} />
     </>
   );
 };

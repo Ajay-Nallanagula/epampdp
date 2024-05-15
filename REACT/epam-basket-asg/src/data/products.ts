@@ -1,14 +1,15 @@
 import { IProduct } from "../models/Product";
 
 const Atta: IProduct = {
-  name: "Atta",
+  category: "Atta",
   productId: "Atta_01",
-  category: "Groceries",
+  group: "Groceries",
   brands: [
     {
-      brand: "Ashirwad",
+      brandName: "Ashirwad",
       brandId: "Ashirwad_001",
       desc: "Used fo making rotis, caution dont use as talcum powder!",
+      category: "Atta",
       variants: [
         {
           id: "10",
@@ -17,7 +18,8 @@ const Atta: IProduct = {
           weightedIn: "Kgs",
           isDefault: true,
           price: 100,
-          image: "Atta image url will come here",
+          image: "/images/AttaImage.png",
+          category: "Atta",
         },
         {
           id: "11",
@@ -25,7 +27,8 @@ const Atta: IProduct = {
           weight: 10,
           weightedIn: "Kgs",
           price: 1000,
-          image: "Atta image url will come here",
+          image: "/images/AttaImage.png",
+          category: "Atta",
         },
       ],
     },
@@ -33,31 +36,34 @@ const Atta: IProduct = {
 };
 
 const Oil: IProduct = {
-  name: "Oil",
+  category: "Oil",
   productId: "Oil_01",
-  category: "Groceries",
+  group: "Groceries",
   brands: [
     {
-      brand: "Sunflower",
+      brandName: "Sunflower",
       brandId: "Sunflower_001",
       desc: "Used fo making dishes, not otherwise!",
+      category: "Oil",
       variants: [
         {
           id: "7",
-          image: "Oil image Url will come here",
+          image: "/images/Sunflower.png",
           name: "Sunflower 2Ltrs",
           weight: 2,
           weightedIn: "Ltrs",
           isDefault: true,
           price: 200,
+          category: "Oil",
         },
         {
           id: "8",
-          image: "Oil image Url will come here",
+          image: "/images/Sunflower.png",
           name: "Sunflower 5Ltrs",
           weight: 5,
           weightedIn: "Ltrs",
           price: 600,
+          category: "Oil",
         },
       ],
     },
@@ -65,14 +71,15 @@ const Oil: IProduct = {
 };
 
 const BakeryFood: IProduct = {
-  name: "Bread",
+  category: "Bread",
   productId: "Bakery_01",
-  category: "Bakery",
+  group: "Bakery",
   brands: [
     {
-      brand: "FABS",
+      brandName: "FABS",
       brandId: "FABS_001",
       desc: "Used fo making rotis, caution dont use as talcum powder!",
+      category: "Bread",
       variants: [
         {
           id: "15",
@@ -81,7 +88,8 @@ const BakeryFood: IProduct = {
           weightedIn: "gms",
           isDefault: true,
           price: 100,
-          image: "Burger image url will come here",
+          image: "/images/Burger.png",
+          category: "Bread",
         },
       ],
     },
@@ -93,5 +101,7 @@ const allProductsApi = () =>
     const AllProducts: IProduct[] = [Atta, Oil, BakeryFood];
     return resolve(AllProducts);
   });
+
+export const allProducts: IProduct[] = [Atta, Oil, BakeryFood];
 
 export default allProductsApi;
