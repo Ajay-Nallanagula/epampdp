@@ -952,7 +952,33 @@ const characters = useSelector(state => state.defaultCharacters)
 
 #endregion Connect Component to Redux 
 
+#region Redux Patterns
 
+Redux is a highly flexible state management library for JavaScript applications, and there are numerous ways to structure a Redux software project. Here are a few common Redux patterns you might come across:
+
+DUCKS Pattern: The Ducks pattern proposes to group the action constants, action creators, and reducers all in the same file, instead of separating them into different directories. This can make the codebase easier to maintain.
+
+Domain-style Structure: This involves organizing actions, reducers, and selectors together based on the feature or domain rather than the type of Redux logic.
+
+Normalized State Shape: This pattern involves designing the redux state in a way that mimics a database table where each entry has unique ID and other entries reference these IDs, instead of nested structures. This makes operations like caching, querying, and updating easier.
+
+Re-ducks Pattern: An evolution of the Ducks pattern, Re-ducks separates operations, actions, and reducers into different files but keeps them in same module folder, enhancing scalability.
+
+Smart and Dumb Components Pattern (or Container/Component pattern): In this pattern, components are divided into two categories: smart components (connected to Redux) and dumb components (not connected to Redux).
+
+Slice Reducers pattern: In this pattern, reducers are organized into slices, each dealing with a separate and isolated part of the state.
+
+Async Actions pattern: This involves using middleware (like redux-thunk or redux-saga) to manage asynchronous actions in a Redux application. Actions to start the async request, actions to handle success, and action to handle failure are all dispatched.
+
+Selectors pattern: Selectors are used to compute derived data from Redux store, and encapsulate the state shape from the rest of the application.
+
+Remember, these are not strictly rules but guidelines, and their adoption depends on the requirements and complexity of the application being built.
+
+#endregion Redux Patterns
+
+#region Learn about Redux Saga Basics(alternate to Thunk)
+
+#endregion Redux Sagas Basics(alternate to Thunk)
 
 https://medium.com/@ayabellazreg/make-a-simple-shopping-cart-app-using-react-redux-1-3-fefde93e80c7
 https://medium.com/@ayabellazreg/make-a-simple-shopping-cart-app-using-react-redux-part-3-32b182e02cc9
