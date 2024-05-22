@@ -990,4 +990,126 @@ See Example : C:\Ajay_EPAM\PDP_PRACTICSE\epampdp\REACT\redux-tookit-query\src\ap
 
 #endregion Redux Toolkit Query
 
+Flux Standard Action:
+
+Feedback on following Question
+
+https://borstch.com/blog/development/managing-concurrent-tasks-with-racing-effects-in-redux-saga
+https://medium.com/dailyjs/handling-race-conditions-with-redux-thunk-c348a7a5a839
+
+
+Question: You have some dispatch action, you're doing from one component, there are multiple users with the same thing at the same point of time, how you are going to maintain the state situations?
+
+// How to handle inconsistencies ?
+When multiple users are interacting with the data at the same time, ideally the Redux state should be updated frequently to reflect the latest state of the application.
+
+There are two main methods to handle these inconsistencies:
+
+Optimistic Updates: Here the UI responds as if the server has completed the request successfully without waiting. It predicts what the server response will be. If the request fails, the state will then be corrected. Facebook comments use optimistic updates.
+
+// Dispatch action to optimistically update UI
+dispatch({ type: 'UPDATE_START', payload: { id: 1, data: 'new data'} });
+fetch('https://api.example.com/data', {
+  method: 'POST',
+  body: JSON.stringify({ id: 1, data: 'new data' })
+  })
+  .then(() => {
+    // Successful, so no need to do anything
+  })
+  .catch(error => {
+    // Handle error, we might roll back the changes in UI
+    dispatch({ type: 'UPDATE_ERROR', error, payload: { id: 1, oldData: 'old data' } });
+  });
+
+Pessimistic Updates: In this case, the UI doesn’t update the state until the server has response. This ensures the consistent state before and after the server call.
+Example : 
+// Dispatch action to start loading - show spinner
+dispatch({ type: 'LOADING_START' });
+
+fetch('https://api.example.com/data')
+  .then(response => {
+    // Response received, stop loading and update state
+    dispatch({ type: 'LOADING_SUCCESS', payload: response.data });
+  })
+  .catch(error => {
+    // There's an error, stop loading and show an error message
+    dispatch({ type: 'LOADING_ERROR', error });
+  });
+  
+ 
+
+Also, consider threading: when two different clients are trying to update the same piece of information, the last update might overwrite the first without knowing what the first user did. This can be avoided as follows:
+
+Locking: The simplest and most direct solution is to lock the state when a user is updating it. This means that other users have to wait for the first user to finish their changes and release the lock before they can make their changes.
+
+// Action to request edit.
+const requestEditUser = (id) => ({
+  type: 'REQUEST_EDIT_USER',
+  id,
+});
+
+// Action to release edit.
+const releaseEditUser = (id) => ({
+  type: 'RELEASE_EDIT_USER',
+  id,
+});
+
+// Action to update user.
+const updateUser = (id, updates) => ({
+  type: 'UPDATE_USER',
+  id,
+  updates,
+  
+});
+
+const userReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'REQUEST_EDIT_USER':
+      return {
+        ...state,
+        users: state.users.map(user => 
+          user.id === action.id ? { ...user, isEditing: true } : user
+        ),
+      };
+    case 'RELEASE_EDIT_USER':
+      return {
+        ...state,
+        users: state.users.map(user => 
+          user.id === action.id ? { ...user, isEditing: false } : user
+        ),
+      };
+    default:
+      return state;
+  }
+};
+
+This ensures that users would first need to dispatch a requestEditUser action and then check if isEditing is false before they are able to edit the user. If isEditing is true, the user is locked for editing.
+
+Transaction: Another solution is to use transactions. When a user begins editing the data, a transaction is created. The middleware ensures that all actions in a transaction are completed before allowing a new transaction to start.
+
+const startTransaction = (actions) => ({
+  type: 'START_TRANSACTION',
+  payload: actions,
+});
+
+const commitTransaction = () => ({
+  type: 'COMMIT_TRANSACTION',
+});
+
+const abortTransaction = () => ({
+  type: 'ABORT_TRANSACTION',
+});
+  
+- When `startTransaction` is dispatched, the actions in the payload are staged for changes and no updates to the state are applied yet.
+- Then, `commitTransaction` is dispatched. Only at this point are the changes applied to the state.
+- If there's a conflict or any issue with any action, `abortTransaction` is dispatched and all the staged changes are discarded.
+
+Note that these are highly simplified examples that do not handle all edge cases or potential issues. For comprehensive solutions, consider using frameworks such as Loopback and libraries like `sequelize` for handling transactions and optimistic locking.
+
+
+
+Exploring adding a real-time backend to your Redux app would also be beneficial, as changes in real time help reduce conflict.
+
+Implementing these strategies can help manage and maintain state, preventing conflicts or inconsistencies.
+
 #endregion

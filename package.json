@@ -2,5 +2,8 @@
   "dependencies": {
     "moment": "^2.29.4",
     "react-router-dom": "^5.3.4"
+  },
+  "devDependencies": {
+    "webpack-cli": "^5.1.4"
   }
 }

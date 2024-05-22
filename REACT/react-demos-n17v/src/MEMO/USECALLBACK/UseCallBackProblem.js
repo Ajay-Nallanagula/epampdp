@@ -25,7 +25,6 @@ const UseCallBackProblem = () => {
       { id: prevArr[prevArr.length - 1].id + 1, name: text },
     ]);
 
-    // setText('')
   };
   const removeUserHandler = (userId) =>
     setUsers(users.filter(({ id }) => id !== userId))

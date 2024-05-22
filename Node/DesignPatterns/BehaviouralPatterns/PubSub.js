@@ -5,6 +5,10 @@ The Publish-Subscribe (PubSub) pattern is a messaging pattern where senders (pub
  and receive only messages of interest, all without direct coupling between the publishers and subscribers
 */
 
+/*
+Pubsub can also be implemented for EventBus related question 
+*/
+
 class PubSub {
     constructor() {
         this.events = {}

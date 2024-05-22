@@ -20,6 +20,8 @@ import ComponentB from "./routerQuestion/components/ComponentB"
 import ChildComponentA from "./routerQuestion/components/ChildComponentA"
 import BasicForm from "./Formik/BasicForm"
 import ServiceUsage from "./ServiceUsage"
+import UseReducerDemo from "./useReducerHook/UseReducerDemo"
+import UseMemoDemoHook from "./Hooks@18/UseMemoHookDemo"
 //import configRoutes from "./routerQuestion/testRouter"
 
 
@@ -44,18 +46,21 @@ const App = () => {
 
     return (
         <>
-            <BrowserRouter>
-                <ServiceUsage />
-                {/* <BasicForm /> */}
-                {/* <Router2 /> */}
-                <Routes>
+            {/* <BrowserRouter>
+                <ServiceUsage /> */}
+            {/* <BasicForm /> */}
+            {/* <Router2 /> */}
+            {/* <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/ComponentA" element={<ComponentA />}>
                         <Route path="ChildComponentA/:namer?" element={<ChildComponentA />} />
                     </Route>
                     <Route path="/ComponentB" element={<ComponentB />} />
                 </Routes>
-            </BrowserRouter>
+            </BrowserRouter> */}
+            <UseMemoDemoHook />
+
+            {/* <UseReducerDemo /> */}
             {/* <Accordion /> */}
             {/* <ThemeProvider>
                 <ContextDemoComponent />
