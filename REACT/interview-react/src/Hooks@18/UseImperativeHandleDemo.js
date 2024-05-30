@@ -36,11 +36,11 @@ const Child = forwardRef((_props, ref) => {
             scrollIntoView() {
                 childRef.current.scrollIntoView();
             },
+            //Custom functions can also be used 
             sayHello() {
                 childRef.current.helloMsg = "Say ehllo Custom Message"
                 return childRef.current.helloMsg
             }
-
         }
     }, [])
 

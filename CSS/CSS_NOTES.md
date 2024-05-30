@@ -1,6 +1,19 @@
-1) Immediate Child Selector : #product > p{ color:orange }
+1) Immediate Child Selector : #product > p{ color:orange }, direct children 
+Example
+<div><p "css will be applied"><div><p "css not be applied"></div>
+
 2) Immediate Sibiling Selector: #product + p{ color:orange}
-3) Sibiling Selector : #product ~ p{  color:orange  }
+Example:
+<div id="product">Product Description</div>
+<p>This paragraph is orange because it's immediately after the "product" div.</p>
+<p>This paragraph will not be orange because it's not immediately after the "product" div.</p>
+
+3) Sibiling Selector : #product ~ p{  color:orange  } //any sibling 
+<div id="product">Product Description</div>
+<p>This paragraph will be orange.</p> 
+<div>Other content</div>
+<p>This paragraph will also be orange.</p>
+
 4) Psuedo-Class-Selector: applies on state of the element like on <a>
     article p:first-child{ color:orange} //Only first p  type element css be applied
     article:first-of-type { color:orange} //Only first different type element css be applied
@@ -18,7 +31,7 @@
     p::first-line: {color:orange}
     p::selection:{background:blue} //css applied to background of selected test
     p::before{content:'...'} //O/P <p>...lorem ipsum</p>
-    p::after{content:'...'}
+    p::after{content:'...'} //O/P <p>lorem ipsum...</p>
 6) Specificity-Order-Selectors: #IdSelectors > .ClassSelectors > ElementSelectors (more-weight to less-weight)
 7) !important: to override the specificty of css selectors we can use !important, this is anti-pattern.
 8) To override: we can also give combination of specificty to increase the value Eg: .class#id-->weight(1,1,0).

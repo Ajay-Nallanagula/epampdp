@@ -14,45 +14,55 @@ app.use(express.json())
 
 
 app.get('/guest', (_req, res) => {
-    res.json({
-        message: "You can see the menu!",
-        item1: "Pizza",
-        item2: "Burger",
-    })
+  res.json({
+    message: "You can see the menu!",
+    item1: "Pizza",
+    item2: "Burger",
+  })
 })
 
 app.post('/login', async (req, res) => {
-    //Erroring here body is undefined
-    const email = req.body["email"]
-    const password = req.body["password"]
+  //Erroring here body is undefined
+  const email = req.body["email"]
+  const password = req.body["password"]
+  //bcrypt .decrypt(password,saltvalue)
 
-    
-    console.log({ email }, { password })
-
-
-    // jwt.sign({ foo: 'bar' }, privateKey, { algorithm: 'RS256' }, function (err, token) {
-    //     console.log(token);
-    // });
-
-    const token = await jwt.sign({ email, password }, secret, { algorithm: 'HS256' })
+  console.log({ email }, { password })
 
 
-    res.send({ token })
+  // jwt.sign({ foo: 'bar' }, privateKey, { algorithm: 'RS256' }, function (err, token) {
+  //     console.log(token);
+  // });
+
+  const token = await jwt.sign({ email, password }, secret, { algorithm: 'HS256' })
+  const refreshToken = await jwt.sign({ email, password }, refresh_secret, { algorithm: 'HS256' })
+  res.send({ token, refreshToken })
+
+
+  res.send({ token })
 })
 
 app.get('/protected', verifyToken, async (req, res) => {
-    res.send('success')
+  res.send('success')
 })
 
 
 function verifyToken(req, res, next) {
 
-    const [p1, p2] = req.headers["authorization"].split(' ')
-    console.log(p1, p2)
-
-    const decoded = jwt.verify(p2,secret, { algorithm: 'HS256' })
+  const [p1, p2] = req.headers["authorization"].split(' ')
+  console.log(p1, p2)
+  try {
+    const decoded = jwt.verify(p2, secret, { algorithm: 'HS256' })
     console.log(decoded)
-    next()
+  } catch (error) {
+    if (e instanceof jwt.TokenExpiredError) {
+      res.status(401).json({ error: "Token expired" });
+    } else if (e instanceof jwt.JsonWebTokenError) {
+      res.status(401).json({ error: "Invalid token" });
+    }
+  }
+
+  next()
 }
 
 
@@ -107,5 +117,5 @@ app.listen(3000);
 */
 
 app.listen(PORT, () => {
-    console.log(`Server is running on PORT: ${PORT}`)
+  console.log(`Server is running on PORT: ${PORT}`)
 })

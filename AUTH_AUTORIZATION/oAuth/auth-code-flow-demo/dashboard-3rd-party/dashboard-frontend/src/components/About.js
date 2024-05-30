@@ -7,6 +7,9 @@ const About = () => {
     const [accessToken, setAccessToken] = useState()
 
     useEffect(() => {
+
+        //Also you can use custom hooks 
+
         const getUserMetadata = async () => {
             try {
                 //This will trigger a call to : https://dev-8mv48kq1hew3c1ei.us.auth0.com/oauth/token
@@ -16,6 +19,7 @@ const About = () => {
                 //         scope: "read:current_user"
                 //     }
                 // })
+
 
                 const accessToken = await auth0.getAccessTokenWithPopup({
                     authorizationParams: {

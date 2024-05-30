@@ -1113,3 +1113,245 @@ Exploring adding a real-time backend to your Redux app would also be beneficial,
 Implementing these strategies can help manage and maintain state, preventing conflicts or inconsistencies.
 
 #endregion
+
+
+#region Redux-Saga-middleware
+
+#region Generator Functions 
+https://javascript.info/async-iterators-generators 
+https://javascript.info/generators
+
+async and await Implementation
+https://akashhamirwasia.com/blog/internals-of-async-await-in-javascript/
+
+**What are generator functions** ?
+https://www.youtube.com/watch?v=EzdgkEMvrvA
+
+
+
+**What is javascript iterator pattern with example how is generator function linked with Iterator pattern?**
+The iterator pattern is a design pattern in which an iterator is used to traverse a container and access the container's elements. It provides an access method to the elements without necessarily exposing the details of the underlying structure. Example your DOM, 
+
+In JavaScript, the iterator pattern can be implemented through the use of special objects, known as iterators. These iterators provide a next() method that returns the next value in the sequence. If there are no more items to return, it will return a done value of true.
+
+Here's an example:
+
+javascript
+
+
+let myArray = [1, 2, 3, 4, 5];
+let iterator = myArray[Symbol.iterator]();
+
+console.log(iterator.next()); // { value: 1, done: false }
+console.log(iterator.next()); // { value: 2, done: false }
+// ....
+console.log(iterator.next()); // { done: true }
+The relation between a generator function and the iterator pattern is that a generator function returns a special type of iterator, called a generator. You can then iterate through the yielded values from the generator function, like this:
+
+javascript
+
+
+function* generatorFunc(){
+   yield 1;
+   yield 2;
+   yield 3;
+}
+      
+let generator = generatorFunc();
+      
+console.log(generator.next()); // { value: 1, done: false }
+console.log(generator.next()); // { value: 2, done: false }
+console.log(generator.next()); // { value: 3, done: false }
+console.log(generator.next()); // { done: true }
+
+In this case, the generator function - generatorFunc - is creating an iterator. When next method is called, execution resumes and goes until the nearest yield expression, where the function's state is saved and paused, and the yielded value is returned. This continues till the function ends. After which, when next is called, { done: true } is returned. This behavior enables the generator to be an iterator that can be used in a loop or other data consumption methods.
+
+What are the usecases of Iterator function?
+Iterators are key in JavaScript because they allow developers to access and manipulate collections of data.
+
+Here are some use cases:
+
+Working with Collection Data Structures: Arrays, Maps, and Sets all have iterator methods so developers can easily retrieve data. Iterators are used to go through these types of collections, retrieve data one by one, and perform any necessary operations.
+
+Lazy Evaluation: Because iterator's next method is manually invoked, you have finer control over when and how many items you want to process. This is particularly useful when working with large datasets as you can process only what you need, helping to improve performance by reducing the amount of processing power required.
+
+Streams and Asynchronous Programming: Iterators can be applied in real-time data handling, like working with live feeds or streams. For example, generating a potentially infinite sequence of Fibonacci numbers as and when they are needed.
+
+Data Manipulation: Iterator in combination with generator functions allow on-demand processing and manipulation of data sequences, such as filtering, mapping, combining, etc.
+
+Custom Iteration: When creating custom data structures, you can rely on Symbol.iterator to define default iteration behavior, ensuring interoperability with higher-level libraries or language constructs that make use of the iteration protocols: Array destructuring, for/of loop, spread operator, Promise.all, etc.
+
+Built-In Iterators: Many built-in JavaScript constructs, such as strings or NodeLists, can be iterated using iterators. Moreover, several advanced JS features and methods (like async/await and fetch API) make use of iterable protocol internally.
+
+So, iterators can be used in many scenarios in JavaScript, especially when it comes to handling and managing data in a more efficient and elegant way.
+
+How is async/await implemented with generators ?
+The async/await syntax is built on top of Promises and generators. The async keyword makes a function return a Promise, and the await keyword can only be used inside an async function, it causes the function execution to pause and wait for a Promise's resolution, then resumes the function execution and returns the resolved value.
+
+Here is a basic iteration example involving an async function:
+const myPromiseFunc = (val, time) =>
+  new Promise((resolve) =>
+    setTimeout(() => {
+      resolve(val);
+    }, time)
+  );
+
+const arr = [1, 2, 3, 4, 5];
+
+async function asyncIter(arr) {
+  const iter = arr[Symbol.iterator]();
+
+  while (true) {
+    const { done, value } = iter.next();
+
+    if (done) break;
+
+    const newValue = await myPromiseFunc(value, 2000);
+    console.log(newValue);
+  }
+}
+
+asyncIter(arr);    // Will log 1, 2, 3, 4, 5 at 2-second intervals
+
+
+#endregion Generator Functions
+
+#region Redux-Sagas
+Reference: 
+https://www.youtube.com/watch?v=nAIZxBeQx_Q&list=PL8p2I9GklV45pe55ZVEEhk8elLZLh932A&index=12 
+Watch from Part 11
+
+**Saga(declarative) Vs Thunk(imperative) Middlewares**
+
+Redux-Saga and Redux-Thunk are both middleware libraries used for managing side effects in Redux-based JavaScript applications, such as handling asynchronous actions.
+
+Redux-Thunk is a simpler middleware that allows you to write action creators that return a function instead of an action. The function can receive the dispatch method as a parameter and can use it for asynchronous tasks like API calls, timeouts, etc.
+
+Example of Redux-Thunk:
+
+function fetchUser(id) {
+  return dispatch => {
+    dispatch(fetchUserRequest(id));
+    return fetchUserFromApi(id).then(
+      user => dispatch(fetchUserSuccess(user)),
+      error => dispatch(fetchUserFailure(error))
+    );
+  }
+}
+
+On the other hand, Redux-Saga uses Generator functions to make asynchronous code look like synchronous code. It's a more powerful library than thunk as it handles complex scenarios easily like race conditions, cancellation, and if-else style conditional logic in a better way.
+
+import { call, put } from 'redux-saga/effects'
+
+export function* fetchUser(action) {
+   try {
+      const user = yield call(fetchUserFromApi, action.id);
+      yield put(fetchUserSuccess(user));
+   } catch (e) {
+      yield put(fetchUserFailure(e));
+   }
+}
+
+
+**How can you write generator functions with Arrow functions in JS?**
+The answer lies in the syntax, JS need "function* <functionName>"  to recognise a generator function .
+JavaScript generator functions cannot be written using arrow function syntax. This is due to the nature of generator functions, which require the use of the function* keyword to denote that a function is a generator.
+
+**Can we write generators with function expressions?**
+Yes we can write.
+const myGenerator = function*() {
+  yield 1;
+  yield 2;
+  yield 3;
+}
+
+const iterator = myGenerator();
+console.log(iterator.next().value); // 1
+console.log(iterator.next().value); // 2
+console.log(iterator.next().value); // 3
+
+**How to add a Saga to store?**
+import createSagaMiddleware from 'redux-saga';
+import todoReducer from './reducers';
+import rootSaga from './sagas';
+
+// Create the saga middleware
+const sagaMiddleware = createSagaMiddleware();
+const store = configureStore({
+  reducer: todoReducer,
+  middleware: [sagaMiddleware]
+});
+// Then run the saga
+sagaMiddleware.run(rootSaga);
+
+**How can we add Multiple Sagas?**
+Adding multiple sagas to a Redux store involves combining all the sagas into a "root saga" using the all and fork effects from the redux-saga/effects module.
+// saga1.js
+import { call, put } from 'redux-saga/effects';
+
+export function* saga1() {
+  // ... definition for saga1
+}
+
+// saga2.js
+import { call, put } from 'redux-saga/effects';
+
+export function* saga2() {
+  // ...definition for saga2
+}
+
+// rootSaga.js
+import { all, fork } from 'redux-saga/effects';
+import { saga1 } from './saga1';
+import { saga2 } from './saga2';
+
+export default function* rootSaga() {
+  yield all([
+    fork(saga1),
+    fork(saga2)
+  ]);
+}
+
+// store.js
+import createSagaMiddleware from 'redux-saga';
+import { configureStore } from '@reduxjs/toolkit';
+import reducer from './reducer';
+import rootSaga from './rootSaga'; // import the root saga
+
+const sagaMiddleware = createSagaMiddleware();
+
+const store = configureStore({
+    reducer,
+    middleware: [sagaMiddleware]
+});
+
+sagaMiddleware.run(rootSaga); // Run the root saga
+
+
+Different Effects in Saga:
+take: Waits for a specified action to happen. It pauses the saga until the action is dispatched.
+
+put: Dispatches an action. This is the equivalent of dispatch in Redux.
+
+fork: Non-blocking call, used to run saga tasks in the background.
+
+call: Used to call some function. The saga is paused until the function call is done.
+
+all: Is used to run multiple effects in parallel and wait for all of them to complete.
+
+select: Calls a selector function with the current state (and optionally, some arguments). The saga is suspended until the selector is resolved.
+
+cancel: Cancels a Task, either immediately or some point in the future.
+
+takeEvery: Spawns a new saga task on each action dispatched to the store that matches the pattern.
+
+takeLatest: Spawns a new saga task on the last action dispatched to the store that matches the pattern.
+
+throttle: Used to handle more fine-tuned control over taking actions, allowing specific control over how many saga tasks are started over a given amount of time.
+
+debounce: Will delay a given saga until after a certain period of time has passed since the last time the dispatched action that matches pattern was 
+
+
+#endregion Redux-Sagas
+
+#endregion Redux-Saga-Middleware

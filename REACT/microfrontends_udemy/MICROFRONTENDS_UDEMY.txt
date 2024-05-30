@@ -70,7 +70,7 @@ Project Info
 Advantages of microfrontends:
 =============================
 - **Independence**: Each microfrontend can be independently developed, tested and deployed by separate teams.
-- **Simplicity**: Small, dedicated codebases are usually easier to maintain.
+- **Simplicity**:  Small, dedicated codebases are usually easier to maintain.
 - **Parallelism**: Multiple teams can work on different features at the same time.
 - **Scalability**: Teams and features can scale horizontally.
 - **Diversity**:  Each microfrontend can be written using the technologies best suited for its feature set.
@@ -111,6 +111,15 @@ However Monlith is difficult to scale and one part of the codebase can have unin
 
 #endregion What is a microfrontend.
 
+--Product
+npm install webpack@5.88.0 webpack-cli@4.10.0 webpack-dev-server@4.7.4 faker@5.1.0 html-webpack-plugin@5.5.0
+
+--Container
+npm install webpack@5.68.0 webpack-cli@4.10.0 webpack-dev-server@4.7.4 html-webpack-plugin@5.5.0 nodemon
+
+#endregion Basics of Microfrontend
+
+
 #region Integration/Orchestration/Assemble Together.
 https://tkssharma.com/building-micro-frontend-build-time-and-compile-time/
 
@@ -136,15 +145,14 @@ Now apps are coupled and we are using different versions of external packages so
 		
 #region Run time integration
 Scenario : "After the container is loaded" it gets access to product-list. 
-One of the simplest approaches to composing applications together in the browser is the humble iframe.
-Doing it using iframe is just an old way of doing it, now we have different tools which can manage that example like webpack, webpack 5 provided module federation
+NOTE: One of the simplest approaches to composing applications together in the browser is the humble iframe.
+****Doing it using iframe is just an old way of doing it, now we have different tools which can manage that example like webpack, webpack 5 provided module federation
  
-In simple terms using runtime composition we just render other site components into a container or shell/main application, it is all runtime means at runtime we will download the bundle and render its component on UI.
+In simple terms using runtime composition we just render other site components into a container or shell/main application, it is all runtime means at runtime we will download the bundle and render its component on UI. How do you achieve this is using Module-Federation 
 
 app1.js and app2.js will be loaded at runtime from a different site from the same domain (sub-domains) and the host application will manage to render the required components from it.
 
 We can achieve this using Module Federation or Next.Js
- 
  Advantages:
  1) Development is faster: The whole development becomes faster and easier because of separate teams and we are getting all package sin hand from different modules.
  2) CI/CD process is easy : Each app/package can be integrated and deployed separately and this makes the CI/CD process a lot easier. When we fix the app or introduce a new feature we don’t have to worry about the entire application since all the features are independent.
@@ -171,13 +179,6 @@ Or using Next.Js
 
 #endregion Integration/Orchestration/Assemble Together.
 
---Product
-npm install webpack@5.88.0 webpack-cli@4.10.0 webpack-dev-server@4.7.4 faker@5.1.0 html-webpack-plugin@5.5.0
-
---Container
-npm install webpack@5.68.0 webpack-cli@4.10.0 webpack-dev-server@4.7.4 html-webpack-plugin@5.5.0 nodemon
-
-#endregion Basics of Microfrontend
 
 #region Basics of Module federation webpack
 
@@ -307,6 +308,29 @@ Findout where exactly in host or in microapp?
 
 
 Incompatible Versions + Singleton rule:  Webpack will follow singleton rule, and load only one copy, but with a warning message in console with incompatible versions.
+
+new ModuleFederationPlugin({
+        name: 'HostApp',
+        filename: 'js/host-app-entry.js',
+        shared: [
+          {
+            react: {
+              requiredVersion: '^18.2.0',
+              singleton: true,
+              eager: true,
+            },
+            'react-dom': {
+              requiredVersion: '^18.2.0',
+              singleton: true,
+              eager: true,
+            },
+            'react-router-dom': {
+              requiredVersion: '^6.3.0',
+              singleton: true,
+              eager: true,
+            },
+          } 
+        ],
 
 #endregion Shared Modules
 
@@ -749,5 +773,29 @@ module.exports = async (_, { mode = 'development' }) => {
     ],
   };
 };
+
+historyApiFallback is a feature mostly used when building single page applications (SPA). It's typically a Boolean option in development environments like webpack's development server (webpack-dev-server config).
+
+Single page applications often use the HTML5 History API to change the URL in the browser without causing a full page refresh, hence giving the appearance of navigating between different "pages" of the application, though it's still essentially a single page.
+
+historyApiFallback is needed for this because if you visit a deep link directly or refresh the page in such an SPA, the server will receive a request to a URL it doesn't have an explicit route defined for, and might respond with a 404 page.
+
+By adding historyApiFallback: true to the development server's config, you can set up fallback behavior to default to sending the index.html page whenever a requested resource can't be found, which then allows the client-side routing system to handle the route.
+
+Example:
+
+javascript
+
+
+devServer: {
+  historyApiFallback: true,
+}
+In the configuration above, if http://localhost:8080/user/123 is visited and that route doesn't exist on the server, the server will serve up the index.html, which then allows client-side routing to handle the /user/123 route.
+
+By default, it assumes index.html. But it can be configured for other files as well, or even to rewrite the pathname to something the server can respond to.
+
+This feature is generally only needed in a development environment, as in production you would configure your server to always serve the single-page-app's index.html, which will then handle routing.
+
+Full responsibility for code correctness, security and licensing lies solely with the user, not with DIAL platform or LLM vendor.
 
 #endregion Sample Webpack.config for Microfrontend

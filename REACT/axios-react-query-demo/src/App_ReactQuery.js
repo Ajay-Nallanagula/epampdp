@@ -4,6 +4,9 @@ import Loader from "./react-query-demos/Loader"
 import ErrorPage from "./react-query-demos/ErrorPage"
 import { DEMOS } from "./react-query-demos/constants"
 import { axiosPost } from "./axiosdemos/axiosMethods"
+import PaginationDemo from "./react-query-demos/Pagination/paginationDemo"
+import UseQueriesDemo from "./react-query-demos/Pagination/UseQueriesDemo"
+import UseRefDemo, { UseRefTimer } from "./react-query-demos/use-ref-demo"
 
 const AppReactQuery = ({ demoLabel = '' }) => {
 
@@ -13,7 +16,15 @@ const AppReactQuery = ({ demoLabel = '' }) => {
 
     //return <ReactUseMutationDemo />
 
-    return <ReactQueryEnabledDemo productId={1} />
+    // return <ReactQueryEnabledDemo productId={1} />
+
+    //    return <PaginationDemo />
+
+    //return <UseQueriesDemo />
+
+    //return <UseRefDemo />
+
+    return <UseRefTimer />
 }
 
 const ReactUseQueryDemo = () => {
@@ -58,14 +69,33 @@ const ReactUseMutationDemo = () => {
             //return await addusers(payload)
             return await axiosPost(payload)
         },
+
         //data : is the response of mutation
         //variables: is the payload that you pass in "mutationFn"
         //context: check--> "onMutate" function , if that returns anything that will be context
         onSuccess: (data, variables, context) => {
             console.log(`Successfully Mutated`, data, context)
+
+            //Scenario : React-query takes some time to place the data that is mutated into cache
+            // Is there a faster way?
+            //Answer: Yes there is an alternate way, as soon as the data is available on sucess that is the first point 
+            //where the fresh data is made available, at this point we can put the data into cache manually like below:
+            queryClient.setQueriesData(['products', data.id], data)
+            /*
+            queryClient.setQueriesData(['products', data.id],
+             (oldData) => {
+                OLD DATA IS IMMUTABLE, you can update data into old data
+                Just like React state this should be immutable
+            })
+                */
+
+
             //Invalidate the cache to show up the latest results and re-cache the response
-            queryClient.invalidateQueries(['products'])
+            //Find out other options on invalidate Queries 
+            //Why exact true, ther can be also the cahe record with product/id which should not be effected
+            queryClient.invalidateQueries(['products'] /*,{exact:true,}*/)
         },
+
         onError: (data, variables, context) => {
 
         },
@@ -80,7 +110,7 @@ const ReactUseMutationDemo = () => {
         //You use onSettled when you are using Promise calls , where the promise can resolve to
         //data or error 
         //context: check--> "onMutate" function , if that returns anything that will be context
-        onSettled: (data, error, variable, context) => {
+        onSettled: (data, error, variables, context) => {
             console.log(`Object is Settled`, { data }, { error }, { variables })
         }
 

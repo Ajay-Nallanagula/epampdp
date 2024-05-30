@@ -6,7 +6,6 @@ import createSagaMiddleware from 'redux-saga';
 
 const sagaMiddleware = createSagaMiddleware()
 
-
 const store = configureStore({
     reducer: todoReducer,
     middleware: (getDefaultMiddleware) => [...getDefaultMiddleware(), loggerMiddleware, sagaMiddleware]

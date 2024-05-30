@@ -984,4 +984,41 @@ In such case what will you deploy to your prod servers ?
 
 . gitlab-ci. yml
 
+Example :
+
+image: node:latest
+
+stages:
+  - install
+  - test
+  - build
+  - deploy
+
+cache:
+  paths:
+   - node_modules/
+
+install_dependencies:
+  stage: install
+  script:
+    - npm install
+
+test:
+  stage: test
+  script: npm run test
+
+build:
+  stage: build
+  script: npm run build
+  artifacts:
+    paths:
+      - build/
+
+deploy:
+  stage: deploy
+  script:
+    - ./deploy.sh
+  only:
+    - master
+
 #endregion GitLab Tutorials

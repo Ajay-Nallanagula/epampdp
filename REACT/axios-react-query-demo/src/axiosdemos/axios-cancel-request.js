@@ -6,5 +6,7 @@ const axiosProductCancelRequest = async () => {
     const result = await axios.get('https://dummyjson.com/products', { signal: controller.signal })
     console.log(result)
     return controller
+
+    //You would typically do is controller.abort()
 }
 export default axiosProductCancelRequest

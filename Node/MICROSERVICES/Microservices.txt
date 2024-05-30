@@ -126,8 +126,8 @@ Cache Mechanisms : Client-Cache(HTTP),CDN, Web Cache, Application Cache
 Cache Eviction Policy:
 Least recently used
 Randomly used
-Last In firstout
-Last Frequently used 
+Last In firstout LIFO
+Last Frequently used  
 
 Cache Invalidation Techniques:
 What will happen If your cache is down, and request are directly going to DB?

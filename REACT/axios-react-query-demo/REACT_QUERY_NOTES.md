@@ -81,6 +81,9 @@ Parallel Queries :
 Parallel queries using LazyLoading/Suspense , this will not work . We need to use special hool called "useSuspenseQueries"/ useInfiniteQueries
 Dynamic Parallel Queries: "useQueries", read more on it 
 
+Pagination using React-Query:
+https://tanstack.com/query/latest/docs/framework/react/guides/paginated-queries
+
 
 
 

@@ -11,6 +11,7 @@ class ErrorBoundaryParent extends React.Component {
     }
 
     componentDidCatch(error, info) {
+        //These error details can be sent to server for Logging , you can write side-effects here 
         console.log({ error }, { info })
     }
 
@@ -26,6 +27,10 @@ class ErrorBoundaryParent extends React.Component {
         //         )
         //     }
         // }
+
+        if(this.state.hasError){
+            return <div>Fallback Error Page</div>
+        }
         return (
             <div>{this.props.children}</div>
         )

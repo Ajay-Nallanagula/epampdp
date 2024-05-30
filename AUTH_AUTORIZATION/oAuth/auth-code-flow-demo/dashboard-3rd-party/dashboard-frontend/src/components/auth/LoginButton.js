@@ -8,8 +8,9 @@ const LoginButton = () => {
         // await authService.login()
         // navigate("/challenges")
 
+        //
         const loginRedirectOptions = { screen_hint: 'signup' }
-        loginWithRedirect()
+        loginWithRedirect() // you can pass pass loginRedirectOptions
     }
 
     return (

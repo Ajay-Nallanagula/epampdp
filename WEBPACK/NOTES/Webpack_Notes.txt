@@ -2,6 +2,9 @@ References:
 https://medium.com/@ittamiloffl/top-10-webpack-interview-questions-and-answers-af57313010db
 https://github.com/styopdev/webpack-interview-questions/blob/master/answers.md
 
+https://javascript.plainenglish.io/setting-up-webpack-for-the-production-and-development-3ca0b0b12ff5
+
+
 
 Webpack:
 What are loaders
@@ -242,7 +245,7 @@ Why do we use babel in webpack? What are various babel plugins?
 Browser Compatibility: Not all browsers support the latest JavaScript ES6/ES7/ES8 features. With Babel, you can write the latest JavaScript code without worrying about compatibility as it will "transpile" your advanced JavaScript code back down to ES5 code, which is more widely supported by most browsers.
 JSX Transformation: If you're working with React, the JSX syntax used in React is not understood by the browser. Babel helps to compile this JSX syntax to plain JavaScript.
 Use Next-Level JS Syntax: Babel gives you the ability to use future JavaScript syntax, like ES7, ES8 and so on which may not be currently supported by all browsers.
-Typescript and Flow: Babel can also be used to transpile TypeScript and Flow syntax to regular JavaScript, which all browsers can understand.
+Typescript and Flow: Babel(using babel-loader only) can also be used to transpile TypeScript and Flow syntax to regular JavaScript, which all browsers can understand.
 
 Various babel plugins we use are:
 @babel/preset-env: This is the most common Babel preset and is often the only one you need. It automatically determines the Babel plugins you need to use based on your supported environments.
@@ -254,6 +257,7 @@ Various babel plugins we use are:
 @babel/plugin-transform-arrow-functions: This plugin specifically transforms ES2015 arrow functions to ES5.
 @babel/plugin-proposal-object-rest-spread: This allows Babel to transform rest properties for object destructuring assignment and spread properties for object literals.
 @babel/plugin-transform-async-to-generator: This plugin transforms async functions to Generator functions.
+@babel/plugin-proposal-private-property-in-object : create react app is not supported and you get a warning , so we need to do npm i for this and make use of it
 
 These are only a small fraction of the available Babel plugins. The exact plugins you need will depend on the specific requirements of your project.
 
@@ -265,11 +269,26 @@ Webpack allows you to bundle all the dependencies, including JavaScript, CSS, an
 
 Code splitting: 
 ===============
-Code splitting is a technique used in Webpack to split the code into smaller chunks that can be loaded on-demand. It helps reduce the initial loading time of an application by loading only the essential code required for the initial view and loading additional code as needed. Webpack achieves code splitting through dynamic imports or by configuring entry points for specific chunks.
+Code splitting is a technique used in Webpack to split the code into smaller chunks that can be loaded on-demand. It helps reduce the initial loading time of an application by loading only the essential code required for the initial view and loading additional code as needed. Webpack achieves code splitting through dynamic imports (import()) or by configuring entry points for specific chunks.
 https://webpack.js.org/guides/code-splitting/
 Three approaches for Code Splitting:
 Entry Points: Manually split code using "entry" configuration.
 				Key words : multiple entries entry{}, loadash included in both bundles,Hence  
+				
+				module.exports = {
+  entry: {
+    app: './src/app.js',  //When you run your webpack build, it will output two bundle files in the dist directory: app.bundle.js and admin.bundle.js.
+    admin: './src/admin.js'
+  },
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].bundle.js' // // on build you get app.bundle.js and admin.bundle.js --> [name] of bundle is the key name(app ,admin )
+  }
+};
+
+NOTE: Webpack creates a separate dependency graph for each entry point. When webpack processes your application, it starts from a list of modules defined on the command line or the entry property of the webpack configuration, the entry points.
+NOTE: If there are common dependencies between your two entry points (for example, if both main.js and vendor.js import the lodash library), webpack will include those dependencies only once in the bundles, according to your optimization rules (SplitChunksPlugin configuration), to avoid code duplication.
+			
 Prevent Duplication: Use Entry dependencies or SplitChunksPlugin to dedupe and split chunks.
 --> Key words: separate loadash using "shared-dependOn" entries and optimization:{runTime:single} manually 
 --> usage of splits-chunk-plugin: This will bundle all the common dependencies like loadash, ramadjs and cache them as part of optimization technique 
@@ -371,6 +390,7 @@ Loaders:
 ========
 Loaders in Webpack are transformations applied to source files as they are added to the dependency graph. They allow you to preprocess files before they are bundled. For example, you can use loaders to transpile TypeScript to JavaScript, convert SCSS to CSS, or optimize and compress images. Loaders are configured in the Webpack configuration file and specified using rules.
 https://webpack.js.org/loaders/
+
 Examples: 
 Transpiling: 
 ------------
@@ -404,7 +424,7 @@ Example:
 module: {
     rules: [
       {
-        test: /\.css$/,
+        test: /\.(css|scss|sass)$/,
         use: [
           { loader: 'style-loader' },
           {
@@ -460,18 +480,19 @@ The difference between a plugin and a loader is that a loader can only transform
 
 | Webpack Plugin  | Webpack Loader  |
 |----------|------------|
-| A plugin serves a wide range of purposes and can be used for optimizing bundles, asset management, resolving dependencies, and more. | Loaders focus on transforming a single file at a time before they are added to the dependency graph. They are used to transform file formats so that they can be understood by Webpack.|
+| A plugin serves a wide range of purposes and can be used for optimizing bundles, asset management, resolving dependencies, and more. | Loaders focus on transforming a single file at a time before they are added to the dependency graph. They are used to transform file formats so that they can be understood by browser.|
 | Plugins make use of hooks in 'Compiler' and 'Compilation' which makes them work on the compilation process itself. | Loaders work with different modules, loaded directly from configuration file. |
 | Plugins are more powerfull and flexible. They are used to perform tasks such as bundle optimization, uglification, minification, chunking, etc. | Loaders are less powerfull but are quite handy for performing transformations on the source code of modules. For example, transforming typescript to javascript, or, less/sass to css. |
 | In the webpack.config.js configuration file, plugins are loaded in separate array object under key 'plugins'. | Loaders are loaded under the key 'module' into the 'rule' sub-array of webpack.config.js configuration file. |
 | They can be a simple JavaScript class with an 'apply' method so that they can be registered with a hook using the 'tap' method. Sample implementations include 'MiniCssExtractPlugin', 'HtmlWebpackPlugin', 'DefinePlugin', etc. | They are configuration objects that specify how webpack should process files. Sample implementations include 'style-loader', 'babel-loader', 'url-loader', etc. |
 | Registration of plugins can be done by importing them into webpack.config.js file and then adding inside 'plugins' array. | Loaders can be registered by defining it within 'rules' array where we specify that it should be used. |
 
+
 #endregion Plugin Vs Loader
 
 How does webpack handle dependencies?
 =======================================
-Step 1: Build Dependency Graph , starting from entry point given in webpack configuration
+Step 1: Build Dependency Graph , starting from entry point given in webpack configuration, Multiple entry points will create multiple dependency-graphs.
 Step 2: Tree-Shaking  [Webpack 4 uses ModuleConcatenation Plugin]
 Step 3: Seal the graph, then it applies plugins and create a bundle 
 Webpack uses a dependency graph to manage dependencies. It starts with an entry point and recursively follows the dependencies of the modules to build a complete graph. Each module is treated as a separate entity and can have its own dependencies. Webpack analyzes the graph and bundles all the dependencies into one or more output files.
@@ -495,6 +516,19 @@ Using dynamic imports: Utilizing dynamic imports allows you to load modules asyn
 The Webpack Dev Server is a development server that provides an easy way to test and debug applications during development. 
 It offers features like hot module replacement (HMR), which allows you to see changes instantly without refreshing the entire page.
 The dev server also provides an optimized build process for faster development iterations.
+
+ devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+	static: {
+            directory: path.join(__dirname, 'public'),
+     },
+    compress: true,
+    port: 9000,
+    open: true,
+    historyApiFallback: true,
+  },
+ 
+ 
 
 8. How can you configure Webpack?
 ==================================
@@ -532,6 +566,23 @@ Name some plugins you think are very important and helpful?
 ===========================================================
 Answer: CommonsChunkPlugin Or SplitsChunkPlugin, DefinePlugin, HtmlWebpackPlugin, ExtractTextWebpackPlugin, CompressionWebpackPlugin, MiniCssExtractPlugin
 
+The DefinePlugin allows you to create global constants which can be configured at compile time. This can be useful for allowing different behavior between development builds and production builds or to expose version numbers or other build-time variables.
+
+const webpack = require('webpack');
+module.exports = {
+  //...
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production')
+    })
+  ]
+};
+
+//Usage in javascript
+if (process.env.NODE_ENV === 'production') {
+   console.log('Looks like we are in production mode!');
+}
+
 What is Hot-Modules-Replacement?
 ================================
 Answer: Hot-Modules-Replacement(HMR) is webpack feature which allows to update modules in application without page reload. 
@@ -540,6 +591,32 @@ Answer: Hot-Modules-Replacement(HMR) is webpack feature which allows to update m
 How to enable source maps in webpack bundles?
 ==============================================
 Answer: Using devtool: 'source-map' (there are various other configurations for source maps, view full list here)
+
+eval: Fastest Source Map option. Each module is executed with eval() and a SourceMap is added as a DataUrl to the eval().
+
+cheap-module-source-map: Original source, with column-mappings, but simplifies the source maps to a single mapping per line.
+
+cheap-source-map: Like eval-cheap-source-map but slower because generating a full SourceMap file.
+
+inline-source-map: Includes the SourceMap as DataUrl in the bundle.
+
+source-map: Full SourceMap as a separate file with line and column mappings.
+
+hidden-source-map: Same as source-map, but doesn’t add a reference comment to the bundle.
+
+nosources-source-map: Same as source-map, but without the source content in the
+
+What is DataUrl in bundle?
+"DataUrl in the bundle" refers to a Data URI scheme, which is a URI scheme that allows included data in-line in web pages as if they were external resources.
+
+A Data URL is a URI scheme that allows you to include data in-line in the bundle itself instead of loading it from an external source. Data URLs are formed by taking a media type, adding a base64-encoded version of the source file, and placing the entire string as the href value for a link or source tag, or as URLs when they are encountered in CSS (like in a background-image property).
+
+When Webpack encounters data URLs in the source, it embeds the source file directly into the bundle. This can be useful for small resources, as it eliminates extra network requests. But it can also cause bundle bloat if overused.
+
+Just like in css
+body {
+    background: url(data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAAAAAAALAAAAAABAAEAAAIBRAA7);
+}
 
 How to automatically build and update bundles in the browser after a change in source code?
 ============================================================================================
@@ -571,6 +648,25 @@ module.exports = {
 You can enable watch mode using 
 watch: true,
 watch: webpack --watch // inpackage.json
+
+What is webpack-bundle-analyser?
+================================
+https://www.npmjs.com/package/webpack-bundle-analyzer
+https://medium.com/@chakresh_sahu/using-webpack-bundle-analyzer-to-analyze-react-apps-bundle-size-22841c493082
+
+If you're using Create React App, a simpler method is to go to package.json and edit the npm scripts.
+
+Run npm install --save-dev webpack-bundle-analyzer to install webpack-bundle-analyzer
+Add a --stats flag at the end of "build" script command
+Add a new script called "analyze" as shown below
+"scripts": {
+  ...
+  "build": "react-scripts build --stats",
+  "analyze": "webpack-bundle-analyzer build/bundle-stats.json",
+},
+Next, run npm run build and then npm run analyze.
+
+
 
 What is parallel-webpack and how does it affect webpack's build process?
 =========================================================================
@@ -610,7 +706,7 @@ npm install webpack-manifest-plugin --save-dev
 const ManifestPlugin = require('webpack-manifest-plugin');
 module.exports = {
   // ... other configurations ...
-  plugins: [    new ManifestPlugin()  ],
+  plugins: [ new ManifestPlugin()  ],
 };
 
 With this configuration, the manifest plugin will generate a manifest.json file in your output directory. This JSON file will map the names of all require/import statements in your JavaScript files to their respective output files.
@@ -634,6 +730,7 @@ Question: Briefly describe long-term caching and how to achieve it using webpack
 ===================================================================================
 https://codeburst.io/long-term-caching-of-static-assets-with-webpack-1ecb139adb95#.vtwnssps4
 
+For each build , new 
 Answer: Browsers should cache static assets to save traffic and users time. But after each change or bugfix, browser have to download newer version of files. The most easy way to achieve this is changing file name. It could be buildId or unique hash in the end of file's name like.
     app.js?build=1
     app.js?build=2
@@ -669,6 +766,7 @@ output: {
   filename: 'bundle.js',
   path: path.resolve(__dirname, 'dist'),
 },
+
 When we do the above configuration 
 Sourcecode is your business logics
 dependencies here is :loadash,react, react-router-dom,ramada, helmet etc 
@@ -821,11 +919,23 @@ Webpack v4+ will minify your code by default in production mode.
 Environment Variables in Webpack:
 =================================
 const path = require('path');
+const webpack = require('webpack')
 
 module.exports = (env) => {
   // Use env.<YOUR VARIABLE> here:
   console.log('Goal: ', env.goal); // 'local'
   console.log('Production: ', env.production); // true
+
+plugins: [
+    new webpack.DefinePlugin({
+      PRODUCTION: JSON.stringify(true),
+      VERSION: JSON.stringify('1.0.0'),
+      BROWSER_SUPPORTS_HTML5: true,
+      TWO: '1+1',
+      'typeof window': JSON.stringify('object')
+    })
+  ],
+};
 
   return {
     entry: './src/index.js',
@@ -935,3 +1045,33 @@ Not all developers do this due to the added complexity, but differential serving
 What does resolution in package.json do?
 For instance, if you have two dependencies A and B, where A depends on lodash version 1.0.0 and B depends on lodash version 2.0.0, you can use the resolutions field to force both A and B to use lodash version 2.0.0.
 Please note that this feature is originally a Yarn-specific feature and does not have built-in support in npm. However, npm users can use a tool such as npm-force-resolutions to utilize this functionality.
+
+
+Webpack dev Vs prod?
+======================
+Why you need dev and prod separate 
+--> dev: sourcemaps, HotModule reloading, Live Server
+--> Prod: Optimizing Build is focus
+	   --> performance
+	   --> minimizing bundle size
+	   --> compatability across all Browsers
+	   --> techniques: code-splitting, minification, -->    tree-shaking
+
+Few Plugins that cn be handy during Prod :
+HtmlWebpackPlugin: This plugin generates an HTML file, injects the output bundles into that file, and writes this file to the dist folder. In the production environment, you might want to use this in tandem with a template engine to maximize reusability.
+
+MiniCssExtractPlugin: In development, styles often go in the JavaScript bundle for hot module replacement. But in production, it's better to extract CSS into separate files per JS file which contains CSS. MiniCssExtractPlugin does this job and should be used only in production.
+
+OptimizeCSSAssetsPlugin: This plugin takes the CSS asset output by MiniCssExtractPlugin and optimizes it for production. It's a good practice to minify the CSS for production which the OptimizeCSSAssetsPlugin does.
+
+TerserPlugin: It is typically used to minify JavaScript. The TerserPlugin included in webpack by default for production mode.
+
+CompressionWebpackPlugin: This plugin can prepare compressed versions of assets to serve them with Content-Encoding. In simple terms, this creates a gzip version of the built files, which can be served in production to decrease the size of the files you're serving.
+
+CleanWebpackPlugin: It's common to clean the /dist folder before each build in production, so that only used files will be generated. This is particularly useful to ensure that hashes generated by webpack-subresource-integrity are included on every build and correctly match new builds.
+
+Remember that plugins should be initialized in the plugins array in the webpack.config.js or .ts file.
+
+
+
+

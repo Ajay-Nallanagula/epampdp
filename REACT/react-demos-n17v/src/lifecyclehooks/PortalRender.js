@@ -1,8 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-
-
 class PortalRender extends React.Component {
     portalRoot = document.getElementById("portal");
     el = document.createElement('div')

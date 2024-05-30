@@ -46,3 +46,10 @@ export const axiosPost = async (payload) => {
     return result.data
 }
 
+export const getPaginatedProducts = async (productsPerPage, currentPage) => {
+    //https://dummyjson.com/products?limit=10&skip=10&select=title,price
+    const { data } = await axios.get(`https://dummyjson.com/products?limit=${productsPerPage}&skip=${(currentPage - 1) * productsPerPage}&select=title,price`)
+    // setCurrentProducts(data.products)
+    //setTotalProducts(data.total)
+    return data
+}

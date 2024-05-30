@@ -22,6 +22,7 @@ import BasicForm from "./Formik/BasicForm"
 import ServiceUsage from "./ServiceUsage"
 import UseReducerDemo from "./useReducerHook/UseReducerDemo"
 import UseMemoDemoHook from "./Hooks@18/UseMemoHookDemo"
+import SuspenseLazyComponent from "./Suspense/SuspenseUsecase"
 //import configRoutes from "./routerQuestion/testRouter"
 
 
@@ -46,6 +47,7 @@ const App = () => {
 
     return (
         <>
+            <SuspenseLazyComponent />
             {/* <BrowserRouter>
                 <ServiceUsage /> */}
             {/* <BasicForm /> */}

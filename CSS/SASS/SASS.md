@@ -16,6 +16,10 @@ Operators: if/else, <,>,= aritmetic etc
 Partials: @import different css into one and have a network call only for one css
 Extend: @extend  will apply any css
 
+## Disadvantages
+Transpiled to css only , slight delay in build, can overcome with good bundlers like webpack 
+Debugging could be challenging , can overcome with source maps
+
 
 
 
