@@ -67,7 +67,7 @@ Project Info
 1) A microfrontend is an architectural style where a front-end app is decomposed into "microapps", working loosely together. 
 2) Each microapp is developed, tested and deployed independently, by separate teams with their own lifecycle, allowing for simpler, more localized and effective project management.
 
-Advantages of microfrontends:
+Advantages/Objectives of microfrontends:
 =============================
 - **Independence**: Each microfrontend can be independently developed, tested and deployed by separate teams.
 - **Simplicity**:  Small, dedicated codebases are usually easier to maintain.
@@ -75,6 +75,7 @@ Advantages of microfrontends:
 - **Scalability**: Teams and features can scale horizontally.
 - **Diversity**:  Each microfrontend can be written using the technologies best suited for its feature set.
 - **Resilience**: A problem in one microfrontend does not affect the others.
+- **Incremental Migration and rewrites** : Migration from Angular 4-Ng5 or react16-react 17 we can do independently , with less rewrites 
 
 Disadvantages of Microfrontend:
 ===============================

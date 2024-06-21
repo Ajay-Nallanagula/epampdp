@@ -4,7 +4,7 @@ import Loader from '../Loader'
 import axios from "axios"
 import { useQuery, useQueryClient } from "@tanstack/react-query"
 
-const PaginationBar = ({ totalProducts, productsPerPage, paginate }) => {
+export const PaginationBar = ({ totalProducts, productsPerPage, paginate }) => {
     let pageNumbers = []
 
     for (let i = 1; i <= Math.ceil(totalProducts / productsPerPage); i++) {
@@ -32,11 +32,13 @@ const PaginationDemo = () => {
     const [currentPage, setCurrentPage] = useState(1)
     //const [currentProducts, setCurrentProducts] = useState([])
 
-    const queryClient = useQueryClient()
+    //const queryClient = useQueryClient()
 
     const paginatedProductsQuery = useQuery({
-        queryKey: ["products", currentPage],
+        queryKey: ["products", currentPage], //products_1: {}
         keepPreviousData: true,
+        staleTime: 20000,
+        //gcTime: 10000,
         queryFn: async () => {
             const data = await getPaginatedProducts(productsPerPage, currentPage)
             return data

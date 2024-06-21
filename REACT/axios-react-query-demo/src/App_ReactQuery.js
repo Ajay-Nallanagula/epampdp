@@ -18,13 +18,13 @@ const AppReactQuery = ({ demoLabel = '' }) => {
 
     // return <ReactQueryEnabledDemo productId={1} />
 
-    //    return <PaginationDemo />
+       return <PaginationDemo />
 
-    //return <UseQueriesDemo />
+    // return <UseQueriesDemo />
 
     //return <UseRefDemo />
 
-    return <UseRefTimer />
+    // return <UseRefTimer />
 }
 
 const ReactUseQueryDemo = () => {

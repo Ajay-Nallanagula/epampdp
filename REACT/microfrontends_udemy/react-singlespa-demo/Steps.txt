@@ -1,0 +1,372 @@
+https://single-spa.js.org/docs/create-single-spa
+
+***https://single-spa.js.org/docs/faq/
+
+Step 1: 
+Create a root-config which will host all other applications , this is a shell application
+command : create-single-spa --dir root-application --moduleType root-config
+//Console logs on executing the command 
+Initialized git repository
+
+   create root-application\package.json
+   create root-application\babel.config.json
+   create root-application\.gitignore
+   create root-application\.husky\pre-commit
+   create root-application\.eslintrc
+   create root-application\.prettierignore
+   create root-application\webpack.config.js
+   create root-application\tsconfig.json
+   create root-application\src\single-spa-practice-root-config.ts
+   create root-application\src\index.ejs
+   create root-application\src\declarations.d.ts
+
+What is index.ejs(embedded javascript system)?
+*.ejs is like template engine, like Razor, using JavaScript we can generate html page.
+EJS is a simple templating language that lets you generate HTML markup with plain 
+JavaScript. No religiousness about how to organize things. 
+No reinvention of iteration and control-flow. 
+It's just plain JavaScript.
+
+
+What is single-spa Layout engine ?
+The single-spa-layout npm package is an optional add-on to single-spa. 
+The layout engine provides a routing API that controls your top level routes, 
+applications, and dom elements. Using single-spa-layout makes it easier to accomplish the following:
+
+1) DOM placement and ordering of applications.
+2) Loading UIs when applications are downloaded.
+3) Default routes for Not Found / 404 pages.
+4) Transitions between routes (implementation pending).
+5) Server side rendering of single-spa applications
+6) Error pages
+
+Step 2: Now we can create each microapp
+--> Each microapp is treated as app-parcel
+NOTE: if we specify --framework , moduleType is inferred to be "app-parcel"
+create-single-spa --dir first-react-microapp --framework react
+create-single-spa --framework vue
+create-single-spa --framework angular
+
+//Console.log output will be as follows
+Initialized git repository
+
+   create first-react-microapp\package.json
+   create first-react-microapp\jest.config.js
+   create first-react-microapp\babel.config.json
+   create first-react-microapp\.eslintrc
+   create first-react-microapp\.gitignore
+   create first-react-microapp\.husky\pre-commit
+   create first-react-microapp\src\declarations.d.ts
+   create first-react-microapp\.prettierignore
+   create first-react-microapp\webpack.config.js
+   create first-react-microapp\src\root.component.tsx
+   create first-react-microapp\src\root.component.test.tsx
+   create first-react-microapp\src\firstReactMicroapp-first-example-microapp.tsx
+   create first-react-microapp\tsconfig.json
+
+Step 3: Repeat Step 2 to create second-microapp 
+
+Step 4: Now we have two different microapps , there are two different places you want to run your application
+    Way 1: Standalone as a microapp during development
+        We can run app in silos using npm "start:standalone": "webpack serve --env standalone"
+        Read: https://single-spa.js.org/docs/recommended-setup/#local-development 
+       -->  You can change the importmaps in root-app to point to localhost
+       -->  A tool called import-map-overrides exists to customize your import map through an in-browser UI.
+       -->  you can use "standalone-single-spa-webpack-plugin", which allows you to develop each application in standalone mode. 
+            this plugin will be installed along with spa-cli itself
+
+
+    Way 2: In:tegrated Mode:  part of root-application(host) once you integrate
+            We can run using "start": "webpack serve",
+    
+   Q)  "microfrontend is running in integrated mode " In the context of single-spa what does this mean?
+    In the context of single-spa, the phrase "microfrontend is running in integrated mode" typically means that the microfrontend is being served as part of a larger, integrated application. Single-spa is a framework for bringing together multiple JavaScript microfrontends in a single web application, allowing them to coexist and interact seamlessly.
+
+Here's a more detailed explanation:
+
+Single-spa and Microfrontends
+Single-spa allows multiple independent frontend applications (microfrontends) to run simultaneously in a single browser window. Each microfrontend is developed, deployed, and maintained independently but can be integrated to create a cohesive user experience.
+
+Integrated Mode
+When a microfrontend is "running in integrated mode," it usually implies the following:
+Part of a Larger Application: The microfrontend is part of a larger application composed of multiple microfrontends managed by single-spa. It is not running in isolation but alongside other microfrontends.
+Shared Dependencies and Services: In integrated mode, microfrontends can share dependencies and services. This reduces redundancy and improves performance by avoiding duplicate loading of shared libraries.
+Unified Navigation and State Management: Integrated mode allows for unified navigation and state management across microfrontends. Single-spa provides hooks and APIs for coordinating routing, state sharing, and inter-microfrontend communication.
+Interoperability: Microfrontends running in integrated mode can interact with each other. Single-spa facilitates communication between microfrontends, enabling them to work together as parts of a whole.
+
+Step 5:
+Register your Applications : https://single-spa.js.org/docs/configuration#registering-applications
+[Personal Opinion] There are two types of applications :
+1) Independent Application : A separate application like in the repository we have "first-react-microapp" & "second-react-microapp"
+   --> These can be deployed in the host/root application "root-application" or "host-react-application" using 
+       importmaps(or polyfill SystemJs)
+   --> inside --> root-application/src/index.ejs
+   <script type="systemjs-importmap">
+      {
+        "imports": {
+         //react,react-dom and single-spa are common dependencies
+          "react": "https://cdn.jsdelivr.net/npm/react@16.13.1/umd/react.production.min.js",
+          "react-dom": "https://cdn.jsdelivr.net/npm/react-dom@16.13.1/umd/react-dom.production.min.js",
+          "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@5.9.0/lib/system/single-spa.min.js",
+
+         //below are microapps
+          "first-react-app": "http://localhost:8080/firstReactMicroapp-first-example-microapp.js",
+          "second-react-microapp": "http://localhost:8081/secondMicroapp-second-mfe.js"
+        }
+      }
+    </script>
+   --> react and react-dom is evident why its needed because, even microapps are built on react
+   --> "single-spa" is needed to register the microapps and start the microapps.
+   --> inside root-application\src\single-spa-practice-root-config.ts
+       import { registerApplication, start, LifeCycles } from "single-spa";
+                  registerApplication({
+                  name: "first-react-app",
+                  app: () => {
+                     return System.import<LifeCycles>(
+                        "http://localhost:8080/firstReactMicroapp-first-example-microapp.js"
+                     );
+                  },
+                  activeWhen: ["/app1"],
+                  });
+   --> inside each microapp , lets say first-react-microapp\src\firstReactMicroapp-first-example-microapp.tsx
+       we will have to expose following LIFECYCLE methods --> bootstrap, mount, unmount these are provided by "single-spa-react framework"
+       we can use cli to create these applications for various JS frameworks react/angular/vue etc 
+       Docs: https://single-spa.js.org/docs/ecosystem
+   --> When you run your first-react-app in integrated mode , i.e along side root-application the landing page 
+       provides a url for the microa-app which looks ""http://localhost:8080/firstReactMicroapp-first-example-microapp.js""
+   --> If you want to run the first-react-app in local environment in silos without root-app we can do using 
+         npm run start:standalone
+   
+   2) On-Fly-Application: 
+   Inside the root-application\src\single-spa-practice-root-config.ts we have an example of on-fly-application 
+   Where we have created a landing-app
+      const landingApp = {
+      bootstrap: () => Promise.resolve(), //bootstrap function
+      mount: () => Promise.resolve(), //mount function
+      unmount: () => Promise.resolve(), //unmount function
+      };
+      registerApplication({
+      name: "header-title",
+      app: landingApp,
+      activeWhen: ["/"], //(location) => location.pathname.startsWith("/"),
+      });
+
+ 
+What happens , When your host-application is a react-application created using CRA?
+In this case we need to install "single-spa" framework npm i --D "single-spa" 
+--> We can write a custom hook to register our routes see useRegisterMFESLatest.js in the repo
+         host-react-app\src\customHooks\useRegisterMFESLatest.js
+Example 
+//Inside custom hook useRegisterMFESLatest.js 
+ useEffect(() => {
+        registerApplication({
+            name: "first-react-app",
+            //SystemJs is not there in React context , hence we need to use window/global object
+            app: () => window.System.import("http://localhost:8080/firstReactMicroapp-first-example-microapp.js"),
+            activeWhen: location => location.pathname === "/app1",
+            customProps: {
+                cat: "meow",
+                dog: "bow-bow",
+                appName: "first-react-app",
+            }
+        });
+        setStatusApp1(true)
+    }, [])
+
+    useEffect(() => {
+        if (statusApp1 && statusApp2) {
+            //IMPORTANT:****
+            start({
+                urlRerouteOnly: true,
+            });
+        }
+    })
+
+//Usage host-react-app\src\App.js
+const [statusApp1, statusApp2] = useRegisterMFES()
+
+And the place holders for the routes to be loaded inside a container should have a specific id 
+<Route path="/app1" element={() => <div id="single-spa-application:first-react-app"></div>}></Route>
+
+
+**Communication Between Microapps in Single-spa**
+==============================================
+
+The list below shows some common best practices of microapps communication :
+==============================================================================
+Create a shared API utility microfrontend that caches fetch/XHR requests and their responses. All microfrontends call into the API microfrontend when making a request, so that the microfrontend can control whether to refetch the data or not.
+Create a shared Auth utility microfrontend that exposes a userCanAccess function for other microfrontends to use when checking permissions. The auth module may also include other exports such as the logged in user object, auth tokens, etc.
+Export shared state from the public interface of your microfrontend so that libraries can import it. For values that change over time, Observables (RxJS docs) can be useful. Create a ReplaySubject so that you can push new values out to all subscribers at any time.
+Use custom browser events to communicate. Fire them on the window in one microfrontend, and listen to the event in a different microfrontend.
+Use cookies, local/session storage, or other similar methods for storing and reading that state. These methods work best with things that don't change often, e.g. logged-in user info.
+
+How to create create-single-spa utility module?
+================================================
+command: create-single-spa --dir utility-microapp   
+-- Choose : in-browser utility module(styleguide....)
+--> follow other options 
+
+console logs 
+============
+Initialized git repository
+   create utility-microapp\package.json
+   create utility-microapp\jest.config.js
+   create utility-microapp\babel.config.json
+   create utility-microapp\.eslintrc
+   create utility-microapp\.prettierignore
+   create utility-microapp\.gitignore
+   create utility-microapp\.husky\pre-commit
+   create utility-microapp\webpack.config.js
+   create utility-microapp\src\org-utility-singlespa-utility.js
+
+Project setup complete!
+Steps to test your utility module:
+1. Run 'npm start -- --port 8500'
+2. Go to http://single-spa-playground.org
+3. Run the following in the browser console: window.importMapOverrides.addOverride('@org-utility/singlespa-utility', '8500')
+4. Run the following in the browser console: System.import('@org-utility/singlespa-utility')
+
+https://single-spa.js.org/docs/recommended-setup/#utility-modules-styleguide-api-etc
+https://single-spa.js.org/docs/faq/
+
+There are 3 approaches in which micro-apps can communicate :
+1) Utility modules (styleguide, API, etc)
+2) Cross microfrontend imports
+3) Shared dependencies
+    a) using importmaps
+    b) using webpack ModuleFederation.
+
+Way 1: Utility modules (styleguide, API, etc)
+-----------------------------------------------
+    Step 1: Create utility app steps mentioned above in the repo "utility-microappts"
+    Step 2: Assumption we have root-application, first react-microapp, second-react-microapp, utility-microappts.
+    Step 3: using cli we created utility app, which gives us utility module in this case "utility-microappts\src\org-utilityts-singlespa-utilityts.ts"
+    Step 4: Added some test methods 
+        export function publicApiFunction(): string;
+        export function testApiFunction(): string;
+    Step 5:  run "npm start"
+    Step 6: Import the utility-microappts into root-application in index.ejs locally and for prod as well 
+    <% if (isLocal) { %>
+    <script type="systemjs-importmap">
+    {//same as below}
+    <script type="systemjs-importmap">
+      {
+        "imports": {
+          "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@5.9.0/lib/system/single-spa.min.js",
+        //**** utility-microapp is imported in root-application ****
+          "utility-microapp": "http://localhost:8082/org-utilityts-singlespa-utilityts.js",
+          "first-react-app": "http://localhost:8080/firstReactMicroapp-first-example-microapp.js",
+          "second-react-microapp": "http://localhost:8081/secondMicroapp-second-mfe.js"
+        }
+      }
+    </script>
+
+   Step 6.1 : If host application is in react i.e host-react-application 
+    Include the utility-microapp in importmap.json  host-react-app\public\scripts\importmap.json
+
+   Step 7: Now import the utility-microapp from first-react-microapp and second-react-microapp
+        To do that we need to include externals in first-react-microapp\webpack.config.js
+        return merge(defaultConfig, {
+        //externals: ['single-spa', /^utility-microapp\//] //if you have multiple files 
+        externals: ['single-spa', 'utility-microapp'],
+    });
+  Step 8: If the first-react-microapp  is in Typescript, we also need schema/defininition file as well
+  first-react-microapp\src\utility-microapp.d.ts
+  Step 9: Inside the root.component.tsx we can start using the utilites 
+        ` import { publicApiFunction, testApiFunction } from "utility-microapp";
+        export default function Root(props) {
+        console.log(`First MFE ${JSON.stringify(props)}`);
+        return (
+            <section>
+            <h2>{publicApiFunction()}</h2>
+            <h2>{testApiFunction()}</h2>
+        }
+            `
+    Step 10: Repeat the same steps for second-react-microapp
+
+Way 2: Cross microfrontend imports
+------------------------------------
+Way1 includes this way, else research more 
+
+Way 3: Shared dependencies
+---------------------------
+Way1 includes this way, else research more  
+
+How will single-spa export the utilites ?
+Goto utility-microapp\webpack.config.js -->  see the webpack settings in module.exports 
+console.log(defaultConfig) --> and do npm start so that the console gets logged 
+Observe that 
+{
+  mode: 'development',
+  entry: '...entry',
+  output: {    ...some entries   },
+  module: {     rules: [ ..somerules]  },
+  devtool: 'source-map',
+  devServer: {...deveServerSettings},
+  // This is how single-spa exports the dependencies 
+  ***externals: [ 'single-spa', /^@org-utility\// ], 
+  plugins: [...plugins]
+}
+   
+NOTE: We could also export just one function 
+module.exports = {
+  externals: ["@org-name/publicApiFunction"],
+
+  // Alternatively, mark *all* org-name packages as externals
+  // externals: [/^@org-name\/.+/]
+};
+
+What are web-pack externals ?
+Using Webpack externals is a way to ensure that certain dependencies or modules are not bundled into your application's build output but instead are expected to be available in the environment where your application is running. This can be particularly useful in a microfrontend architecture like Single-SPA, where multiple micro frontends might share common dependencies or utility modules.
+
+Why Use Webpack Externals?
+Avoid Duplication:
+By marking dependencies as externals, you avoid bundling the same code multiple times across different micro frontends. This reduces the overall size of your application and improves loading times.
+
+Shared Dependencies:
+Externals allow multiple micro frontends to share the same instance of a library or utility module, ensuring consistent behavior and state.
+
+Load Order Control:
+Externals give you control over when and how certain scripts are loaded, which can be important for managing dependencies and ensuring that shared libraries are available when needed.
+
+
+What are single-spa-parcels?
+============================
+https://single-spa.js.org/docs/parcels-overview
+
+
+What are Layout-engine in the context of Single-spa?
+=====================================================
+https://single-spa.js.org/docs/layout-overview
+
+What are devtools available for single-spa?
+==========================================
+https://single-spa.js.org/docs/devtools
+
+Errors Faced :
+===============
+***LIST OF COMMON ERRORS: https://github.com/systemjs/systemjs/blob/main/docs/errors.md#3 
+Error: application 'XXXX' died in status LOADING_SOURCE_CODE: Unable to resolve bare specifier 'react' 
+Resolution : https://github.com/systemjs/systemjs/blob/main/docs/errors.md#8
+https://github.com/systemjs/systemjs/issues/2195 
+To fix this, you need to add React to an import map on the page:
+<script type="systemjs-importmap">
+  "react": "https://cdn.jsdelivr.net/npm/react@16.13.1/umd/react.production.min.js",
+      "react-dom": "https://cdn.jsdelivr.net/npm/react-dom@16.13.1/umd/react-dom.production.min.js"
+   </script>
+   
+Error: single-spa minified message #43: single-spa: patchHistoryApi() was called after the history api was already patched
+Explaination : Refer  useRegisterMFESLATEST.js
+In short start() method should not be called multiple times, 
+it can be called once your mfe's are loaded. 
+Inside useEffect you can call start()
+
+Error : TypeError: Cannot read properties of undefined (reading 'setExtraStackFrame')
+when there is a mismatch in React versions, and they are shared 
+Scenario: first-react-microapp mfe is in React17, host-react-app is in React18
+
+
+
+References and Examples:
+https://obaranovskyi.medium.com/micro-frontends-cross-application-communication-with-single-spa-and-rxjs-aa55084bf344
+https://dev.to/luistak/cross-micro-frontends-communication-30m3 
