@@ -1,0 +1,128 @@
+let obj= {A:'a',B:'b'}
+//Seal:  new properties from being added to it and marks all existing properties as non-configurable
+Object.seal(obj)
+console.log(Object.isSealed(obj))//true
+obj.C = 'c' // cannot add new property
+delete obj.A //Cannot delete
+
+Object.defineProperty(obj,'A',{writable:false})
+console.log(Object.getOwnPropertyDescriptor(obj,'A')) // Cannot configure objects
+
+obj.A ='aaa' //You can change exisiting property
+console.log(obj)
+obj={D:'d'}
+console.log(obj) //You can re-assign the object
+console.log(Object.isSealed(obj))
+
+
+objects can have duplicate keys, only the latest one will be shown
+const obj = {A:'a',A:'b'}
+console.log(obj) //o/p {A:'b'}
+
+To show symbols , in Object literal form 
+
+let id = Symbol("id");
+let nonSym = 'jKey'
+
+let user = {
+  name: "John",
+  [id]: 123 , //1
+  [nonSym ]: 143 //2
+};
+
+What is the difference between 1 & 2 ?
+The key which has symbol is not shown, symbols are used to hide the properties , in other way make them private hence they are been hidden
+console.log(user) //{  jKey: 143,  name: "John"}
+console.log(Object.keys(user)) //["jKey","name"]
+
+How to find if Object has symbols 
+console.log(Object.getOwnPropertySymbols(user)) //Symbol(id)
+
+Symbols are skipped by for…in && Object.keys()
+let id = Symbol("id");
+let user = {
+  name: "John",
+  age: 30,
+  [id]: 123
+};
+
+for (let key in user) alert(key); // name, age (no symbols)
+
+// the direct access by the symbol works
+alert( "Direct: " + user[id] );
+
+ Object.assign copies both string and symbol properties:
+ 
+ spread operator also copies both strings and symbols:
+let id = Symbol("id");
+let kd= Symbol("kd")
+let user = {
+  name: "John",
+  age: 30,
+  [id]: 123,
+[kd]:'KEDI'
+};
+
+const newObj = {...user}
+console.log(newObj)//{  age: 30,  name: "John"}
+console.log(Object.getOwnPropertySymbols(newObj //[[object Symbol] { ... }, [object Symbol] { ... }]
+
+Global symbols:
+
+As we’ve seen, usually all symbols are different, even if they have the same name. But sometimes we want same-named symbols to be same entities. For instance, different parts of our application want to access symbol "id" meaning exactly the same property.
+
+To achieve that, there exists a global symbol registry. We can create symbols in it and access them later, and it guarantees that repeated accesses by the same name return exactly the same symbol.
+
+In order to read (create if absent) a symbol from the registry, use Symbol.for(key).
+
+That call checks the global registry, and if there’s a symbol described as key, then returns it, otherwise creates a new symbol Symbol(key) and stores it in the registry by the given key.
+
+For instance:
+
+// read from the global registry
+let id = Symbol.for("id"); // if the symbol did not exist, it is created
+
+// read it again (maybe from another part of the code)
+let idAgain = Symbol.for("id");
+
+// the same symbol
+alert( id === idAgain ); // true
+Symbols inside the registry are called global symbols. If we want an application-wide symbol, accessible everywhere in the code – that’s what they are for
+
+
+Symbol.keyFor
+For global symbols, not only Symbol.for(key) returns a symbol by name, but there’s a reverse call: Symbol.keyFor(sym), that does the reverse: returns a name by a global symbol.
+let sym = Symbol.for("name");
+let sym2 = Symbol.for("id");
+
+// get name by symbol
+alert( Symbol.keyFor(sym) ); // name
+alert( Symbol.keyFor(sym2) ); // id
+
+let id = Symbol("namerhjsbdj");
+let nonSym = 'jKey'
+let user = {
+  name: "John",
+  [id]: 123 ,// not "id": 123
+  [nonSym ]: 143
+};
+
+const globalSym = Symbol.for('Ajay')
+console.log(typeof(globalSym) )
+console.log(Symbol.keyFor(globalSym ))
+console.log(id.description)//localsymbol
+//const sym = Symbol.keyFor('id')//local symbol, undefined keyFor works only for global symbols
+//console.log({sym})
+
+
+
+What is Object.is() ?? Object.is Vs == or ===
+https://medium.com/coding-at-dawn/es6-object-is-vs-in-javascript-7ce873064719#:~:text=The%20method%20Object.is,they%20are%20the%20same%20value.
+Object.is(value1,value2) //equality check
+The first difference is that Object.is() thinks -0 and +0 are different values, while === says they are the same value.
+The second difference between is that Object.is thinks NaN is the same value as itself, while === says they are not same value.
+console.log(Object.is(-0, +0)) // false
+console.log(-0 === +0) // true
+console.log(Object.is(NaN, NaN)) // true
+console.log(NaN === NaN) // false
+Object.is(+0,0) is false, Object.is(NaN,NaN) is true (Its opossite for ===)

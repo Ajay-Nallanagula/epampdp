@@ -1,0 +1,88 @@
+const Vs Object.freeze
+https://alligator.io/js/const-vs-obj-freeze/#:~:text=comes%20into%20play.-,Object.,existing%20value%20of%20an%20object.&text=const%20makes%20the%20variable%20binding,Object.
+
+const : We CAN change the value/prop of the const object, but we CANNOT re-assign the object
+Object.freeze: we CANNOT change the value/prop of the const object, but we CAN re-assign the object
+
+Hence use both of them in conjuction as shown below:
+
+const alligator = {
+  canItFly : false
+};
+
+Object.freeze(alligator);
+alligator.canItFly = true; // This is ignored
+alligator = {pi: 3.14}; // This will throw an TypeError
+console.log(alligator); // {canItFly: false}
+
+//What will happen in === 
+step 1 : both the variables are subjected to typeof(x) , if both of themm are of same type 
+step 2: then == is applied on the values 
+
+Typeof : 
+https://medium.com/better-programming/how-to-check-data-types-in-javascript-using-typeof-424d0520a329
+
+ECMAScript 5 introduced an Array.isArray() method to check for an array, since typeof will not be able to tell arrays from other objects
+typeof([]) is an object.
+Array.isArray([]) //true
+
+null == undefined //true loose equality
+null === undefined //false strict equality
+// Two exclamation points !! (the logical NOT) operator are equivalent to Boolean()
+console.log(typeof !!(37)) === // boolean
+console.log(typeof !!(0)) === // boolean
+
+The falsy values in JavaScript are false, 0, 0n, null, undefined, NaN, and the empty string “”; everything else is truthy
+
+NaN is the only value in JavaScript that doesn’t equal itself
+console.log(NaN==NaN)//false
+console.log(NaN===NaN)//false
+console.log(null===null)//true
+console.log(undefined===undefined)//true
+
+typeof object/array/date/regex  all these return 'object', which is evidently not true except for an object
+Alternate ways are 
+For Array : 
+a) Array.isArray
+b) console.log(Object.prototype.toString.call({})) // [object Object]
+   console.log(Object.prototype.toString.call([])) // [object Array]
+For regex:
+const myRegExp = /search/
+console.log(typeof myRegExp) // 'object'
+console.log(myRegExp instanceof RegExp) // true
+console.log(Object.prototype.toString.call(myRegExp)) // [object RegExp]
+
+For Date: 
+// The Date native object is built-in to JavaScript
+const emptyDate = new Date()
+const invalidDate = new Date("fail")
+console.log(typeof emptyDate) // 'object'
+console.log(typeof invalidDate) // 'object'
+// Checking for a date is a little trickier
+console.log(emptyDate instanceof Date)
+console.log(invalidDate instanceof Date)
+console.log(Object.prototype.toString.call(invalidDate))
+console.log(invalidDate instanceof Date && !Number.isNaN(invalidDate.valueOf())) // true
+
+Gothchas
+typeof new Boolean(false) === 'object'; // true
+typeof new Number(37) === 'object'; // true 
+typeof new String(`Hello World!`) === 'object'; // true
+console.log(typeof String('AJay'))//string
+console.log(typeof new String('AJay'))//object
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

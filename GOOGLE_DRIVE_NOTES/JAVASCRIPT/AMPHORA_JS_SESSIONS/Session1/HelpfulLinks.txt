@@ -1,0 +1,50 @@
+const Vs Object.freeze
+https://alligator.io/js/const-vs-obj-freeze/#:~:text=comes%20into%20play.-,Object.,existing%20value%20of%20an%20object.&text=const%20makes%20the%20variable%20binding,Object.
+
+const : We CAN change the value/prop of the const object, but we CANNOT re-assign the object
+Object.freeze: we CANNOT change the value/prop of the const object, but we CAN re-assign the object
+
+Hence use both of them in conjuction as shown below:
+
+const alligator = {
+  canItFly : false
+};
+
+Object.freeze(alligator);
+alligator.canItFly = true; // This is ignored
+alligator = {pi: 3.14}; // This will throw an TypeError
+console.log(alligator); // {canItFly: false}
+
+//What will happen in === 
+step 1 : both the variables are subjected to typeof(x) , if both of themm are of same type 
+step 2: then == is applied on the values 
+
+for math operators null is converted to zero, while undefined is converted to NaN.
++undefined //NaN
++null //0
+
+It’s not recommended to use the question mark operator for blocks of code. The notation is shorter than the
+equivalent if statement, which appeals to some programmers. But it is less readable.
+
+A chain of OR "||" returns the first truthy value or the last one if no truthy value is found.
+A chain of AND "&&" returns the first falsy value or the last value if none were found.
+
+important difference is that:
+|| returns the first truthy value.
+?? returns the first defined value.
+Ex:
+let a = 0  //change a to null and check
+let b = 1
+let c = a || b
+console.log(c)
+let d = a ?? b
+Console.log(d)
+
+Due to safety reasons, it’s forbidden to use ?? together with && and || operators.
+
+undefined Vs undeclared
+https://www.geeksforgeeks.org/what-are-undeclared-and-undefined-variables-in-javascript/#:~:text=CSS%20and%20JavaScript%20%3F-,What%20are%20undeclared%20and%20undefined%20variables%20in%20JavaScript%3F,using%20var%20or%20const%20keyword.
+
+let aVariable;
+typeof(aVariable) //undefined
+typeof(undeclaredVariable) // still undefined, which is wrong in JS , because we havent declared 

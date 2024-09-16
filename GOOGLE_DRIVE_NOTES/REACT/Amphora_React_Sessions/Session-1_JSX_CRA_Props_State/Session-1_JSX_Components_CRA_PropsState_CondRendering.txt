@@ -1,0 +1,489 @@
+React Internal Exporer: https://jser.dev/2024-05-11-introducing-rie
+https://jser.dev/series/react-source-code-walkthrough
+
+
+What is Concurrency in React 18 and New Features of 18
+https://react.dev/blog/2022/03/29/react-v18, Research 
+Render phase: Is used to calculate changes, and may be aborted if the user wants to. If this phase is aborted the DOM isn’t updated.
+Pre-commit phase: Is a period where you can read changes made to the VDOM, before they are applied to the actual DOM.
+Commit phase: Here the changes are applied and any side effects are triggered.
+Mounting: Runs once when the component is created. Updating: Runs each time a change is made to the component. Unmounting: Runs once when the component is about to be destroyed.
+https://vmarchesin.medium.com/the-react-lifecycle-step-by-step-47c0db0bfe73#:%7E:text=Pre%2Dcommit%20phase%3A%20Is%20a,any%20side%20effects%20are%20triggered
+
+Suspense in React ?
+Learn in detail , to suspend render, throw a promise .... Research
+
+
+React is a Library. Something like Handlebars.js ,Moustache.js
+
+#region What is Single Page Application?
+https://huspi.com/blog-open/definitive-guide-to-spa-why-do-we-need-single-page-applications
+Eg: SPS, Gmail, Facebook, twitter, Googlemaps,GitHub
+--> A single-page application is an app that doesn’t need to reload the page during its use and works within a browser.
+--> One of the best advantages of a correctly-configured SPA is the user experience (UX), where the user enjoys the natural environment of the app without having to wait for the page reloads and other things.
+--> MPA – multi-page application (a traditional app that loads new pages when you click a link)
+--> PWA – progressive web application (a website that is built using JavaScript or its frameworks and can act like an app, i.e., you can, for example, add it to your mobile phone homepage as an app)
+
+Advantages of SPA:
+--> HTML + CSS + Scripts  are loaded at the launch of the app and don’t need to be reloaded during usage, only data/state gets loaded.
+As a result, the application is very responsive to the user’s queries and doesn’t have to wait for client-server communication all the time.
+--> Debugging a single-page application is also easy using the Chrome browser 
+--> Caching process is also quite efficient – the application sends only one request, stores all data transmitted This is especially important at times when the user can have poor connectivity – s/he can still use your app since it’s synchronized with the server when the connection improves.
+
+Disadvantages of SPA:
+Load is on the browsers, what will happen if user is on low power devices, internet speed.
+Memory Usage of SPA application, memory leaks as the same page runs for long time, not like MPA.
+JavaScript can be enabled/disabled in devices, think of additional ways to enable JS.
+XSS attacks, no new page is loaded hackers can inject new scripts on client side.
+SEO optimization will be difficult for SPA, indexing of the pages will beacome tough
+
+When to use SPA?
+--> When you have a business or a personal website that needs a dynamic platform and small data volume, the single-page application is a good idea.
+-->  if you are planning to develop a mobile app in the future, since, as we mentioned above, the backend API can be used for both web and mobile apps.
+--> the architecture is suitable for Software-as-a-Service (SaaS) platforms, closed communities, and social networks (which is why Facebook uses it). The reason for this is that these sites don’t need optimization for searches on Google. 
+
+When to us MPA?
+Large companies with a broad range of services and products would benefit from a more traditional multi-page application.
+Managing such an application would also be much easier since it is possible to connect it to multiple user databases. 
+Eg: Google, Bing, and other search engines (to sell the products or services they offer.)
+
+What is Client-side rendering?
+==============================
+The browser sends a request for an HTML file from the server
+The server responds quickly with a simple HTML file with styles and scripts linked
+The user sees an empty page or some loader image while the js is executing
+The application fetches data, generates views, and injects it into DOM
+The application is ready for use
+***NOTE: CSR THE RENDERING HAPPENS ON THE CLIENT SIDE WITH THE NECESSARY DETAILS AVAILABLE HTML+CSS+js.
+
+What is Server-Side-Rendering?
+===============================
+The browser sends a request for an HTML file from the server
+The server fetches all needed data, renders the application, and generates the app’s HTML file on the fly
+The user sees the available content
+The single-page application framework is what attaches events, generates a virtual DOM, and performs other actions
+The application is ready for use
+***NOTE: SSR HTML+DATA IS PREPARED AND RENDERED , THE USER READILY SEES HTML PAGE, SPA WILL ATTACH DOM EVENTS , VIRTUAL DOM.
+
+What is Static Site Generators?
+================================
+The browser sends a request for an HTML file from the server
+The server responds quickly with an already-prepared HTML file
+The user sees the page
+The application fetches data, generates views, and injects it into DOM
+The application is ready for use
+
+#endregion Single Page Application
+
+*****REACT SUPPORTS ONLY ONE-WAY BINDING.
+
+#region miscllenaous
+React Class Property Proposal
+https://michalzalecki.com/react-components-and-class-properties/
+
+random unique keys shortid npm package
+
+Difference between NPX Vs NPM
+https://dev.to/bogicevic7/npm-vs-npx-which-to-use-when-2hob
+https://www.techgecs.in/2019/12/difference-between-npm-npx-and-yarn.html
+
+NPX: Npx will search for that package in the local and global registry. When npx finds the package it will run that package from there. But let’s say that you don’t have that package installed locally or
+globaly. In that case npx will download the package files and install the package. That package will be run from the local npx cache.
+
+--> Well, if you want to experiment in order to find what you need, then you don’t want to install packages, you just want to try them (run them without installing). With npx you can run any package even if you don’t have it installed. When you run the package with npx it won’t be saved (meaning it won’t be saved locally or globally), but if you want to use some package frequently you can always install it with npm.
+
+Examples: 
+npx create-react-app my-app
+npx cowsay "Hello, npx!"
+
+
+Yarn:
+Yarn is package manager like npm, so in this section, I’ll just make a comparison between yarn and
+npm.
+Yarn is faster than npm because when installing multiple packages npm installs them one at the time while yarn is installing them concurrently.
+
+
+HOW DID WE EVOLVE TO JSX from PURE JS in React?(Session From Manohar)
+https://codesandbox.io/s/dazzling-curran-fus12?file=/index.html      1-OCT-2020
+VideoRecording-link : https://web.microsoftstream.com/video/98eed31a-63af-4bf5-a697-ec2c378af621
+
+What is <React.StrictMode>?
+We can do import React,{StrictMode} from 'react'; <StrictMode> bla bla </StrictMode>
+1) StrictMode is a tool for highlighting potential problems in an application
+2) Like Fragment, StrictMode does not render any visible UI. It activates additional checks and warnings for its descendants
+
+Url : https://reactjs.org/docs/strict-mode.html
+https://mariosfakiolas.com/blog/my-react-components-render-twice-and-drive-me-crazy/
+
+Strict mode warns you about : 	
+		deprecated methods, unecessary side-effects, unsafe life-cycle changes , warn about findDOMNode instead use , createRef() etc
+ 
+React and ReactDOM?
+ReactDom contains render method, other useful API methods related to react are present in React Object like your HOOKS
+
+you see the good old document.getElementById("app") DOM access why ?
+1) You use this to tell React where the application should be located in the page.
+
+React.DOM vs ReactDOM ?
+difference between React.DOM and ReactDOM. The first is a collection of ready-made HTML elements, and the second is a way to render the app in the browser (think ReactDOM.render()).
+ReactDOM, on the other hand, acts as the glue between React's Virtual DOM and the actual browser's DOM.
+
+Can We run React without Node?
+https://jscomplete.com/learn/why-node-for-react#:~:text=Some%20people%20mistakenly%20assume%20that,t%20even%20need%20a%20browser.
+https://letsreact.org/how-to-create-a-react-app-without-npm/
+--> Yes we can run React without Node. React gives you a language to describe a user interface (UI). 
+--> React is like an enhanced HTML 
+--> To run react without node, simply create HTML Page--> Include 
+<script src=“https://unpkg.com/react@17/umd/react.development.js” crossorigin></script>
+<script src=“https://unpkg.com/react-dom@17/umd/react-dom.development.js” crossorigin></script>
+
+and start writing react related code and load it in your browsser React will still work.
+
+
+
+React.createClass({}) this is deprecated from version 16.0 ,Its better use ES6 syntax 
+export class Sample extends React.Component {
+//bla bla 
+}
+
+#endregion
+
+#region VIRTUAL DOM 
+______________________________________________________________________________________________________________________
+How browser rendering works — behind the scenes ...
+ https://blog.logrocket.com/how-browser-rendering-works-behind-the-scenes-6782b0e8fb10/
+
+What is Virtual DOM and Why is it fast ?
+https://medium.com/@happymishra66/virtual-dom-in-reactjs-43a3fdb1d130
+https://programmingwithmosh.com/react/react-virtual-dom-explained/
+
+Post-mortem of Virtual-DOM?
+https://bitsofco.de/understanding-the-virtual-dom/#:~:text=Because%20React%20uses%20the%20virtual,of%20the%20elements%20that%20change.
+
+How Virtual DOM works?
+======================
+1) First we need to know how browser parses HTML & Css, so briefly, Browser first parses HTML create DOM object(simple JS object), similarly it also creates CSSOM(css object model , yet another JS Object)
+2) CSSOM is applied to DOM, this is phase is called "ATTACHMENT" . The RENDER-TREE is prepared here at this point.
+3) After ATTACHMENT is done , LAYOUT phase starts, which means where each of the html element should be placed on the browser screen, its calculated based on cordinates 
+4) [THIS IS WRONG]Once Layout is done , RENDERTREE is prepared and the HTML elements are PAINTED and DISPLAYED 
+
+consider following eg :
+document.getElementById("root").innerHTML = 'New Value'
+For this all the above steps will have to be performed, for one element updation performance might not be affected.
+But if we update the real DOM 10 times each of the above step will repeat 10 times. This is why updating Real DOM is slow.
+
+React on the other hand , introduced "Virtual DOM" Virtual DOM is ,DOM object maintained in-memory. 
+(Something like in-memory caching, caching DOM object , is treated as Virtual DOM).
+Proof for below: https://www.geeksforgeeks.org/reactjs-virtual-dom/
+But REACT maintains TWO copies of Virtual DOM 
+1) One Copy of VirtualDOM tracked for updated changes.
+2) second copy tracked with previous changes.
+3) At the time updating REAL DOM , both Virtual DOM are compared and changes that needed to be done are patched onto REAL DOM(Reconciliation)
+
+****Why is Virtual DOM efficent ?
+--> Efficient diff algorithm, React uses Breadth First Search Over Depth First search
+--> Batch Update operations.
+--> React keeps track of changes using the keys .
+--> Uses observable instead of dirty checking to detect the change
+--> Efficient update of subtree only.
+
+
+#region Dirty Check Vs Observables
+Dirty checking is a technique where the framework periodically checks for changes in the data model and updates the user interface if any changes are detected. It involves comparing the current data model with the previous one to identify changes. While this approach is simple, it can be resource-intensive, especially for large data models.
+
+Example:
+const user = {   name: 'John Doe',  age: 30,};
+// Periodically check for changes and update the UI
+setInterval(() => {
+  if (user.name !== previousUser.name || user.age !== previousUser.age) {
+    // Update the UI with the new data
+    renderUser(user);
+    // Update the previousUser to the current state
+    previousUser = { ...user };
+  }
+}, 1000); // Check every 1000ms (1 second)
+
+In this example, every 1 second, the framework checks if there are any changes in the user object. If there are changes, it updates the user interface by rendering the new data.
+
+Is dirty checking based on polling the data model?
+===================================================
+Dirty checking is a process where a system repeatedly checks a data model to see if changes have occurred. This is done by maintaining a copy of the data model and comparing it to the current model, typically during an application's run-cycle.
+
+So yes, you can conceptually think of dirty checking as a form of polling, where the system iteratively checks the data model for changes. However, it's not polling in the traditional sense, as it doesn't involve making regular requests to a server or database for updates. Instead, it checks values in the local data model itself.
+
+Observables:
+Observables, on the other hand, are a more advanced and efficient way to handle changes in data. Instead of actively checking for changes, observables allow components or subscribers to listen to changes in the data and react accordingly. When the data changes, observables emit events that notify the subscribers, which then update the user interface.
+
+Eg: RxJs 
+import { BehaviorSubject } from 'rxjs';
+
+// Create a BehaviorSubject with initial data
+const userSubject = new BehaviorSubject({
+  name: 'John Doe',
+  age: 30,
+});
+
+// Function to update the user data
+function updateUser(name, age) {
+  userSubject.next({ name, age });
+}
+
+// Component subscribing to user changes
+userSubject.subscribe((user) => {
+  renderUser(user);
+});
+
+Now, whenever the updateUser function is called with new data, the userSubject emits a new event, and all the subscribed components update the user interface automatically without the need for periodic check
+
+
+#endregion Dirty Check Vs Observables
+
+
+#region React Reconciliation
+
+Reconciliation is the process by which React updates the UI to reflect changes in the component state. The reconciliation algorithm is the set of rules that React uses to determine how to update the UI in the most efficient way possible.
+
+React uses a virtual DOM (Document Object Model) to update the UI. The virtual DOM is a lightweight in-memory representation of the real DOM, which allows React to make changes to the UI without manipulating the actual DOM. This makes updates faster, as changing the virtual DOM is less expensive than changing the real DOM.
+
+The reconciliation algorithm works by comparing the current virtual DOM tree to the updated virtual DOM tree, and making the minimum number of changes necessary to bring the virtual DOM in line with the updated state.
+
+The algorithm uses two main techniques to optimize updates:
+
+Tree diffing: React compares the current virtual DOM tree with the updated virtual DOM tree, and identifies the minimum number of changes necessary to bring the virtual DOM in line with the updated state.
+
+Batching: React batches multiple changes into a single update, reducing the number of updates to the virtual DOM and, in turn, the real DOM.
+
+another efficent technique is usage of Observables: React uses Observables rather than dirty Checking
+
+The reconciliation algorithm is a critical part of React's performance and helps make React one of the fastest and most efficient JavaScript libraries for building user interfaces.
+
+#region What is “React Fiber”?
+Fiber is the new reconciliation engine in React 16. Its main goal is to enable incremental rendering of the DOM(Virtual DOM).
+****https://github.com/acdlite/react-fiber-architecture
+
+React Fiber is a complete rewrite of React's core reconciliation algorithm - the part of React that figures out how and when to update the user interface - which was introduced in React version 16.
+
+The primary goal of React Fiber was to provide a more responsive user interface for complex applications. React Fiber accomplishes this by relying on the ability to pause, resume, and reuse work as needed, rather than having to wait for updates to complete, enabling it to work in a way that better respects out-of-the-box factors like animation or user input.
+
+The name "Fiber" comes from the term "fiber" in computer science, which is a data structure used to manage multiple tasks in a program. React's Fiber architecture is directly inspired by this concept, enabling more efficient handling of complex UI updates.
+
+What is Fiber Datastructure?
+In computer science, a Fiber is a type of lightweight thread that uses cooperative multitasking, a method of task scheduling where tasks voluntarily yield control periodically or when idle in order to enable multiple applications to be run simultaneously.
+
+This is different from preemptive multitasking (used by operating system threads and processes) where the scheduler determines when a task should be switched out.
+
+Fibers switch context only when they explicitly yield, not on interrupts or arbitrary scheduler decisions, allowing them to maintain a simpler execution model than preemptive context switching. This makes fibers a popular choice for certain high performance situations, like running simulations or games, or handling user-interface events.
+
+In the context of React, the term “Fiber” refers to the new reconciliation engine that was released with React 16. Its main goal is to enable incremental rendering - the ability to split rendering work into chunks and spread it out over multiple frames. A single instance of a fiber corresponds to a virtual stack frame, with React Fiber being a reimplementation of a stack, but with the added ability to pause, resume, and discard work as needed.
+
+Does Angular uses Fiber? What does Angular use?
+No, Angular does not use Fiber. Fiber is a part of the React library, which was developed and introduced by Facebook to improve React's performance by controlling when and how components render. Angular, which is developed and maintained by Google, uses a different architecture and set of technologies for managing UI updates and re-rendering.
+
+Angular uses a different set of structures and methods compared to React. Here are a few key components:
+
+Hierarchical Dependency Injection (DI): This is a major feature of Angular which forms the backbone of the Angular architecture. The injector subsystem is in charge of creating components, resolving their dependencies, and providing them to other components as requested.
+
+Zones: This feature enables Angular to automatically run change detection when a relevant event (like a user action or HTTP response) occurs. It patches browser events to create a wrapper around the callback, triggering change detection when the event occurs.
+
+Ahead-of-Time (AOT) Compilation: Angular has a compiler which converts the Angular HTML and TypeScript code into JavaScript during the build process, before the browser downloads and runs the code.
+
+Change Detection: Angular uses a unidirectional change detection mechanism which checks for updates in a component and its template in a specific order, reducing inefficiencies and improving performance.
+
+#endregion What is “React Fiber”?
+
+#endregion React Reconciliation
+
+Advantages of Virtual DOM.
+--------------------------
+1) Virtual DOM doesn't use dirty checking, instead it uses observables to track/update the changes (Dirty Check is done in AngularJs)
+2) Virtual DOM carries out Bulk updates ,
+3) Virtual DOM uses efficent diffing algorithms,[React Fibers, BFS VS DFS]
+4) Efficient update of subtree only Breadth First Apporach(learn a bit about BFS)
+
+ dirty check Vs Observables ? https://stackoverflow.com/questions/21109361/why-is-reacts-concept-of-virtual-dom-said-to-be-more-performant-than-dirty-mode#:~:text=Dirty%20checking%20is%20slower%20than,in%20the%20data%20structure%20recursively.&text=This%20isn't%20really%20related,with%20or%20without%20dirty%20checking.
+ SHORT ANSWER :  In React, each of your components have a state. This state is like an observable you might find in knockout or other MVVM style libraries. Essentially, React knows when to re-render the scene because it is able to observe when this data changes. Dirty checking is slower than observables because you must poll the data at a regular interval and check all of the values in the data structure recursively. By comparison, setting a value on the state will signal to a listener that some state has changed, so React can simply listen for change events on the state and queue up re-rendering.
+
+Whenever setState() method is called on any component, ReactJS makes that component dirty and re-renders it.
+Re-render all the children if parent state has changed, But this can be controlled using ShouldComponentUpdate() lifecycle method or React.Memo() hook.
+
+what do you mean by bulk updates??
+
+consider followinge example?
+
+//The output of rerender after the button click will just be once 'The component re-rendered', rather than 5 times , because setCount is been called 5 times in handleClick , all the setCounts are batched and trigger one re-render.
+
+function App() {
+	const [count, setCount] = useState(0)
+	//useEffect should show output on every re-render.
+	useEffect(() => { console.log('The component re-rendered')	})
+
+	const handleClick = () => {
+		setCount((prev) => prev + 1) //Should re-render on each setCount
+		setCount((prev) => prev + 1)
+		setCount((prev) => prev + 1)
+		setCount((prev) => prev + 1)
+		setCount((prev) => prev + 1)
+	}
+
+	return (
+		<><div>{count}<div
+		<div><button onClick={handleClick} style={{ border: '4px solid rgba(0,0,0,1)' }}>Increment</button></div></>
+	)
+}
+
+
+When setCount is called 4 times , the component state is not updated at each state rather React collects all the setStates and do a bulk update .
+
+What are react batch updates?
+https://blog.logrocket.com/simplifying-state-management-in-react-apps-with-batched-updates/
+https://stackoverflow.com/questions/53048495/does-react-batch-state-update-functions-when-using-hooks
+In short react collects all the setStates and run them together , rather than updating each individual one. 
+React collects all the updates from known scopes, like eventHandlers(click,onchange) etc. This will go as batch updates.
+But batch-Updates inside setTimeOuts, promises,[ if the state changes are triggered asynchronously (e.g. wrapped in a promise), they will not be batched]
+react doesn't take them as part of batch updates, w.r.t promises/setTimeouts the update is applied IMMEDIATELY.
+***If you want to force the asyncalls also to be batch updated we need to use an unstable API call ReactDOM.unstable_batchedUpdates(() => { ... })
+
+NOTE: USING BATCH UPDATES YOU DIRECTLY GET THE READY-MADE VALUES, THE CHANGE TRANSITION IS NOT SEEN.
+	  BUT DURING NON BATCH UPDATES,(ASYNC CALLS) , THE CHANGE TRANSITION IS SEEN WHEN YOU CONSOLE
+	  FOLLOW THE EXAMPLE SHOWN IN THE REFERENCE LINKS
+	  
+
+
+NOTE: React.createElement , Actually, this function (called directly or through JSX) creates a new node in the Virtual DOM
+https://www.freecodecamp.org/news/a-quick-guide-to-learn-react-and-how-its-virtual-dom-works-c869d788cd44/
+______________________________________________________________________________________________________________________
+#endregion
+
+#region What is JSX ??
+
+HOW DID WE EVOLVE TO JSX from PURE JS in React?(Session From Manohar)
+https://codesandbox.io/s/dazzling-curran-fus12?file=/index.html
+VideoRecording-link : https://web.microsoftstream.com/video/98eed31a-63af-4bf5-a697-ec2c378af621
+
+JSX is special syntax of react, It is look-a-like of HTML but its actually Javascript .
+JSX is compiled into browser understandable JS by tool called Babel.js.
+JSX supports nesting of components, since class is a reserved word in JS , we have className in JSX to give stylised classes.
+You can also create the elements using pure javascript, without JSX , using React.createElement('CustomComponentName',{attributes...})
+
+
+Eg without JSX :
+class IngredientsList extends React.Component {
+render() {
+return React.createElement(
+"ul",
+{ className: "ingredients" },
+this.props.items.map((ingredient, i) =>
+React.createElement("li", { key: i }, ingredient)
+)
+);
+}
+}
+
+React Components must start with UpperCase letter, Why?
+https://reactjs.org/docs/jsx-in-depth.html
+Short Ans: In JSX, lower-case tag names are considered to be HTML tags. However, lower-case tag names with a dot (property accessor) aren't.
+<component /> compiles to React.createElement('component') (html tag) //lowercase is converted to string
+<Component /> compiles to React.createElement(Component) //Uppercase will remain as data object or type
+<obj.component /> compiles to React.createElement(obj.component)
+<ReactContext.Provider/> is another example of with .
+
+
+#endregion
+
+#region Conditional Rendering
+style 1 : isRender && ComponentA
+style 2: isRenderA ? CompA : CompB
+style 3 : if(isRenderA) return CompA else CompB
+#endregion
+
+#region Helpful References :
+
+This is why we need to bind event handlers in Class Components in React ? Wht there is no this for arrow functions ?
+https://www.freecodecamp.org/news/this-is-why-we-need-to-bind-event-handlers-in-class-components-in-react-f7ea1a6f93eb
+
+
+When null is returned by a component it prevents React from mounting the component.
+function App(props) {
+    if(props.noRender)
+        return null
+    
+    return (
+        <div>App Component</div>
+    )
+}
+
+
+#endregion
+
+#region CRA
+CRA is tool chain
+config babel,webpack
+npx react app
+conventions are followed in react app
+react-script does all webpack and babel stuff
+react-source-explorer package
+
+#endregion
+
+#region Props Vs State
+
+What are props? 
+Short for properties, props can best be defined as a way of passing data from component to component, basically from parent to child component
+Props can be set manually or props can be set using PropTypes.DefaultProps. Props must be immutable.
+
+What is state ? state is private to class.
+React components has a built-in state object. The state object is where you store property values that belongs to the component.
+Though state is built-in you can choose NOT to use the state in the components, in that case only using props and not state makes the component Pure Component.
+When the state object changes, the component re-renders.state objects are  mutable
+
+
+https://medium.com/@itIsMadhavan/reactjs-props-vs-state-ff3a7680930d
+
+1) ***Props must be immutable.
+2) If you want to mutate props, then they have to be assigned to state to mutate. 
+Since props are passed in, and they cannot change, you can think of any React component that only uses props (and not state) as “pure,”
+that is, it will always render the same output given the same input. This makes them really easy to test - win!
+Component That uses only props , i.e doesn't change any property of prop via state is called as pure component.
+
+consider scenario of props send to child component, and child component needs to update the parent props , in that case we need to use callbacks 
+eg: button click handler , define a function with params in parent component assign that to props and pass onto child , trigger the function call in child 
+
+*** WRONG PRACTICES OF UPDATING STATE:
+
+1) this.state.count = this.state.count + 1 //WRONG WAY
+React cannot listen to the state getting updated in this way, so your component will not re-render. Always use setState
+
+2) this.setState({
+  count: this.state.count + 1 //WRONG WAY
+});
+This way doesn't take into account the asynchrony way of set-state, and might cause errors with out of sync state data.
+
+Q)  setstate using callback vs object?
+---------------------------------------
+https://medium.com/@wisecobbler/using-a-function-in-setstate-instead-of-an-object-1f5cfd6e55d1
+Answer:  setSate is asynchrony in nature, i.e don't expect your state to be immediately updated after  call to setState.
+
+NOTE: use a callback in setState only when you are dealing with previous state, if you don't require a previosState, you can directly assign an object.
+NOTE: Make sure if you have to spread array/object or not.
+
+consider following
+const [state,setState] = useState({key:'value')}
+
+setState({key:state.key}) //WRONG: This case will not gurantee you that state.key has updated key value , owing to asyncrony nature of the setState
+
+setState((prevState,[props])=>({key:prevState.key})) //CORRECT: in this way prevState value will be provided by react itself considering asynchrony nature of setState , additionally call back function also has second parameter as props, square bracket indicate its optional
+
+#endregion
+
+#region Importance of List-elements and Keys in React
+https://adhithiravi.medium.com/why-do-i-need-keys-in-react-lists-dbb522188bbb
+Keys are significant in React because they aid in determining whether items in a list have been changed, updated, or removed. 
+This process helps React to optimize the rendering by recycling existing DOM elements.
+When an element's key changes, React will create a new component instance rather than update the current one. This is why keys need to be stable in a list.
+However, it's important to note that keys only make sense in the context of the surrounding array.
+
+1) If we dont provide a key, React uses indexes as keys .
+2) Array can be sorted,manipulated, added , removed In that case index will change and that leads to inefficent rendering of the react components.
+
+
+#endregion Importance of List-elements and Keys in React

@@ -1,0 +1,228 @@
+#region AXios
+Sample REST-API calls : https://jsonplaceholder.typicode.com/guide/
+
+axios documentation : https://github.com/axios/axios
+
+References: https://medium.com/codingthesmartway-com-blog/getting-started-with-axios-166cb0035237
+https://www.smashingmagazine.com/2020/06/rest-api-react-fetch-axios/
+
+#region REST API Intro
+https://www.smashingmagazine.com/2018/01/understanding-using-rest-api/
+
+An API is an application programming interface. It is a set of rules that allow programs to talk to each other. The developer creates the API on the server and allows the client to talk to it.
+
+REST determines how the API looks like. It stands for “Representational State Transfer”. It is a set of rules that developers follow when they create their API. One of these rules states that you should be able to get a piece of data (called a resource) when you link to a specific URL.
+
+Each URL is called a request while the data sent back to you is called a response.
+
+
+
+#endregion 
+
+#region FETCH API (JS inbuilt)
+
+
+
+
+#endregion Fetch API
+
+
+#region features of axios:
+
+What is axios ??
+Axios is a Promise-based HTTP client for JavaScript which can be used in your front-end application and in your Node.js backend.
+By using Axios it’s easy to send asynchronous HTTP request to REST endpoints and perform CRUD operations.
+
+
+Features of Axios:
+-----------------
+Make XMLHttpRequests from the browser
+Make http requests from node.js
+Supports the Promise API
+Intercept request and response
+Transform request and response data
+Cancel requests
+Automatic transforms for JSON data
+Client side support for protecting against XSRF
+Streamlined error handling
+Support for upload progress
+Response timeout
+Support for older browsers
+
+
+
+
+JOBS THAT cannot be done on client side:
+1) communication with database
+2) parallel tasks 
+3) communication with servers.
+
+Basic ways of Axios get/post 
+
+// Make a GET request
+axios({
+  method: 'get',
+  url: 'https://api.github.com/users/hacktivist123',
+});
+
+// Make a Post Request
+axios({
+  method: 'post',
+  url: '/login',
+  data: {
+    firstName: 'shedrack',
+    lastName: 'akintayo'
+  }
+});
+
+There are other shorthand methods for each of HTTP-VERB
+axios.request(config)
+axios.get(url[, config])
+axios.delete(url[, config])
+axios.head(url[, config])
+axios.options(url[, config]) //Used for preflight requests 
+axios.post(url[, data[, config]])
+axios.put(url[, data[, config]])
+axios.patch(url[, data[, config]])
+
+
+Making multiple requests using Axios eg:
+axios.all([
+  axios.get('https://api.github.com/users/hacktivist123'),
+  axios.get('https://api.github.com/users/adenekan41')
+])
+.then(response => {
+  console.log('Date created: ', response[0].data.created_at);
+  console.log('Date created: ', response[1].data.created_at);
+});
+
+
+How to pass Headers information using axios ? 
+const headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'JWT fefege...'
+}
+
+axios.post(Helper.getUserAPI(), data, {
+    headers: headers
+  })
+  .then((response) => {
+    dispatch({
+      type: FOUND_USER,
+      data: response.data[0]
+    })
+  })
+  .catch((error) => {
+    dispatch({
+      type: ERROR_FINDING_USER
+    })
+  })
+
+#region async + useEffect Hook
+Problem : 
+https://dev.to/n1ru4l/homebrew-react-hooks-useasynceffect-or-how-to-handle-async-operations-with-useeffect-1fa8
+https://dev.to/stlnick/useeffect-and-async-4da8
+#endregion async + useEffect Hook
+
+
+#endregion features of axios
+
+How to pass common headers using axios ?
+axios.defaults.headers.common = {
+    'X-Requested-With': 'XMLHttpRequest',
+    'Authorization': 'Bearer ' + token, // replace 'token' with your token value
+    // more headers can be added as needed
+};
+
+How to achieve the same thing using fetch?
+const commonHeaders = {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ' + yourToken,   // replace 'yourToken' with actual token
+    // any other headers
+};
+
+const options = {
+    method: 'GET',    // or 'POST', 'PUT', etc.
+    headers: commonHeaders,
+    // any additional options, such as 'body' for POST requests
+};
+
+fetch('https://api.example.com/data', options)
+    .then(response => response.json())
+    .then(data => console.log(data));
+
+How to do interceptors in axios?
+
+Axios interceptors are functions that Axios calls during the request/response process. You can use them to transform the request or response data, handle errors, add headers or logging, etc.
+
+Here is an example of how to use Axios interceptors for request and response:
+
+Request Interceptor:
+jsx
+
+
+axios.interceptors.request.use(function (config) {
+    // Do something before request is sent
+    config.headers.common['Authorization'] = 'Bearer ' + token; //Add common header Authorization
+    return config;
+  }, function (error) {
+    // Do something with request error
+    return Promise.reject(error);
+  });
+In this example, before a request is sent, we are adding an Authorization header to the config object.
+
+Response Interceptor:
+jsx
+
+
+axios.interceptors.response.use(function (response) {
+    // Do something with response data
+    console.log('Response was received');
+    return response;
+  }, function (error) {
+    // Do something with response error
+    return Promise.reject(error);
+  });
+In this example, as soon as the response is received, we are logging a message to the console.
+
+Keep in mind once an interceptor is installed, it's invoked for every request and response - very helpful for tasks like setting auth tokens. And the use methods for the interceptors return an interceptor ID which can be used to eject an interceptor later:
+
+
+
+
+const myInterceptor = axios.interceptors.request.use(function () {/*...*/});
+axios.interceptors.request.eject(myInterceptor);
+This can be useful if you want to add/remove interceptors in a conditional manner based on the app's state.
+
+Full responsibility for code correctness, security and licensing lies solely with the user, not with DIAL platform or LLM vendor.
+
+Axios customInstances?
+import axios from "axios";
+
+const instance = axios.create({
+ baseURL: 'https://api.example.com',
+ timeout: 1000, 
+ headers: {'X-Custom-Header': 'foobar'}
+});
+
+export default instance;
+
+In this example, we're creating a new Axios instance and setting some defaults. Every request made with this instance will be sent to 'https://api.example.com', have an X-Custom-Header, and will timeout if it takes longer than 1000ms.
+
+You can then import and use this instance for HTTP requests like this:
+import instance from './path-to-your-instance-file';
+
+// Use in component or anywhere
+instance.get('/user')
+  .then((response) => {
+    console.log(response);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+	
+	This use of custom Axios instances is highly useful when you want different setups or configurations for different kinds of requests. You can even add interceptors specifically for a custom instance.
+
+
+
+#end Axios

@@ -1,0 +1,524 @@
+ 
+
+
+//This is factory function
+function createObject(){
+return {
+/*some objects with props and functions*/
+}
+}
+
+const obj = createObject() //Factory function.
+console.log(obj.constructor) // gives--> Object() [native code]
+
+constructor
+
+function Circle(radius){
+//this = {} created by JS itself
+this.radius = radius
+this.draw = function(){
+console.log('draw')
+}
+
+//return this,
+// happen automatically , when we use 'new' keyword to create an object
+}
+
+const circle = new Circle(10)
+console.log(circle.constructor) ==> gives you entire Circle function
+
+NOTE: every object has a constructor.
+
+Object literal vs Object ctor way of creating objects
+-----------------------------------------------------
+When you use Object literal , Javascript's Object() ctor get called
+const x = {} // Javascript will create const x = new Object()
+Other ctors in JS are 
+new String() // literals : '',"",``
+new Boolean() // true or false
+new NUmber() // give numbers etc.
+new Function()
+
+In javascript all functions are objects 
+consider from above example
+Circle.constructor // new Function() [native code]
+
+How will javascript interpret ctor functions :
+
+const Circle = new Function(radius, `   /*** see the blacktick multiline 
+//this = {} created by JS itself
+this.radius = radius
+this.draw = function(){
+console.log('draw')
+}
+
+`)
+
+
+----------------------------------------------------------------------------
+
+Classical Vs Prototypical Inheritance
+-------------------------------------
+
+Class Circle has a method --> optimumLocation()
+Class Square has a method ---> optimumLocation()
+Moving the redundant method optimumLocation to class Shape and Circle and Square ectends the Shape, is called Classical Inheritance
+
+But Js doesn't have Classical Inheritance, It has only Prototypical.
+
+What is prototypical Inheritance:
+---------------------------------
+What is a prototype ?
+
+Prototype is Parent object or Root Object
+
+consider we have a object named car 
+const car ={
+prop1:'blabla'
+}
+
+Now I somehow want to link this car object to more generic object vehicle 
+
+const vehicle = {
+vprop1 : 'blahblah'
+}
+
+How do we achieve it?
+---------------------
+We can assign that using 
+[[Prototype]] --> we will have to give 
+car.Prototype = vehicle 
+//this is not legitimate code this is //for understanding only
+
+Thus Prototype is just an object , every JS object has a "__proto__"
+object except for one objectbase or rootobject
+****rootobject or Object base doesn't have a __proto__ at all.
+All other objects are inherited from rootobject
+
+***NOTE: __proto__ is deprecated to access prototype we will have to use Object.getPrototypeOf({})
+
+let x={},y={}
+Object.getPrototypeOf(x) === Object.getPrototypeOf(y)//true
+Yes they both are pointing to rootObject , hence true 
+
+			objectbase
+			|		|
+			|		|
+		    x		y	 //Object.getPrototypeOf(x), Object.getPrototypeOf(y)
+
+//objectBase is created using Object() whenever we give let x={} ==> its 
+//x = new Object()
+
+In JS even functions are objects so even functions have prototype.
+Object.getPrototypeOf(x) === Object.prototype  //Here Object is a function
+
+Multilevel Inheritance
+----------------------
+consider 
+let arr =[]
+What will the prototype of arr be ??
+Object.getPrototypeOf(arr) //arrBase
+arrBase contains all the array related methods like , map,reduce,push, pull etc
+what is Prototype of arrBase
+ 
+Object.getPrototypeOf(Object.getPrototypeOf(arr))  //Objectbase
+		
+						ObjectBase //Object.getPrototypeOf(Object.getPrototypeOf(arr))
+							|
+							|				
+						  arrBase	//Object.getPrototypeOf(arr)
+							|
+							|
+						   arr
+						   
+Similarly like above logic consider the following
+function Stopwatch(){
+/*some logic*/
+}	
+
+const stopWatch = new StopWatch()
+console.log(Object.getPrototypeOf(stopWatch)) //****stopWatchBase which means StopWatch() itself 
+
+						ObjectBase  // Object.getPrototypeOf(Object.getPrototypeOf(stopWatch))
+							|
+							|				
+						 stopWatchBase	//Object.getPrototypeOf(stopWatch), which is StopWatch itself
+							|
+							|
+						  stopWatch
+
+Consider the following
+let person = {name:'Ajay'}
+
+console.log(Object.keys(person)) // [name] and same with for in lop .
+But where are other props like toString() etc etc ?
+Their enumerable properties are false hence they don't showup in Object.keys()
+console.log(Object.getOwnPropertyDescriptor(person,'name')) //O/p {value:"Ajay",writable:true,enumerable:true,configurable:true}
+const objectBase = Object.getPrototypeOf(person1)
+console.log(Object.getOwnPropertyDescriptor(objectBase,'toString')) //enumerable is false hence we cannot see them in Object.keys
+o/p : {value:f toString {...},writable:true,enumerable:false,configurable:true}
+
+How to change the descriptor props?
+Object.defineProperty(person,'name',{
+value:'defaultValue'
+enumerable: true/false,    //When false we cannot see the property in Object.keys or for-in loop
+configurable : true/false, //When false we cannot delete the property , **delete person.name , will be ignored
+writable: true/false       //When false we cannot set the property, it will be only read-only
+})
+
+let obj ={}  //or let obj = new Object()
+Object.getPrototypeOf(obj) === Object.prototype  //Object.get
+//Object.getPrototypeOf(Object.prototype) is NULL
+
+let arr = [] //or let arr = new Array()
+Object.getPrototypeOf(arr) //? ArrayBase,
+Object.getPrototypeOf(arr) === Array.protoype
+//Object.getPrototypeOf(Array.prototype) is Object.prototype
+//Object.getPrototypeOf(Object.prototype) is NULL
+
+Object.getPrototypeOf(true) === Boolean.prototype
+
+so similarly
+let circle = new Circle()
+Object.getPrototypeOf(circle) === Circle.prototype
+
+Consider the following
+Array.prototype.shuffle = function(){
+//blah blah
+}
+
+let arr =[]
+arr.shuffle()
+
+This is very much possible, but what if Ecmascript have added shuffle in Array in future versions
+What if a third-party-library , you are using have already added shuffle method ??
+NOTE: HENCE , NEVER ADD METHODS ON OBJECTS YOU DON'T OWN. Dont add methods on predefined objects .
+
+NOTE: Object.keys() returns only instance members.
+	  for-in loop returns both instance members and prototype members
+for eg.
+
+function Circle{
+this.area = function(){
+//area method
+}
+}
+
+Circle.prototype.draw = function(){
+//draw method
+}
+
+let circle = new Circle()
+object.keys(circle) //[area] only instance or own properties are enumerated
+for-in loop  => //[area,draw] , instance(own) + prototypes properties are enumerated.
+
+Prototypical Inheritance
+------------------------
+function Circle(){
+this.draw(){
+console.log('draw')
+}
+}
+ const circle = new Circle()
+Object.getPrototypeOf(circle) //Circle.prototype //CircleBase
+console.log(Object.getPrototypeOf(circle) === Circle.prototype) //true
+Object.getPrototypeOf(Circle.prototype) //Object.getPrototypeOf(Circle.prototype) ==> ObjectBase
+Circle.prototype.duplicate = function(){
+console.log('duplicate')
+}
+
+Now consider, there is a Square function which needs same duplicate method.
+We cannot use redundant code , for duplicate . Instead we do prototypical Inheritance.
+
+1) We write a new function named Shape
+function Shape(){
+}
+
+Shape.prototype.duplicate = function(){console.log('duplicate')}
+ const shape = new Shape()
+Object.getPrototypeOf(shape) //Shape.Prototype ==> SHapeBase
+Object.getPrototypeOf(Shape.Prototype) //Objectbase
+
+2) We have to link Shape to Circle object 
+-----------------------------------------
+console.log(Object.getPrototypeOf(shape) === Shape.prototype)// true
+Circle.prototype = Object.create(Shape.prototype)
+
+PREVIOUSLY
+----------
+Circle.prototype = Object.create(Object.prototype)
+console.log(Circle.prototype) is Objectbase
+
+After  --> Circle.prototype = Object.create(Shape.prototype)
+console.log(Circle.prototype)  is ShapeBase
+
+									ObjectBase
+									  |
+									  |
+									Shape  
+									  |
+									  |
+                                    Circle									  
+
+
+What does object.create() do ?
+-------------------------------
+Object.create(object,[objectproperties])
+1) It creates a new object and the methods,props on prototype are copied to new object.
+NOTE: ****Object.create doesn't copy instance or own methods/props.
+
+eg: 
+function Shape(){
+  this.shaper = function(){
+    console.log('shaper')
+  }
+}
+Shape.prototype.duplicate = function(){
+  console.log('duplicate')
+}
+
+const circle = Object.create(Shape.prototype)
+console.log(circle.shaper()) //undefined
+
+Every Objet in JS has counstructor property
+function Circle(){
+//some instance methods
+}
+
+const circle = new Circle()
+const circle2 = Circle.prototype.constructor() // which ia as good as new Circle()
+
+When we do prototypical Inheritance
+------------------------------------
+Circle.prototype = Object.create(Shape.prototype)
+In here the 
+Circle.prototype.constructor will change to Shape
+i.e const circle = new Circle.prototype.constructor() // => new Shape()
+so as best practice we will always have to do 
+Circle.prototype = Object.create(Shape.prototype)
+*****Circle.prototype.constructor = Circle
+
+How to call parent constructor
+------------------------------
+consider following scenarion
+
+function Shape(color){
+this.color = color
+}
+
+function Circle(radius){
+this.radius = radius
+}
+
+//Circle is derived from SHape
+Circle.prototype = Object.create(Shape.prototype)
+Circle.prototype.constructor = Circle
+
+const circle = new Circle(10)
+console.log(circle) // {radius:10} , where is Color??
+
+So to get color , every function in JS is object 
+//We need to modify our Circle() like this
+function Circle(radius,color){
+Shape.call(this,color) //*** this is like super()
+this.radius = radius
+}
+
+const circle = new Circle(10,'red')
+console.log(circle) // {radius:10,color:'red'} , where is Color??
+
+//at *** what will happen if we call Shape(color) , in that case Shape will point to window object.
+
+What is intermediate function Inheritance ?
+-------------------------------------------
+function Shape(){}
+Shape.prototype.duplicate = function(){
+  console.log('duplicate')
+}
+
+function Circle() {}
+function Square() {}
+
+so rather than writing the protype inheritance logic
+Circle.prototype = Object.create(Shape.Prototype)
+Circle.prototype.constructor = Circle
+//Repeating the same logic for square 
+
+We can write an intermediary function
+function extend(Child,Parent){
+Child.prototype = Object.create(Parent.Prototype)
+Child.prototype.constructor = child
+}
+
+
+const circle = extend(Circle,Shape)
+Object.getPrototypeOf(circle) //CircleBase ==> Circle.prototype ==> Circle()
+
+Method overriding
+-----------------
+Assume Circle is derived from Shape
+Shape.prototype.duplicate = function(){
+console.log('duplicate')
+}
+
+Circle.prototype.duplicate = function(){
+console.log('duplicate from Circle')
+}
+
+const circle = extend(Circle,Shape)
+console.log(circle.duplicate()) //'duplicate from Circle'
+Why because javascript scans the prototype chain, when the method is found , the scan is stopped, duplicate is found in circle prototype itself 
+
+Now how do we call the Shape function duplicate ??
+
+Circle.prototype.duplicate = function(){
+Shape.prototype.duplicate() //IF YOU ARE NOT USING THIS , inside Shape.duplicate
+Shape.prototype.duplicate.call(this) //here this refers to Circle.
+console.log('duplicate from Circle')
+}
+
+
+Polymorphism:
+-------------
+consider Shape is base class for square and circle
+consider 
+Circle.prototype.dupe = function(){console.log('Circle')}
+Square.prototype.dupe=function(){console.log('Square')}
+
+Same function in many ways
+const arr = [new Circle(),new Square()]
+for(let item of arr){
+item.dupe() // O/p circle for first iteration, square for second iteration
+}
+
+If polymorphism was NOT in place
+for(let item of arr){
+if(typeof(item) === 'Circle'){
+//call method related to circle
+}elseif(/* similar logic for square*/)
+}
+
+
+"Favor composition over Inheritance"
+
+What is composition?
+Consider a parent class "Animal"
+
+function Animal(){
+this.eat = function(){}
+this.walk = function(){}
+}
+
+Now "Animal" can be a base class for 
+Cat,Tiger....
+But what if have a Aquatic animals ??
+Fish can't walk, fish can swim, so to accomodate Fish
+
+Animal function has to be split into
+function Animal(){
+this.eat = function(){}
+}
+
+function Mammal(){ //Inherit from Animal
+this.walk = function(){}
+}
+
+function Aquatic(){
+this.Swim = function(){}
+}
+
+Now 
+function Cat(){//inherit from Mammal and Animal} , function Fish(){//inherit from Aquatic and Animal} .... so..on
+
+This is disadvantage of Inheritance, the same functionality we can achieve using "COMPOSITION"
+
+consider
+const canEat = {
+eat:function(){}
+}
+const canWalk = {
+walk:function(){}
+}
+const canSwim = {
+swim:function(){}
+}
+
+const cat = Object.assign({},canEat,canWalk)
+if this is involved or if its ctor function
+Object.assign(Cat.prototype,canEat,canWalk) //here all are props are merged to Cat.prototype
+Now cat has all the properties of canEat and canWalk
+Similarly
+const fish = Object.assign({},canEat,canSwim)
+
+
+#region ES6Classes
+
+ES6 Classes
+------------
+class Circle{
+constructor(radius){
+//THESE ARE INSTANCE PROPS, THEY WILL NOT BE PRESENT IN PROTOTYPE
+this.radius= radius
+
+//This is instance property
+this.move = function(){
+console.log('move')
+}
+}
+//CLASS METHODS BY DEFAULT WILL END UP IN Prototype
+//IN CASE YOU NEED, INSTANCE METHODS ONLY USE CTOR
+draw(){
+console.log('draw')
+}
+}
+
+const c = new Circle(10)
+const c1 = Circle(12) //ERROR, use of "new" keyword is mandatory
+//Where as in ES5 or below we could have done this , withou error
+
+
+
+
+
+#endregion ES6Classes
+
+#region Misc
+function Shape(color){
+this.color = color
+}
+Shape.prototype.duplicate = function(){console.log("duplicate")}
+const shape = new Shape()
+
+console.group('SHAPE')
+console.log('prototype',Shape.prototype)
+console.log('constructor',Shape.prototype.constructor)
+console.log(Object.getPrototypeOf(Object.getPrototypeOf(Shape)) === Object.getPrototypeOf(Shape.prototype))//Shape.prototype.prototype i.e Object.prototype
+console.log(Object.getPrototypeOf(shape) === Shape.prototype)
+console.log(Object.getPrototypeOf({}) === Object.getPrototypeOf(Shape.prototype))//ObjectBase
+console.groupEnd('SHAPE')
+
+
+function Circle(radius){
+this.radius = radius
+}
+Circle.prototype.area = function(){console.log('Circle Area')}
+console.group('CIRCLE')
+console.log('PROTOTYPE INHERITANCE')
+console.log('NATIVE CODE', Object.getPrototypeOf(Circle))
+console.log('Ciricle Prototype',Object.getPrototypeOf(Circle.prototype))
+console.log(Object.getPrototypeOf(Circle.prototype) === Object.getPrototypeOf({}))
+Circle.prototype = Object.create(Shape.prototype)
+console.log('Circle Inherited',Object.getPrototypeOf(Circle.prototype))
+console.log('Circle Ctor', Circle.prototype.constructor)
+Circle.prototype.constructor = Circle
+console.log('Circle Ctor- Changed', Circle.prototype.constructor)
+/*console.log('But Where is "area" function')
+Circle.prototype = Object.assign({},{...Circle.prototype,...Shape.prototype})
+console.log('Merged Circle Inherited',Circle.prototype)*/
+
+console.groupEnd('CIRCLE')
+
+
+
+#endregion Misc
+

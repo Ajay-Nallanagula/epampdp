@@ -1,0 +1,662 @@
+#region What are Various Design Patterns in React?
+***https://javascriptpatterns.vercel.app/patterns/react-patterns/hooks-pattern
+
+2. Render Props: In this pattern, a component with a render prop takes a function that returns a React element, which is invoked within the component's render method.
+
+3. Controlled Components: This is a pattern where the parent component controls the state of the child component by handling its events and re-rendering it with new data to make it reflect changes.
+
+4. Higher-Order Components (HOCs): HOCs are a technique in React for reusing component logic. They are not part of the React API, they are a pattern that stems from React’s compositional nature. 
+
+5. Context API: It's used when some data needs to be accessible by many components at different nesting levels, applied sparingly because it makes component reuse more difficult.
+
+6. Container/Presentational Components (also known as smart and dumb components): This pattern dictates that container components deal with logic, like API calls and state, while presentational components deal with how things look. 
+
+7. Hooks: It is a new addition in React 16.8 that allows you to use state and other React features, like lifecycle methods, without writing a class.
+The Hook pattern is the practice of extracting component logic into reusable functions. This ensures your components are clean and more straightforward to reason about. This pattern can be employed using Custom Hooks.
+
+8. Redux/Flux: Redux is a predictable state container for JavaScript apps. It helps you write applications that behave consistently.
+
+9. Provider Pattern: This Pattern is very handy when you want to pass down various props deeply down your component tree without passing it manually at every level.
+
+10. Atomic Design with React: Atomic Design is methodology for creating design systems. There are five distinct levels in atomic design: atoms, molecules, organisms, templates, and pages.
+
+#endregion What are Various Design Patterns in React?
+
+#region HOC
+
+React Supplied HOC's : Provider, connect(redux)
+
+What are HOC's?
+https://www.smashingmagazine.com/2020/06/higher-order-components-react/
+
+Problems with HOC's well explained ?
+https://www.kirillvasiltsov.com/writing/thinking-in-react-hooks/
+
+CONS of HOC's:
+--> Naming collision, there might be a chance of naming two or more HOC's same name, thus overiding the props
+--> Props drilling: When using HOCs, it can become messy and cumbersome to pass properties through multiple levels of components
+--> Ref forwarding: In HOCs, it's hard to access the ref of a wrapped component because refs aren't passed through. This forces developers to use workarounds that add complexity to the code and might be error-prone.
+--> Indirection: HOCs introduce a level of indirection, which can make debugging and tracing through the code harder. HOCs are also hard to inspect for other developers
+--> Static Methods: If you apply a HOC to a component that has static methods, it won't be able to copy them over unless you hoist them manually.
+-->  Unwanted re-renders: HOCs may end up doing unnecessary re-renders causing inefficiency in the performance.
+
+#region Higher Order functions
+https://blog.bitsrc.io/understanding-higher-order-functions-in-javascript-75461803bad
+
+What is functional programming ?
+Functional Programming is a form of programming in which you can pass functions as parameters to other functions and also return them as values
+
+In JavaScript or any other functional programming languages functions are objects.
+
+In JavaScript functions are a special type of objects. They are Function objects
+
+function greeting() {
+  console.log('Hello World');
+}
+// Invoking the function
+greeting();  // prints 'Hello World'
+
+To prove functions are objects
+// We can add properties to functions like we do with objects
+greeting.lang = 'English';
+// Prints 'English'
+console.log(greeting.lang);
+
+With functions in JavaScript, you can
+Store them as variables
+Use them in arrays
+Assign them as object properties (methods)
+Pass them as arguments
+Return them from other functions
+
+What you can do with objects like assiging/pass as params/ etc , can also be done with your functions in JS
+
+What are Higher order functions ?
+---------------------------------
+ A Higher-Order function is a function that receives a function as an argument or returns the function as output.
+Eg: map,filter,reduce are some of HOF's
+
+User-Defined-HOF:
+-----------------
+const add = (x)=>(y)=>x+y 
+const result = add(2) //add returns function with parameter
+console.log(result(3))
+
+#endregion Higher order functions
+
+
+https://reactjs.org/docs/higher-order-components.html
+
+What is a HOC?
+A higher-order component (HOC) is an advanced technique in React for reusing component logic. HOCs are not part of the React API, per se. They are a pattern that emerges from React’s compositional nature.
+
+a higher-order component is a function that takes a component and returns a new component.
+const EnhancedComponent = higherOrderComponent(WrappedComponent);
+
+HOCs are common in third-party React libraries, such as Redux’s connect 
+
+Examples: W:\INTERVIEWS_2020\PRACTICE_DEMOS_NOTES\REACT\Session-1\firstapp\src\HOOKS\HOC>
+
+
+Rule of thumb:
+1) Don’t Mutate the Original Component. Use Composition.
+
+Eg:
+function logProps(InputComponent) {
+  InputComponent.prototype.componentDidUpdate = function(prevProps) {
+    console.log('Current props: ', this.props);
+    console.log('Previous props: ', prevProps);
+  };
+  // The fact that we're returning the original input is a hint that it has
+  // been mutated.
+  return InputComponent;
+}
+
+// EnhancedComponent will log whenever props are received
+const EnhancedComponent = logProps(InputComponent);
+
+What happens if we mutate?
+a) One is that the input component cannot be reused separately from the enhanced component, tight coupling
+b) If you apply another HOC to EnhancedComponent that also mutates componentDidUpdate, the first HOC’s functionality will be overridden!
+
+
+2) HOCs should pass through props that are unrelated to its specific concern, in other words that are only related to WrappedComponent.
+3) Wrap the Display Name for Easy Debugging
+function withSubscription(WrappedComponent) {
+  class WithSubscription extends React.Component {/* ... */}
+  WithSubscription.displayName = `WithSubscription(${getDisplayName(WrappedComponent)})`;
+  return WithSubscription;
+}
+
+function getDisplayName(WrappedComponent) {
+  return WrappedComponent.displayName || WrappedComponent.name || 'Component';
+}
+
+NOTE:
+1) Don't use HOC in render method.
+//DON'T DO THIS.
+render() {
+  // A new version of EnhancedComponent is created on every render
+  // EnhancedComponent1 !== EnhancedComponent2
+  const EnhancedComponent = enhance(MyComponent);
+  // That causes the entire subtree to unmount/remount each time!
+  return <EnhancedComponent />;
+}
+2) Static Methods Must Be Copied Over
+// Define a static method
+WrappedComponent.staticMethod = function() {/*...*/}
+// Now apply a HOC
+const EnhancedComponent = enhance(WrappedComponent);
+
+// The enhanced component has no static method
+typeof EnhancedComponent.staticMethod === 'undefined' // true
+
+To solve this, you could copy the methods onto the container before returning it:
+
+function enhance(WrappedComponent) {
+  class Enhance extends React.Component {/*...*/}
+  // Must know exactly which method(s) to copy :(
+  Enhance.staticMethod = WrappedComponent.staticMethod;
+  return Enhance;
+}
+
+3) Refs Aren’t Passed Through
+That’s because ref is not really a prop — like key, it’s handled specially by React. If you add a ref to an element whose component is the result of a HOC, the ref refers to an instance of the outermost container component, not the wrapped component
+
+The solution for this problem is to use the React.forwardRef 
+
+
+#region Scenarios/Usecases/Requirements for HOC
+
+Higher Order Components (HOCs) are a great tool to abstract repeated logic. You would use a HOC when you want to share common functionality between React components. Here are some scenarios, use cases, and requirements from real-world projects where you could use HOCs:
+
+1. **Authentication/Authorization:** You may need certain components to only render when a user is authenticated or has proper authorization. This behavior can be abstracted into a HOC for easy reusability across components. The HOC checks if the user is authenticated or authorized, and if not, either redirects the user to a login page or renders a "Not Authorized" message instead of the wrapped component.
+Example:
+```jsx
+import React from 'react';
+import { Redirect } from 'react-router-dom';
+const withAuthorization = (WrappedComponent) => {
+  return class WithAuthorization extends React.Component {
+    render() {
+      if (!this.props.isUserLoggedIn) {
+        return <Redirect to="/login" />
+      }
+
+      return <WrappedComponent {...this.props} />;
+    }
+  }
+}
+
+export default withAuthorization;
+```
+
+2. **Error Handling:** A HOC can be used to handle errors for wrapped components. If the wrapped component throws an error, the HOC will catch it and render an error message. This prevents the entire application from crashing due to unhandled errors.
+
+Example of Error Handling HOC:
+import React from 'react';
+
+function withErrorHandling(WrappedComponent) {
+  return class extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = { error: null, hasError:false };
+    }
+	
+	static getDerivedStateFromError(error){
+	  return {hasError: !!error}
+	}
+
+    componentDidCatch(error, errorInfo) {
+      // You can log error messages to an error reporting service here
+      console.log("error", error, "errorInfo", errorInfo);
+      sendErrorsForLogging()
+    }
+
+    render() {
+      if (this.state.error) {
+        // The component tree could not be rendered due to an error, display a fallback UI.
+        return <h1>Something went wrong while loading this component.</h1>;
+      }
+      return <WrappedComponent {...this.props} />;
+    }
+  };
+}
+
+export default withErrorHandling;
+
+3. **Loading states:** If you fetch data in a component, you can use a HOC to handle the loading state. The HOC will render a spinner or a "Loading..." message while the data is being fetched, and then render the wrapped component once the data has been fetched.
+
+4. **Analytics:** If you want to keep track of how a user interacts with your application, a HOC can help. The HOC can wrap a component and track events like clicks, page views, form submissions, etc.
+
+5. **Styling/Theming:** In case you want to apply the same style properties to multiple components across your app, a HOC can be used. The HOC will apply the style or themes to wrapped components.
+
+OTHER USECASES WITH HOC: 
+https://levelup.gitconnected.com/real-world-examples-of-higher-order-components-hoc-for-react-871f0d8b39d8
+
+This is a HOC that checks if a user is logged in. If not, it redirects the user to the login page. 
+Otherwise, it renders the wrapped component. The wrapped component will get all props passed to it.
+
+
+#endregion Scenarios/Usecases/Requirements for HOC
+
+#endregion HOC
+
+#region Render props
+Render Props: In this pattern, a component with a render prop takes a function that returns a React element, which is invoked within the component's render method.
+In react Context.Consumer is a renderProp
+
+class FetchComponent extends React.Component {
+    constructor(props) { super(props); this.state= { data: null }; }
+    componentDidMount() {
+        fetch(this.props.url)
+            .then(response => response.json())
+            .then(data => this.setState({ data }));
+    }
+ render() { return this.props.render(this.state.data); }
+}
+
+// Usage
+<FetchComponent url="/api/data" render={data => (
+   	<ProductList products={data}/>
+)}/>
+
+Example 2:
+class Mouse extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { x: 0, y: 0 };
+    }
+
+    handleMouse = (event) => {
+        this.setState({
+            x: event.clientX,
+            y: event.clientY
+        });
+    }
+
+    render() {
+        return (
+            <div style={{ height: '100vh' }} onMouseMove={this.handleMouse}>
+                {this.props.render(this.state)}
+            </div>
+        );
+    }
+}
+
+// Usage
+<Mouse render={({ x, y }) => (
+    <h1>The mouse position is ({x}, {y})</h1>
+)}/>
+
+#endregion Render Props
+
+#region Container/Presentation component
+
+In Container Pattern , we have container having all the state managed and remaing components are Presentation Component
+
+Presentation Component : 
+=======================
+Presentational Components: These are reusable and semantic components that are purely driven by props. They are mainly occupied with HOW things look.
+function UserList({ users }) {
+  return (
+    <ul>
+      {users.map(user => (
+        <li>{user.name}</li>
+      ))}
+    </ul>
+  );
+}
+
+Container Component
+====================
+Container Components: These components are focused on how things work. These are where you handle state management and make API calls. They are mostly logic-driven, connect to the redux store, dispatch redux action.
+
+class UserListContainer extends React.Component {
+  state = { users: [] };
+  componentDidMount() {
+    fetch('/api/users').then(res => res.json()).then(users => this.setState({ users }));
+  }
+  render() { return <UserList users={this.state.users} />;  }
+}
+
+#endregion Container/Presentation component
+
+#region Hooks pattern
+The Hook pattern is the practice of extracting component logic into reusable functions. This ensures your components are clean and more straightforward to reason about. This pattern can be employed using Custom Hooks.
+
+Assume you have some logic that fetches user data, and you realize you need this same logic in multiple components. Instead of duplicating the code, you would extract it into a custom hook:
+
+import { useState, useEffect } from 'react';
+import fetchUser from 'fetchUser';
+
+function useUserData(userId) {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    fetchUser(userId).then(userData => setUser(userData));
+  }, [userId]);
+
+  return user;
+}
+
+//Inside your componentfunction UserProfile({ userId }) {
+  const user = useUserData(userId);
+
+  return user === null ? 'Loading...' : user.name;
+}
+
+
+#endregion Hooks Pattern
+
+#region Provider pattern
+
+A Provider is a higher order component provided to us by the Context object. We can create a Context object, using the createContext method that React provides for us.
+
+import { ThemeProvider, ThemeContext } from "../context";
+
+const LandingPage = () => {
+  <ThemeProvider>
+    <TopNav />
+    <Main />
+  </ThemeProvider>;
+};
+
+const TopNav = () => {
+  return (
+    <ThemeContext.Consumer>
+      {{ theme }} =>{" "}
+      <div style={{ backgroundColor: theme === "light" ? "#fff" : "#000 " }}>
+        ...
+      </div>{" "}
+      }
+    </ThemeContext.Consumer>
+  );
+};
+
+//A React component that subscribes to context changes. This lets you subscribe to a context within a function component.
+const Toggle = () => {
+  return (
+    <ThemeContext.Consumer>
+      {{ theme, setTheme }} => (
+      <button
+        onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+        style={{
+          backgroundColor: theme === "light" ? "#fff" : "#000",
+          color: theme === "light" ? "#000" : "#fff",
+        }}
+      >
+        Use {theme === "light" ? "Dark" : "Light"} Theme
+      </button>
+      )}
+    </ThemeContext.Consumer>
+  );
+};
+
+#endregion Provider Pattern
+
+#region Atomic Design templates
+Atomic design is a methodology for creating design systems that's composed of five distinct stages working together to create interface design systems in a more deliberate manner.
+1. Atoms: Basic building blocks like buttons, inputs, labels etc.
+2. Molecules: They are single entities or a unit of a group of atoms, such as a form with inputs and a button.
+3. Organisms: They combine molecules into a relatively complex section of an interface.
+4. Templates: They illustrate how the smaller components from the previous three stages can be put together to form a page.
+5. Pages: The final layer of Atomic Design, Pages, is where everything comes together, and the design comes to life.
+Now, an example implementation in React would be:
+
+Another Example: https://eng.zemosolabs.com/atomic-design-in-react-react-native-using-a-theming-library-part-1-4fc2e0e2ccc8
+
+```jsx
+//atoms
+const Input = (props) => <input {...props} />
+const Button = (props) => <button {...props}>{props.children}</button>
+
+//molecule
+const SearchForm = ({onSearch}) => {
+    let input;
+    return (
+        <form onSubmit={(e) => { 
+            onSubmitSearch(e, input)}}
+        >
+            <Input innerRef={node => {input = node}} />
+            <Button type="submit">Search</Button>
+        </form>
+    );
+
+    function onSubmitSearch(e, input) {
+        e.preventDefault();
+        onSearch(input.value);
+    }
+}
+
+//organism
+const Search = ({results, onSearch}) => (
+    <div>
+        <SearchForm onSearch={onSearch} />
+        <ul>
+            {results.map(item => <li>{item}</li>)}
+        </ul>
+    </div>
+)
+
+//template
+const AppTemplate = ({children}) => (
+    <main>
+        <h1>My App</h1>
+        {children}
+    </main>
+)
+
+//page
+class App extends React.Component {
+    state = {results: []}
+
+    onSearch(query) {
+        // logic to get results based on query
+        this.setState({results});
+    }
+
+    render() {
+        return (
+            <AppTemplate>
+                <Search results={this.state.results} onSearch={this.onSearch} />
+            </AppTemplate>
+        )
+    }
+}
+```
+This is a simplified example, but it should give you an idea of how components can be broken down and categorized for reusability and maintainability with Atomic Design.
+
+#endregion Atomic Design Template 
+
+#region Compositional Pattern 
+
+Where we break a large component into smaller composable components . 
+Example of accordion panel 
+============================
+
+//Sample data.JS
+const faqData = [
+    {
+        id: 1,
+
+        header: 'What is App?',
+
+        body: "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+    },
+
+    {
+        id: 2,
+
+        header: 'App pricing?',
+
+        body: "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+    },
+]
+
+//Sample Accordion.styles.JS
+import styled from "styled-components";
+
+export const Title = styled.h1`
+  font-size: 60px;
+  text-align: center;
+  color: #BF4F74;
+`;
+
+export const Wrapper = styled.section`
+  padding: 4em;
+  background: papayawhip;
+`;
+
+export const Header = styled.header`
+  font-size: 40px;
+  text-align: center;
+  color: green;
+  border: 2px solid black;
+  display:flex;
+  justify-content:center;
+  cursor: pointer;
+`;
+
+
+//Accordion.js
+import React, { useState, useContext } from "react"
+import { Title, Header, ItemContent, Item } from "./Accordion.styles"
+import data from './data'
+
+const ThemeContext = React.createContext()
+
+export default function Accordion() {
+    return (
+        <Accordion.Title>
+            Accordion Title
+            {
+                data.map(item => {
+                    return (
+                        <Accordion.Item key={item.id}>
+                            <Accordion.ItemHeader>
+                                {item.header}
+                            </Accordion.ItemHeader>
+                            <Accordion.ItemContent>
+                                {item.body}
+                            </Accordion.ItemContent>
+                        </Accordion.Item>
+                    )
+                })
+            }
+
+        </Accordion.Title>
+    )
+}
+
+Accordion.Title = function AccordionTitle({ children, ...restProps }) {
+    return <Title {...restProps}>{children}</Title>
+}
+
+
+
+Accordion.Item = function AccordionItem({ children, ...restProps }) {
+    const [show, setShow] = useState(false)
+    const toggleShow = (show) => setShow(!show)
+    return (
+        <ThemeContext.Provider value={{ show, toggleShow }}>
+            <Item {...restProps}>{children}</Item>
+        </ThemeContext.Provider >
+    )
+}
+
+Accordion.ItemHeader = function AccordionHeader({ children, ...restProps }) {
+    const context = useContext(ThemeContext)
+    const btnClick = () => {
+        context.toggleShow(context.show)
+    }
+    return (
+        <>
+            <Header {...restProps} onClick={() => btnClick()}>{children}</Header>
+        </>
+    )
+}
+
+Accordion.ItemContent = function AccordionItemContent({ children, ...restProps }) {
+    const context = useContext(ThemeContext)
+    if (context.show) {
+        return (<ItemContent {...restProps}>{children}</ItemContent>)
+    }
+    return null
+}
+
+#endregion Compositional Pattern 
+
+Other Important Topics
+----------------------
+TTFB: The Time To First Byte can be fast, since the initial HTML does not contain large components.
+FCP:  The First Contentful Paint can occur once the JavaScript bundle has downloaded, parsed, and executed its contents.
+TTI: The Time To Interactive can occur once the JavaScript bundle has downloaded, parsed, and executed its contents to bind the event handlers to the components.
+LCP: The Largest Contentful Paint can occur at the same time as the First Contentful Paint, provided there aren't any large components such as large images or videos.
+https://javascriptpatterns.vercel.app/patterns/rendering-patterns/incremental-static-regeneration
+
+#region Javascript function composition
+https://medium.com/javascript-scene/master-the-javascript-interview-what-is-function-composition-20dfb109a1a0
+
+Get more details on functional programming
+
+
+Are HOC's Pure Components?
+==========================
+Higher-Order Components (HOCs) in React themselves are not inherently pure components. However, they can return pure components.
+
+A pure component in React is a component that renders the same output given the same state and props. React's `PureComponent` performs a shallow comparison on the component's props and state to decide if it should re-render. If nothing has changed, it prevents the re-render, potentially improving performance.
+
+HOCs, on the other hand, are functions that take a component and return a new component. They are a pattern that emerges from React’s compositional nature. 
+
+That being said, you can definitely have HOCs return a pure component if that fits your use-case. Here is an example:
+
+```jsx
+import React, { PureComponent } from 'react';
+
+function withExtraPropAdded(WrappedComponent) {
+  return class extends PureComponent {
+    render() {
+      return <WrappedComponent {...this.props} newProp="example" />;
+    }
+  }
+}
+```
+
+This HOC is adding a prop to the wrapped component, and the returned component is a pure component. It will only re-render if its state or props change. Be careful though, PureComponent does a shallow props comparison, complex data structures may not behave as expected.
+
+
+Can we make side effects in  HOC in React?
+============================================
+Yes, we can make side-effects in a Higher-order Component or HOC in React similar to any other components. Side effects include data fetching, subscriptions or manually changing the DOM.
+
+We can utilize lifecycle methods like `componentDidMount`, `componentDidUpdate`, or `componentWillUnmount` in class-based higher-order components to have these side effects.
+
+But for a react-proper way, especially with hooks being more adopted now, side effects are supposed to be handled within useEffect hook and it can also be used in a functional higher-order component.
+
+It’s worth noting that using useEffect in a HOC would essentially be mirroring the same behavior as `componentDidMount`, `componentDidUpdate`, and `componentWillUnmount`.
+
+Here is an example:
+
+```jsx
+import React, { useEffect } from 'react';
+
+function withSideEffect(WrappedComponent) {
+  return (props) => {
+    useEffect(() => {
+      // fetch data
+      // subscribe 
+      // or kick off any other side-effects 
+    }, []);
+
+    return <WrappedComponent {...props} />;
+  };
+}
+```
+
+This function is a HOC with a side effect. The side effect functions when the component is first mounted. This is indicated by the empty array provided as the second argument to `useEffect` (this is equivalent to `componentDidMount` in class based components).
+
+Always remember to handle cleanup for your side-effects usually for subscriptions or timers when the component will unmount. Will prevent memory leaks and potential unexpected behavior. This done by returning a function in the `useEffect` hook.
+
+
+
+#endregion Js function composition

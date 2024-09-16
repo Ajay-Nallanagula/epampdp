@@ -1,0 +1,682 @@
+Manohar References : https://drive.google.com/drive/u/0/my-drive
+
+let obj = {
+  name:'Ajay',
+  age:34,
+  address:'Neredmet'
+}
+console.log(obj)
+delete obj.age
+console.log('After detete',obj) //{name:'Ajay',address:'Neredmet'}
+
+How to check if a property exists in the object or not 
+Way 1 : object.key === undefined //true , object doesn't exist
+	eg: console.log(obj.gym === undefined)//true
+Way 2: "key" in object , "in" operator 
+console.log('name' in obj) //true
+console.log('gym' in obj) //false
+
+What is the "in" Vs "check undefined"
+consider the following edge case 
+let obj ={test:undefined}
+console.log(obj.test) //undefined, means no such property ,where as its defined 
+console.log('test' in obj) //true
+
+//iterates through all the keys in the object
+for (key in object) {
+  // executes the body for each key among object properties
+}
+
+for(key in obj){
+  console.log(`${key}:${obj[key]}`)
+}
+
+Does object order the keys ??
+let codes = {
+  "49": "Germany",
+  "41": "Switzerland",
+  "44": "Great Britain",
+  "1": "USA"
+};
+
+//Object sorts its keys by default if they are numeric 
+for(key in codes){
+  console.log(key) //1,41,44,49
+}
+the keys if are numerals , the object by default sorts them. If the keys are strings, their order is decided based on their entry .
+
+In case if you want to retain the order of entry  ,But what should u do to retain the order of their entry ? 
+let codes = {
+  "+49": "Germany",
+  "+41": "Switzerland",
+  "+44": "Great Britain",
+  "+1": "USA"
+};
+
+This way we can retain the order of entry.
+
+Other than numbers, strings keys order of entry is always retained .
+In the above case "+49" is a string not a number
+
+Object copying/reference copying
+let user = { name: 'John' };
+
+let admin = user; // you are just copying the reference, which means there are two variables pointing to same memory location.
+
+admin.name = 'Pete'; // changed by the "admin" reference
+
+alert(user.name); 
+
+let codes = {
+  "49": "Germany",
+  "41": "Switzerland",
+  "44": "Great Britain",
+  "1": "USA"
+};
+
+let phones = codes
+console.log(phones == codes) //true
+console.log(phones === codes) //true
+
+How to clone object, rather than reference in JS? Object.assign
+syn : Object.assign (destinationObj,[srcObj1,srcObj2,srcObj3.....]) // square bracket here denotes optional not an array
+Eg: Object.assign(user, permissions1, permissions2);
+let user = {
+  name: "John",
+  age: 30
+};
+
+let clone = Object.assign({}, user);  //clone is now a new object with same schema as user
+
+Eg: 2
+let user = { name: "John" };
+
+let permissions1 = { canView: true };
+let permissions2 = { canEdit: true };
+
+// copies all properties from permissions1 and permissions2 into user
+Object.assign(user, permissions1, permissions2);
+
+// now user = { name: "John", canView: true, canEdit: true }
+If the copied property name already exists, it gets overwritten
+
+//Disadvantage of Object.assign
+consider 
+let user = {
+  name: "John",
+  sizes: {     // NESTED OBJECT
+    height: 182,
+    width: 50
+  }
+};
+
+const clone = Object.assign({},user}
+Now clone has new object with all new schema of "PRIMITIVE" types ONLY , however user and clone both share the same reference to nested object sizes
+console.log(clone.sizes === user.sizes) //true 
+
+This is also same with object destructuring
+const cloneDestruct = {...user}
+console.log(cloneDestruct.sizes === user.sizes);//true
+
+cloneDestruct.sizes.height = 19999
+console.log(user.sizes.height)//19999
+
+To fix that, we should use the cloning loop that examines each value of user[key] and, if it’s an object, then replicate its structure as well. That is called
+ a “deep cloning”. Use for loop check each prop if object do Object.assign independently for each nested object 
+ 
+Generally we use thridparty library methods like loadash method _.cloneDeep or Ramda clone method.
+
+this keyword :
+--------------
+"this" in javascript is unbound , where as in oops this is bound to an object.
+
+It’s common that an object method needs to access the information stored in the object to do its job.
+
+For instance, the code inside user.sayHi() may need the name of the user.
+
+To access the object, a method can use the this keyword.
+
+The value of this is the object “before dot”, the one used to call the method.
+
+Shorthand method notation w.r.t object
+// these objects do the same
+
+user = {
+  sayHi: function() {    alert("Hello");  }
+};
+
+// method shorthand looks better, right?
+user = {
+  sayHi() { // same as "sayHi: function()"
+    alert("Hello");
+  }
+};
+
+Why can't we ommit this and use the object name directly like shown below
+let user = {
+  name: "John",
+  age: 30,
+  sayHi() {
+    alert(user.name); // "user" instead of "this"
+  }
+};
+
+consider the following scenario 
+let admin = user 
+user=null
+admin.sayHi() // Error user is assgined null
+
+So usage of this is reliable in such cases.
+The rule is simple: if obj.f() is called, then this is obj during the call of f. So it’s either user or admin in the
+
+You can write this way as well
+function sayHi() {alert(this)}
+sayHi();
+
+if the above lines are executed in browser then the value of this is window object
+if the above lines are executed in Node then the value of this is global object
+in other environments this which is anonymous refers to that environment globals.
+
+Usually such call is a programming error. If there’s this inside a function, it expects to be called in an object context.
+
+Arrow functions have no “this”:
+1) Arrow functions doesn't have this .
+2) For arrow functions "this" is taken from the surrounding scope .
+
+consider following example
+let group = {
+  title: "Our Group",
+  students: ["John", "Pete", "Alice"],
+
+/*
+  The error occurs because forEach runs functions with "this=undefined" by default, so the attempt to access undefined.title is made.
+*/
+
+  showList() {
+    this.students.forEach(function(student) {
+      // Error: Cannot read property 'title' of undefined, 
+      alert(this.title + ': ' + student)
+    });
+  }
+};
+
+Not having this naturally means another limitation: 
+arrow functions can’t be used as constructors.
+They can’t be called with new.
+Arrow functions see "this" as just another variable.there is no specific meaning for this in arrow functions.
+
+Arrow functions:
+Do not have this
+Do not have arguments keyword.
+Can’t be called with new
+They also don’t have super, but we didn’t study it yet
+
+
+
+
+let group = {
+  title: "Our Group",
+  students: ["John", "Pete", "Alice"],
+
+  showList() {
+    this.students.forEach( //1) this here is variable group, decided during runtime when its called
+      student => alert(this.title + ': ' + student) //this here is picked from comment 1) , surrounding scope 
+    );
+  }
+};
+
+group.showList();
+
+Constructor, operator "new"
+--------------------------
+
+const obj = {} // This will create only one object 
+If you have a scenario to create multiple instances of the object , in that case we need to have ctor functions 
+function User(name){
+this.name = name
+this.admin= false
+}
+const user = new User('Ajay')
+
+when we create a ctor function with new opertor following things happen 
+1) it creates an empty object
+2)The function body executes. Usually it modifies this, adds new properties to it.
+3) returns this 
+
+function User(name) {
+  // this = {};  (implicitly)
+
+  // add properties to this
+  this.name = name;
+  this.isAdmin = false;
+
+  // return this;  (implicitly)
+}
+
+So let user = new User("Jack") gives the same result as:
+let user = {
+  name: "Jack",
+  isAdmin: false
+};
+
+
+That’s the main purpose of constructors – to implement reusable object creation code.
+
+To determine if the function is called with new or not we can do the following 
+function User() {
+  alert(new.target);
+}
+
+// without "new":
+User(); // undefined
+
+// with "new":
+new User(); // function User { ... }
+
+What will happen if we are using return statement from ctor ?
+There are rules to it 
+1) if we return an object/array from ctor funtion , then this will be ignored , object will be returned
+function User(){
+  this.name ='Ajay'
+  this.age=34
+  return {name:'Vijay',age:'20'} // or array typeof([]) is 'object' in javascript 
+}
+
+const user =  new User()
+console.log(user) //{name:'Vijay',age:'20'}
+
+2) if we return an primitive datatype or null/undefined/just return;, then primitive data type is ignored and "this" is returned
+function User(){
+  this.name ='Ajay'
+  this.age=34
+  return null// or undefined or symbol or bigInt or int ,bool,string will be ignored if its a ctor function
+}
+
+const user =  new User()
+console.log(user){name:'Ajay',age:34}
+
+We can also add funtions to ctor 
+function User(name) {
+  this.name = name;
+
+  this.sayHi = function() {
+    alert( "My name is: " + this.name );
+  };
+}
+
+let john = new User("John");
+
+john.sayHi();// My name is John
+
+Optional Chaining : https://javascript.info/optional-chaining
+------------------
+let user = {}; // user has no address
+alert( user?.address?.street ); // undefined (no error)
+
+Don’t overuse the optional chaining
+for example, if according to our coding logic user object must be there, but address is optional, then user.address?.street would be better.
+
+There must be let/const/var user. The optional chaining works only for declared variables.
+// ReferenceError: user is not defined
+user?.address;
+
+The optional chaining ?. is not an operator, but a special syntax construct, that also works with functions and square brackets.
+For example, ?.() is used to call a function that may not exist. ?.[] is used to access objects with keys 
+?.()
+-------
+let user1 = {
+  admin() {
+    alert("I am admin");
+  }
+}
+
+let user2 = {};
+
+user1.admin?.(); // I am admin
+user2.admin?.();
+
+?.[]
+--------
+let user1 = {
+  firstName: "John"
+};
+
+let user2 = null; // Imagine, we couldn't authorize the user
+
+let key = "firstName";
+
+alert( user1?.[key] ); // John
+alert( user2?.[key] ); // undefined
+
+alert( user1?.[key]?.something?.not?.existing); // undefined
+
+?. with delete
+delete user?.name; // delete user.name if user exists
+
+We can use ?. for safe reading and deleting, but not writing
+The optional chaining ?. has no use at the left side of an assignment:
+// the idea of the code below is to write user.name, if user exists
+user?.name = "John"; // Error, doesn't work
+// because it evaluates to undefined = "John"
+
+
+Object Define Properties:
+------------------------
+Javascript Objects:
+Javascript properties are enumerable, writable and configurable
+http://arqex.com/967/javascript-properties-enumerable-writable-configurable
+
+var ob = {a: 1};
+ob.a; // => 1
+ 
+// Modifying the value of a property
+ob.a = 0; //Writable
+ob.a; // => 0;
+// Creating a new property
+ob.b = 2;
+ob.b; // => 2
+// Deleting a property
+delete ob.b; //Configurable
+ob.b; // => undefined
+
+By Default when you create an object, each property in object gets three properties additinally i.e 
+a) enumerable
+b) writable
+c) configurable
+
+
+Enumerable: I can access to all of them using a for..in loop. Also, enumerable property keys of an object are returned using Object.keys method.
+Writable: I can modify their values, I can update a property just assigning a new value to it: ob.a = 1000;
+Configurable: I can modify the behavior of the property, so I can make them non-enumerable, non-writable or even non-cofigurable if we feel like doing so. 
+NOTE : Configurable properties are the only ones that can be removed using the delete operator
+
+For ex : var obj = {prop1:'hi',prop2:'hello'} 
+
+How does Javascript interprets the properties of obj shown in example ??
+Ans: Well you can find that out by using Object.getOwnPropertyDescriptor(<object>,'<propertyName'>);
+
+for ex:
+Object.getOwnPropertyDescriptor(obj,'prop1');
+output:{value:'hi',enumerable:true,configurable:true,writable:true}
+
+Object.getOwnPropertyDescriptor(obj,'prop2');
+output:{value:'hello',enumerable:true,configurable:true,writable:true}
+
+How can we edit the enumerable,configurable,writable properties of javascript ?
+Ans :  
+Object.defineProperty() or Object.defineProperties : This function is used to define properties on object set the value of the property and change default behaviour of enumerable,writable,configurable.
+//For multiple properties
+Syntax : Object.defineProperties(obj, {key1: descriptor1}, {key2: descriptor2},…)
+
+//For single property
+Syntax : Object.defineProperty(obj,'<propertyname>',
+{
+value:<value>,
+enumerable:<T/F>,
+configurable:<T/F>,
+writable:<T/F>,
+}
+);
+
+
+Object.defineProperties(ob,
+{
+prop1:{value:'hi1',enumerable:false,configurable:false,writable:false},
+prop2:{value:'hello1',enumerable:false,configurable:false,writable:false},
+});
+
+What are the default values for properties on an object using Object.defineProperty() ??
+Object.defineProperty(obj,{
+prop3:{value:"I am Prop3"}
+});
+Object.getOwnPropertyDescriptor(obj,'prop3')
+output : {value:'I am Prop3',enumerable:false,configurable:false,writable:false}
+
+What will happen if non-writable property contains an object ??
+For example : Object.defineProperty(obj,'prop5',{
+value:{
+prop10:'10',
+prop11:'11'
+},
+writable:false
+});
+
+In this case the reference to the object is what is not writable, but the object itself can be modified yet
+
+obj.prop5.prop10 = 'prop10'
+obj.prop5.prop11 = 'prop11'
+console.log(obj.prop5) //{prop10:'prop10',prop11:"prop11"}
+
+obj.prop5 ={prop100:'100'} // {prop10:'prop10',prop11:"prop11"}, instrict mode will throw typeerror
+
+What should be done to restrict non-writable property object changes ??
+Ans We can make use of   Object.freeze( obj ) // all the modifications will be ignored
+
+____________________________________________________________________________________________
+Demo Example :
+var task = {
+test: "Test"
+}
+
+var descrpt = Object.getOwnPropertyDescriptor(task,'test');
+//console.log(descrpt);
+
+//Multiple properties
+Object.defineProperties(task,{
+prop1:{value:'prop1'},
+prop2:{value:'prop2'}
+});
+
+//One property
+Object.defineProperty(task,'prop3',{value:'prop3',/*configurable:true*/}); //Line No 16
+//console.log(Object.getOwnPropertyDescriptor(task,'prop3'));
+
+//Check for writable
+task.prop3 ='prop4';  //STRICT MODE : Error thrown TypeError: Cannot assign to read only property 'prop3' of object '#<Object>'
+//NON_STRICT MODE : prop3 , no error thrown value remains unchanged
+//console.log(task.prop3); 
+//Writable is false for prop3
+//if non-writable property contains an object , Object.freeze()
+
+Object.defineProperty(task,'prop5',{
+value:{
+prop10:'10',
+prop11:'11'
+},
+writable:false
+});
+task.prop5.prop10 = 'prop10';
+task.prop5.prop11 = 'prop11';
+
+console.log(task.prop5) //{prop10: "prop10", prop11: "prop11"}
+
+//To avoid :
+Object.freeze(task)
+task.prop5.prop10 ='prop99'; //{prop10: "prop10", prop11: "prop11"} , in strict mode will lead to an error
+
+
+//check for enumerable
+for(key in task){
+console.log(key); 
+}
+//NON STRICT MODE : Outputs only test, prop1, prop2,prop3 has enumerable as false
+//STRICT MODE : key is not defined, will not output test
+
+//Check for configurable
+Object.defineProperty(task,'prop3',{
+value:6,
+writable: true,
+enumerable:true,
+configurable:true
+});
+//TypeError: Cannot redefine property: prop3
+//To make this work on Line No 16 comment out /*configurable:true*/
+
+Object.defineProperty(task,'prop9',{value:'prop9',configurable:false, writable:true});
+
+//Exceptional case
+Object.defineProperty(task,'prop9',{
+writable: false, //This is allowed 
+});
+
+//NOTE : You cannot delete properties of an object whose configurable is set to false
+//NOTE : You can change writable ,, when configurable is set to true 
+//NOTE: you can change value of property when configurable is set to true 
+//NOTE : configurable doestn't work on writable/value
+
+
+let obj= {A:'a',B:'b'}
+//Seal:  new properties from being added to it and marks all existing properties as non-configurable
+Object.seal(obj)
+console.log(Object.isSealed(obj))//true
+obj.C = 'c' // cannot add new property
+delete obj.A //Cannot delete
+
+Object.defineProperty(obj,'A',{writable:false})
+console.log(Object.getOwnPropertyDescriptor(obj,'A')) // Cannot configure objects
+
+obj.A ='aaa' //You can change exisiting property
+console.log(obj)
+obj={D:'d'}
+console.log(obj) //You can re-assign the object
+console.log(Object.isSealed(obj))
+
+
+objects can have duplicate keys, only the latest one will be shown
+const obj = {A:'a',A:'b'}
+console.log(obj) //o/p {A:'b'}
+
+
+Symbols:
+---------
+Symbols are guaranteed to be unique. Even if we create many symbols with the same description, they are different values. The description is just a label that doesn’t affect anything.
+
+let id1 = Symbol("id");
+let id2 = Symbol("id");
+alert(id1 == id2); // false
+
+Symbols don’t auto-convert to a string
+let id = Symbol("id");
+alert(id); // TypeError: Cannot convert a Symbol value to a string
+
+let id = Symbol("id");
+console.log(id)
+let id2=  Symbol("id")
+console.log(id2.toString())
+console.log(id==id2)//false
+console.log(id.toString()===id2.toString())//true
+
+let id = Symbol("id");
+console.log(id.description)// "id"
+
+Hidden Propereties with symbol
+------------------------------
+To show symbols , in Object literal form 
+
+let id = Symbol("id");
+let nonSym = 'jKey'
+
+let user = {
+  name: "John",
+  [id]: 123 , //1
+  [nonSym ]: 143 //2
+};
+
+What is the difference between 1 & 2 ?
+The key which has symbol is not shown, symbols are used to hide the properties , in other way make them private hence they are been hidden
+console.log(user) //{  jKey: 143,  name: "John"}
+console.log(Object.keys(user)) //["jKey","name"]
+
+How to find if Object has symbols 
+console.log(Object.getOwnPropertySymbols(user)) //Symbol(id)
+
+Symbols are skipped by for…in && Object.keys()
+let id = Symbol("id");
+let user = {
+  name: "John",
+  age: 30,
+  [id]: 123
+};
+
+for (let key in user) alert(key); // name, age (no symbols)
+
+// the direct access by the symbol works
+alert( "Direct: " + user[id] );
+
+ Object.assign copies both string and symbol properties:
+ 
+ spread operator also copies both strings and symbols:
+ let id = Symbol("id");
+let kd= Symbol("kd")
+let user = {
+  name: "John",
+  age: 30,
+  [id]: 123,
+[kd]:'KEDI'
+};
+
+const newObj = {...user}
+console.log(newObj)//{  age: 30,  name: "John"}
+console.log(Object.getOwnPropertySymbols(newObj //[[object Symbol] { ... }, [object Symbol] { ... }]
+
+Global symbols:
+
+As we’ve seen, usually all symbols are different, even if they have the same name. But sometimes we want same-named symbols to be same entities. For instance, different parts of our application want to access symbol "id" meaning exactly the same property.
+
+To achieve that, there exists a global symbol registry. We can create symbols in it and access them later, and it guarantees that repeated accesses by the same name return exactly the same symbol.
+
+In order to read (create if absent) a symbol from the registry, use Symbol.for(key).
+
+That call checks the global registry, and if there’s a symbol described as key, then returns it, otherwise creates a new symbol Symbol(key) and stores it in the registry by the given key.
+
+For instance:
+
+// read from the global registry
+let id = Symbol.for("id"); // if the symbol did not exist, it is created
+
+// read it again (maybe from another part of the code)
+let idAgain = Symbol.for("id");
+
+// the same symbol
+alert( id === idAgain ); // true
+Symbols inside the registry are called global symbols. If we want an application-wide symbol, accessible everywhere in the code – that’s what they are for
+
+
+Symbol.keyFor
+For global symbols, not only Symbol.for(key) returns a symbol by name, but there’s a reverse call: Symbol.keyFor(sym), that does the reverse: returns a name by a global symbol.
+let sym = Symbol.for("name");
+let sym2 = Symbol.for("id");
+
+// get name by symbol
+alert( Symbol.keyFor(sym) ); // name 
+console.log(sym.description) //name
+alert( Symbol.keyFor(sym2) ); // id
+console.log(sym.description) //id
+
+let id = Symbol("namerhjsbdj");
+let nonSym = 'jKey'
+let user = {
+  name: "John",
+  [id]: 123 ,// not "id": 123
+  [nonSym ]: 143
+};
+
+const globalSym = Symbol.for('Ajay')
+console.log(typeof(globalSym) )
+console.log(Symbol.keyFor(globalSym ))
+console.log(id.description)//localsymbol
+//const sym = Symbol.keyFor('id')//local symbol, undefined keyFor works only for global symbols
+//console.log({sym})
+
+
+
+What is Object.is() ?? Object.is Vs == or ===
+https://medium.com/coding-at-dawn/es6-object-is-vs-in-javascript-7ce873064719#:~:text=The%20method%20Object.is,they%20are%20the%20same%20value.
+Object.is(value1,value2) //equality check
+The first difference is that Object.is() thinks -0 and +0 are different values, while === says they are the same value.
+The second difference between is that Object.is thinks NaN is the same value as itself, while === says they are not same value.
+console.log(Object.is(-0, +0)) // false
+console.log(-0 === +0) // true
+console.log(Object.is(NaN, NaN)) // true
+console.log(NaN === NaN) // false
+Object.is(+0,0) is false, Object.is(NaN,NaN) is true (Its opossite for ===)

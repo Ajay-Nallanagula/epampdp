@@ -1,0 +1,161 @@
+Agenda:
+Hello, world!
+Code structure
+The modern mode, "use strict"
+Variables
+Data types
+Interaction: alert, prompt, confirm
+Type Conversions
+Basic operators, maths
+Comparisons
+Conditional operators: if, '?'
+Logical operators
+Nullish coalescing operator '??'
+Loops: while and for
+The "switch" statement
+
+
+Hello,World 
+script tag :
+JavaScript programs can be inserted into any part of an HTML document with the help of the <script> tag
+Eg: 
+<!DOCTYPE html>
+<script>alert('Before <html>')</script>
+<html>
+<script>alert('Before Head')</script>
+<head>
+<title>Page Title</title>
+<script>alert('Inside Head')</script>
+</head>
+
+<script>alert('After Head,Before Body')</script>
+
+<body>
+
+<h1>This is a Heading</h1>
+<p>This is a paragraph.</p>
+<script>alert('Inside body')</script>
+
+</body>
+<script>alert('After Body')</script>
+</html>
+<script>alert('After <Html>')</script>
+
+When script is in head
+The browser loads all the scripts in head tag before loading and rendering body html. It is recommended to include scripts before ending body tag if scripts are not required while window is loading
+When script is in body
+Scripts can also be added at the end of body tag. This way you can be sure that all the web page resources are loaded and it is safe to interact with DOM
+Eg:
+<body>
+    <h1> JavaScript Tutorials</h1>
+    <p>This is JavaScript sample.</p>
+   
+        <!--Some HTML here.. -->
+    
+    <script>
+        alert('hi')
+
+    </script>
+    <script src="/PathToScriptFile.js"></<script> 
+</body>
+
+Html5 standard does not required type="text/javascript" attribute, whereas prior html standards requires type attribute
+Because default lnguage and type in HTML5 is javascript.
+
+Js separate file.
+The benefit of a separate file is that the browser will download it and store it in its cache.
+Other pages that reference the same script will take it from the cache instead of downloading it, so the file is actually downloaded only once.
+That reduces traffic and makes pages faster.
+
+//Src and js inside script tag will not work
+<script src="file.js">
+  alert(1); // the content is ignored, because src is set
+</script
+
+//This works
+<script src="file.js"></script>
+<script>alert(1)</script>
+
+How is Javascript and  HTml rendered in the browser 
+https://medium.com/jspoint/how-the-browser-renders-a-web-page-dom-cssom-and-rendering-df10531c9969#:~:text=When%20the%20browser%20reads%20HTML,be%20converted%20to%20JavaScript%20objects.
+https://blog.logrocket.com/how-browser-rendering-works-behind-the-scenes-6782b0e8fb10/
+
+Variables
+----------
+There are two limitations on variable names in JavaScript:
+The name must contain only letters, digits, or the symbols $ and _.
+
+Declaring variable using 'var' is old style , using let is modern style.
+
+When should we use capitals for a constant and when should we name it normally? Let’s make that clear.
+Being a “constant” just means that a variable’s value never changes. But there are constants that are known prior to execution (like a hexadecimal value for red) and there are constants that are calculated in run-time, during the execution, but do not change after their initial assignment.
+The first character must not be a digit.
+
+Number , range 2^53-1 to -(-2^53 -1)
+Any nonNumber operated with number results in NaN
+ 1/0 = Infinity , alert(Infinity)
+ 
+ If your numbers fall beyond number range we can start using BigInt
+ BigInt is created by appending n 
+ // the "n" at the end means it's a BigInt
+const bigInt = 1234567890123456789012345678901234567890n;
+
+String:
+Double and single quotes are “simple” quotes. There’s practically no difference between them in JavaScript.
+Backticks are “extended functionality” quotes. They allow us to embed variables and expressions into a string by wrapping them in ${…}, for example:
+In JavaScript, there is no such type. There’s only one type: string. A string may consist of only one character or many of them.
+
+Boolean (logical type):
+Null:
+Null is just a special value which represents “nothing”, “empty” or “value unknown”.
+Undefined:
+The meaning of undefined is “value is not assigned”. Its default value for declared but not assigned variables.
+The typeof operator
+The typeof operator returns the type of the argument. It’s useful when we want to process values of different types differently or just want to do a quick check.
+
+It supports two forms of syntax:
+
+As an operator: typeof x.
+As a function: typeof(x).
+
+typeof(10n) //bigInt
+typeof undefined // "undefined"
+typeof null // "object"
+typeof alert //function
+typeof Symbol('id') //'symbol'
+
+There are 8 basic data types in JavaScript.
+
+number for numbers of any kind: integer or floating-point, integers are limited by ±253.
+bigint is for integer numbers of arbitrary length.
+string for strings. A string may have zero or more characters, there’s no separate single-character type.
+boolean for true/false.
+null for unknown values – a standalone type that has a single value null.
+undefined for unassigned values – a standalone type that has a single value undefined.
+object for more complex data structures.
+symbol for unique identifier
+
+For null returns "object" – this is an error in the language, it’s not actually an object.
+
+alert:
+The mini-window with the message is called a modal window. The word “modal” means that the visitor can’t interact with the rest of the page, press other buttons, etc, until they have dealt with the window. In this case – until they press “OK”.
+
+prompt:
+result = prompt('title',defaultValue)
+Eg:
+let age = prompt('How old are you?', 100);
+alert(`You are ${age} years old!`);
+
+confirm:
+let isBoss = confirm("Are you the boss?");
+alert( isBoss ); // true if OK is pressed
+
+Null collasecing : collasecing checks only for null or undefined and not for all falsy values 
+x = a ?? b is a short equivalent to:
+x = (a !== null && a !== undefined) ? a : b;
+
+let height = 0;
+alert(height || 100); // 100
+alert(height ?? 100); // 0
+
+

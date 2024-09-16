@@ -13,7 +13,8 @@ console.log(
     7) When we use buffer.alloc , new memory will allocated which is not part of this buffer.poolsize
     8) When we use buffer.allocUnsafe() , memory will be allocated from this poolsize, filled with junk memory values
     9) When we use buffer.allocUnsafeSlow() , memory will be allocated from this poolsize, filled with nothing.
-    10) buffer.from() and buffer.concat both use buffer.allocUnsafe() under the hood , and fill the buffer ASAP after instantiation.
+    10) buffer.from() and buffer.concat both use buffer.allocUnsafe() under the hood , 
+        and fill the buffer ASAP after instantiation.
     `
 )
 console.log("END_____________NOTES ON BUFFER________________\n\n")
@@ -30,6 +31,8 @@ const memoryContainer = Buffer.alloc(3)
 
 console.log(memoryContainer)//this will output in hexa-decimal
 console.log(memoryContainer[0]) //this will output in decimal
+console.log(memoryContainer.byteLength) //will tell how many bites are filled 
+console.log(memoryContainer.length) // will tell total buffer length (3)
 
 memoryContainer[0] = 0x48
 console.log(memoryContainer[0]) //this will output in decimal
@@ -96,3 +99,17 @@ console.log("Memory Size of the Buffer in Bytes: " + memoryFromContainer.length)
 console.log("END ___________Demo Buffer.from([])_________________\n\n")
 
 //#endregion Buffer.from()
+
+
+const fs = require('node:fs/promises')
+
+console.log("****START:Access fliles using Promises***")
+
+    (async () => {
+        try {
+            await fs.copyFile("diffWaysAccessFile.txt", "copyfile-promise.txt")
+        } catch (error) {
+            console.log(error)
+        }
+    })()
+console.log("****END:Access fliles using Promises***\n\n")

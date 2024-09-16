@@ -1,0 +1,466 @@
+Arrays
+-----
+
+Syntax:
+let arr = new Array();
+let arr = []; //Array literal
+
+Javascript arrays can also contain mix of values, neednot be of same datatype
+// mix of values
+let arr = [ 'Apple', { name: 'John' }, true, function() { alert('hello'); } ];
+
+// get the object at index 1 and then show its name
+alert( arr[1].name ); // John
+
+// get the function at index 3 and run it
+arr[3](); // hello
+
+pop/push shift/unshift
+Arrays in JavaScript can work both as a queue and as a stack. They allow you to add/remove elements both to/from the beginning or the end.
+
+pop:
+let fruits = ["Apple", "Orange", "Pear"];
+alert( fruits.pop() ); // remove "Pear" and alert it
+alert( fruits ); // Apple, Orange
+
+push:
+let fruits = ["Apple", "Orange"];
+fruits.push("Pear");
+
+alert( fruits ); // Apple, Orange, Pear
+
+
+Methods that work with the beginning of the array:
+shift:
+let fruits = ["Apple", "Orange", "Pear"];
+alert( fruits.shift() ); // remove Apple and alert it
+alert( fruits ); // Orange, Pear
+
+unshift:
+let fruits = ["Orange", "Pear"];
+fruits.unshift('Apple');
+alert( fruits ); // Apple, Orange, Pear
+
+push and unshift can add multiple elements
+let fruits = ["Apple"];
+
+fruits.push("Orange", "Peach");
+fruits.unshift("Pineapple", "Lemon");
+
+// ["Pineapple", "Lemon", "Apple", "Orange", "Peach"]
+alert( fruits );
+
+If you try push an array :
+let arr = ["A"]
+let arr2 = ["B","C"]
+arr.push([...arr2])
+console.log(arr) //["A", ["B", "C"]]
+
+
+Array insert an element at greater index not existing
+let arr = ["A"]
+arr[4] = "B"
+console.log( arr) //["A", undefined, undefined, undefined, "B"]
+
+JS engine will add optimizations to make array work fast/quicker , when used like an array
+
+This is possible because arrays are extended objects in JS.
+Arrays are objects at the core . The square notation of array in JS is burrowed from the object itself
+But the engine will see that we’re working with the array as with a regular object. Array-specific optimizations are not suited for such cases and will be turned off, their benefits disappear.
+
+consider the following :
+let fruits = []; // make an array
+fruits[10] = 5 assign a property with the index far greater than its //length
+fruits.age = 25; // create a property with an arbitrary name
+
+we can assign properties to array like Objects, 
+The keys of array are always numbers, unlike objects have string keys
+
+Arrays are carefully tuned inside JavaScript engines to work with contiguous ordered data, please use them this way
+
+Methods push/pop (EOA:end of array) Vs shift/unshift
+push/pop are faster then shift unshift why
+let arr = ["A","B","C"]
+console.log( arr.shift())
+The shift/unshift operation must do 3 things:
+Remove/Add the element with the index 0.
+Move all elements to the left, renumber them from the index 1 to 0, from 2 to 1 and so on.
+Update the length property.
+
+pop doesn't need to move anything 
+fruits.pop(); // take 1 element from the end
+
+iterate arrays: Apart from traditional for loop
+let fruits = ["Apple", "Orange", "Plum"];
+
+// iterates over array elements
+for (let fruit of fruits) {
+  alert( fruit );
+}
+
+The for..of doesn’t give access to the number of the current element, just its value, but in most cases that’s enough. And it’s shorter.
+
+Technically arrays can use for..in loops, but its causes multiple issues
+w.r.t array-like objects, 
+let arr = ["Apple", "Orange", "Pear"];
+for (let key in arr) {
+  alert( arr[key] ); // Apple, Orange, Pear
+}
+The loop for..in iterates over all properties, not only the numeric ones.
+
+There are so-called “array-like” objects in the browser and in other environments, that look like arrays. That is, they have length and indexes properties, but they may also have other non-numeric properties and methods, which we usually don’t need. The for..in loop will list them though. So if we need to work with array-like objects, then these “extra” properties can become a problem.
+
+The for..in loop is optimized for generic objects, not arrays, and thus is 10-100 times slower. Of course, it’s still very fast. The speedup may only matter in bottlenecks. But still we should be aware of the difference.
+
+Generally, we shouldn’t use for..in for arrays.
+
+length of an array
+------------------
+The length property automatically updates when we modify the array. To be precise, it is actually not the count of values in the array, but the greatest numeric index plus one
+
+consider following example 
+let arr = ["A","B","C"]
+arr[2000] ='D' // greatest index here is 2000
+console.log( arr.length) // length is 2001
+
+The length property is editable property 
+If we increase it manually, nothing interesting happens. But if we decrease it, the array is truncated. The process is irreversible, here’s the example:
+
+let arr = [1, 2, 3, 4, 5];
+arr.length = 2; // truncate to 2 elements
+alert( arr ); // [1, 2]
+
+arr.length = 5; // return length back
+alert( arr ); // the values do not return [1,2,,,] irreversible
+
+so the simplest way to clear an array is array.length = 0
+
+array creaztion using new Array()
+let arr = new Array(4) //the length of the array can be decided
+//but all the indicices are given undefined values
+arr.length is 4 here
+
+toString
+--------
+Arrays have overidden toString method they will return comma seperated values
+
+alert( [] + 1 ); // "1"
+alert( [1] + 1 ); // "11"
+alert( [1,2] + 1 ); // "1,21"
+
+here [] becomes an empty string, [1] becomes "1" and [1,2] becomes "1,2"
+tHE ABOVE WILL be converted to 
+When the binary plus "+" operator adds something to a string, it converts it to a string as well
+alert( "" + 1 ); // "1"
+alert( "1" + 1 ); // "11"
+alert( "1,2" + 1 ); // "1,21"
+
+
+splice:
+-------
+splice is like swiss knife method this can be used to accomplish insert,delete,replace operations on array
+
+can we use delete key workd w.r.t array ?
+Yes we can use arrays are sugar coated objects in Javascript, 
+let arr = ["I", "go", "home"];
+delete arr[1]
+console.log(arr.length) //GOTCHA , length will remain as 3
+console.log(arr) //["I", undefined, "home"]
+delete will generally delete obj.key , arrays are not key-value pair.
+delete doesn't shift the places in the array , adjusts the length property like shift()
+
+so we need to use splice :
+syntax: arr.splice(index[, deleteCount, elem1, ..., elemN])
+It starts from the position index: removes deleteCount elements and then inserts elem1, ..., elemN at their place. Returns the array of removed elements.
+
+let arr = ["I", "study", "JavaScript"];
+const removedElement = arr.splice(1, 1); 
+console.log(arr,removedElement ) //arr: ["I", "JavaScript"], //removedElement : ["study"]
+removed elements can be multiple hence splice returns array of removed elements
+
+
+//splice remove and add elements to array
+let arr = ["I", "study", "JavaScript","Hero"];
+const removedElement = arr.splice(1, 2,"item1","item2","item3"); 
+console.log({arr},{removedElement })
+// arr: ["I", "item1", "item2", "item3", "Hero"]
+//removedElement: ["study", "JavaScript"]
+
+Negative indexes are allowed in splice, the delete,insert,update will be done from the end of the array
+
+let arr = [1, 2, 5];
+// from index -1 (one step from the end)
+// delete 0 elements,
+// then insert 3 and 4
+arr.splice(-1, 0, 3, 4);
+
+alert( arr ); // 1,2,3,4,5
+
+Another use , splice can also be used for clone , it produces a new array.
+let arr = ["I", "study", "JavaScript","Hero"];
+let arr2 = arr 
+console.log(arr2==arr) //true
+const arr3 = arr.splice(0,0)//delete 0 elements ,or don't delete any elements
+console.log(arr2==arr3) //false
+
+
+slice:
+------
+arr.slice([start], [end])
+It returns a new array copying to it all items from index start to end (not including end). Both start and end can be negative, in that case position from array end is assumed.
+
+even slice return new array
+
+concat :
+--------
+arr.concat(arg1, arg2...)
+The method arr.concat creates a new array that includes values from other arrays and additional items.
+It accepts any number of arguments – either arrays or values
+let arr = ["A","B"]
+const newArr = arr.concat("C","D") // concat individual elements
+console.log(newArr ) //["A", "B", "C", "D"]
+let arr2 = ["E","F"]
+const arr3 =arr.concat(arr2) //concat an array itself
+console.log(arr3) //["A", "B", "E", "F"]
+
+
+let arr = [1, 2];
+// create an array from: arr and [3,4]
+alert( arr.concat([3, 4]) ); // 1,2,3,4
+// create an array from: arr and [3,4] and [5,6]
+alert( arr.concat([3, 4], [5, 6]) ); // 1,2,3,4,5,6
+// create an array from: arr and [3,4], then add values 5 and 6
+alert( arr.concat([3, 4], 5, 6) ); // 1,2,3,4,5,6
+
+What happens when concat is applied on array:Like objects
+
+
+let arr = [1, 2];
+
+let arrayLike = {
+  0: "something",
+  length: 1
+};
+
+console.log( arr.concat(arrayLike) ); // 1,2,[object Object]
+
+But if an array-like object has a special Symbol.isConcatSpreadable property, then it’s treated as an array by concat: its elements are added instead:
+let arr = [1, 2];
+
+let arrayLike = {
+  0: "something",
+  1: "else",
+  [Symbol.isConcatSpreadable]: true,
+  length: 2
+};
+
+alert( arr.concat(arrayLike) );
+
+filter/find/map are same as we use
+
+sort :
+------
+Array sort by default treats all the elements as strings and then does the sort for eg :
+let arr = [ 1, 2, 15 ];
+// the method reorders the content of arr
+const result = arr.sort();
+console.log( result );  // 1, 15, 2
+Literally, all elements are converted to strings for comparisons. For strings, lexicographic ordering is applied and indeed "2" > "15"
+
+ hence we use comparer function:
+ function compareNumeric(a, b) {
+  if (a > b) return 1;
+  if (a == b) return 0;
+  if (a < b) return -1;
+}
+
+//short cut way of comparer is arr.sort( (a, b) => a - b );
+
+split and join:
+---------------
+split : string to array based on delimiter
+syntax : str.split(delim[,limit])
+let names = 'Bilbo, Gandalf, Nazgul';
+const arr = names.split(',')
+console.log(arr) //["Bilbo", "Gandalf", "Nazgul"]
+
+//split can also limit the items that it can return 
+let names = 'Bilbo, Gandalf, Nazgul';
+const arr = names.split(',',1)
+console.log(arr) //["Bilbo"]
+
+What ahppens if delimiter is not given for split
+let names = 'Bilbo, Gandalf, Nazgul';
+const arr = names.split()
+console.log(arr) //['Bilbo, Gandalf, Nazgul']
+
+join: arr to string , default seperator is comma 
+The call arr.join(glue) does the reverse to split. It creates a string of arr items joined by glue between them
+let arr = ['Bilbo', 'Gandalf', 'Nazgul'];
+let str = arr.join('  '); // glue the array into a string using ;
+console.log( str ); //"Bilbo  Gandalf  Nazgul"
+
+//default seperator is comma
+let arr = ['Bilbo', 'Gandalf', 'Nazgul'];
+let str = arr.join(); //No parameter
+console.log( str ); //"Bilbo,Gandalf,Nazgul"
+
+reduce/reduceRight:
+1.methods arr.reduce and arr.reduceRight  is used to calculate a single value based on array.
+2. syntax:
+let value = arr.reduce(function(accumulator, item, index, array) {
+  
+}, [initial]);
+Arguments:
+
+accumulator – is the result of the previous function call, equals initial the first time (if initial is provided).
+item – is the current array item.
+index – is its position.
+array – is the array.
+
+accumulator stores the result of previous function call, for the first execution of the function call accumulator assumes the initial value
+
+IF THE INITIAL VALUE IS NOT GIVEN accumulator ASSUMES THE SCHEMA OF THE FIRST ITEM IN THE ARRAY. AND SKIPS THE FUNCTION EXECUTION FOR ARRAYS FIRST ELEMENT, IF ITS A NUMBER ACCUMULATOR WILL TAKE THE FIRST NUMBER .....
+
+In short : The result is the same. That’s because if there’s no initial, then reduce takes the first element of the array as the initial value and starts the iteration from the 2nd element.
+
+EG:
+let arr = [1, 2, 3, 4, 5];
+let result = arr.reduce((sum, current) => {
+console.log(`sum : ${sum}`)
+console.log(`current: ${current}`) //CURRENT 1 , IS SKIPPED
+return sum + current
+}
+);
+
+
+NOTE: consider the following example for reduce throws an error 
+// Error Info: "TypeError: Reduce of empty array with no initial value"
+let arr = [];
+let result = arr.reduce((sum, current) => sum + current)
+
+Array.isArray
+-------------
+arrays is type of an object, hence consider following:
+let arr = [];
+console.log(typeof arr); //object
+console.log(Array.isArray(arr));  //true
+
+thisArg : optional argument
+-------
+
+Most of the array methods like filter,find, map etc support thisArg
+thisArg will bind tis to the particular array method
+
+arr.find(func, thisArg);
+arr.filter(func, thisArg);
+arr.map(func, thisArg);
+
+consider following example:
+let army = {
+  minAge: 18,
+  maxAge: 27,
+  canJoin(user) {
+	console.log(user)
+	console.log(this) //Window object
+    return user.age >= this.minAge && user.age < this.maxAge;
+  }
+  }
+
+const users = [{age:22},{age:17}]
+
+let result = users.filter(army.canJoin); //[1] REPLACE THIS LINE
+console.log(result) // [] will be an empty array, expected is [{age:22}]
+
+in [1] for the filter we are just giving a reference , but not invoking so 'this will be Window', arr.filter(function() {...})
+in this case function is invoked with window context
+
+to prevent this from happening
+replace [1]
+way 1: //const result = users.filter(item => army.canJoin(item))
+Way 2: thisArg --> users.filter(army.canJoin,army);
+
+What is reduceRight??
+by default reduce method applies function on  array elements from left to right
+Where as reduceRight applies function on array elements from right to left 
+
+for eg:
+var arr = ["1", "2", "3", "4", "5"];
+
+total1 = arr.reduce(function(prev, cur) {
+    return prev + cur;
+});
+
+total2 = arr.reduceRight(function(prev, cur) {
+    return prev + cur;
+});
+
+console.log(total1); // => 12345
+console.log(total2); // => 54321
+
+reduceRight is like reverse the array and apply reduce.
+
+PollyFills for map, filter,reduce
+
+MAP:
+----
+Array.prototype.myMap = function(cb,arr){
+const newArr = []
+
+for(let i= 0; i<this.length;i++){
+	const result = cb.call(this,this[i],i,this)
+  newArr.push(result)
+}
+return newArr
+}
+
+const arr = [1,2,3,4]
+const result = arr.myMap((item,index) => {
+console.log(index)
+return item+1
+})
+
+console.log(result)
+
+Filter:
+Array.prototype.myFilter = function(cb,arr){
+const newArr = []
+
+for(let i= 0; i<this.length;i++){
+	const result = cb.call(this,this[i],i,this)
+  if(result){
+  newArr.push(this[i])
+  }
+}
+return newArr
+}
+
+const arr = [1,2,3,4]
+const result = arr.myFilter((item,index) => {
+console.log(index)
+return item%2 === 0
+})
+
+console.log(result)
+
+//REDUCE
+Array.prototype.myReduce = function(cb,initAcc,arr){
+let accumulator = initAcc
+
+for(let i= 0; i<this.length;i++){
+if!accumulator===undefined){
+	accumulator = this[i]
+}else{
+accumulator = cb.call(this, accumulator,this[i],i,this)
+}
+}
+return accumulator
+}
+
+const arr = [1,2,3,4]
+const result = arr.myReduce((acc,item,index) => {
+acc=  acc+item
+return acc
+},0)
+
+console.log(result)

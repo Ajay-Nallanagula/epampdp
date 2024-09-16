@@ -1,0 +1,18 @@
+class User {
+  constructor(name) { this.name = name; }
+  sayHi() { alert(this.name); }
+}
+
+// proof: User is a function
+alert(typeof User); // function
+
+class User {
+  constructor(name) { this.name = name; }
+  sayHi() { alert(this.name); }
+}
+
+class Person extends User{
+constructor(name){ //Derived constructor must call super()
+//this.name=name //'this' is not allowed before super()
+}
+}

@@ -1,0 +1,664 @@
+
+#region callBacks
+
+References : https://www.twilio.com/blog/asynchronous-javascript-understanding-callbacks#:~:text=Whenever%20a%20function%20on%20the,when%20the%20stack%20is%20empty%E2%80%9D.
+
+https://www.javascripttutorial.net/javascript-callback/
+
+Event loop:
+https://www.javascripttutorial.net/javascript-event-loop/
+
+Many platforms that host Javascript , host bunch of functions that are asynchronous in nature . i.e initiate the call now, but they finish later.
+
+for example setTimout()
+I/O operations, fetching files, querying data from DB like MongoDB,API calls etc
+
+console.log('SET TIMEOUT INTIATED')
+setTimeout(()=>console.log('time out function executed'),2000)
+console.log('IMMEDIATE STATEMENT AFTER setTimeout')
+
+//Output
+SET TIMEOUT INTIATED
+IMMEDIATE STATEMENT AFTER setTimeout
+time out function executed
+
+What is a callback ?
+In JavaScript, a callback is a function passed into another function as an argument to be executed later.
+Eg let oddNumbers = numbers.filter(number => number % 2);
+Eg : function btnClicked() { 
+   // do something here
+}
+let btn = document.querySelector('#btn');
+btn.addEventListener('click',btnClicked);
+
+
+Javscript is single-threaded, nonblocking, event loop to provide concurrency, the asynchrony part is provided by the Browser-engines , i.e the asynchrony part is outsourced .
+Let say setTimeout(func,2000) , In this case browser will track the timer i.e asynchrony(executed later).
+
+Java or C# the “main program flow” happens on the main thread or process and “the occurrence of events independently of the main program flow” is the spawning of new threads or processes that runs code in parallel to the “main program flow”
+
+Chrome,Edge,Node uses Chrome - V8 Javascript Engine
+Firefox uses SpiderMonkey engine.
+IE use Chakra Engine
+
+consider following example 
+
+function loadScript(src) {
+  // creates a <script> tag and append it to the page
+  // this causes the script with given src to start loading and run when complete
+  let script = document.createElement('script');
+  script.src = src;
+  document.head.append(script);
+}
+
+usage :
+loadScript('/my/script.js');
+// the code below loadScript
+// doesn't wait for the script loading to finish
+// ...
+
+Now consider If I want to use sampleFunction() i.e is in script.js to be executed immediately after loadScript
+
+loadScript('/my/script.js');
+sampleFunction(); //Error, no such function.
+
+Browser is not given sufficent time for the script.js to load.
+And we don't know when the script.js loading is completed , Just to know when the script.js loading is completed we will introduce a callback
+
+function loadScript(src,callBack) {
+    let script = document.createElement('script');
+  script.src = src;
+  script.onload = () => callBack(script)
+  document.head.append(script);
+}
+
+//usage
+loadScript('/my/script.js', (script)=>{
+//the callback runs after the script is loaded
+//NOW this function runs
+console.log(`${script.src}`)
+sampleFunction();
+})
+
+//How to catch the callback error
+
+//introduce a  error param
+function loadScript(error,src,callBack) {
+    let script = document.createElement('script');
+  script.src = src;
+  script.onload = () => callBack(null,script)
+  script.onload = () => callBack(error,script)
+  document.head.append(script);
+}
+
+//usage
+loadScript('',(error,script)=>{
+if(error){
+//Log error and do needful
+}
+else{
+console.log(`${script.src}`)
+sampleFunction();
+}
+})
+
+Day-in , day ou we use callbacks in filter,maps,reduce etc , these are sequential call backs .
+
+What are async callbacks ??
+Asynchronicity means that if JavaScript has to wait for an operation to complete, it will execute the rest of the code while waiting.
+
+Note that JavaScript is a single-threaded programming language. It carries asynchronous operations via the callback queue and event loop.
+
+consider 
+function download(url) {
+    setTimeout(() => {
+        // script to download the picture here
+        console.log(`Downloading ${url} ...`);
+    }, 3* 1000);
+}
+
+function process(picture) {
+    console.log(`Processing ${picture}`);
+}
+
+let url = 'https://www.javascripttutorial.net/foo.jg';
+
+download(url);
+process(url);
+
+//Output:
+Processing .....
+Downloading....
+
+logically first we need to download and then process, so to avoid that we need call backs 
+
+function download(url,callback) {
+    setTimeout(() => {
+        // script to download the picture here
+        console.log(`Downloading ${url} ...`);
+		callback()
+    }, 3* 1000);
+}
+function process(picture) {
+    console.log(`Processing ${picture}`);
+}
+
+downlaod(url,process)
+
+//What are disadvantage of callback ?
+
+consider above example 
+const url1 = 'https://www.javascripttutorial.net/pic1.jpg';
+const url2 = 'https://www.javascripttutorial.net/pic2.jpg';
+const url3 = 'https://www.javascripttutorial.net/pic3.jpg';
+
+download(url1,function(picture){
+    console.log(`Processing ${picture}`);
+    // download the second picture
+    download(url2,function(picture){
+        console.log(`Processing ${picture}`);
+        // download the third picture
+        download(url3,function(picture){
+            console.log(`Processing ${picture}`);
+        });
+    });
+});
+
+This sort of code is called pyramid of doom or callback hell.
+There is nothing wrong with this code , but its tedious , hard to maintain and non-scalable .
+
+const makeBurger = nextStep => {
+  getBeef(function (beef) {
+    cookBeef(beef, function (cookedBeef) {
+      getBuns(function (buns) {
+        putBeefBetweenBuns(buns, beef, function(burger) {
+          nextStep(burger)
+        })
+      })
+    })
+  })
+}
+
+// Make and serve the burger
+makeBurger(function (burger) => {
+  serve(burger)
+})
+
+#endregion callBacks
+
+#region Promises
+javascript project template : https://create-project.js.org/#getting_started
+
+What is a Promise?
+Assume that , there is  a POP_Singer, who is been pestered by his fans , asking for next release, The team of pop-singer devise an idea , they ask his fans to fill in a form with their email address in it, whenever the singer releases his next album, the subscribed fans will be notified.
+
+Fans can be notified when there is arelease and when the release is stalled due to piracy or due to physcal hazards like studio catches fire etc. In both the cases information will be passed to the fans.
+
+Considering the above analogy we have 
+1) Producing code --> singer
+2) consuming code --> fans
+3) Promise --> subscription forms given to fans
+
+so promise is a special JS object which links the producing code and consuming code  together
+
+Constructor syntax of promise
+------------------------------
+let promise = new Promise((resolve,reject)=>{
+//executor (the singer sings)
+})
+
+The function passed to new Promise is called the executor. When new Promise is created, the executor runs automatically.The executor produces result.
+
+Its arguments "resolve" and "reject" are callbacks provided by JavaScript itself. Our code is only inside the
+executor
+
+When the executor finishes its execution, it generates output
+if its success output --> resolve(output)
+if its failure outpout --> reject(output)
+
+new Promise(...) --> returns a promise object 
+promise = {
+//This indicates the status of promise pending,fullfilled,reject
+state: [pending,fullfilled,reject],
+//result initially undefined,chnages to value when resolve(output) is invoked
+//or error when reject(output) is invoked
+result: [value or error]
+
+//When new Promise(executor)
+{state:pending,result:undefined} --> success--> {state:fullfilled,result:value}
+{state:pending,result:undefined} --> failure--> {state:rejected,result:error}
+
+NOTE: the state and result are internal, as users we don't have access to them ,we can access them only using then,catch,finally
+
+
+Simple promise example 
+
+let promiseSuccess = new Promise((resolve,reject)=>{
+setTimeout(()=>{
+  resolve('Promise executed')
+  },1000)
+})
+
+promiseSuccess.then(response => console.log({response}))
+
+let promiseFailure = new Promise((resolve,reject)=>{
+setTimeout(()=>reject(new Error('Error intentionally caused')),1000)
+})
+
+promiseFailure.then(response => console.log({response}))
+
+
+Can we call multiple resolve, rejects in executor function ?
+Yes, you can call, but only one either resolve or reject is considered remaing all are ignored , ther will not be any error, but simply ignored 
+
+let promiseSuccess = new Promise((resolve,reject)=>{
+setTimeout(()=>{
+  resolve('Promise executed')
+  resolve ('Another resolve') //Ignored
+  reject('first Reject') //Ignored
+},1000)
+})
+
+For a new promise you don't need to make I/O bllocking call, you can immediatelty resoleve a promise ,
+//NO settimout in below example
+let promiseImmediate = new Promise((resolve)=>resolve('Immediately resolved'))
+promiseImmediate.then((response)=>console.log({response}))
+//output : 'Immediately resolved'
+
+
+Promise Consumers: then/catch/finally
+
+then:
+-----
+syntax : promiseObj.then(sucessFunc,errorFunc)
+
+When promise resolves to success --> sucessFunc will be executed
+When promise resolves to failure --> errorFunc will be executed
+eg: 
+let promiseFailure = new Promise((resolve,reject)=>{
+  setTimeout(()=>reject(new Error('Error intentionally caused')),1000)
+  })
+  
+  promiseFailure.then(
+    responseSucess => console.log({responseSucess}),
+    responseFailure => console.log({responseFailure})
+  )
+  
+  //Output responseFailure: Error: Error intentionally caused
+
+  let promiseSuccess2 = new Promise((resolve,reject)=>{
+    setTimeout(()=>resolve('Sucess resolved '),1000)
+    })
+    
+    promiseSuccess2.then(
+      responseSucess => console.log({responseSucess}),
+      responseFailure => console.log({responseFailure})
+    )
+	//output responseSucess: "Sucess resolved "
+	
+There is a betterway to deal with errors 
+catch:
+------
+promiseFailure.then(
+    responseSucess => console.log({responseSucess}),
+    //responseFailure => console.log({responseFailure})
+  ).catch(error => console.log('CATCH',{error}))
+
+//output => CATCH {error: Error: Error intentionally caused}
+
+finally:
+-------
+finally block is executed always, irrespective resolve or reject 
+we can close connection, fix memory leaks etc in finally block
+
+finally vs then :
+----------------
+finally doesn't know wether a promise is sucessful or rejected.
+finally object passes results and errors to next handler.
+
+eg:
+new Promise((resolve, reject) => {
+  setTimeout(() => resolve("result"), 2000)
+})
+  .finally(() => alert("Promise ready"))
+  .then(result => alert(result));
+  
+  new Promise((resolve, reject) => {
+  throw new Error("error");
+})
+  .finally(() => alert("Promise ready"))
+  .catch(err => alert(err));
+
+
+Promise Vs callback:
+Promise does things in natural order, first fetch result and then usin 'then' process the result
+In callback, fetch the result, even befor fetching we will have to decide what a callback does 
+
+'.then' can be called any number of times , callback can be called only once
+
+NOTE: technically we can also add many .then to a single promise. This is not chaining
+
+let promise = new Promise(function(resolve, reject) {
+  setTimeout(() => resolve(1), 1000);
+});
+
+promise.then(function(result) {
+  alert(result); // 1
+  return result * 2; //o/p 2
+});
+
+promise.then(function(result) {
+  alert(result); // 1
+  return result * 2; //o/p 2
+});
+
+promise.then(function(result) {
+  alert(result); // 1
+  return result * 2; //o/p 2
+});
+
+
+Promise API:
+------------
+Promise.all : execute in parallell, wait for all to complete, return if any of it is error
+we want many promises to execute in parallel and wait until all of them are ready.
+
+For instance, download several URLs in parallel and process the content once they are all do. 
+
+This can be handled by Promise.all([...promises])
+Promise.all([
+  new Promise((resolve)=> setTimeout(()=>resolve('Promise1'),1000)),
+  new Promise((resolve)=> setTimeout(()=>resolve('Promise2'),2000)),
+  new Promise((resolve)=> setTimeout(()=>resolve('Promise3'),3000)),
+]).then(alert) //HERE THEN WILL WAIT TILL ALL THE PROMISES ARE RESOLVED
+//O/p Promise1,Promise2,Promise3
+
+If any of the promises is rejected, the promise returned by Promise.all immediately rejects with that error.
+
+Promise.all([
+  new Promise((resolve)=> setTimeout(()=>resolve('Promise1'),1000)),
+  new Promise((resolve,reject)=> setTimeout(()=>reject('Promise2'),2000)),
+  new Promise((resolve)=> setTimeout(()=>resolve('Promise3'),3000)),
+]).then(alert)
+//O/P , .then will not be executed , error in console.
+
+
+Promise.all is either all success or all failure . ITS ATOMIC
+If a promise errors, it will return immediately without executing other promises after failed promise.
+Consider even though I have an error in Promise.all, I need to proceed and continue with other functionality
+
+Promise.allSettled execute all in parallel, wait for all of them to resolve ireespective of error.
+-------------------
+Promise.allSettled just waits for all promises to settle, regardless of the result
+
+Promise.allSettled([
+  new Promise((resolve)=> setTimeout(()=>resolve('Promise1'),1000)),
+  new Promise((resolve,reject)=> setTimeout(()=>reject('Promise2'),2000)),
+  new Promise((resolve)=> setTimeout(()=>resolve('Promise3'),3000)),
+]).then((response)=>console.log({response}))
+
+//Output 
+response: Array(3)
+0: {status: "fulfilled", value: "Promise1"}
+1: {status: "rejected", reason: "Promise2"}
+2: {status: "fulfilled", value: "Promise3"}
+
+Promise.race: executes any one of the promise , and returns the result . remaining are ignored.
+Similar to Promise.all, but waits only for the first settled promise and gets its result (or error).
+
+Promise.race([
+  new Promise((resolve, reject) => setTimeout(() => resolve(1), 1000)),
+  new Promise((resolve, reject) => setTimeout(() => reject(new Error("Whoops!")), 2000)),
+  new Promise((resolve, reject) => setTimeout(() => resolve(3), 3000))
+]).then(alert); // 1
+
+The first promise here was fastest, so it became the result. After the first settled promise “wins the race”, all further results/errors are ignored.
+
+Promise.any
+Similar to Promise.race, but waits only for the first fulfilled promise and gets its result. If all of the given promises are rejected, then the returned promise is rejected with AggregateError – a special error object that stores all promise errors in its errors property.
+
+Promise.any([
+  new Promise((resolve, reject) => setTimeout(() => reject(new Error("Whoops!")), 1000)),
+  new Promise((resolve, reject) => setTimeout(() => resolve(1), 2000)),
+  new Promise((resolve, reject) => setTimeout(() => resolve(3), 3000))
+]).then(alert); // 1
+
+Promise.any([
+  new Promise((resolve,reject)=> setTimeout(()=>reject('Promise2'),2000)),
+]).then((response)=>console.log({response}))
+//Uncaught (in promise) AggregateError: All promises were rejected
+
++−−−−−−−−−−−−−−−−−−−−+−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−+−−−−−−−−−−−−−−−−−+
+| name               | description                                     |                 |
++−−−−−−−−−−−−−−−−−−−−+−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−+−−−−−−−−−−−−−−−−−+
+| Promise.allSettled | does not short-circuit                          | Added in ES2020 |
+| Promise.all        | short-circuits when an input value is rejected  | Added in ES2015 |
+| Promise.race       | short-circuits when an input value is settled   | Added in ES2015 |
+| Promise.any        | short-circuits when an input value is fulfilled | this proposal   |
++−−−−−−−−−−−−−−−−−−−−+−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−+−−−−−−−−−−−−−−−−−+
+
+#region Promise.race Vs Promise.any
+https://stackoverflow.com/questions/61732049/what-is-the-difference-between-promise-any-and-promise-race
+
+Promise.race Vs Promise.any
+============================
+
+Promise.race and Promise.any do different things:
+Promise.race is settled as soon as any of the promises you feed it settle, whether they are fulfilled or rejected.
+Promise.any is settled as soon as any of the promises you feed it is fulfilled or they are all rejected, in which case it's rejected with an AggregateError.
+
+The chief differences are:
+race's promise is rejected when the first promise you give it is rejected; any's promise isn't, because another promise may be fulfilled instead.
+any's promise's rejection reason will be an AggregateError, but race's rejection reason will be the rejection reason from the first promise that was rejected.
+
+***So if you pass them both an array of two promises, and one of the promises is rejected, then afterward the other promise is fulfilled, the promise from Promise.race will be rejected (because the first promise to settle was rejected) and the promise from Promise.any will be fulfilled (because although the first promise was rejected, the second was fulfilled). E.g.:
+
+const a = new Promise((_, reject) => setTimeout(reject,  100, new Error("a")));
+const b = new Promise((resolve)   => setTimeout(resolve, 200, "b"));
+
+Promise.race([a, b]).then(
+    value => {
+        console.log(`race: fulfilled with ${value}`);
+    },
+    reason => {
+        console.log(`race: rejected with ${reason.message}`);
+    }
+);
+
+Promise.any([a, b]).then(
+    value => {
+        console.log(`any:  fulfilled with ${value}`);
+    },
+    reason => {
+        console.log(`any:  rejected with ${reason.errors.map(({message}) => message).join()}`);
+    }
+);
+
+
+
+#endregion Promise.race Vs Promise.any
+
+#endregion Promises
+
+#region Async/Await
+
+//These two methods are obsolete because of async/await
+Promise.reject
+Promise.resolve
+
+Read Microtasks from here  --> https://javascript.info/microtask-queue
+Read async await : https://javascript.info/async-await
+
+NOTE async wraps a promise with resolve 
+NOTE: Wrap your await in try catch , error handling
+NOTE : Lines after async function call get executed without waiting
+NOTE: await works with Promise.all
+// wait for the array of results
+let results = await Promise.all([
+  fetch(url1),
+  fetch(url2),
+  ...
+]);
+
+Async key word
+--------------
+async before function means one simple thing,function always returns a promise.
+Other values are wrapped in RESOLVED promise automatically
+
+eg :
+async function f() {
+  return 1; // This is equivalent to Promise.resolve(1)
+}
+
+f().then(alert);
+
+Await 
+-----
+await makes JavaScript wait until that promise settles and returns its result.
+
+**Promise Vs Async/Await
+=========================
+Easier Answer:
+Promise VS Async/Await
+Syntax: Promises use .then() and .catch() for handling resolved values and errors, while async/await uses await within async functions to wait for promises to resolve, creating a more synchronous style.
+Error Handling: With Promises, errors are handled using .catch() or chaining multiple .then() blocks. async/await allows error handling using try/catch blocks, which can be more intuitive and resemble synchronous error handling.
+Readability: async/await often results in cleaner and more readable code, especially for complex asynchronous flows, by resembling synchronous code structure.
+
+
+https://medium.com/version-1/difference-between-promise-and-async-await-95e453182f55
+
+The only difference is the execution context between promise and async/await.
+
+When a Promise is created and the asynchronous operation is started, the code after the Promise creation continues to execute synchronously. When the Promise is resolved or rejected, the attached callback function is added to the microtask queue. The microtask queue is processed after the current task has been completed but before the next task is processed from the task queue. This means that any code that follows the creation of the Promise will execute before the callback function attached to the Promise is executed.
+
+On the other hand, with Async/Await, the await keyword causes the JavaScript engine to pause the execution of the async function until the Promise is resolved or rejected. While the async function waits for the Promise to resolve, it does not block the call stack, and any other synchronous code can be executed. Once the Promise is resolved, the execution of the async function resumes, and the result of the Promise is returned. If rejected, it throws an error value.
+
+#endregion 
+
+#region Generator Functions 
+https://javascript.info/async-iterators-generators 
+https://javascript.info/generators
+
+async and await Implementation
+https://akashhamirwasia.com/blog/internals-of-async-await-in-javascript/
+
+**What are generator functions** ?
+https://www.youtube.com/watch?v=EzdgkEMvrvA
+
+
+
+**What is javascript iterator pattern with example how is generator function linked with Iterator pattern?**
+The iterator pattern is a design pattern in which an iterator is used to traverse a container and access the container's elements. It provides an access method to the elements without necessarily exposing the details of the underlying structure.
+
+In JavaScript, the iterator pattern can be implemented through the use of special objects, known as iterators. These iterators provide a next() method that returns the next value in the sequence. If there are no more items to return, it will return a done value of true.
+
+Here's an example:
+
+javascript
+
+
+let myArray = [1, 2, 3, 4, 5];
+let iterator = myArray[Symbol.iterator]();
+
+console.log(iterator.next()); // { value: 1, done: false }
+console.log(iterator.next()); // { value: 2, done: false }
+// ....
+console.log(iterator.next()); // { done: true }
+The relation between a generator function and the iterator pattern is that a generator function returns a special type of iterator, called a generator. You can then iterate through the yielded values from the generator function, like this:
+
+javascript
+
+
+function* generatorFunc(){
+   yield 1;
+   yield 2;
+   yield 3;
+}
+      
+let generator = generatorFunc();
+      
+console.log(generator.next()); // { value: 1, done: false }
+console.log(generator.next()); // { value: 2, done: false }
+console.log(generator.next()); // { value: 3, done: false }
+console.log(generator.next()); // { done: true }
+
+In this case, the generator function - generatorFunc - is creating an iterator. When next method is called, execution resumes and goes until the nearest yield expression, where the function's state is saved and paused, and the yielded value is returned. This continues till the function ends. After which, when next is called, { done: true } is returned. This behavior enables the generator to be an iterator that can be used in a loop or other data consumption methods.
+
+What are the usecases of Iterator function?
+Iterators are key in JavaScript because they allow developers to access and manipulate collections of data.
+
+Here are some use cases:
+
+Working with Collection Data Structures: Arrays, Maps, and Sets all have iterator methods so developers can easily retrieve data. Iterators are used to go through these types of collections, retrieve data one by one, and perform any necessary operations.
+
+Lazy Evaluation: Because iterator's next method is manually invoked, you have finer control over when and how many items you want to process. This is particularly useful when working with large datasets as you can process only what you need, helping to improve performance by reducing the amount of processing power required.
+
+Streams and Asynchronous Programming: Iterators can be applied in real-time data handling, like working with live feeds or streams. For example, generating a potentially infinite sequence of Fibonacci numbers as and when they are needed.
+
+Data Manipulation: Iterator in combination with generator functions allow on-demand processing and manipulation of data sequences, such as filtering, mapping, combining, etc.
+
+Custom Iteration: When creating custom data structures, you can rely on Symbol.iterator to define default iteration behavior, ensuring interoperability with higher-level libraries or language constructs that make use of the iteration protocols: Array destructuring, for/of loop, spread operator, Promise.all, etc.
+
+Built-In Iterators: Many built-in JavaScript constructs, such as strings or NodeLists, can be iterated using iterators. Moreover, several advanced JS features and methods (like async/await and fetch API) make use of iterable protocol internally.
+
+So, iterators can be used in many scenarios in JavaScript, especially when it comes to handling and managing data in a more efficient and elegant way.
+
+How is async/await implemented with generators ?
+The async/await syntax is built on top of Promises and generators. The async keyword makes a function return a Promise, and the await keyword can only be used inside an async function, it causes the function execution to pause and wait for a Promise's resolution, then resumes the function execution and returns the resolved value.
+
+Here is a basic iteration example involving an async function:
+const myPromiseFunc = (val, time) =>
+  new Promise((resolve) =>
+    setTimeout(() => {
+      resolve(val);
+    }, time)
+  );
+
+const arr = [1, 2, 3, 4, 5];
+
+async function asyncIter(arr) {
+  const iter = arr[Symbol.iterator]();
+
+  while (true) {
+    const { done, value } = iter.next();
+
+    if (done) break;
+
+    const newValue = await myPromiseFunc(value, 2000);
+    console.log(newValue);
+  }
+}
+
+asyncIter(arr);    // Will log 1, 2, 3, 4, 5 at 2-second intervals
+
+
+#endregion Generator Functions 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

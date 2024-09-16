@@ -1,0 +1,199 @@
+#region Composition Vs Inheritance
+composition Vs Inheritance:
+https://youtu.be/wfMtDGfHWpA
+https://blog.bitsrc.io/choosing-between-inheritance-vs-composition-for-web-components-70b29885350f
+
+
+
+Inheritance: When you design types areong "What they are"? IS A 
+Composition: when you design your types around " What they do"? HAS A
+
+Limitations of Inheritance:
+===========================
+Gorilla-Banana Problem, where you request banana , you get Gorilla with banana.
+In Inheritance , you may get more that whats asked for .
+Inheritance is building taxonomy, assuming the future requirements ..
+
+When to use Inheritance,Composition
+===================================
+Inheritance: “is a.” E.g., The dog is an animal.
+Composition: “has a.” E.g., The dog has four legs.
+In inheritance, components are tightly coupled. For example, a parent component change can cause unintended consequences for its descendant components or the entire codebase. On the other hand, the coupling is much looser in composition
+
+
+In general programming ,always favour compostion over inheritence because inheritence tries to predict the future composition accomodates the future.
+
+"is-a-relationship" vs "has-a-relationship"
+class Parent {}
+
+class Child extends Parent //is A relationship
+{
+/**/
+}
+
+class Engine{}
+
+class Car extends Engine {} // A car is a Engine "is a relationship"
+
+class BullockCart {
+ctor () {
+var engine = new Engine() // BullockCart has a relionshisp with Engine 
+}
+}
+//has a relationship
+<A>
+<B></B>
+</A>
+//Is a relationship
+class A extends B{
+
+}
+
+
+#region Example Using Inheritance 
+
+class Button extends React.Component{
+  constructor(props){
+    super(props);
+    this.className='plain-button';
+  }
+  
+  render(){
+    return {
+      <span className={this.className}>
+        {this.props.children}
+      </span>
+    }
+  }
+}
+
+class SuccessButton extends Button{
+  constructor(props){
+    super(props);
+    this.className = props.className + ' success-button';
+  }
+}
+
+class ErrorButton extends Button{
+  constructor(props){
+    super(props);
+    this.className = props.className + ' error-button';
+  }
+}
+
+ class Main extends React.Component{
+   render(){
+     <>
+     ... 
+     <Button> Plain Button </Button>
+     <hr/>
+     <SuccessButton> Success Button </SuccessButton>
+     <hr/>
+     <ErrorButton> Error Button </ErrorButton>  
+     ...
+     </>
+  }
+}
+
+#endregion Example Using Inheritance 
+
+#region Example Using Composition 
+class Button extends React.Component{
+    render(){
+      return <span className={this.props.className + ' plain-button'}>
+         {this.props.children}
+       </span>
+    }
+ }
+
+class SuccessButton extends React.Component{
+   render(){
+     return <Button className='success-button'>{this.props.children}</Button>;  
+   }
+}
+
+class ErrorButton extends React.Component{
+   render(){
+     return <Button className='error-button'>{this.props.children}</Button>;  
+   }
+}
+
+class Main extends React.Component{
+     render(){
+       <>
+         ....
+         <Button> Plain Button </Button>
+         <hr/>
+         <SuccessButton> Success Button </SuccessButton>
+         <hr/>
+         <ErrorButton> Error Button </ErrorButton>  
+         ...
+        </>
+     }
+ }
+#endregion Example Using Composition 
+
+#endregion
+
+#region Lists and Keys
+https://medium.com/@adhithiravi/why-do-i-need-keys-in-react-lists-dbb522188bbb
+indexes should not be used as keys, should be avoided, if an element is added to start of the list, there is change in index numbers of the list , in such cases state of the component behaves weirdly .
+
+using index as a Key is an ANTI-PATTERN.
+
+If the key is an index, reordering an item changes it. Hence, the component state can get mixed up and may use the old key for a different component instance.
+Keys help React identify which items have changed, are added, or are removed. 
+
+https://legacy.reactjs.org/docs/reconciliation.html#recursing-on-children
+
+When the items are naively inserted, like at random indexes, React will mutate the elements/components , its always better to use keys.
+
+What are some exceptions where it is safe to use index as key?
+If your list is static and will not change.
+The list will never be re-ordered.
+The list will not be filtered (adding/removing items from the list).
+There are no ids for the items in the list.
+
+#endregion
+
+#region Miscellanous
+Render Props Pattern :
+https://blog.bitsrc.io/understanding-render-props-in-react-1edde5921314
+
+
+Map helps to iterate over List and Object.keys() to iterate over object. 
+https://reactjs.org/docs/lists-and-keys.html
+
+Keys help React identify which items have changed, are added, or are removed. 
+The best way to pick a key is to use a string that uniquely identifies a list item among its siblings. 
+When you don’t have stable IDs for rendered items, you may use the item index as a key as a last resort. 
+We don’t recommend using indexes for keys if the order of items may change. This can negatively impact performance and may cause issues with component state. 
+https://medium.com/@robinpokorny/index-as-a-key-is-an-anti-pattern-e0349aece318 
+
+To generate the keys randomly, we can use the package https://www.npmjs.com/package/shortid 
+
+We can use index as key, if the list meet these conditions: 
+1) The list and items are static–they are not computed and do not change; 
+2) The items in the list have no ids.
+3) The list is never reordered or filtered.
+
+Example:
+https://jsbin.com/wohima/edit?js,output 
+
+A good rule of thumb is that elements inside the map() call need keys. Keys used in arrays need to be unique only in siblings. However, they don't need to be globally unique.
+Keys serve as a hint to React but they don’t get passed to your components. 
+
+In-depth explanation why keys are important: 
+https://reactjs.org/docs/reconciliation.html#recursing-on-children
+
+The state of the art algorithms have a complexity in the order of O(n3) where n is the number of elements in the tree. 
+If we used this in React, displaying 1000 elements would require in the order of one billion comparisons. This is far too expensive. Instead, React implements a heuristic O(n) algorithm based on two assumptions: 
+Two elements of different types will produce different trees. 
+The developer can hint at which child elements may be stable across different renders with a key prop.
+React uses Breadth first approach rather than Depth first while updating the DOM.
+
+Some good videos to watch: 
+VDOM Diffing Explained - https://www.youtube.com/watch?v=fJRWtoSaIew
+Learn to Code: How React.js Works - https://www.youtube.com/watch?v=mLMfx8BEt8g
+
+#endregion

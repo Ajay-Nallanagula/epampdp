@@ -1,0 +1,182 @@
+JS call apply bind and constructor
+----------------------------------
+
+#region BIND
+
+https://medium.com/@omergoldberg/javascript-call-apply-and-bind-e5c27301f7bb
+
+The bind() method creates a new function that, when called, has its this keyword set to the provided value
+
+The bind() method creates a new function that, when called, has its this keyword set to the provided value.
+React 'this' example : https://www.freecodecamp.org/news/this-is-why-we-need-to-bind-event-handlers-in-class-components-in-react-f7ea1a6f93eb/
+
+NOTE: BIND RETURNS COPY OF A FUNCTION
+var sampleFunc = sample.bind(this)
+HERE bindedFunc is a function copy of sample..., we need to explicitly call it.
+
+Eg:
+var pokemon = {
+    firstname: 'Pika',    lastname: 'Chu ',
+    getPokeName: function() {
+        var fullname = this.firstname + ' ' + this.lastname;
+        return fullname;
+    },
+};
+
+var pokemonName = function(food,hobby){
+  console.log(this.getPokeName())
+  console.log(this.getPokeName()+ 'loves ' + food +' and '+ hobby)
+}
+
+const newFunc = pokemonName.bind(pokemon) //newfunc is a copy of pokeMonName
+console.log(newFunc('Chicken','Sleeping'))
+
+After bind, Imagine pokemon (object) will change like this
+var pokemon = {
+    firstname: 'Pika',    lastname: 'Chu ',
+    getPokeName: function() {
+        var fullname = this.firstname + ' ' + this.lastname;
+        return fullname;
+    },
+   pokemonName: function(food,hobby){
+	console.log(this.getPokeName())
+	console.log(this.getPokeName()+ 'loves ' + food +' and '+ hobby)
+	}
+};
+
+Practical Example of bind in React-Component
+--------------------------------------------
+class DemoClassComp extends Component { constructor() { super(); this.state = { name: "Ajay" }; 
+//TO BIND THIS WE NEED TO UNCOMMENT BELOW LINE, EG WORKS AS EXPECTED
+//this.handleClick = this.handleClick.bind(this) //**
+}
+
+ handleClick() { //WHat is this here ?? console.log(this); alert(this.state.name); } //this undefined
+
+//IN BUTTON CLICK , 'this' looses its context , hence this is undefined if we don't comment line (**)
+ render() { return ( <div> <button onClick={this.handleClick} > Click Here </button> </div> ); } } 
+ 
+How does this change in arrow function?
+---------------------------------------
+arrow functions are lexically scoped i.e this is picked up from the surrounding scope.
+In this case when we use arrow function this is picked up from render() method {scope}, inside render this is The component itself
+
+What happens when there is class property proposal?
+---------------------------------------------------
+On using it as class property , the this is binded automatically by the transpiler ur using eg babel 
+You will need to check the transpiled code of babel for that , you can see in chrome, dev tools inside main.chunk.js
+
+
+#endregion BIND
+
+#region call and apply
+The call() and apply() method calls a function with a given this value and arguments provided INDIVIDUALLY and as ARRAY respectively.
+
+NOTE : CALL method will call the function for you , bind we need to explicitly call
+syntax : 
+funcToCallOnThis.call(thisContextObj,arg1,arg2,arg3)
+funcToApplyOnThis.apply(thisContextObj,[arg1,arg2,arg3])
+
+#region Example call and apply
+const fullName= {
+  firstname:'Ajay',
+  lastName:'Nallanagula',
+  getFullName(){
+  return this.firstname+ ' '+this.lastName
+  }
+}
+
+function details(roll,std){
+	const name = this.getFullName()
+  return `${name} ${roll} ${std}`
+}
+
+
+console.log(details.call(fullName,10,10))
+console.log(details.apply(fullName,[20,20]))
+#endregion  Example call and apply
+
+CALL Vs BIND:
+1) Accepts additional parameters as well
+2) Executes the function it was called upon right away.
+3) The call() method does not make a copy of the function it is being called on.
+
+eg:
+var pokemon = { firstname: 'Pika', lastname: 'Chu ', getPokeName: function() { var fullname = this.firstname + ' ' + this.lastname; return fullname; }, }; 
+
+var pokeManNamer = function(food,hobby){ console.log(this.getPokeName()+ food +' '+hobby) } 
+pokeManNamer.call(pokemon,'Chicken','Sleep') 
+pokeManNamer.apply(pokemon,['Chicken','Sleep']) 
+
+Why should we not call React events , with call or apply?
+call and apply will automatically invoke the eventhandlers, they wouldn't wait for user clicking on the button.
+As soon as the component is mounted the event handlers will be called .
+
+#endregion call and apply
+
+#region constructor
+
+https://javascript.info/constructor-new
+
+constructor of JS does 4 things 
+1) Creates Brand new Object
+2) creates a [[PROTOTYPE]] link in that newly created object
+3) the newly created object , is set as the this in that function call
+4) will by default returns this newly created object, unless there is an explicit reference datatype(arrays,objects) are returned
+
+function User(name) {
+  // this = {};  (implicitly) //Creates Brand new Object , the newly created object , is set as the this in that function call
+
+  // add properties to this
+  this.name = name;
+  this.isAdmin = false;
+
+  // return this;  (implicitly)   //will by default returns this newly created object, unless there is an explicit reference                                //datatype(arrays,objects) are returned
+}
+
+
+How to check if a function is called with 'new'
+-----------------------------------------------
+
+use new.target inside the function to know if its called with new keyword or not.
+function User() {
+  alert(new.target); 
+}
+
+// without "new":
+User(); // undefined
+
+// with "new":
+new User(); // function User { ... }
+
+What is the return type of constructor ?
+----------------------------------------
+Usually, constructors do not have a return statement. Their task is to write all necessary stuff into this, and it automatically becomes the result.
+
+But if there is a return statement, then the rule is simple:
+
+If return is called with an object, then the object is returned instead of this.
+If return is called with a primitive, it’s ignored.
+Eg:
+function BigUser() {
+  this.name = "John";
+  return { name: "Godzilla" };  // <-- returns this object
+}
+
+alert( new BigUser().name ); //Godzilla
+
+function SmallUser() {
+  this.name = "John";
+  return; // <-- returns this
+}
+
+alert( new SmallUser().name ); //John
+
+NOTE: 
+let user = new User; // <-- no parentheses
+// same as
+let user = new User();
+
+Learn more about [[Prototype]] : https://javascript.info/prototype-inheritance
+
+#endregion constructor

@@ -1,0 +1,102 @@
+https://codesandbox.io/p/sandbox/useroutes-demo-e5cej1?file=%2Fsrc%2FApp.js
+
+3 departments 4 steps 
+4 steps common 
+Data points are diffrent from deparment to department 
+Container , should be painted based on the role
+
+//
+
+conatiner should should be an  orchestrator
+Specific implementation by department
+
+Clean Architecture 
+
+3 departs 
+
+//
+
+//container json file ... 
+steps 
+
+//D
+
+abstract class BaseClass {
+workflow step1
+...
+
+}
+
+//IOC Inside , 
+iocContainer.inject<Baseclass,MicroApp1BaseClass >
+
+class MicroApp1BaseClass
+
+//Inside Microapp1
+class  MicroApp1{
+ constructor(microApp1baseClass){
+ //the microApp1baseClass instance is supplied by the IOC container 
+ }
+}
+
+
+11years Focus areas 
+Tecch agnostic 
+Design Patterns
+Clean Architecture
+Domain 
+DevSecops
+
+
+Problem Statement :
+There are 3 different departments with same workflow 
+The 3 departments have different data points.
+there is a container wihich is orchestrator for 3 departments 
+Based on the  Login , user should redirect to one of the departments 
+Implementation of context boundaries, deep dive psuedo code of IOC container
+Asked for Psuedo code, Architecture, DevSecops
+
+
+https://react.dev/blog/2022/03/29/react-v18
+
+Interviewer - Gangi Reddy Nandyala
+ 
+How do you access environment variables in your react application? 
+What following snippet will do ?  
+
+"husky": { 
+    "hooks": { 
+      "pre-commit": "concurrently \"npm run test\" lint-staged" 
+    } 
+  }  
+ 
+3. What following snippet will do?  
+
+"resolutions": { 
+    "@opentelemetry/instrumentation": "0.43.0", 
+    "@opentelemetry/instrumentation-user-interaction": "0.33.1", 
+    "crypto-js": "4.2.0" 
+  } 
+ 
+4. Coding test: 
+
+In Existing component add a button, on button click call a Rest API(Post call) and pass headers Authorization and pass current date time as json ( "currentDate": currentTime} as payload, and write logic to handle errors and assume you will get response as list of strings write logic to process 
+ 
+How do you navigate to previous route? 
+How do you access params from path? 
+You have 10 components, how do you share data among them? 
+How do you store data in browser to make it only accessible to specific component? 
+Do you have any experience with microfrontends? 
+How do you set headers to make it availble to all apis calls if you use axios? 
+What are fragments? 
+Any experience in java? 
+
+**Make sure make API fetch calls 
+
+Learn more on metadata
+
+
+
+
+
+

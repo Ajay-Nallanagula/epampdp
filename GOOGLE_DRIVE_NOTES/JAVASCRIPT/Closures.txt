@@ -1,0 +1,64 @@
+var vs let :
+https://stackoverflow.com/questions/762011/whats-the-difference-between-using-let-and-var-to-declare-a-variable-in-jav
+var is added to global scope i.e is windo while as let is not added
+use let in for loop after loop iterator doesn't exisit, for var it stays 
+var is scoped to the nearest function block and let is scoped to the nearest enclosing block, which can be smaller than a function block.
+
+'use strict';
+let me = 'foo';
+let me = 'bar'; // SyntaxError: Identifier 'me' has already been declared
+
+'use strict';
+var me = 'foo';
+var me = 'bar'; // No problem, `me` is replaced.
+
+
+
+Lexical scoping: Variables declared outside of a function are global variables and are visible everywhere in a JavaScript program. Variables declared inside a function have function scope and are visible only to code that appears inside that function.
+https://stackoverflow.com/questions/1047454/what-is-lexical-scope
+
+Lexical scoping, also known as static scoping, is a concept in programming languages where the scope of a variable is determined by its location within the source code. In JavaScript, lexical scoping means that the scope of a variable is defined by its location within the code when the function is defined, not when it is executed. This is in contrast to dynamic scoping, where the scope is based on the current execution context.
+function outerFunction() {
+  let outerVariable = 'I am outer!';
+  function innerFunction() {
+    let innerVariable = 'I am inner!';
+    console.log(outerVariable); // Access outerVariable from the outer function
+    console.log(innerVariable); // Access innerVariable from the inner function
+  }
+  innerFunction();
+}
+
+outerFunction();
+
+In this example, innerFunction is nested inside outerFunction. Lexical scoping allows innerFunction to access both its own variables (innerVariable) and variables from its outer scope (outerVariable). The important point is that the inner function has access to the variables of the outer function because it was defined within the lexical scope of the outer function.
+
+
+
+https://medium.com/front-end-developers/es6-variable-scopes-in-loops-with-closure-9cde7a198744
+//About closures
+http://javascriptissexy.com/understand-javascript-closures-with-ease/
+
+A closure is an inner function that has access to the outer (enclosing) function’s variables—scope chain. 
+The closure has three scope chains: 
+it has access to its own scope (variables defined between its curly brackets), 
+it has access to the outer function’s variables, 
+it has access to the global variables.
+
+Example:
+function showName (firstName, lastName) {
+var nameIntro = "Your name is ";
+    // this inner function has access to the outer function's variables, including the parameter
+function makeFullName () {        
+return nameIntro + firstName + " " + lastName;    
+}
+
+return makeFullName ();
+}
+
+showName ("Michael", "Jackson"); // Your name is Michael Jackson
+
+
+Closures have access to the outer function’s variable even after the outer function returns
+Closures store references to the outer function’s variables. Hence the latest changes are cleary visible.
+Closures Gone Awry
+Because closures have access to the updated values of the outer function’s variables, they can also lead to bugs when the outer function’s variable changes with a for loop
