@@ -1,0 +1,16 @@
+What is an Agent in Http?
+-------------------------
+const http = require("node:http");
+const agent = http.Agent({keep-alive: true});
+http.createRequest({agent});
+Agent will open TCP/IP connection bridge between client and server and Http passes through that bridge.
+When you say "keep-alive", the TCP/IP connection will not be closed and will still remain once opened for other requests.
+
+What is "Content-Length" vs "transfer-encodeing: chunked" as a response header?
+ContentLength : 100, all the 100 bytes are recieved at a time.
+"transfer-encodeing: chunked", all the response is chunked and recieved as a sream.
+
+http.request({
+    ContentLength : Buffer.bytesLength(JSON.Stringify({content:content})) // will calculate the length of the request content
+})
+
