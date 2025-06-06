@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "noImplicitAny": true,
+        "target": "ESNext",
+        "lib": [
+            "es2015"
+        ]
+    },
+    "include": [
+        "**/*.ts",
+        "**/*.js"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}

@@ -758,3 +758,20 @@ const counterReducer = (state, action) => {
 #endregion useReducer
 
 #endregion
+
+
+Scenario: useLayoutHook
+------------------------
+I want to change the css of anchor tag from blue to black and on hover i need to show underline.
+If I use useEffect , when the screen is loading initially the <a> are blue then the css is getting applied where the links are turning black 
+Thats easily visible and bad user experience
+
+jsx is below
+<ul id="ulList">
+<li> <a> </li>
+</ul>
+
+useLayoutEffect(() => {
+	const uls = document.selector("#ulList")
+	uls.classList.add("customAnchrCss");
+},[])

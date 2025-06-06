@@ -1,5 +1,16 @@
 https://excalidraw.com/
 
+
+#region resources and Links
+Basic Concepts :  https://www.geeksforgeeks.org/system-design-tutorial/
+
+FIND QUESTIONS LIKE THIS: https://www.youtube.com/watch?v=QBpHNbjLdKs,    https://www.youtube.com/watch?v=EIf9Te2KQ9A
+
+***Developer to Architecture : https://developertoarchitect.com/lessons/
+
+
+#endregion resources and links 
+
 #region Greenfeild Vs Brownfeild
 Greenfield Project:
 
@@ -19,7 +30,218 @@ There can be challenges with a brownfield project, including dealing with existi
 
 #endregion Greenfeild Vs Brownfeild
 
+
+#region  Roadmap
 System Design Roadmap: https://roadmap.sh/system-design
+
+System Design encompasses many concepts, spanning foundational principles, best practices, and specialized techniques for building scalable, reliable, and maintainable software systems. If you're preparing to learn or master system design, it helps to organize these topics into core areas and progressively deepen your understanding. Below is a comprehensive checklist of **concepts one should know in System Design**, broken into categories.
+
+---
+
+### **1. Basics of System Design**
+- **Functional Requirements vs. Non-Functional Requirements (NFRs):**
+  - Functional: What the system should do (e.g., user authentication, payment).
+  - Non-Functional: Performance, scalability, availability, resilience, etc.
+- **Architectural Styles:**
+  - Monolithic Architecture
+  - Microservices Architecture
+  - Service-Oriented Architecture (SOA)
+  - Event-Driven Architecture
+  - Serverless Architecture
+- **System Design Process:**
+  - Requirements gathering and clarification
+  - High-Level Design (HLD): Components, data flow, and architecture
+  - Low-Level Design (LLD): Detailed implementation, APIs, and data models
+  - Identifying trade-offs
+
+---
+
+### **2. Scalability & Performance**
+- **Scalability:**
+  - Horizontal Scaling (adding more machines or instances)
+  - Vertical Scaling (adding more resources to existing machines)
+  - When to scale and choosing between horizontal vs. vertical scaling
+- **Load Balancing:**
+  - What is load balancing?
+  - Types: Layer 4 (Transport), Layer 7 (Application)
+  - Techniques: Round-robin, Least Connections, IP Hashing
+  - Load balancers like NGINX, HAProxy, AWS Elastic Load Balancer
+- **Caching:**
+  - Types: Client-side, Server-side, Distributed caching
+  - Tools: Redis, Memcached
+  - Cache eviction policies: LRU (Least Recently Used), LFU (Least Frequently Used), etc.
+- **Content Delivery Networks (CDNs):**
+  - Role of CDNs for static assets
+  - Examples: Cloudflare, Akamai, AWS CloudFront
+- **Rate Limiting:**
+  - Controlling traffic using fixed-window vs sliding-window algorithms
+- **Performance Optimization:**
+  - Latency vs. Throughput
+  - Bottleneck identification
+  - Techniques like read-write separation, data indexing, and query optimization
+
+---
+
+### **3. Data Management**
+- **Database Basics:**
+  - Relational Databases: SQL concepts, normalization, ACID properties
+  - Examples: MySQL, PostgreSQL, Oracle
+  - NoSQL Databases: Types (key-value, document, graph, columnar), and BASE properties
+  - Examples: MongoDB, Cassandra, DynamoDB
+- **Database Scaling:**
+  - Sharding (Horizontal Partitioning)
+  - Replication (Master-Slave, Master-Master)
+  - Read replicas
+- **Indexes:**
+  - How indexes work in databases
+  - Pros and cons of indexing
+- **Data Consistency Models:**
+  - Strong Consistency, Eventual Consistency
+  - CAP Theorem (Consistency, Availability, Partition Tolerance)
+- **Data Partitioning:**
+  - Partitioning strategies: Range, Hash, List, Composite
+
+---
+
+### **4. Handling Large Scale Systems**
+- **Distributed Systems Concepts:**
+  - What is a distributed system?
+  - Leader election techniques
+  - Consensus protocols: Paxos, Raft
+  - Clock synchronization: Lamport Timestamps
+- **Message Queues:**
+  - When and why to use messaging
+  - Message brokers: RabbitMQ, Kafka, Amazon SQS
+- **Data Storage:**
+  - Distributed File Systems: HDFS, GlusterFS
+  - Object Storage systems (e.g., Amazon S3)
+- **Event-Driven Architecture:**
+  - Event producers and consumers
+  - Event streaming systems (e.g., Apache Kafka)
+
+---
+
+### **5. Reliability & Fault Tolerance**
+- **Fault Tolerance:**
+  - Designing for resilient systems
+  - Graceful degradation
+  - Circuit Breaker pattern
+- **Replication:**
+  - High availability through redundant systems
+  - Examples: Active-active or active-passive replication
+- **Distributed Transactions:**
+  - 2PC (Two-Phase Commit), SAGA patterns
+- **Data Backup & Recovery:**
+  - Strategies for backup systems
+  - Snapshot technologies
+- **Chaos Engineering:**
+  - Simulating failure scenarios to test robustness (e.g., Netflix Chaos Monkey)
+
+---
+
+### **6. Security**
+- **Authentication and Authorization:**
+  - OAuth, OpenID Connect, and JWTs
+  - Role-based Access Control (RBAC) vs Attribute-based Access Control (ABAC)
+- **Encryption:**
+  - Symmetric and Asymmetric encryption
+  - Transport Layer Security (TLS/SSL)
+- **Data Protection:**
+  - Protecting sensitive data
+  - Secure storage of secrets (e.g., AWS Secrets Manager, HashiCorp Vault)
+- **Common Vulnerabilities:**
+  - OWASP Top 10 (SQL Injection, CSRF, XSS, etc.)
+- **Firewall & DDoS Protection:**
+  - Setting up Web Application Firewalls (WAF)
+  - Mitigating Distributed Denial of Service (DDoS) attacks
+
+---
+
+### **7. Monitoring & Observability**
+- **Monitoring:**
+  - Tools for monitoring: Prometheus, Grafana, Datadog
+  - Collecting metrics: CPU, memory, I/O, disk usage
+- **Logging:**
+  - Log aggregation tools (e.g., ELK stack: Elasticsearch, Logstash, Kibana)
+  - Structured logging
+- **Tracing:**
+  - Distributed tracing (e.g., Jaeger, Zipkin)
+- **Alerting:**
+  - Automated alerts with thresholds to detect anomalies
+
+---
+
+### **8. API Design**
+- **REST APIs:**
+  - HTTP methods (GET, POST, PUT, DELETE, etc.)
+  - Designing RESTful endpoints
+  - Status codes and error handling
+- **GraphQL:**
+  - How GraphQL benefits querying over REST
+  - Schema design in GraphQL
+- **gRPC:**
+  - High-performance remote procedure calls
+  - Protocol Buffers (protobuf)
+- **API Rate Limiting and Throttling:**
+  - How to protect APIs from misuse
+- **Versioning:**
+  - Strategies to handle API changes (e.g., v1, v2)
+
+---
+
+### **9. Additional Concepts**
+- **Design Patterns:**
+  - Singleton, Factory, Observer, Circuit Breaker, etc.
+  - Patterns specifically for system design: CQRS (Command Query Responsibility Segregation), Event Sourcing
+- **Proxies:**
+  - Reverse Proxy vs. Forward Proxy (e.g., NGINX, HAProxy)
+- **Search Systems:**
+  - Indexing and search engines like Elasticsearch, Solr
+- **Real-Time Systems:**
+  - WebSocket communication
+  - Publish-Subscribe models
+  - Long polling
+
+---
+
+### **10. Cloud and DevOps Concepts**
+- **Cloud Platforms:**
+  - AWS, Azure, GCP basics
+- **Infrastructure as Code (IaC):**
+  - Terraform, Ansible, AWS CloudFormation
+- **Kubernetes and Containerization:**
+  - Docker fundamentals
+  - Orchestrating microservices with Kubernetes
+- **CI/CD Pipelines:**
+  - Continuous integration/deployment principles
+
+---
+
+### **10. Trade-offs and Interview Focus**
+When designing a system, understanding **trade-offs** is critical. Always be ready to balance:
+- Consistency vs. Availability
+- Cost vs. Performance
+- Scalability vs. Simplicity
+- Pre-building vs. Extensibility
+
+---
+
+### How to Prepare:
+1. Master foundational principles first: databases, caching, load balancing.
+2. Apply concepts through mock projects or case studies.
+3. Use visualization tools (e.g., Lucidchart, Draw.io) to practice making system design diagrams.
+4. Study examples like designing a URL shortener, an e-commerce system, or video streaming services.
+
+By building a strong conceptual foundation and practicing practical implementations, you'll become proficient in System Design and ready for real-world challenges or technical interviews!
+
+
+#endregion
+
+#region Youtube Videos:
+--> https://www.youtube.com/watch?v=s9Qh9fWeOAk
+
+
+#endregion Youtube Videos
 
 ***Low-Level-System-Design: https://www.youtube.com/watch?v=aJxx-Y42rF0
 ***High-Level-System-Design: 

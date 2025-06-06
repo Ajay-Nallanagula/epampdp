@@ -800,3 +800,13 @@ This feature is generally only needed in a development environment, as in produc
 Full responsibility for code correctness, security and licensing lies solely with the user, not with DIAL platform or LLM vendor.
 
 #endregion Sample Webpack.config for Microfrontend
+
+
+#region
+✅ ACID principles – Ensuring data integrity and reliability
+✅ Sharding & Replication – Scaling databases for high availability
+✅ Database Optimization – Improving performance and query efficiency
+✅ Normalization Techniques – Structuring data effectively
+✅ Modern Database Architectures – Understanding relational, NoSQL, and distributed systems
+
+#endregion

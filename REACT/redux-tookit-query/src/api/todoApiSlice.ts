@@ -23,6 +23,8 @@ const todosApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3500/" }),
   endpoints: (builder) => ({
     getTodos: builder.query<Todo[], void>({
+      //NOTE: Also check on RTK Query , queryFn, usecase: download
+      //Docs queryFn: https://redux-toolkit.js.org/rtk-query/usage/customizing-queries#examples---queryfn
       query: () => {
         //throw Error("Something went Wrong");
         return "/todos";
@@ -40,6 +42,8 @@ const todosApi = createApi({
     }),
 
     updateTodo: builder.mutation<Todo[], Todo>({
+      //NOTE: Also check on RTK Query , queryFn, usecase: download
+      //Docs queryFn: https://redux-toolkit.js.org/rtk-query/usage/customizing-queries#examples---queryfn
       query: (todo) => {
         return {
           url: `/todos/${todo.id}`,
@@ -50,6 +54,8 @@ const todosApi = createApi({
     }),
 
     removeTodo: builder.mutation<Todo[], Todo>({
+      //NOTE: Also check on RTK Query , queryFn, usecase: download
+      //Docs queryFn: https://redux-toolkit.js.org/rtk-query/usage/customizing-queries#examples---queryfn
       query: ({ id }) => {
         return {
           url: `/todos/${id}`,
@@ -71,3 +77,6 @@ export const {
 export default todosApi;
 
 //Step 3: See PTO to index.tsx
+
+//NOTE: Also check on RTK Query , queryFn, usecase: download
+//Docs queryFn: https://redux-toolkit.js.org/rtk-query/usage/customizing-queries#examples---queryfn

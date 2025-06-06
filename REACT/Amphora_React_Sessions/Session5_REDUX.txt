@@ -987,6 +987,10 @@ https://medium.com/@ayabellazreg/make-a-simple-shopping-cart-app-using-react-red
 
 https://www.youtube.com/playlist?list=PL0Zuz27SZ-6M1J5I1w2-uZx36Qp6qhjKo
 See Example : C:\Ajay_EPAM\PDP_PRACTICSE\epampdp\REACT\redux-tookit-query\src\api\todoApiSlice.ts
+RTK Query , queryFn, usecase: download
+
+Docs: https://redux-toolkit.js.org/rtk-query/overview
+//Docs queryFn: https://redux-toolkit.js.org/rtk-query/usage/customizing-queries#examples---queryfn
 
 #endregion Redux Toolkit Query
 
